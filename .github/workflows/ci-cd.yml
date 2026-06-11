@@ -1,0 +1,82 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - development
+      - test
+  pull_request:
+    branches:
+      - main
+      - development
+      - test
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install Dependencies
+        run: bun install
+
+      - name: Build Applications
+        run: |
+          bun --cwd apps/backend type-check
+          bun --cwd apps/frontend run build
+          bun --cwd apps/docs run build
+
+  deploy-development:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/development' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Development Environment
+        run: |
+          echo "🐳 Building Docker images for Development..."
+          docker build -t trading-backend:dev -f docker/backend/Dockerfile .
+          docker build -t trading-frontend:dev -f docker/frontend/Dockerfile .
+          docker build -t trading-docs:dev -f docker/docs/Dockerfile .
+          echo "🚀 Deploying to Dev Server..."
+
+  deploy-testing:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/test' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Testing Environment
+        run: |
+          echo "🐳 Building Docker images for Testing/Staging..."
+          docker build -t trading-backend:test -f docker/backend/Dockerfile .
+          docker build -t trading-frontend:test -f docker/frontend/Dockerfile .
+          docker build -t trading-docs:test -f docker/docs/Dockerfile .
+          echo "🚀 Deploying to Testing Server..."
+
+  deploy-production:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Production Environment
+        run: |
+          echo "🐳 Building Docker images for Production..."
+          docker build -t trading-backend:prod -f docker/backend/Dockerfile .
+          docker build -t trading-frontend:prod -f docker/frontend/Dockerfile .
+          docker build -t trading-docs:prod -f docker/docs/Dockerfile .
+          echo "🚀 Deploying to Production Server..."

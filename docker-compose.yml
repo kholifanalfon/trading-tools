@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: trading_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: trading_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5431:5432" # Keep internal Postgres accessible on custom port if needed
+    networks:
+      - trading_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d trading_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pgbouncer:
+    image: edoburu/pgbouncer:latest
+    container_name: trading_pgbouncer
+    ports:
+      - "6543:6432"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=trading_db
+      - POOL_MODE=transaction
+      - MAX_CLIENT_CONN=100
+      - DEFAULT_POOL_SIZE=20
+      - MIN_POOL_SIZE=5
+      - RESERVE_POOL_SIZE=5
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - trading_net
+
+volumes:
+  pgdata:
+
+networks:
+  trading_net:
+    driver: bridge

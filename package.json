@@ -1,0 +1,32 @@
+{
+  "name": "trading-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:backend": "bun --cwd apps/backend dev",
+    "dev:frontend": "bun --cwd apps/frontend dev",
+    "dev:docs": "bun --cwd apps/docs start",
+    "dev": "bun run --parallel dev:docs dev:backend dev:frontend",
+    "build:backend": "bun --cwd apps/backend type-check",
+    "build:frontend": "bun --cwd apps/frontend build",
+    "build:docs": "bun --cwd apps/docs build",
+    "build": "bun run build:backend && bun run build:frontend && bun run build:docs",
+    "db:generate": "bun run commands/db-generate.ts",
+    "db:migrate": "bun run commands/db-migrate.ts",
+    "db:introspect": "bun run commands/db-introspect.ts",
+    "db:seed": "bun run commands/db-seed.ts",
+    "make:migration": "bun run commands/make-migration.ts",
+    "make-seeder": "bun run commands/make-seeder.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "typescript": "^5.0.0"
+  },
+  "overrides": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0"
+  }
+}
