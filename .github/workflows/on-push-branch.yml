@@ -68,8 +68,7 @@ jobs:
       dockerfile: docker/backend/Dockerfile
       changed: ${{ needs.changes.outputs.backend }}
       event_name: ${{ github.event_name }}
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit
 
   # 5b. Docker — Frontend (hanya jika frontend berubah)
   docker-frontend:
@@ -83,8 +82,7 @@ jobs:
       changed: ${{ needs.changes.outputs.frontend }}
       event_name: ${{ github.event_name }}
       api_url: ${{ needs.env-config.outputs.api_url }}
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit
 
   # 5c. Docker — Docs (hanya jika docs berubah)
   docker-docs:
@@ -97,5 +95,4 @@ jobs:
       dockerfile: docker/docs/Dockerfile
       changed: ${{ needs.changes.outputs.docs }}
       event_name: ${{ github.event_name }}
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit

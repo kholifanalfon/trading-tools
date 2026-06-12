@@ -51,8 +51,7 @@ jobs:
       dockerfile: docker/backend/Dockerfile
       changed: 'true'      # tag push → selalu build semua app
       event_name: push
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit
 
   # 3b. Docker — Frontend (selalu build semua)
   docker-frontend:
@@ -66,8 +65,7 @@ jobs:
       changed: 'true'
       event_name: push
       api_url: ${{ needs.env-config.outputs.api_url }}
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit
 
   # 3c. Docker — Docs (selalu build semua)
   docker-docs:
@@ -80,5 +78,4 @@ jobs:
       dockerfile: docker/docs/Dockerfile
       changed: 'true'
       event_name: push
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit
