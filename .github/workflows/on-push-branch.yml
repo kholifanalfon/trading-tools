@@ -26,12 +26,12 @@ jobs:
   # 1. Build & Type Check
   build-and-test:
     name: Code Quality & Build
-    uses: ./.github/workflows/reusable/_reusable-build-test.yml
+    uses: ./.github/workflows/_reusable-build-test.yml
 
   # 2. CodeQL Security Scan
   codeql:
     name: CodeQL Security Scan
-    uses: ./.github/workflows/reusable/_reusable-codeql.yml
+    uses: ./.github/workflows/_reusable-codeql.yml
     permissions:
       security-events: write
       contents: read
@@ -39,7 +39,7 @@ jobs:
   # 3. Detect mana app yang berubah — hemat runner minutes
   changes:
     name: Detect Changes
-    uses: ./.github/workflows/reusable/_reusable-detect-changes.yml
+    uses: ./.github/workflows/_reusable-detect-changes.yml
 
   # 4. Resolve API URL berdasarkan branch (dev vs test)
   env-config:
@@ -61,7 +61,7 @@ jobs:
   docker-backend:
     name: Docker — Backend
     needs: [build-and-test, codeql, changes, env-config]
-    uses: ./.github/workflows/reusable/_reusable-docker-push.yml
+    uses: ./.github/workflows/_reusable-docker-push.yml
     with:
       app: backend
       image_name: ghcr.io/${{ github.repository_owner }}/trading-backend
@@ -75,7 +75,7 @@ jobs:
   docker-frontend:
     name: Docker — Frontend
     needs: [build-and-test, codeql, changes, env-config]
-    uses: ./.github/workflows/reusable/_reusable-docker-push.yml
+    uses: ./.github/workflows/_reusable-docker-push.yml
     with:
       app: frontend
       image_name: ghcr.io/${{ github.repository_owner }}/trading-frontend
@@ -90,7 +90,7 @@ jobs:
   docker-docs:
     name: Docker — Docs
     needs: [build-and-test, codeql, changes, env-config]
-    uses: ./.github/workflows/reusable/_reusable-docker-push.yml
+    uses: ./.github/workflows/_reusable-docker-push.yml
     with:
       app: docs
       image_name: ghcr.io/${{ github.repository_owner }}/trading-docs
