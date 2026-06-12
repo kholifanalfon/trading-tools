@@ -41,6 +41,35 @@ jobs:
           bun run --cwd apps/frontend build
           bun run --cwd apps/docs build
 
+  codeql-analysis:
+    name: CodeQL Advanced Security
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript-typescript' ]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended,security-and-quality # Peningkatan rule set deteksi
+
+      # Menjalankan autobuild. Untuk JS/TS, CodeQL biasanya tidak membutuhkan proses kompilasi native
+      - name: Autobuild CodeQL
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{matrix.language}}"
+
   # JOB BARU: Mendeteksi bagian mana yang berubah
   changes:
     name: Detect Changes
@@ -74,7 +103,7 @@ jobs:
 
   build-and-push-images:
     name: Build & Push Docker Images
-    needs: [build-and-test, changes]
+    needs: [build-and-test, changes, codeql-analysis]
     if: github.event_name == 'release' || (github.event_name == 'push' && contains(fromJSON('["refs/heads/development", "refs/heads/test"]'), github.ref))
     runs-on: ubuntu-latest
     steps:
