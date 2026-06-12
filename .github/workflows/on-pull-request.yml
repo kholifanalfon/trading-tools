@@ -1,0 +1,37 @@
+name: "CI — Pull Request Gate"
+
+# ============================================================
+# Trigger: Setiap PR ke branch utama
+# Tujuan : Validasi kode SEBELUM merge. DILARANG deploy apapun.
+# ============================================================
+
+on:
+  pull_request:
+    branches:
+      - main
+      - development
+      - test
+
+# Batalkan run lama jika ada commit baru di PR yang sama
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  security-events: write  # untuk CodeQL upload hasil ke tab Security PR
+
+jobs:
+
+  # 1. Build & Type Check — harus hijau sebelum PR bisa di-merge
+  build-and-test:
+    name: Code Quality & Build
+    uses: ./.github/workflows/_reusable-build-test.yml
+
+  # 2. CodeQL — hasil scan muncul langsung di tab Security PR
+  codeql:
+    name: CodeQL Security Scan
+    uses: ./.github/workflows/_reusable-codeql.yml
+    permissions:
+      security-events: write
+      contents: read
