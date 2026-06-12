@@ -4,8 +4,10 @@ FROM oven/bun:1-alpine AS build
 WORKDIR /app
 
 # Copy package descriptors
-COPY package.json ./
+COPY package.json bun.lock ./
 COPY apps/frontend/package.json ./apps/frontend/
+COPY apps/backend/package.json ./apps/backend/
+COPY apps/docs/package.json ./apps/docs/
 
 # Install dependencies
 RUN bun install
@@ -13,8 +15,12 @@ RUN bun install
 # Copy application files
 COPY apps/frontend ./apps/frontend
 
+# Set environment variables for build
+ARG FE_VITE_API_URL
+ENV FE_VITE_API_URL=$FE_VITE_API_URL
+
 # Build static assets
-RUN bun --cwd apps/frontend run build
+RUN bun run --cwd apps/frontend build
 
 # Nginx host stage
 FROM nginx:alpine

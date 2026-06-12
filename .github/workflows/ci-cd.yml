@@ -12,6 +12,11 @@ on:
       - development
       - test
 
+# Permissions needed to write packages (images) to GHCR
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -41,13 +46,27 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Deploy to Development Environment
+      - name: Log in to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push Development Images
         run: |
+          # Convert repository owner name to lowercase (GHCR requires lowercase owner)
+          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+
           echo "🐳 Building Docker images for Development..."
-          docker build -t trading-backend:dev -f docker/backend/Dockerfile .
-          docker build -t trading-frontend:dev -f docker/frontend/Dockerfile .
-          docker build -t trading-docs:dev -f docker/docs/Dockerfile .
-          echo "🚀 Deploying to Dev Server..."
+          docker build -t ghcr.io/$OWNER/trading-backend:dev -f docker/backend/Dockerfile .
+          docker build --build-arg FE_VITE_API_URL=${{ vars.DEV_FE_VITE_API_URL || 'http://localhost:3000' }} -t ghcr.io/$OWNER/trading-frontend:dev -f docker/frontend/Dockerfile .
+          docker build -t ghcr.io/$OWNER/trading-docs:dev -f docker/docs/Dockerfile .
+
+          echo "🚀 Pushing images to GHCR..."
+          docker push ghcr.io/$OWNER/trading-backend:dev
+          docker push ghcr.io/$OWNER/trading-frontend:dev
+          docker push ghcr.io/$OWNER/trading-docs:dev
 
   deploy-testing:
     needs: build-and-test
@@ -57,13 +76,26 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Deploy to Testing Environment
+      - name: Log in to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push Testing/Staging Images
         run: |
+          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+
           echo "🐳 Building Docker images for Testing/Staging..."
-          docker build -t trading-backend:test -f docker/backend/Dockerfile .
-          docker build -t trading-frontend:test -f docker/frontend/Dockerfile .
-          docker build -t trading-docs:test -f docker/docs/Dockerfile .
-          echo "🚀 Deploying to Testing Server..."
+          docker build -t ghcr.io/$OWNER/trading-backend:test -f docker/backend/Dockerfile .
+          docker build --build-arg FE_VITE_API_URL=${{ vars.TEST_FE_VITE_API_URL || 'http://localhost:3000' }} -t ghcr.io/$OWNER/trading-frontend:test -f docker/frontend/Dockerfile .
+          docker build -t ghcr.io/$OWNER/trading-docs:test -f docker/docs/Dockerfile .
+
+          echo "🚀 Pushing images to GHCR..."
+          docker push ghcr.io/$OWNER/trading-backend:test
+          docker push ghcr.io/$OWNER/trading-frontend:test
+          docker push ghcr.io/$OWNER/trading-docs:test
 
   deploy-production:
     needs: build-and-test
@@ -73,10 +105,23 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Deploy to Production Environment
+      - name: Log in to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push Production Images
         run: |
+          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+
           echo "🐳 Building Docker images for Production..."
-          docker build -t trading-backend:prod -f docker/backend/Dockerfile .
-          docker build -t trading-frontend:prod -f docker/frontend/Dockerfile .
-          docker build -t trading-docs:prod -f docker/docs/Dockerfile .
-          echo "🚀 Deploying to Production Server..."
+          docker build -t ghcr.io/$OWNER/trading-backend:latest -t ghcr.io/$OWNER/trading-backend:prod -f docker/backend/Dockerfile .
+          docker build --build-arg FE_VITE_API_URL=${{ vars.PROD_FE_VITE_API_URL || 'http://localhost:3000' }} -t ghcr.io/$OWNER/trading-frontend:latest -t ghcr.io/$OWNER/trading-frontend:prod -f docker/frontend/Dockerfile .
+          docker build -t ghcr.io/$OWNER/trading-docs:latest -t ghcr.io/$OWNER/trading-docs:prod -f docker/docs/Dockerfile .
+
+          echo "🚀 Pushing images to GHCR..."
+          docker push ghcr.io/$OWNER/trading-backend:latest
+          docker push ghcr.io/$OWNER/trading-frontend:latest
+          docker push ghcr.io/$OWNER/trading-docs:latest
