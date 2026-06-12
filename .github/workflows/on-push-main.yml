@@ -1,0 +1,29 @@
+name: "CI — Push Main"
+
+# ============================================================
+# Trigger: Push ke branch main (hasil merge dari PR)
+# Tujuan : Validasi build di default branch tetap hijau
+# Note   : CodeQL ditangani terpisah oleh on-codeql.yml
+#          Docker image dibuat saat push tag, bukan push main
+# ============================================================
+
+on:
+  push:
+    branches:
+      - main
+
+# main push tidak di-cancel agar log build tersimpan lengkap
+concurrency:
+  group: main-ci-${{ github.sha }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+
+jobs:
+
+  # Pastikan kode di main selalu bisa di-build setelah merge
+  build-and-test:
+    name: Code Quality & Build
+    uses: ./.github/workflows/_reusable-build-test.yml

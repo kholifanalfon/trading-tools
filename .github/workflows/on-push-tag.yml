@@ -1,0 +1,82 @@
+name: "CD — Push Tag (Build Versioned Images)"
+
+# ============================================================
+# Trigger: Push tag dengan format semver (v1.2.3)
+# Tujuan : Build dan push SEMUA Docker image dengan tag versi
+#          Image ini yang akan dideploy saat release dibuat
+# Note   : TIDAK deploy ke production — itu tugas on-release.yml
+# ============================================================
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+# Tag push tidak di-cancel, biarkan selesai
+concurrency:
+  group: tag-${{ github.ref_name }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  packages: write
+
+
+jobs:
+
+  # 1. Final validation sebelum image dibuild
+  build-and-test:
+    name: Code Quality & Build
+    uses: ./.github/workflows/_reusable-build-test.yml
+
+  # 2. Resolve API URL untuk production (tag = akan rilis ke prod)
+  env-config:
+    name: Resolve Env Config
+    runs-on: ubuntu-latest
+    outputs:
+      api_url: ${{ steps.resolve.outputs.api_url }}
+    steps:
+      - name: Resolve Production API URL
+        id: resolve
+        run: |
+          echo "api_url=${{ vars.PROD_FE_VITE_API_URL || 'http://localhost:3000' }}" >> $GITHUB_OUTPUT
+
+  # 3a. Docker — Backend (selalu build semua, tag = rilis baru)
+  docker-backend:
+    name: Docker — Backend
+    needs: [build-and-test, env-config]
+    uses: ./.github/workflows/_reusable-docker-push.yml
+    with:
+      app: backend
+      image_name: ghcr.io/${{ github.repository_owner }}/trading-backend
+      dockerfile: docker/backend/Dockerfile
+      changed: 'true'      # tag push → selalu build semua app
+      event_name: push
+    secrets: inherit
+
+  # 3b. Docker — Frontend (selalu build semua)
+  docker-frontend:
+    name: Docker — Frontend
+    needs: [build-and-test, env-config]
+    uses: ./.github/workflows/_reusable-docker-push.yml
+    with:
+      app: frontend
+      image_name: ghcr.io/${{ github.repository_owner }}/trading-frontend
+      dockerfile: docker/frontend/Dockerfile
+      changed: 'true'
+      event_name: push
+      api_url: ${{ needs.env-config.outputs.api_url }}
+    secrets: inherit
+
+  # 3c. Docker — Docs (selalu build semua)
+  docker-docs:
+    name: Docker — Docs
+    needs: [build-and-test, env-config]
+    uses: ./.github/workflows/_reusable-docker-push.yml
+    with:
+      app: docs
+      image_name: ghcr.io/${{ github.repository_owner }}/trading-docs
+      dockerfile: docker/docs/Dockerfile
+      changed: 'true'
+      event_name: push
+    secrets: inherit

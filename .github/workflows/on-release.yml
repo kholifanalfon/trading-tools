@@ -1,0 +1,70 @@
+name: "CD — Release (Deploy Production)"
+
+# ============================================================
+# Trigger: Release di-publish via GitHub UI
+# Tujuan : Deploy image berversi ke production
+# Note   : Image sudah ada dari on-push-tag.yml
+#          Job ini TIDAK rebuild image — langsung deploy
+#          Menggunakan GitHub Environment "production" untuk
+#          approval gate manual sebelum deploy berjalan
+# ============================================================
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  packages: read
+
+
+jobs:
+
+  # Deploy ke production — membutuhkan approval manual
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+
+    # ⚠️ WAJIB: Aktifkan GitHub Environment "production" di:
+    #   Settings → Environments → production → Required reviewers
+    # Job ini akan PAUSE dan menunggu persetujuan sebelum berjalan
+    environment: production
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+
+      - name: Extract Release Tag
+        id: tag
+        run: echo "version=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # ------------------------------------------------------------
+      # Ganti bagian ini dengan mekanisme deploy yang digunakan:
+      # Contoh: SSH ke server, kubectl apply, docker stack deploy, dsb.
+      # ------------------------------------------------------------
+      - name: Deploy Backend
+        run: |
+          echo "🚀 Deploying trading-backend:${{ steps.tag.outputs.version }} to production"
+          # Contoh SSH deploy:
+          # ssh user@prod-server "docker pull ghcr.io/${{ github.repository_owner }}/trading-backend:${{ steps.tag.outputs.version }} && docker service update --image ghcr.io/${{ github.repository_owner }}/trading-backend:${{ steps.tag.outputs.version }} trading-backend"
+
+      - name: Deploy Frontend
+        run: |
+          echo "🚀 Deploying trading-frontend:${{ steps.tag.outputs.version }} to production"
+          # ssh user@prod-server "..."
+
+      - name: Deploy Docs
+        run: |
+          echo "🚀 Deploying trading-docs:${{ steps.tag.outputs.version }} to production"
+          # ssh user@prod-server "..."
+
+      - name: Notify Deployment Success
+        run: |
+          echo "✅ Production deployment of ${{ steps.tag.outputs.version }} complete!"
