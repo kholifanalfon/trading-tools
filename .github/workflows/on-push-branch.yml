@@ -1,0 +1,101 @@
+name: "CI/CD — Push Branch"
+
+# ============================================================
+# Trigger: Push ke branch development atau test
+# Tujuan : CI + build Docker image untuk lingkungan dev/staging
+# Note   : main TIDAK ada di sini — main hanya diisi via PR
+# ============================================================
+
+on:
+  push:
+    branches:
+      - development
+      - test
+
+# Batalkan run lama jika ada push baru ke branch yang sama
+concurrency:
+  group: branch-${{ github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+
+  # 1. Build & Type Check
+  build-and-test:
+    name: Code Quality & Build
+    uses: ./.github/workflows/_reusable-build-test.yml
+
+  # 2. CodeQL Security Scan
+  codeql:
+    name: CodeQL Security Scan
+    uses: ./.github/workflows/_reusable-codeql.yml
+    permissions:
+      security-events: write
+      contents: read
+
+  # 3. Detect mana app yang berubah — hemat runner minutes
+  changes:
+    name: Detect Changes
+    uses: ./.github/workflows/_reusable-detect-changes.yml
+
+  # 4. Resolve API URL berdasarkan branch (dev vs test)
+  env-config:
+    name: Resolve Env Config
+    runs-on: ubuntu-latest
+    outputs:
+      api_url: ${{ steps.resolve.outputs.api_url }}
+    steps:
+      - name: Resolve API URL by branch
+        id: resolve
+        run: |
+          if [[ "${{ github.ref_name }}" == "test" ]]; then
+            echo "api_url=${{ vars.TEST_FE_VITE_API_URL || 'http://localhost:3000' }}" >> $GITHUB_OUTPUT
+          else
+            echo "api_url=${{ vars.DEV_FE_VITE_API_URL || 'http://localhost:3000' }}" >> $GITHUB_OUTPUT
+          fi
+
+  # 5a. Docker — Backend (hanya jika backend berubah)
+  docker-backend:
+    name: Docker — Backend
+    needs: [build-and-test, codeql, changes, env-config]
+    uses: ./.github/workflows/_reusable-docker-push.yml
+    with:
+      app: backend
+      image_name: ghcr.io/${{ github.repository_owner }}/trading-backend
+      dockerfile: docker/backend/Dockerfile
+      changed: ${{ needs.changes.outputs.backend }}
+      event_name: ${{ github.event_name }}
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # 5b. Docker — Frontend (hanya jika frontend berubah)
+  docker-frontend:
+    name: Docker — Frontend
+    needs: [build-and-test, codeql, changes, env-config]
+    uses: ./.github/workflows/_reusable-docker-push.yml
+    with:
+      app: frontend
+      image_name: ghcr.io/${{ github.repository_owner }}/trading-frontend
+      dockerfile: docker/frontend/Dockerfile
+      changed: ${{ needs.changes.outputs.frontend }}
+      event_name: ${{ github.event_name }}
+      api_url: ${{ needs.env-config.outputs.api_url }}
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # 5c. Docker — Docs (hanya jika docs berubah)
+  docker-docs:
+    name: Docker — Docs
+    needs: [build-and-test, codeql, changes, env-config]
+    uses: ./.github/workflows/_reusable-docker-push.yml
+    with:
+      app: docs
+      image_name: ghcr.io/${{ github.repository_owner }}/trading-docs
+      dockerfile: docker/docs/Dockerfile
+      changed: ${{ needs.changes.outputs.docs }}
+      event_name: ${{ github.event_name }}
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

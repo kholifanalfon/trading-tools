@@ -1,0 +1,47 @@
+name: "[Reusable] Detect Changes"
+
+on:
+  workflow_call:
+    outputs:
+      backend:
+        description: "True if backend files changed"
+        value: ${{ jobs.detect-changes.outputs.backend }}
+      frontend:
+        description: "True if frontend files changed"
+        value: ${{ jobs.detect-changes.outputs.frontend }}
+      docs:
+        description: "True if docs files changed"
+        value: ${{ jobs.detect-changes.outputs.docs }}
+
+jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+      docs: ${{ steps.filter.outputs.docs }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Path Filter
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'apps/backend/**'
+              - 'docker/backend/**'
+              - 'package.json'
+              - 'bun.lockb'
+            frontend:
+              - 'apps/frontend/**'
+              - 'docker/frontend/**'
+              - 'package.json'
+              - 'bun.lockb'
+            docs:
+              - 'apps/docs/**'
+              - 'docker/docs/**'
+              - 'package.json'
+              - 'bun.lockb'
