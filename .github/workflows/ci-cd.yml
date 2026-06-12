@@ -35,8 +35,8 @@ jobs:
       - name: Build Applications
         run: |
           bun run --cwd apps/backend type-check
-          bun run --cwd apps/frontend run build
-          bun run --cwd apps/docs run build
+          bun run --cwd apps/frontend build
+          bun run --cwd apps/docs build
 
   deploy-development:
     needs: build-and-test
