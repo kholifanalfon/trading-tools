@@ -26,7 +26,7 @@ jobs:
   # 1. Final validation sebelum image dibuild
   build-and-test:
     name: Code Quality & Build
-    uses: ./.github/workflows/_reusable-build-test.yml
+    uses: ./.github/workflows/reusable/_reusable-build-test.yml
 
   # 2. Resolve API URL untuk production (tag = akan rilis ke prod)
   env-config:
@@ -44,7 +44,7 @@ jobs:
   docker-backend:
     name: Docker — Backend
     needs: [build-and-test, env-config]
-    uses: ./.github/workflows/_reusable-docker-push.yml
+    uses: ./.github/workflows/reusable/_reusable-docker-push.yml
     with:
       app: backend
       image_name: ghcr.io/${{ github.repository_owner }}/trading-backend
@@ -58,7 +58,7 @@ jobs:
   docker-frontend:
     name: Docker — Frontend
     needs: [build-and-test, env-config]
-    uses: ./.github/workflows/_reusable-docker-push.yml
+    uses: ./.github/workflows/reusable/_reusable-docker-push.yml
     with:
       app: frontend
       image_name: ghcr.io/${{ github.repository_owner }}/trading-frontend
@@ -73,7 +73,7 @@ jobs:
   docker-docs:
     name: Docker — Docs
     needs: [build-and-test, env-config]
-    uses: ./.github/workflows/_reusable-docker-push.yml
+    uses: ./.github/workflows/reusable/_reusable-docker-push.yml
     with:
       app: docs
       image_name: ghcr.io/${{ github.repository_owner }}/trading-docs

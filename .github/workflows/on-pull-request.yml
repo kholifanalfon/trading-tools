@@ -26,12 +26,12 @@ jobs:
   # 1. Build & Type Check — harus hijau sebelum PR bisa di-merge
   build-and-test:
     name: Code Quality & Build
-    uses: ./.github/workflows/_reusable-build-test.yml
+    uses: ./.github/workflows/reusable/_reusable-build-test.yml
 
   # 2. CodeQL — hasil scan muncul langsung di tab Security PR
   codeql:
     name: CodeQL Security Scan
-    uses: ./.github/workflows/_reusable-codeql.yml
+    uses: ./.github/workflows/reusable/_reusable-codeql.yml
     permissions:
       security-events: write
       contents: read
