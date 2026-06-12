@@ -13,9 +13,6 @@ on:
         description: "True if docs files changed"
         value: ${{ jobs.detect-changes.outputs.docs }}
 
-# Opt-in ke Node.js 24 agar kompatibel dengan GitHub Actions runner terbaru
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   detect-changes:
@@ -27,7 +24,7 @@ jobs:
       docs: ${{ steps.filter.outputs.docs }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Run Path Filter
         uses: dorny/paths-filter@v3
