@@ -3,9 +3,6 @@ name: "[Reusable] Build & Test"
 on:
   workflow_call:
 
-# Opt-in ke Node.js 24 agar kompatibel dengan GitHub Actions runner terbaru
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build-and-test:
@@ -13,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
