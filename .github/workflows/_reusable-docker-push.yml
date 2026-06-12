@@ -31,6 +31,10 @@ on:
     # secrets: inherit digunakan di caller — GITHUB_TOKEN tidak bisa
     # dideklarasikan di sini karena merupakan nama yang direservasi GitHub.
 
+# Opt-in ke Node.js 24 agar kompatibel dengan GitHub Actions runner terbaru
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   docker-push:
     name: Build & Push (${{ inputs.app }})

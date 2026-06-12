@@ -13,6 +13,10 @@ on:
         description: "True if docs files changed"
         value: ${{ jobs.detect-changes.outputs.docs }}
 
+# Opt-in ke Node.js 24 agar kompatibel dengan GitHub Actions runner terbaru
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   detect-changes:
     name: Detect Changes
