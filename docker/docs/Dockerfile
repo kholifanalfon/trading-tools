@@ -10,7 +10,7 @@ RUN bun install
 
 COPY apps/docs ./apps/docs
 
-RUN bun --cwd apps/docs run build
+RUN bun run --cwd apps/docs build
 
 # Nginx stage
 FROM nginx:alpine
