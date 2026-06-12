@@ -1,0 +1,57 @@
+name: "CodeQL Security Analysis"
+
+# ============================================================
+# Trigger: Pola resmi yang direkomendasikan GitHub untuk CodeQL.
+# Harus memiliki on.push ke default branch (main) agar hasil
+# scan muncul di tab Security → Code scanning alerts.
+#
+# Referensi: https://docs.github.com/en/code-security/code-scanning
+# ============================================================
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      - development
+      - test
+  schedule:
+    # Scan mingguan setiap Senin pukul 02.00 UTC
+    # Mendeteksi CVE baru pada dependensi meski tidak ada commit
+    - cron: '0 2 * * 1'
+
+permissions:
+  contents: read
+  security-events: write
+
+# Opt-in ke Node.js 24 agar kompatibel dengan GitHub Actions runner terbaru
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  analyze:
+    name: CodeQL Advanced Security (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript-typescript' ]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended,security-and-quality
+
+      - name: Autobuild CodeQL
+        uses: github/codeql-action/autobuild@v4
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{ matrix.language }}"

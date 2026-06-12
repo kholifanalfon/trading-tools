@@ -3,6 +3,7 @@ name: "CI — Pull Request Gate"
 # ============================================================
 # Trigger: Setiap PR ke branch utama
 # Tujuan : Validasi kode SEBELUM merge. DILARANG deploy apapun.
+# Note   : CodeQL ditangani terpisah oleh on-codeql.yml
 # ============================================================
 
 on:
@@ -19,19 +20,14 @@ concurrency:
 
 permissions:
   contents: read
-  security-events: write  # untuk CodeQL upload hasil ke tab Security PR
+
+# Opt-in ke Node.js 24 agar kompatibel dengan GitHub Actions runner terbaru
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
 
-  # 1. Build & Type Check — harus hijau sebelum PR bisa di-merge
+  # Build & Type Check — harus hijau sebelum PR bisa di-merge
   build-and-test:
     name: Code Quality & Build
     uses: ./.github/workflows/_reusable-build-test.yml
-
-  # 2. CodeQL — hasil scan muncul langsung di tab Security PR
-  codeql:
-    name: CodeQL Security Scan
-    uses: ./.github/workflows/_reusable-codeql.yml
-    permissions:
-      security-events: write
-      contents: read
