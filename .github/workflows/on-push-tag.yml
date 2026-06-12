@@ -26,7 +26,7 @@ jobs:
   # 1. Final validation sebelum image dibuild
   build-and-test:
     name: Code Quality & Build
-    uses: ./.github/workflows/reusable/_reusable-build-test.yml
+    uses: ./.github/workflows/_reusable-build-test.yml
 
   # 2. Resolve API URL untuk production (tag = akan rilis ke prod)
   env-config:
@@ -44,21 +44,20 @@ jobs:
   docker-backend:
     name: Docker — Backend
     needs: [build-and-test, env-config]
-    uses: ./.github/workflows/reusable/_reusable-docker-push.yml
+    uses: ./.github/workflows/_reusable-docker-push.yml
     with:
       app: backend
       image_name: ghcr.io/${{ github.repository_owner }}/trading-backend
       dockerfile: docker/backend/Dockerfile
       changed: 'true'      # tag push → selalu build semua app
       event_name: push
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit
 
   # 3b. Docker — Frontend (selalu build semua)
   docker-frontend:
     name: Docker — Frontend
     needs: [build-and-test, env-config]
-    uses: ./.github/workflows/reusable/_reusable-docker-push.yml
+    uses: ./.github/workflows/_reusable-docker-push.yml
     with:
       app: frontend
       image_name: ghcr.io/${{ github.repository_owner }}/trading-frontend
@@ -66,19 +65,17 @@ jobs:
       changed: 'true'
       event_name: push
       api_url: ${{ needs.env-config.outputs.api_url }}
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit
 
   # 3c. Docker — Docs (selalu build semua)
   docker-docs:
     name: Docker — Docs
     needs: [build-and-test, env-config]
-    uses: ./.github/workflows/reusable/_reusable-docker-push.yml
+    uses: ./.github/workflows/_reusable-docker-push.yml
     with:
       app: docs
       image_name: ghcr.io/${{ github.repository_owner }}/trading-docs
       dockerfile: docker/docs/Dockerfile
       changed: 'true'
       event_name: push
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    secrets: inherit

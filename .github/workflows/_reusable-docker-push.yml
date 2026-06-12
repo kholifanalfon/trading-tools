@@ -28,9 +28,8 @@ on:
         required: false
         type: string
         default: "http://localhost:3000"
-    secrets:
-      GITHUB_TOKEN:
-        required: true
+    # secrets: inherit digunakan di caller — GITHUB_TOKEN tidak bisa
+    # dideklarasikan di sini karena merupakan nama yang direservasi GitHub.
 
 jobs:
   docker-push:
@@ -49,7 +48,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ github.token }}
 
       - name: Extract Docker Metadata
         id: meta

@@ -1,0 +1,40 @@
+name: "CI — Push Main (Security Scan)"
+
+# ============================================================
+# Trigger: Push ke branch main (hasil merge dari PR)
+# Tujuan : Menjalankan CodeQL pada default branch agar hasil
+#          security scan ter-track di tab Security → Code scanning
+#
+# Note   : Build/deploy TIDAK ada di sini.
+#          main hanya bisa diisi via PR (branch protection).
+#          Docker image dibuat saat push tag, bukan push main.
+# ============================================================
+
+on:
+  push:
+    branches:
+      - main
+
+# main push tidak di-cancel agar hasil scan tersimpan lengkap
+concurrency:
+  group: main-codeql-${{ github.sha }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+
+  # Build check — pastikan kode di main tetap bisa di-build
+  build-and-test:
+    name: Code Quality & Build
+    uses: ./.github/workflows/_reusable-build-test.yml
+
+  # CodeQL pada default branch — wajib untuk Code Scanning dashboard
+  codeql:
+    name: CodeQL Security Scan
+    uses: ./.github/workflows/_reusable-codeql.yml
+    permissions:
+      security-events: write
+      contents: read
