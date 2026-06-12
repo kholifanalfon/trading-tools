@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     base: baseUrl,
+    envDir: resolve(__dirname, "../../"),
     envPrefix: ["VITE_", "FE_"], // Allows accessing FE_ variables inside React app
     resolve: {
       alias: {

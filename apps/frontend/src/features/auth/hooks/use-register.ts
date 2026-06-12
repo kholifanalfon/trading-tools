@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { RegisterInput } from "../auth.schema";
+import { registerApi } from "../services/auth.api";
 
 export function useRegister() {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,16 +13,10 @@ export function useRegister() {
     setIsLoading(true);
     setError(null);
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      if (data.email === "error@example.com") {
-        throw new Error("Email already in use");
-      }
-
+      await registerApi(data);
       options?.onSuccess?.();
     } catch (err: any) {
-      setError(err.message || "Something went wrong");
+      setError(err.response?.data?.error || err.message || "Failed to register");
     } finally {
       setIsLoading(false);
     }
