@@ -46,7 +46,16 @@ export default async function seed() {
 }
 `;
 
-const fd = openSync(filePath, "w");
-writeFileSync(fd, template, "utf-8");
-closeSync(fd);
+let fd: number | null = null;
+try {
+  fd = openSync(filePath, "w");
+  writeFileSync(fd, template, "utf-8");
+} catch (error) {
+  console.error(`❌ Failed to create seeder file: ${(error as Error).message}`);
+  process.exit(1);
+} finally {
+  if (fd !== null) {
+    closeSync(fd);
+  }
+}
 console.log(`✅ Seeder created: apps/backend/src/db/seeders/${fileName}`);

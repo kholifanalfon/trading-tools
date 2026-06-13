@@ -86,9 +86,18 @@ export type New${typeName} = typeof ${variableName}.$inferInsert;
 `;
 
 // Write the new schema file
-const fd = openSync(filePath, "w");
-writeFileSync(fd, template, "utf-8");
-closeSync(fd);
+let fd: number | null = null;
+try {
+  fd = openSync(filePath, "w");
+  writeFileSync(fd, template, "utf-8");
+} catch (error) {
+  console.error(`❌ Failed to write schema file: ${(error as Error).message}`);
+  process.exit(1);
+} finally {
+  if (fd !== null) {
+    closeSync(fd);
+  }
+}
 console.log(`✅ Schema file created: apps/backend/src/db/schemas/${fileName}`);
 
 // Add export statement to schema.ts if it doesn't already exist
@@ -102,9 +111,18 @@ if (existsSync(SCHEMA_INDEX_PATH)) {
 if (!schemaIndexContent.includes(exportStatement)) {
   const separator = schemaIndexContent.endsWith("\n") || schemaIndexContent === "" ? "" : "\n";
   schemaIndexContent = `${schemaIndexContent}${separator}${exportStatement}\n`;
-  const fdIndex = openSync(SCHEMA_INDEX_PATH, "w");
-  writeFileSync(fdIndex, schemaIndexContent, "utf-8");
-  closeSync(fdIndex);
+  let fdIndex: number | null = null;
+  try {
+    fdIndex = openSync(SCHEMA_INDEX_PATH, "w");
+    writeFileSync(fdIndex, schemaIndexContent, "utf-8");
+  } catch (error) {
+    console.error(`❌ Failed to update schema index: ${(error as Error).message}`);
+    process.exit(1);
+  } finally {
+    if (fdIndex !== null) {
+      closeSync(fdIndex);
+    }
+  }
   console.log(`✅ Added export to apps/backend/src/db/schema.ts`);
 } else {
   console.log(`ℹ️ Export already exists in apps/backend/src/db/schema.ts`);
