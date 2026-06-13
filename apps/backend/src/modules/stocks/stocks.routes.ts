@@ -10,9 +10,13 @@ const controller = new StocksController();
 router.use(requireAuth);
 
 router.get("/", validateQuery(StockQuerySchema), controller.getStocks);
+router.get("/sync-status", controller.getSyncStatus);
 router.get("/:id", controller.getStockById);
 router.post("/", validateBody(CreateStockSchema), controller.createStock);
 router.put("/:id", validateBody(UpdateStockSchema), controller.updateStock);
 router.delete("/:id", controller.deleteStock);
+router.post("/sync", controller.syncStocks);
 
 export const stocksRoutes = router;
+
+

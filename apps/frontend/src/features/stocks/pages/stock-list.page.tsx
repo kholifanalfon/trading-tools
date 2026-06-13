@@ -3,9 +3,13 @@ import { useGetStocks } from "../hooks/use-get-stocks";
 import { useCreateStock } from "../hooks/use-create-stock";
 import { useUpdateStock } from "../hooks/use-update-stock";
 import { useDeleteStock } from "../hooks/use-delete-stock";
+import { useSyncStock } from "../hooks/use-sync-stock";
 import { StockTable } from "../components/stock-table";
 import { StockFormDialog } from "../components/stock-form-dialog";
 import { Stock } from "../types/stocks.types";
+import { getSyncStatusApi } from "../services/stocks.api";
+import { toast } from "sonner";
+import { useWebSocket } from "@/shared/hooks/use-websocket";
 
 export function StockListPage() {
   const [search, setSearch] = useState("");
@@ -13,6 +17,32 @@ export function StockListPage() {
   const [page, setPage] = useState(1);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedStock, setSelectedStock] = useState<Stock | null>(null);
+  const [isSyncing, setIsSyncing] = useState(false);
+
+  // Listen to sync status updates in real-time via WebSockets to update button states
+  useWebSocket(["stocks", "sync-status"], () => {
+    setIsSyncing(false);
+  });
+
+  // Check initial sync status on mount
+  useEffect(() => {
+    let active = true;
+    const checkInitialSyncStatus = async () => {
+      try {
+        const state = await getSyncStatusApi();
+        if (active && state.status === "running") {
+          setIsSyncing(true);
+        }
+      } catch (err) {
+        console.error("Error checking sync status:", err);
+      }
+    };
+
+    checkInitialSyncStatus();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   // Debounce search input
   useEffect(() => {
@@ -34,6 +64,7 @@ export function StockListPage() {
   const createStockMutation = useCreateStock();
   const updateStockMutation = useUpdateStock();
   const deleteStockMutation = useDeleteStock();
+  const syncStockMutation = useSyncStock();
 
   const handleAddClick = () => {
     setSelectedStock(null);
@@ -54,6 +85,19 @@ export function StockListPage() {
       }
     }
   };
+
+  const handleSyncClick = async () => {
+    try {
+      setIsSyncing(true);
+      await syncStockMutation.mutateAsync();
+      toast.success("Stock synchronization started in the background. The list will update shortly!");
+    } catch (err) {
+      console.error("Sync failed:", err);
+      toast.error(err instanceof Error ? err.message : "Sync failed");
+      setIsSyncing(false);
+    }
+  };
+
 
   const handleFormSubmit = async (formData: any) => {
     try {
@@ -93,7 +137,9 @@ export function StockListPage() {
         onAddClick={handleAddClick}
         onEditClick={handleEditClick}
         onDeleteClick={handleDeleteClick}
+        onSyncClick={handleSyncClick}
         isLoading={isLoading}
+        isSyncing={isSyncing}
       />
 
       <StockFormDialog
@@ -107,3 +153,6 @@ export function StockListPage() {
     </div>
   );
 }
+export default StockListPage;
+
+

@@ -18,6 +18,7 @@ import {
   TerminalIcon,
   UserIcon,
   TrendingUpIcon,
+  SettingsIcon,
 } from "lucide-react";
 
 import { useAuthStore } from "@/shared/stores/auth.store";
@@ -68,9 +69,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           url: "/stocks",
           icon: <TrendingUpIcon />,
         },
+        {
+          title: "Settings",
+          url: "/settings",
+          icon: <SettingsIcon />,
+        },
       ],
     });
   }
+
 
   return (
     <Sidebar collapsible="icon" {...props}>

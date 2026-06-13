@@ -1,5 +1,5 @@
 import { Stock } from "../types/stocks.types";
-import { Edit2Icon, Trash2Icon, PlusIcon, SearchIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { Edit2Icon, Trash2Icon, PlusIcon, SearchIcon, ChevronLeftIcon, ChevronRightIcon, SparklesIcon } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import {
@@ -22,7 +22,9 @@ export interface StockTableProps {
   onAddClick: () => void;
   onEditClick: (stock: Stock) => void;
   onDeleteClick: (stock: Stock) => void;
+  onSyncClick: () => void;
   isLoading: boolean;
+  isSyncing: boolean;
 }
 
 export function StockTable({
@@ -36,7 +38,9 @@ export function StockTable({
   onAddClick,
   onEditClick,
   onDeleteClick,
+  onSyncClick,
   isLoading,
+  isSyncing,
 }: StockTableProps) {
   return (
     <div className="space-y-4">
@@ -51,10 +55,24 @@ export function StockTable({
             className="pl-8 h-8 text-xs"
           />
         </div>
-        <Button onClick={onAddClick} className="flex items-center gap-1.5 h-8 text-xs px-3">
-          <PlusIcon className="h-3.5 w-3.5" />
-          Add Stock
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={onSyncClick}
+            disabled={isSyncing || isLoading}
+            className="flex items-center gap-1.5 h-8 text-xs px-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition disabled:opacity-50"
+          >
+            {isSyncing ? (
+              <SparklesIcon className="h-3.5 w-3.5 animate-spin" />
+            ) : (
+              <SparklesIcon className="h-3.5 w-3.5" />
+            )}
+            Sync with Gemini
+          </Button>
+          <Button onClick={onAddClick} className="flex items-center gap-1.5 h-8 text-xs px-3">
+            <PlusIcon className="h-3.5 w-3.5" />
+            Add Stock
+          </Button>
+        </div>
       </div>
 
       {/* Table Card Container */}
@@ -106,7 +124,8 @@ export function StockTable({
                         variant="ghost"
                         size="sm"
                         onClick={() => onEditClick(stock)}
-                        className="h-7 w-7 p-0"
+                        disabled={isSyncing}
+                        className="h-7 w-7 p-0 disabled:opacity-50"
                         title="Edit Stock"
                       >
                         <Edit2Icon className="h-3.5 w-3.5" />
@@ -115,7 +134,8 @@ export function StockTable({
                         variant="ghost"
                         size="sm"
                         onClick={() => onDeleteClick(stock)}
-                        className="h-7 w-7 p-0 text-destructive hover:text-destructive hover:bg-destructive/10"
+                        disabled={isSyncing}
+                        className="h-7 w-7 p-0 text-destructive hover:text-destructive hover:bg-destructive/10 disabled:opacity-50"
                         title="Delete Stock"
                       >
                         <Trash2Icon className="h-3.5 w-3.5" />

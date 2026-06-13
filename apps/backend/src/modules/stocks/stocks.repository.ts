@@ -94,4 +94,27 @@ export class StocksRepository {
       });
     return result[0] || null;
   }
+
+  async upsertStock(data: CreateStockInput) {
+    const result = await db
+      .insert(stocks)
+      .values({
+        symbol: data.symbol,
+        name: data.name,
+        sector: data.sector,
+        price: data.price,
+      })
+      .onConflictDoUpdate({
+        target: stocks.symbol,
+        set: {
+          name: data.name,
+          sector: data.sector,
+          price: data.price,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return result[0];
+  }
 }
+

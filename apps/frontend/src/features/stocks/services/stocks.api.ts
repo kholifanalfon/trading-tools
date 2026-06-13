@@ -27,3 +27,21 @@ export async function deleteStockApi(id: number): Promise<{ success: boolean }> 
   const response = await api.delete<{ success: boolean }>(`/stocks/${id}`);
   return response.data;
 }
+
+export interface SyncStateResponse {
+  status: "idle" | "running" | "success" | "failed";
+  error: string | null;
+  lastSyncAt: string | null;
+}
+
+export async function syncStockApi(): Promise<any> {
+  const response = await api.post<any>("/stocks/sync");
+  return response.data;
+}
+
+export async function getSyncStatusApi(): Promise<SyncStateResponse> {
+  const response = await api.get<SyncStateResponse>("/stocks/sync-status");
+  return response.data;
+}
+
+

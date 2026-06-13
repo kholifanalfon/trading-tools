@@ -36,16 +36,12 @@ export function NavMain({
 }) {
   return (
     <>
-      {items.map((item) => (
-        <SidebarGroup>
+      {items.map((item, i) => (
+        <SidebarGroup key={i}>
           <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
           <SidebarMenu>
-            {item.items?.map((subItem) => (
-              <Collapsible
-                key={subItem.title}
-                asChild
-                defaultOpen={subItem.isActive}
-              >
+            {item.items?.map((subItem, j) => (
+              <Collapsible key={j} asChild defaultOpen={subItem.isActive}>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild tooltip={subItem.title}>
                     <a href={subItem.url}>

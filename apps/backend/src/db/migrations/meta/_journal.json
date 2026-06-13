@@ -8,6 +8,13 @@
       "when": 1781352241644,
       "tag": "0000_bent_tusk",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1781355602326,
+      "tag": "0001_dapper_living_tribunal",
+      "breakpoints": true
     }
   ]
 }

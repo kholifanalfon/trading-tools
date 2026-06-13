@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { StocksService } from "./stocks.service";
+import { logger } from "@/core/logger";
 
 export class StocksController {
   private service = new StocksService();
@@ -63,4 +64,38 @@ export class StocksController {
       next(error);
     }
   };
+
+  getSyncStatus = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = this.service.getSyncState();
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  syncStocks = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const state = this.service.getSyncState();
+      if (state.status === "running") {
+        res.status(409).json({ error: "A stock synchronization process is already running." });
+        return;
+      }
+
+      // Execute the sync in the background
+      this.service.syncStocks().catch((error) => {
+        logger.error(`Error in background stock sync: ${error instanceof Error ? error.message : String(error)}`);
+      });
+
+      res.status(202).json({
+        success: true,
+        message: "Stock synchronization started in the background.",
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
+
+
+
