@@ -8,6 +8,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  useSidebar,
 } from "@/shared/components/ui/sidebar";
 import {
   Collapsible,
@@ -15,6 +16,7 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 import { ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function NavMain({
   items,
@@ -34,6 +36,14 @@ export function NavMain({
     }[];
   }[];
 }) {
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  const handleLinkClick = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  };
+
   return (
     <>
       {items.map((item, i) => (
@@ -44,10 +54,10 @@ export function NavMain({
               <Collapsible key={j} asChild defaultOpen={subItem.isActive}>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild tooltip={subItem.title}>
-                    <a href={subItem.url}>
+                    <Link to={subItem.url} onClick={handleLinkClick}>
                       {subItem.icon}
                       <span>{subItem.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                   {subItem.items?.length ? (
                     <>
@@ -62,9 +72,9 @@ export function NavMain({
                           {item.items?.map((subItem) => (
                             <SidebarMenuSubItem key={subItem.title}>
                               <SidebarMenuSubButton asChild>
-                                <a href={subItem.url}>
+                                <Link to={subItem.url} onClick={handleLinkClick}>
                                   <span>{subItem.title}</span>
-                                </a>
+                                </Link>
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
                           ))}
