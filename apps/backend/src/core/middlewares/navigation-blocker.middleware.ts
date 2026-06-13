@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { config } from "@/core/config";
 
 export function navigationBlocker(
   req: Request,
@@ -8,11 +9,10 @@ export function navigationBlocker(
   const secFetchMode = req.headers["sec-fetch-mode"];
   const secFetchDest = req.headers["sec-fetch-dest"];
 
-  // Block direct browser navigation access (e.g. user opening the link directly in address bar)
+  // Block direct browser navigation access and redirect to the frontend origin
   if (secFetchMode === "navigate" || secFetchDest === "document") {
-    return res.status(403).json({
-      error: "Direct browser access is not allowed",
-    });
+    const frontendUrl = config.BE_CORS_ALLOWED_ORIGINS[0] || "http://localhost:8082";
+    return res.redirect(302, frontendUrl);
   }
 
   next();
