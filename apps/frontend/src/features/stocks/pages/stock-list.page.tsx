@@ -1,0 +1,109 @@
+import { useState, useEffect } from "react";
+import { useGetStocks } from "../hooks/use-get-stocks";
+import { useCreateStock } from "../hooks/use-create-stock";
+import { useUpdateStock } from "../hooks/use-update-stock";
+import { useDeleteStock } from "../hooks/use-delete-stock";
+import { StockTable } from "../components/stock-table";
+import { StockFormDialog } from "../components/stock-form-dialog";
+import { Stock } from "../types/stocks.types";
+
+export function StockListPage() {
+  const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedStock, setSelectedStock] = useState<Stock | null>(null);
+
+  // Debounce search input
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+      setPage(1);
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  // TanStack Query & Mutations
+  const { data, isLoading } = useGetStocks({
+    page,
+    limit: 10,
+    search: debouncedSearch || undefined,
+  });
+
+  const createStockMutation = useCreateStock();
+  const updateStockMutation = useUpdateStock();
+  const deleteStockMutation = useDeleteStock();
+
+  const handleAddClick = () => {
+    setSelectedStock(null);
+    setIsDialogOpen(true);
+  };
+
+  const handleEditClick = (stock: Stock) => {
+    setSelectedStock(stock);
+    setIsDialogOpen(true);
+  };
+
+  const handleDeleteClick = async (stock: Stock) => {
+    if (confirm(`Are you sure you want to delete stock ${stock.symbol}?`)) {
+      try {
+        await deleteStockMutation.mutateAsync(stock.id);
+      } catch (err) {
+        console.error("Failed to delete stock:", err);
+      }
+    }
+  };
+
+  const handleFormSubmit = async (formData: any) => {
+    try {
+      if (selectedStock) {
+        await updateStockMutation.mutateAsync({
+          id: selectedStock.id,
+          data: formData,
+        });
+      } else {
+        await createStockMutation.mutateAsync(formData);
+      }
+      setIsDialogOpen(false);
+    } catch (err) {
+      console.error("Form submit failed:", err);
+    }
+  };
+
+  const activeMutation = selectedStock ? updateStockMutation : createStockMutation;
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">Stock Management</h1>
+        <p className="text-sm text-muted-foreground">
+          View, add, modify, and delete stock ticker records in the database.
+        </p>
+      </div>
+
+      <StockTable
+        stocks={data?.items || []}
+        total={data?.total || 0}
+        page={page}
+        totalPages={data?.totalPages || 1}
+        search={search}
+        onSearchChange={setSearch}
+        onPageChange={setPage}
+        onAddClick={handleAddClick}
+        onEditClick={handleEditClick}
+        onDeleteClick={handleDeleteClick}
+        isLoading={isLoading}
+      />
+
+      <StockFormDialog
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        onSubmit={handleFormSubmit}
+        stock={selectedStock}
+        isLoading={activeMutation.isPending}
+        error={activeMutation.error}
+      />
+    </div>
+  );
+}

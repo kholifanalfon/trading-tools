@@ -14,6 +14,7 @@ import { ProfilePage } from "./features/profile/pages/profile.page";
 import { AuthLoginPage } from "./features/auth/pages/auth-login.page";
 import { AuthRegisterPage } from "./features/auth/pages/auth-register.page";
 import { UserManagementListPage } from "./features/user-management/pages/user-management-list.page";
+import { StockListPage } from "./features/stocks/pages/stock-list.page";
 import { ThemeProvider } from "./shared/components/theme-provider";
 import { ThemeToggle } from "./shared/components/ui/theme-toggle";
 import { TooltipProvider } from "./shared/components/ui/tooltip";
@@ -57,6 +58,7 @@ export function App() {
                 <Route path="/" element={<InfoLandingPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/user-management" element={<UserManagementListPage />} />
+                <Route path="/stocks" element={<StockListPage />} />
               </Route>
             </Routes>
           </BrowserRouter>
@@ -121,6 +123,8 @@ function PlatformLayout() {
     pageName = "Profile";
   } else if (location.pathname === "/user-management") {
     pageName = "User Management";
+  } else if (location.pathname === "/stocks") {
+    pageName = "Stock Management";
   } else if (location.pathname === "/dashboard") {
     pageName = "Dashboard";
   } else if (location.pathname === "/orders") {

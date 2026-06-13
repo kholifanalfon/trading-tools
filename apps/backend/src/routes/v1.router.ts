@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { authRoutes } from "@/modules/auth/auth.routes";
 import { userManagementRoutes } from "@/modules/user-management/user-management.routes";
+import { stocksRoutes } from "@/modules/stocks/stocks.routes";
 
 const v1Router = Router();
 
@@ -25,5 +26,6 @@ v1Router.get("/sentry-test", (req, res) => {
 
 v1Router.use("/auth", authRoutes);
 v1Router.use("/user-management", userManagementRoutes);
+v1Router.use("/stocks", stocksRoutes);
 
 export { v1Router };
