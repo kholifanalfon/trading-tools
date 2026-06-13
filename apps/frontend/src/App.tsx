@@ -13,6 +13,7 @@ import { InfoLandingPage } from "./features/info/pages/info-landing.page";
 import { ProfilePage } from "./features/profile/pages/profile.page";
 import { AuthLoginPage } from "./features/auth/pages/auth-login.page";
 import { AuthRegisterPage } from "./features/auth/pages/auth-register.page";
+import { UserManagementListPage } from "./features/user-management/pages/user-management-list.page";
 import { ThemeProvider } from "./shared/components/theme-provider";
 import { ThemeToggle } from "./shared/components/ui/theme-toggle";
 import { TooltipProvider } from "./shared/components/ui/tooltip";
@@ -55,6 +56,7 @@ export function App() {
               <Route element={<PlatformLayout />}>
                 <Route path="/" element={<InfoLandingPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/user-management" element={<UserManagementListPage />} />
               </Route>
             </Routes>
           </BrowserRouter>
@@ -117,6 +119,8 @@ function PlatformLayout() {
   let pageName = "Tech Stack";
   if (location.pathname === "/profile") {
     pageName = "Profile";
+  } else if (location.pathname === "/user-management") {
+    pageName = "User Management";
   } else if (location.pathname === "/dashboard") {
     pageName = "Dashboard";
   } else if (location.pathname === "/orders") {
