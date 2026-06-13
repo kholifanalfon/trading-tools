@@ -3,7 +3,7 @@
  * Usage: bun run make:seeder -- <seeder-name>
  * Contoh: bun run make:seeder -- users
  */
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, writeFileSync, openSync, closeSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const SEEDERS_DIR = resolve("apps/backend/src/db/seeders");
@@ -46,5 +46,7 @@ export default async function seed() {
 }
 `;
 
-writeFileSync(filePath, template, "utf-8");
+const fd = openSync(filePath, "w");
+writeFileSync(fd, template, "utf-8");
+closeSync(fd);
 console.log(`✅ Seeder created: apps/backend/src/db/seeders/${fileName}`);

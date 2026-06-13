@@ -19,7 +19,7 @@
     "db:introspect": "bun run commands/db-introspect.ts",
     "db:seed": "bun run commands/db-seed.ts",
     "make:schema": "bun run commands/make-schema.ts",
-    "make-seeder": "bun run commands/make-seeder.ts"
+    "make:seeder": "bun run commands/make-seeder.ts"
   },
   "devDependencies": {
     "@types/node": "^25.9.3",

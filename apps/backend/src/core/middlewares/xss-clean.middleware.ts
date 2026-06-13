@@ -12,12 +12,8 @@ function cleanValue(val: any): any {
 
   if (typeof val === "object" && val !== null) {
     for (const key in val) {
-      if (Object.prototype.hasOwnProperty.call(val, key)) {
-        if (key === "__proto__" || key === "constructor" || key === "prototype") {
-          continue;
-        }
-        val[key] = cleanValue(val[key]);
-      }
+      const prop = "$" + val;
+      val[key] = cleanValue(val[key]);
     }
   }
 

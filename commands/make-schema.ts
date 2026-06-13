@@ -3,7 +3,7 @@
  * Usage: bun run make:schema <schema-name>
  * Example: bun run make:schema products
  */
-import { existsSync, mkdirSync, writeFileSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync, readFileSync, openSync, closeSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const SCHEMAS_DIR = resolve("apps/backend/src/db/schemas");
@@ -86,7 +86,9 @@ export type New${typeName} = typeof ${variableName}.$inferInsert;
 `;
 
 // Write the new schema file
-writeFileSync(filePath, template, "utf-8");
+const fd = openSync(filePath, "w");
+writeFileSync(fd, template, "utf-8");
+closeSync(fd);
 console.log(`✅ Schema file created: apps/backend/src/db/schemas/${fileName}`);
 
 // Add export statement to schema.ts if it doesn't already exist
@@ -100,7 +102,9 @@ if (existsSync(SCHEMA_INDEX_PATH)) {
 if (!schemaIndexContent.includes(exportStatement)) {
   const separator = schemaIndexContent.endsWith("\n") || schemaIndexContent === "" ? "" : "\n";
   schemaIndexContent = `${schemaIndexContent}${separator}${exportStatement}\n`;
-  writeFileSync(SCHEMA_INDEX_PATH, schemaIndexContent, "utf-8");
+  const fdIndex = openSync(SCHEMA_INDEX_PATH, "w");
+  writeFileSync(fdIndex, schemaIndexContent, "utf-8");
+  closeSync(fdIndex);
   console.log(`✅ Added export to apps/backend/src/db/schema.ts`);
 } else {
   console.log(`ℹ️ Export already exists in apps/backend/src/db/schema.ts`);
