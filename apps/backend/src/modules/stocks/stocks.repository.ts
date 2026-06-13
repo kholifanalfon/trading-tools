@@ -1,7 +1,11 @@
-import { eq, like, or, sql, desc, asc } from "drizzle-orm";
+import { eq, like, or, sql, asc } from "drizzle-orm";
 import { db } from "@/db/db";
 import { stocks } from "@/db/schema";
-import { CreateStockInput, UpdateStockInput, StockQueryInput } from "./stocks.schema";
+import {
+  CreateStockInput,
+  UpdateStockInput,
+  StockQueryInput,
+} from "./stocks.schema";
 
 export class StocksRepository {
   async getStocks(query: StockQueryInput) {
@@ -11,7 +15,7 @@ export class StocksRepository {
       ? or(
           like(stocks.symbol, `%${query.search}%`),
           like(stocks.name, `%${query.search}%`),
-          like(stocks.sector, `%${query.search}%`)
+          like(stocks.sector, `%${query.search}%`),
         )
       : undefined;
 
@@ -86,12 +90,9 @@ export class StocksRepository {
   }
 
   async deleteStock(id: number) {
-    const result = await db
-      .delete(stocks)
-      .where(eq(stocks.id, id))
-      .returning({
-        id: stocks.id,
-      });
+    const result = await db.delete(stocks).where(eq(stocks.id, id)).returning({
+      id: stocks.id,
+    });
     return result[0] || null;
   }
 
@@ -117,4 +118,3 @@ export class StocksRepository {
     return result[0];
   }
 }
-
