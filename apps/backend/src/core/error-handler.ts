@@ -14,8 +14,8 @@ export function errorHandler(
   let status = err.status || 500;
   let message = err.message || "Internal Server Error";
   let details: any = undefined;
-  let errorType: "application" | "server" = "server";
-  let errorCode = "INTERNAL_SERVER_ERROR";
+  let errorType: "application" | "server";
+  let errorCode: string;
 
   // 1. Classify error type (application vs server)
   if (err instanceof ZodError) {
