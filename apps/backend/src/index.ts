@@ -57,7 +57,7 @@ app.use(hpp());
 app.use(xssClean);
 
 // Parse request cookies
-app.use(cookieParser());
+app.use(cookieParser(config.BE_JWT_SECRET));
 
 // Enable CSRF protection
 app.use(csrfProtection);

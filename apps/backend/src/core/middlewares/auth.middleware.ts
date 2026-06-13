@@ -12,7 +12,7 @@ export async function requireAuth(
   next: NextFunction,
 ) {
   try {
-    const token = req.cookies?.token;
+    const token = req.signedCookies?.token;
     if (typeof token !== "string" || !token.trim()) {
       throw new Error("Authentication required");
     }

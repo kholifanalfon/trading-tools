@@ -26,6 +26,7 @@ export class AuthController {
         secure: false, // Set to false so it works on local development HTTP
         sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        signed: true,
       });
 
       res.status(200).json(user);
@@ -49,6 +50,7 @@ export class AuthController {
         httpOnly: true,
         secure: false,
         sameSite: "lax",
+        signed: true,
       });
       res.status(200).json({ success: true });
     } catch (error) {
