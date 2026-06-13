@@ -12,7 +12,7 @@ function cleanValue(val: any): any {
 
   if (typeof val === "object" && val !== null) {
     for (const key in val) {
-      const prop = "$" + val;
+      const prop = "$" + key;
       val[prop] = cleanValue(val[prop]);
     }
   }
