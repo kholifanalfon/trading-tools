@@ -1,14 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import { AuthService } from "./auth.service";
-import { RegisterInputSchema, LoginInputSchema } from "./auth.schema";
 
 export class AuthController {
   private authService = new AuthService();
 
   register = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const validated = RegisterInputSchema.parse(req.body);
-      const user = await this.authService.register(validated);
+      const user = await this.authService.register(req.body);
       res.status(201).json(user);
     } catch (error) {
       next(error);
@@ -17,8 +15,7 @@ export class AuthController {
 
   login = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const validated = LoginInputSchema.parse(req.body);
-      const { user, token } = await this.authService.login(validated);
+      const { user, token } = await this.authService.login(req.body);
 
       // Set cookie
       res.cookie("token", token, {
