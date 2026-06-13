@@ -1,12 +1,14 @@
+import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   BrowserRouter,
   Routes,
   Route,
-  Link,
   useLocation,
   Outlet,
+  Navigate,
 } from "react-router-dom";
+import { useAuthStore } from "@/shared/stores/auth.store";
 import { InfoLandingPage } from "./features/info/pages/info-landing.page";
 import { ProfilePage } from "./features/profile/pages/profile.page";
 import { AuthLoginPage } from "./features/auth/pages/auth-login.page";
@@ -29,6 +31,8 @@ import {
   BreadcrumbSeparator,
   BreadcrumbPage,
 } from "./shared/components/ui/breadcrumb";
+
+import { GlobalErrorContainer } from "./shared/components/global-error-container";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +58,7 @@ export function App() {
               </Route>
             </Routes>
           </BrowserRouter>
+          <GlobalErrorContainer />
         </QueryClientProvider>
       </TooltipProvider>
     </ThemeProvider>
@@ -61,6 +66,24 @@ export function App() {
 }
 
 function AuthLayout() {
+  const { isAuthenticated, isLoading, checkAuth } = useAuthStore();
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background text-foreground">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans transition-colors duration-200">
       <main className="flex-1 bg-background">
@@ -72,6 +95,23 @@ function AuthLayout() {
 
 function PlatformLayout() {
   const location = useLocation();
+  const { isAuthenticated, isLoading, user, checkAuth, logout } = useAuthStore();
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background text-foreground">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
   // Dynamic breadcrumb page name based on route path
   let pageName = "Tech Stack";
@@ -105,12 +145,22 @@ function PlatformLayout() {
             </Breadcrumb>
           </div>
           <div className="flex items-center gap-4">
-            <Link
-              to="/login"
+            <span className="text-sm text-muted-foreground hidden sm:inline">
+              Logged in as <strong className="text-foreground">{user?.fullName}</strong>
+            </span>
+            <button
+              onClick={async () => {
+                try {
+                  await logout();
+                  window.location.href = "/login";
+                } catch (err) {
+                  console.error("Logout failed:", err);
+                }
+              }}
               className="text-sm text-muted-foreground hover:text-foreground transition font-medium"
             >
-              Sign In
-            </Link>
+              Sign Out
+            </button>
             <ThemeToggle />
           </div>
         </header>

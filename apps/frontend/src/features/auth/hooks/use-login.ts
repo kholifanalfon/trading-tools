@@ -1,35 +1,20 @@
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { LoginInput } from "../auth.schema";
+import { useAuthStore } from "@/shared/stores/auth.store";
+import { ApiError } from "@/shared/config/api";
 
 export function useLogin() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const login = useAuthStore((state) => state.login);
 
-  const loginMutation = async (
-    data: LoginInput,
-    options?: { onSuccess?: (data: { token: string }) => void }
-  ) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      if (data.email === "error@example.com") {
-        throw new Error("Invalid email or password");
-      }
-
-      options?.onSuccess?.({ token: "mock-jwt-token" });
-    } catch (err: any) {
-      setError(err.message || "Something went wrong");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const mutation = useMutation<void, ApiError, LoginInput>({
+    mutationFn: async (data: LoginInput) => {
+      await login(data);
+    },
+  });
 
   return {
-    mutate: loginMutation,
-    isLoading,
-    error,
+    mutate: mutation.mutate,
+    isLoading: mutation.isPending,
+    error: mutation.error,
   };
 }

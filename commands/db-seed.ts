@@ -32,6 +32,7 @@ async function runSeeders() {
     }
 
     console.log("\n🎉 All seeders executed successfully.");
+    process.exit(0);
   } catch (error) {
     console.error("❌ Seeding failed:", error);
     process.exit(1);

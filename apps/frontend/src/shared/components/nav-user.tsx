@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { useAuthStore } from "@/shared/stores/auth.store"
 import {
   Avatar,
   AvatarFallback,
@@ -97,10 +98,15 @@ export function NavUser({
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOutIcon
-              />
+            <DropdownMenuItem onClick={async () => {
+              try {
+                await useAuthStore.getState().logout();
+                window.location.href = "/login";
+              } catch (error) {
+                console.error("Logout failed:", error);
+              }
+            }}>
+              <LogOutIcon />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
