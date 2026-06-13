@@ -7,9 +7,11 @@
   ],
   "scripts": {
     "dev:backend": "bun --cwd apps/backend dev",
+    "dev:backend:pinorama": "bun --cwd apps/backend dev:pinorama",
     "dev:frontend": "bun --cwd apps/frontend dev",
     "dev:docs": "bun --cwd apps/docs start",
     "dev": "bun run --parallel dev:docs dev:backend dev:frontend",
+    "dev:pinorama": "bun run --parallel dev:docs dev:backend:pinorama dev:frontend",
     "build:backend": "bun --cwd apps/backend type-check",
     "build:frontend": "bun --cwd apps/frontend build",
     "build:docs": "bun --cwd apps/docs build",

@@ -23,7 +23,7 @@ export class ApiError extends Error {
     status: number,
     code: string,
     requestId?: string,
-    details?: any
+    details?: any,
   ) {
     super(message);
     this.name = "ApiError";
@@ -80,7 +80,12 @@ api.interceptors.response.use(
   (error) => {
     if (axios.isAxiosError(error) && error.response) {
       const data = error.response.data;
-      if (data && typeof data === "object" && "type" in data && "status" in data) {
+      if (
+        data &&
+        typeof data === "object" &&
+        "type" in data &&
+        "status" in data
+      ) {
         return Promise.reject(
           new ApiError(
             data.message || "An error occurred",
@@ -88,20 +93,20 @@ api.interceptors.response.use(
             data.status,
             data.code || "UNKNOWN_ERROR",
             data.requestId,
-            data.details
-          )
+            data.details,
+          ),
         );
       }
     }
-    
+
     // Fallback for network issues or generic errors
     return Promise.reject(
       new ApiError(
         error.message || "Network Connection Error",
         "server",
         error.response?.status || 500,
-        "NETWORK_ERROR"
-      )
+        "NETWORK_ERROR",
+      ),
     );
-  }
+  },
 );

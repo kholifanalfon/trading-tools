@@ -16,7 +16,9 @@ import {
   GalleryVerticalEndIcon,
   AudioLinesIcon,
   TerminalIcon,
-  UsersIcon,
+  UserIcon,
+  TrendingUpIcon,
+  SettingsIcon,
 } from "lucide-react";
 
 import { useAuthStore } from "@/shared/stores/auth.store";
@@ -55,12 +57,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const navMain = [];
   if (user?.role === "admin") {
     navMain.push({
-      title: "User Management",
-      url: "/user-management",
-      icon: <UsersIcon />,
-      isActive: true,
+      title: "Master",
+      items: [
+        {
+          title: "User Management",
+          url: "/user-management",
+          icon: <UserIcon />,
+        },
+        {
+          title: "Stock Management",
+          url: "/stocks",
+          icon: <TrendingUpIcon />,
+        },
+        {
+          title: "Settings",
+          url: "/settings",
+          icon: <SettingsIcon />,
+        },
+      ],
     });
   }
+
 
   return (
     <Sidebar collapsible="icon" {...props}>

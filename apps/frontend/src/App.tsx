@@ -14,6 +14,8 @@ import { ProfilePage } from "./features/profile/pages/profile.page";
 import { AuthLoginPage } from "./features/auth/pages/auth-login.page";
 import { AuthRegisterPage } from "./features/auth/pages/auth-register.page";
 import { UserManagementListPage } from "./features/user-management/pages/user-management-list.page";
+import { StockListPage } from "./features/stocks/pages/stock-list.page";
+import { SettingsPage } from "./features/settings/pages/settings.page";
 import { ThemeProvider } from "./shared/components/theme-provider";
 import { ThemeToggle } from "./shared/components/ui/theme-toggle";
 import { TooltipProvider } from "./shared/components/ui/tooltip";
@@ -34,6 +36,12 @@ import {
 } from "./shared/components/ui/breadcrumb";
 
 import { GlobalErrorContainer } from "./shared/components/global-error-container";
+import { Toaster } from "@/shared/components/ui/sonner";
+import { useQueryClient } from "@tanstack/react-query";
+import { useWebSocket } from "@/shared/hooks/use-websocket";
+import { stocksKeys } from "./features/stocks/stocks.keys";
+import { toast } from "sonner";
+import { WebSocketProvider } from "@/shared/providers/websocket-provider";
 
 const queryClient = new QueryClient();
 
@@ -53,19 +61,29 @@ export function App() {
               </Route>
 
               {/* Platform Sidebar Layout Wrapper */}
-              <Route element={<PlatformLayout />}>
+              <Route
+                element={
+                  <WebSocketProvider>
+                    <PlatformLayout />
+                  </WebSocketProvider>
+                }
+              >
                 <Route path="/" element={<InfoLandingPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/user-management" element={<UserManagementListPage />} />
+                <Route path="/stocks" element={<StockListPage />} />
+                <Route path="/settings" element={<SettingsPage />} />
               </Route>
             </Routes>
           </BrowserRouter>
           <GlobalErrorContainer />
+          <Toaster />
         </QueryClientProvider>
       </TooltipProvider>
     </ThemeProvider>
   );
 }
+
 
 function AuthLayout() {
   const { isAuthenticated, isLoading, checkAuth } = useAuthStore();
@@ -98,6 +116,17 @@ function AuthLayout() {
 function PlatformLayout() {
   const location = useLocation();
   const { isAuthenticated, isLoading, user, checkAuth, logout } = useAuthStore();
+  const queryClient = useQueryClient();
+
+  // Listen to sync status updates in real-time via WebSockets globally
+  useWebSocket(["stocks", "sync-status"], (data) => {
+    if (data.status === "success") {
+      toast.success("Stock synchronization completed successfully!");
+      queryClient.invalidateQueries({ queryKey: stocksKeys.lists() });
+    } else if (data.status === "failed") {
+      toast.error(`Stock synchronization failed: ${data.error || "Unknown error"}`);
+    }
+  });
 
   useEffect(() => {
     checkAuth();
@@ -121,11 +150,16 @@ function PlatformLayout() {
     pageName = "Profile";
   } else if (location.pathname === "/user-management") {
     pageName = "User Management";
+  } else if (location.pathname === "/stocks") {
+    pageName = "Stock Management";
+  } else if (location.pathname === "/settings") {
+    pageName = "Settings";
   } else if (location.pathname === "/dashboard") {
     pageName = "Dashboard";
   } else if (location.pathname === "/orders") {
     pageName = "Orders";
   }
+
 
   return (
     <SidebarProvider>

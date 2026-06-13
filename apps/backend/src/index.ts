@@ -1,6 +1,7 @@
 import express from "express";
 import * as Sentry from "@sentry/node";
 import helmet from "helmet";
+import { webSocketService } from "./core/websocket";
 import cookieParser from "cookie-parser";
 import hpp from "hpp";
 import { config } from "./core/config";
@@ -73,8 +74,11 @@ app.get("/health", (req, res) => {
 // Global Error Handler
 app.use(errorHandler);
 
-app.listen(config.BE_PORT, () => {
+const server = app.listen(config.BE_PORT, () => {
   logger.info(
     `🚀 Backend server is running on http://localhost:${config.BE_PORT}`,
   );
 });
+
+// Initialize WebSocket Service on the HTTP server
+webSocketService.initialize(server);
