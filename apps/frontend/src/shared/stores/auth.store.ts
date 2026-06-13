@@ -18,23 +18,19 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: true,
 
   login: async (data: LoginInput) => {
-    set({ isLoading: true });
     try {
       const user = await loginApi(data);
-      set({ user, isAuthenticated: true, isLoading: false });
+      set({ user, isAuthenticated: true });
     } catch (error) {
-      set({ isLoading: false });
       throw error;
     }
   },
 
   logout: async () => {
-    set({ isLoading: true });
     try {
       await logoutApi();
-      set({ user: null, isAuthenticated: false, isLoading: false });
+      set({ user: null, isAuthenticated: false });
     } catch (error) {
-      set({ isLoading: false });
       throw error;
     }
   },

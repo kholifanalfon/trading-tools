@@ -32,6 +32,8 @@ import {
   BreadcrumbPage,
 } from "./shared/components/ui/breadcrumb";
 
+import { GlobalErrorContainer } from "./shared/components/global-error-container";
+
 const queryClient = new QueryClient();
 
 export function App() {
@@ -56,6 +58,7 @@ export function App() {
               </Route>
             </Routes>
           </BrowserRouter>
+          <GlobalErrorContainer />
         </QueryClientProvider>
       </TooltipProvider>
     </ThemeProvider>

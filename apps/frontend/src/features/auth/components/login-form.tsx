@@ -18,10 +18,12 @@ import {
 } from "@/shared/components/ui/field";
 import { Input } from "@/shared/components/ui/input";
 
+import { ErrorDisplay } from "@/shared/components/ui/error-display";
+
 export interface LoginFormProps {
   onSubmit: (data: LoginInput) => void;
   isLoading: boolean;
-  error: string | null;
+  error: unknown;
   onNavigateToRegister: () => void;
 }
 
@@ -63,11 +65,7 @@ export function LoginForm({
             <CardContent>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <FieldGroup>
-                  {error && (
-                    <div className="p-3 border border-destructive/20 bg-destructive/10 text-destructive text-xs font-semibold rounded-md">
-                      {error}
-                    </div>
-                  )}
+                  <ErrorDisplay error={error} />
 
                   <Field>
                     <Button variant="outline" type="button" className="w-full">

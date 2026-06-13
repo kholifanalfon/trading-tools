@@ -10,7 +10,6 @@ export function AuthLoginPage() {
   const handleSubmit = (data: LoginInput) => {
     mutate(data, {
       onSuccess: () => {
-        // Redirect to homepage/landing page on successful login
         navigate("/");
       },
     });

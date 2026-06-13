@@ -1,4 +1,5 @@
 import express from "express";
+import * as Sentry from "@sentry/node";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import hpp from "hpp";
@@ -11,11 +12,28 @@ import { xssClean } from "./core/middlewares/xss-clean.middleware";
 import { csrfProtection } from "@/core/middlewares/csrf.middleware";
 import { corsMiddleware } from "@/core/middlewares/cors.middleware";
 import { navigationBlocker } from "@/core/middlewares/navigation-blocker.middleware";
+import { requestIdMiddleware } from "@/core/middlewares/request-id.middleware";
+import { requestLogger } from "@/core/middlewares/request-logger.middleware";
+
+// Initialize Sentry first to capture all activity
+if (config.BE_SENTRY_DSN) {
+  Sentry.init({
+    dsn: config.BE_SENTRY_DSN,
+    tracesSampleRate: 1.0,
+  });
+}
 
 const app = express();
 
 // Disable X-Powered-By header
 app.disable("x-powered-by");
+
+// Set up unique Request IDs and Request Logging
+app.use(requestIdMiddleware);
+app.use(requestLogger);
+
+// Enable CORS with Credentials support
+app.use(corsMiddleware);
 
 // Set secure HTTP headers
 app.use(helmet());
@@ -43,9 +61,6 @@ app.use(cookieParser());
 
 // Enable CSRF protection
 app.use(csrfProtection);
-
-// Enable CORS with Credentials support
-app.use(corsMiddleware);
 
 // Register routes
 app.use("/api/v1", v1Router);

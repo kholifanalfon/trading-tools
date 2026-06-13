@@ -17,6 +17,11 @@ v1Router.get("/", (req, res) => {
   });
 });
 
+// Sentry test endpoint
+v1Router.get("/sentry-test", (req, res) => {
+  throw new Error("Sentry Test Error from Express Backend!");
+});
+
 v1Router.use("/auth", authRoutes);
 
 export { v1Router };

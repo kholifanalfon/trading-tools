@@ -1,12 +1,16 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/shared/components/ui/card";
 import { Badge } from "@/shared/components/ui/badge";
+import { Button } from "@/shared/components/ui/button";
 import { TechStackInfo } from "../types/info.types";
+import { ErrorDisplay } from "@/shared/components/ui/error-display";
 
 export interface InfoPresenterProps {
   backendStack: TechStackInfo | undefined;
   isLoading: boolean;
   error: unknown;
   frontendStack: Array<{ name: string; desc: string; type: string }>;
+  onTestFrontendSentry: () => void;
+  onTestBackendSentry: () => void;
 }
 
 export function InfoPresenter({
@@ -14,6 +18,8 @@ export function InfoPresenter({
   isLoading,
   error,
   frontendStack,
+  onTestFrontendSentry,
+  onTestBackendSentry,
 }: InfoPresenterProps) {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
@@ -32,8 +38,8 @@ export function InfoPresenter({
           </p>
         </div>
 
-        {/* Connection Status Indicator */}
-        <div className="flex justify-center mb-16">
+        {/* Connection Status & Sentry Testing */}
+        <div className="flex flex-col items-center gap-4 mb-16">
           <div className="flex items-center gap-3 px-4 py-2 rounded-md border border-border bg-card shadow-sm">
             <span className="text-xs text-muted-foreground font-medium">Backend Connection:</span>
             {isLoading ? (
@@ -52,6 +58,15 @@ export function InfoPresenter({
                 Online
               </div>
             )}
+          </div>
+
+          <div className="flex gap-4">
+            <Button variant="outline" size="sm" onClick={onTestFrontendSentry}>
+              🚨 Test Frontend Sentry
+            </Button>
+            <Button variant="outline" size="sm" onClick={onTestBackendSentry} disabled={isLoading || !!error}>
+              ⚡ Test Backend Sentry
+            </Button>
           </div>
         </div>
 
@@ -102,11 +117,8 @@ export function InfoPresenter({
                   <span>Fetching stack configurations...</span>
                 </div>
               ) : error ? (
-                <div className="py-12 px-6 border border-destructive/20 bg-destructive/10 text-center space-y-2 rounded-md">
-                  <p className="text-sm font-semibold text-destructive">Failed to connect to backend server</p>
-                  <p className="text-xs text-muted-foreground max-w-xs mx-auto">
-                    Ensure the backend Express service is active on your host port (default: 3000).
-                  </p>
+                <div className="py-4">
+                  <ErrorDisplay error={error} />
                 </div>
               ) : backendStack ? (
                 <div className="divide-y divide-border">
