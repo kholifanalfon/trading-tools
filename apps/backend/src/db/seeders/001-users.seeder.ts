@@ -1,5 +1,5 @@
-import { db } from "../db";
-import { users } from "../schema";
+import { db } from "@/db/db";
+import { users } from "@/db/schema";
 
 export default async function seed() {
   console.log("🌱 Seeding data for: users...");

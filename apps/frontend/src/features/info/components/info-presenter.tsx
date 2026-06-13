@@ -170,7 +170,7 @@ export function InfoPresenter({
                     </span>
                   </div>
 
-                  <div className="py-4 flex items-start justify-between gap-4 last:pb-0">
+                  <div className="py-4 flex items-start justify-between gap-4">
                     <div>
                       <h3 className="font-semibold text-foreground">Authentication</h3>
                       <p className="text-xs text-muted-foreground mt-1">JWT payload sign, verify, and encryption</p>
@@ -179,6 +179,18 @@ export function InfoPresenter({
                       {backendStack.auth}
                     </span>
                   </div>
+
+                  {backendStack.version && (
+                    <div className="py-4 flex items-start justify-between gap-4 last:pb-0">
+                      <div>
+                        <h3 className="font-semibold text-foreground">API Version</h3>
+                        <p className="text-xs text-muted-foreground mt-1">Current active endpoint version</p>
+                      </div>
+                      <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">
+                        {backendStack.version}
+                      </span>
+                    </div>
+                  )}
                 </div>
               ) : null}
             </CardContent>

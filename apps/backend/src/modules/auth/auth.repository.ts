@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import { db } from "../../db/db";
-import { users } from "../../db/schema";
+import { db } from "@/db/db";
+import { users } from "@/db/schema";
 import { RegisterInput } from "./auth.schema";
 
 export class AuthRepository {

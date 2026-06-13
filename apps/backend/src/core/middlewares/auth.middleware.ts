@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { jwtVerify } from "jose";
-import { config } from "../config";
-import { AuthRepository } from "../../modules/auth/auth.repository";
+import { config } from "@/core/config";
+import { AuthRepository } from "@/modules/auth/auth.repository";
 
 const secret = new TextEncoder().encode(config.BE_JWT_SECRET);
 const authRepository = new AuthRepository();

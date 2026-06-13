@@ -5,7 +5,7 @@ import { User } from "../types/auth.types";
 
 
 export async function loginApi(data: LoginInput): Promise<User> {
-  const response = await api.post<User>("/api/v1/auth/login", data);
+  const response = await api.post<User>("/auth/login", data);
   return response.data;
 }
 
@@ -16,16 +16,16 @@ export async function registerApi(data: RegisterInput): Promise<User> {
     email: data.email,
     password: data.password,
   };
-  const response = await api.post<User>("/api/v1/auth/register", payload);
+  const response = await api.post<User>("/auth/register", payload);
   return response.data;
 }
 
 export async function getMeApi(): Promise<User> {
-  const response = await api.get<User>("/api/v1/auth/me");
+  const response = await api.get<User>("/auth/me");
   return response.data;
 }
 
 export async function logoutApi(): Promise<{ success: boolean }> {
-  const response = await api.post<{ success: boolean }>("/api/v1/auth/logout");
+  const response = await api.post<{ success: boolean }>("/auth/logout");
   return response.data;
 }

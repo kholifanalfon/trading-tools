@@ -1,7 +1,8 @@
 import { SignJWT } from "jose";
-import { config } from "../../core/config";
+import { config } from "@/core/config";
 import { AuthRepository } from "./auth.repository";
 import { RegisterInput, LoginInput } from "./auth.schema";
+import { UnauthorizedError } from "@/core/errors/auth-error";
 
 export class AuthService {
   private authRepository = new AuthRepository();
@@ -25,13 +26,20 @@ export class AuthService {
 
   async login(data: LoginInput) {
     const user = await this.authRepository.getUserByEmail(data.email);
-    if (!user) {
-      throw new Error("Invalid email or password");
-    }
 
-    const isPasswordValid = await Bun.password.verify(data.password, user.userPassword);
-    if (!isPasswordValid) {
-      throw new Error("Invalid email or password");
+    // Dummy hash of same algorithm structure to execute verification when user is not found,
+    // preventing user enumeration via timing analysis.
+    const dummyHash =
+      "$argon2id$v=19$m=65536,t=2,p=1$YHZwLuqWbhVFmYtOuCqtsKaxnCJX0TZie1kuwXEhw/I$a3hUn0MEkMpYeMWZXM9P5NlJnlRQOuK0AosnU8CD6us";
+    const passwordToVerify = user ? user.userPassword : dummyHash;
+
+    const isPasswordValid = await Bun.password.verify(
+      data.password,
+      passwordToVerify,
+    );
+
+    if (!user || !isPasswordValid) {
+      throw new UnauthorizedError();
     }
 
     const token = await this.generateToken({
