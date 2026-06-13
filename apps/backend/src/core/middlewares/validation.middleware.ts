@@ -14,3 +14,17 @@ export function validateBody(schema: ZodSchema) {
     }
   };
 }
+
+/**
+ * Middleware to validate request query parameters against a Zod schema.
+ */
+export function validateQuery(schema: ZodSchema) {
+  return (req: Request, res: Response, next: NextFunction): void => {
+    try {
+      req.query = schema.parse(req.query);
+      next();
+    } catch (error) {
+      next(error);
+    }
+  };
+}
