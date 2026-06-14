@@ -125,7 +125,7 @@ export class FinnhubAdapter implements ScreenerProviderAdapter {
       }
       return points;
     } catch (err) {
-      console.warn(`Finnhub stockCandles failed for ${symbol}: ${err instanceof Error ? err.message : String(err)}`);
+      console.warn("Finnhub stockCandles failed for symbol:", symbol, err);
       return [];
     }
   }

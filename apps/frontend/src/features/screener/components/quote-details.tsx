@@ -10,7 +10,7 @@ export interface QuoteDetailsProps {
 }
 
 export function QuoteDetails({ quote, symbol, isLoading, onRefresh }: QuoteDetailsProps) {
-  if (isLoading) {
+  if (isLoading && !quote) {
     return (
       <div className="bg-card/45 backdrop-blur-md rounded-xl border border-border/80 p-6 shadow-md flex flex-col items-center justify-center h-48 text-muted-foreground text-xs gap-2">
         <div className="h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />

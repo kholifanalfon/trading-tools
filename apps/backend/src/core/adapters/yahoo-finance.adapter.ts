@@ -83,7 +83,7 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
         }));
     } catch (err) {
       // Return empty array if request fails (e.g. invalid symbol or offline)
-      console.warn(`Yahoo Finance chart failed for ${symbol}: ${err instanceof Error ? err.message : String(err)}`);
+      console.warn("Yahoo Finance chart failed for symbol:", symbol, err);
       return [];
     }
   }

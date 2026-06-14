@@ -123,7 +123,10 @@ export class ScreenerService {
     // Fetch individually in parallel chunks of 10
     try {
       console.log(
-        `[Historical Sync] Starting historical sync for target date: ${targetDateStr}. Total symbols: ${allStocks.length}`,
+        "[Historical Sync] Starting historical sync for target date:",
+        targetDateStr,
+        ". Total symbols:",
+        allStocks.length,
       );
       let insertedCount = 0;
       const failedSymbols: string[] = [];
@@ -216,22 +219,33 @@ export class ScreenerService {
                     await this.repository.upsertStockData(insertItems);
                   insertedCount += upserted.length;
                   console.log(
-                    `[Historical Sync] [SUCCESS] ${stock.symbol} synced successfully. Saved ${upserted.length} bars.`,
+                    "[Historical Sync] [SUCCESS]",
+                    stock.symbol,
+                    "synced successfully. Saved",
+                    upserted.length,
+                    "bars.",
                   );
                 } else {
                   console.log(
-                    `[Historical Sync] [SUCCESS] ${stock.symbol} synced successfully. No data points matched target date ${targetDateStr}.`,
+                    "[Historical Sync] [SUCCESS]",
+                    stock.symbol,
+                    "synced successfully. No data points matched target date",
+                    targetDateStr,
                   );
                 }
               } else {
                 console.warn(
-                  `[Historical Sync] [FAILED] ${stock.symbol} failed to fetch chart/historical data.`,
+                  "[Historical Sync] [FAILED]",
+                  stock.symbol,
+                  "failed to fetch chart/historical data.",
                 );
                 failedSymbols.push(stock.symbol);
               }
             } catch (err) {
               console.error(
-                `[Historical Sync] [ERROR] Error syncing individual stock ${stock.symbol}:`,
+                "[Historical Sync] [ERROR] Error syncing individual stock",
+                stock.symbol,
+                ":",
                 err,
               );
               failedSymbols.push(stock.symbol);
@@ -297,7 +311,7 @@ export class ScreenerService {
       let symbolToQuery = symbol.toUpperCase();
 
       const startDate = new Date();
-      let interval = "1d";
+      let interval: string;
 
       // Configure start date and interval based on timeframe
       if (timeframe === "1D") {
@@ -338,7 +352,8 @@ export class ScreenerService {
 
       if (!points || points.length === 0) {
         console.warn(
-          `[ScreenerService] External API returned 0 points for ${symbol}. Falling back to DB.`,
+          "[ScreenerService] External API returned 0 points for symbol. Falling back to DB. Symbol:",
+          symbol,
         );
         return this.repository.getStockHistoricalData(symbol, limit);
       }
@@ -393,7 +408,8 @@ export class ScreenerService {
       return formattedPoints.slice(-limit);
     } catch (error) {
       console.error(
-        `[ScreenerService] Failed to get live historical data for ${symbol}:`,
+        "[ScreenerService] Failed to get live historical data for symbol:",
+        symbol,
         error,
       );
       // Fallback to database
