@@ -18,7 +18,7 @@ export function requestLogger(req: Request, res: Response, next: NextFunction) {
       url: cleanUrl,
       ip: req.ip || req.socket.remoteAddress,
     },
-    `Incoming Request: ${cleanMethod} ${cleanUrl}`,
+    `[INFO] Incoming Request: ${cleanMethod.removeNewline()} ${cleanUrl.removeNewline()}`,
   );
 
   // Listen to request completion to log duration and response status
@@ -33,7 +33,7 @@ export function requestLogger(req: Request, res: Response, next: NextFunction) {
       statusCode: res.statusCode,
       duration: `${duration}ms`,
     };
-    const message = `Request Completed: ${cleanMethod} ${cleanUrl} ${res.statusCode} in ${duration}ms`;
+    const message = `[INFO] Request Completed: ${cleanMethod.removeNewline()} ${cleanUrl.removeNewline()} ${res.statusCode} in ${duration}ms`;
 
     if (res.statusCode >= 500) {
       logger.error(logData, message);
