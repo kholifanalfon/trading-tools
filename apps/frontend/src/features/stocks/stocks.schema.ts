@@ -8,10 +8,7 @@ export const CreateStockFormSchema = z.object({
     .regex(/^[a-zA-Z0-9.]+$/, { message: "Ticker symbol must be alphanumeric or contain dots" }),
   name: z.string().min(1, { message: "Stock name is required" }),
   sector: z.string().min(1, { message: "Sector is required" }),
-  price: z.preprocess(
-    (val) => Number(val),
-    z.number().min(0, { message: "Price must be non-negative" })
-  ),
+  price: z.preprocess((val) => Number(val), z.number().min(0, { message: "Price must be non-negative" })),
   watchlist: z.boolean().default(false),
   exchange: z.string().min(1, { message: "Exchange is required" }),
 });
@@ -24,10 +21,7 @@ export const UpdateStockFormSchema = z.object({
     .regex(/^[a-zA-Z0-9.]+$/, { message: "Ticker symbol must be alphanumeric or contain dots" }),
   name: z.string().min(1, { message: "Stock name is required" }),
   sector: z.string().min(1, { message: "Sector is required" }),
-  price: z.preprocess(
-    (val) => Number(val),
-    z.number().min(0, { message: "Price must be non-negative" })
-  ),
+  price: z.preprocess((val) => Number(val), z.number().min(0, { message: "Price must be non-negative" })),
   watchlist: z.boolean().optional(),
   exchange: z.string().min(1, { message: "Exchange is required" }).optional(),
 });

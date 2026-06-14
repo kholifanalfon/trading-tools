@@ -2,14 +2,7 @@ import { Stock } from "../types/stocks.types";
 import { Edit2Icon, Trash2Icon, PlusIcon, SearchIcon, ChevronLeftIcon, ChevronRightIcon, SparklesIcon, StarIcon } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/shared/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/components/ui/table";
 
 export interface StockTableProps {
   stocks: Stock[];
@@ -50,12 +43,7 @@ export function StockTable({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="relative flex-1 max-w-xs">
           <SearchIcon className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder="Search symbol, name, sector..."
-            value={search}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="pl-8 h-8 text-xs"
-          />
+          <Input placeholder="Search symbol, name, sector..." value={search} onChange={(e) => onSearchChange(e.target.value)} className="pl-8 h-8 text-xs" />
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -63,11 +51,7 @@ export function StockTable({
             disabled={isSyncing || isLoading}
             className="flex items-center gap-1.5 h-8 text-xs px-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition disabled:opacity-50"
           >
-            {isSyncing ? (
-              <SparklesIcon className="h-3.5 w-3.5 animate-spin" />
-            ) : (
-              <SparklesIcon className="h-3.5 w-3.5" />
-            )}
+            {isSyncing ? <SparklesIcon className="h-3.5 w-3.5 animate-spin" /> : <SparklesIcon className="h-3.5 w-3.5" />}
             Sync with Gemini
           </Button>
           <Button onClick={onAddClick} className="flex items-center gap-1.5 h-8 text-xs px-3">
@@ -119,35 +103,18 @@ export function StockTable({
                       className="h-7 w-7 p-0 text-amber-500 hover:bg-amber-500/10 focus:ring-0"
                       title={stock.watchlist ? "Remove from Watchlist" : "Add to Watchlist"}
                     >
-                      <StarIcon
-                        className={`h-4 w-4 ${stock.watchlist ? "fill-amber-500 text-amber-500" : "text-muted-foreground/60"}`}
-                      />
+                      <StarIcon className={`h-4 w-4 ${stock.watchlist ? "fill-amber-500 text-amber-500" : "text-muted-foreground/60"}`} />
                     </Button>
                   </TableCell>
-                  <TableCell className="py-2 px-4 font-semibold text-xs text-indigo-400 font-mono">
-                    {stock.symbol}
-                  </TableCell>
-                  <TableCell className="py-2 px-4 text-xs font-bold font-mono text-muted-foreground">
-                    {stock.exchange || "IDX"}
-                  </TableCell>
+                  <TableCell className="py-2 px-4 font-semibold text-xs text-indigo-400 font-mono">{stock.symbol}</TableCell>
+                  <TableCell className="py-2 px-4 text-xs font-bold font-mono text-muted-foreground">{stock.exchange || "IDX"}</TableCell>
                   <TableCell className="py-2 px-4 text-xs text-foreground font-medium">{stock.name}</TableCell>
                   <TableCell className="py-2 px-4 text-xs text-muted-foreground">{stock.sector}</TableCell>
-                  <TableCell className="py-2 px-4 text-xs text-foreground font-mono">
-                    {stock.price.toLocaleString("id-ID")}
-                  </TableCell>
-                  <TableCell className="py-2 px-4 text-xs text-muted-foreground">
-                    {new Date(stock.updatedAt).toLocaleDateString()}
-                  </TableCell>
+                  <TableCell className="py-2 px-4 text-xs text-foreground font-mono">{stock.price.toLocaleString("id-ID")}</TableCell>
+                  <TableCell className="py-2 px-4 text-xs text-muted-foreground">{new Date(stock.updatedAt).toLocaleDateString()}</TableCell>
                   <TableCell className="py-2 px-4 text-right">
                     <div className="flex items-center justify-end gap-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => onEditClick(stock)}
-                        disabled={isSyncing}
-                        className="h-7 w-7 p-0 disabled:opacity-50"
-                        title="Edit Stock"
-                      >
+                      <Button variant="ghost" size="sm" onClick={() => onEditClick(stock)} disabled={isSyncing} className="h-7 w-7 p-0 disabled:opacity-50" title="Edit Stock">
                         <Edit2Icon className="h-3.5 w-3.5" />
                       </Button>
                       <Button
@@ -175,23 +142,11 @@ export function StockTable({
               Page {page} of {totalPages} ({total} stocks)
             </span>
             <div className="flex items-center gap-1.5">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => onPageChange(page - 1)}
-                disabled={page === 1}
-                className="h-7 px-2 text-xs"
-              >
+              <Button variant="outline" size="sm" onClick={() => onPageChange(page - 1)} disabled={page === 1} className="h-7 px-2 text-xs">
                 <ChevronLeftIcon className="h-3 w-3 mr-0.5" />
                 Prev
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => onPageChange(page + 1)}
-                disabled={page === totalPages}
-                className="h-7 px-2 text-xs"
-              >
+              <Button variant="outline" size="sm" onClick={() => onPageChange(page + 1)} disabled={page === totalPages} className="h-7 px-2 text-xs">
                 Next
                 <ChevronRightIcon className="h-3 w-3 ml-0.5" />
               </Button>

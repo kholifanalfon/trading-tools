@@ -9,6 +9,4 @@ export const UpdateSettingsFormSchema = z.object({
   default_strategy: z.string().optional(),
 });
 
-
 export type UpdateSettingsFormInput = z.infer<typeof UpdateSettingsFormSchema>;
-

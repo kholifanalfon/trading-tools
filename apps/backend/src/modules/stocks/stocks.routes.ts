@@ -18,5 +18,3 @@ router.delete("/:id", controller.deleteStock);
 router.post("/sync", controller.syncStocks);
 
 export const stocksRoutes = router;
-
-

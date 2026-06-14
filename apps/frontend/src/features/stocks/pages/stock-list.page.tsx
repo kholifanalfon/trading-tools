@@ -111,7 +111,6 @@ export function StockListPage() {
     }
   };
 
-
   const handleFormSubmit = async (formData: any) => {
     try {
       if (selectedStock) {
@@ -134,9 +133,7 @@ export function StockListPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-foreground">Stock Management</h1>
-        <p className="text-sm text-muted-foreground">
-          View, add, modify, and delete stock ticker records in the database.
-        </p>
+        <p className="text-sm text-muted-foreground">View, add, modify, and delete stock ticker records in the database.</p>
       </div>
 
       <StockTable
@@ -168,5 +165,3 @@ export function StockListPage() {
   );
 }
 export default StockListPage;
-
-

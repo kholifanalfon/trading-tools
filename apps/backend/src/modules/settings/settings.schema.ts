@@ -9,7 +9,4 @@ export const UpdateSettingsSchema = z.object({
   default_strategy: z.string().optional(),
 });
 
-
 export type UpdateSettingsInput = z.infer<typeof UpdateSettingsSchema>;
-
-

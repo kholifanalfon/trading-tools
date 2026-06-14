@@ -5,6 +5,7 @@ import {
   Routes,
   Route,
   useLocation,
+  useNavigate,
   Outlet,
   Navigate,
 } from "react-router-dom";
@@ -56,6 +57,7 @@ export function App() {
       <TooltipProvider>
         <QueryClientProvider client={queryClient}>
           <BrowserRouter
+            basename={import.meta.env.FE_BASE_URL || "/"}
             future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
           >
             <Routes>
@@ -124,6 +126,7 @@ function AuthLayout() {
 
 function PlatformLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { isAuthenticated, isLoading, user, checkAuth, logout } = useAuthStore();
   const queryClient = useQueryClient();
 
@@ -207,7 +210,7 @@ function PlatformLayout() {
               onClick={async () => {
                 try {
                   await logout();
-                  window.location.href = "/login";
+                  navigate("/login");
                 } catch (err) {
                   console.error("Logout failed:", err);
                 }

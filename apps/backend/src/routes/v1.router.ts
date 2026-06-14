@@ -33,5 +33,3 @@ v1Router.use("/settings", settingsRoutes);
 v1Router.use("/screener", screenerRoutes);
 
 export { v1Router };
-
-

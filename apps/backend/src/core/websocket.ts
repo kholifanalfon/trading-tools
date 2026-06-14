@@ -41,9 +41,7 @@ export class WebSocketService {
       this.wss.clients.forEach((client) => {
         const extWs = client as unknown as ExtendedWebSocket;
         if (extWs.isAlive === false) {
-          logger.warn(
-            "WebSocket client failed heartbeat check. Terminating connection.",
-          );
+          logger.warn("WebSocket client failed heartbeat check. Terminating connection.");
           extWs.close(1008, "Heartbeat timeout"); // RFC 6455 Policy Violation code
           extWs.terminate();
           return;
@@ -76,15 +74,7 @@ export class WebSocketService {
       // Wrap the native 'on' method
       const nativeOn = extWs.on.bind(extWs);
       extWs.on = (event: string, listener: (...args: any[]) => void): any => {
-        const nativeEvents = [
-          "close",
-          "error",
-          "message",
-          "ping",
-          "pong",
-          "unexpected-response",
-          "upgrade",
-        ];
+        const nativeEvents = ["close", "error", "message", "ping", "pong", "unexpected-response", "upgrade"];
         if (nativeEvents.includes(event)) {
           return nativeOn(event as any, listener);
         } else {
@@ -120,9 +110,7 @@ export class WebSocketService {
             logger.warn(`No custom listener registered for event: ${event}`);
           }
         } catch (error) {
-          logger.warn(
-            `Received non-JSON or invalid WebSocket message format from client. Error: ${error instanceof Error ? error.message : String(error)}`,
-          );
+          logger.warn(`Received non-JSON or invalid WebSocket message format from client. Error: ${error instanceof Error ? error.message : String(error)}`);
         }
       });
 
@@ -160,10 +148,7 @@ export class WebSocketService {
         const signedToken = rawCookies.token || "";
 
         // Unsign the token cookie
-        const token = cookieParser.signedCookie(
-          signedToken,
-          config.BE_JWT_SECRET,
-        );
+        const token = cookieParser.signedCookie(signedToken, config.BE_JWT_SECRET);
         if (typeof token !== "string" || !token.trim()) {
           throw new Error("Authentication token not found in cookies");
         }
@@ -179,9 +164,7 @@ export class WebSocketService {
           this.wss?.emit("connection", ws, request);
         });
       } catch (error) {
-        logger.warn(
-          `Rejected WebSocket connection: ${error instanceof Error ? error.message : String(error)}`,
-        );
+        logger.warn(`Rejected WebSocket connection: ${error instanceof Error ? error.message : String(error)}`);
         socket.write("HTTP/1.1 401 Unauthorized\r\n\r\n");
         socket.destroy();
       }
@@ -213,9 +196,7 @@ export class WebSocketService {
     }
 
     const payload = JSON.stringify({ event, data });
-    logger.info(
-      `Broadcasting WebSocket event '${event}' to ${room ? `room '${room}'` : "all connected clients"}.`,
-    );
+    logger.info(`Broadcasting WebSocket event '${event}' to ${room ? `room '${room}'` : "all connected clients"}.`);
 
     for (const client of this.clients) {
       if (client.readyState === WS.OPEN) {

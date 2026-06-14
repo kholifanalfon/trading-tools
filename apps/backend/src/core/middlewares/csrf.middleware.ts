@@ -4,10 +4,7 @@ import { config } from "@/core/config";
 
 const isProduction = process.env.NODE_ENV === "production";
 
-const {
-  doubleCsrfProtection,
-  generateCsrfToken,
-} = doubleCsrf({
+const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
   getSecret: () => config.BE_JWT_SECRET,
   getSessionIdentifier: (req: Request) => {
     // Use the session JWT token cookie if present, otherwise empty string for anonymous users

@@ -43,5 +43,3 @@ export async function getSyncStatusApi(): Promise<SyncStateResponse> {
   const response = await api.get<SyncStateResponse>("/stocks/sync-status");
   return response.data;
 }
-
-

@@ -4,21 +4,11 @@ import { decrypt } from "@/core/utils/crypto";
 import { AppError } from "@/core/errors/app-error";
 import { webSocketService } from "@/core/websocket";
 import { NewStockData } from "@/db/schemas/stock-data.schema";
-import {
-  StockSearchResult,
-  StockQuote,
-  SyncHistoricalState,
-} from "./screener.schema";
+import { StockSearchResult, StockQuote, SyncHistoricalState } from "./screener.schema";
 import { ScreenerProviderAdapter } from "@/core/adapters/provider.adapter";
 import { YahooFinanceAdapter } from "@/core/adapters/yahoo-finance.adapter";
 import { FinnhubAdapter } from "@/core/adapters/finnhub.adapter";
-import {
-  calculateEMA,
-  calculateRSI,
-  calculateMACD,
-  calculateSMA,
-  calculateATR,
-} from "@/core/utils/indicators";
+import { calculateEMA, calculateRSI, calculateMACD, calculateSMA, calculateATR } from "@/core/utils/indicators";
 import { calculateAllScores } from "@/core/utils/scoring.utils";
 import { ScoreMetrics } from "@/core/types/scoring.types";
 
@@ -137,9 +127,7 @@ export class ScreenerService {
 
     // Fetch individually in parallel chunks of 10
     try {
-      this.logAndBroadcast(
-        `[Historical Sync] Starting historical sync for target date: ${targetDateStr}. Total symbols: ${allStocks.length}`
-      );
+      this.logAndBroadcast(`[Historical Sync] Starting historical sync for target date: ${targetDateStr}. Total symbols: ${allStocks.length}`);
       let insertedCount = 0;
       const failedSymbols: string[] = [];
       const chunkSize = 10;
@@ -147,9 +135,7 @@ export class ScreenerService {
 
       for (let i = 0; i < allStocks.length; i += chunkSize) {
         const chunk = allStocks.slice(i, i + chunkSize);
-        this.logAndBroadcast(
-          `[Historical Sync] Processing batch ${Math.floor(i / chunkSize) + 1}/${Math.ceil(allStocks.length / chunkSize)} (${chunk.length} symbols)...`
-        );
+        this.logAndBroadcast(`[Historical Sync] Processing batch ${Math.floor(i / chunkSize) + 1}/${Math.ceil(allStocks.length / chunkSize)} (${chunk.length} symbols)...`);
 
         await Promise.all(
           chunk.map(async (stock) => {
@@ -158,24 +144,12 @@ export class ScreenerService {
               const startDate = new Date();
               startDate.setDate(startDate.getDate() - 365); // Fetch 365 days of historical data for EMAs
 
-              let points = await adapter.getHistoricalData(
-                symbolToQuery,
-                startDate,
-                new Date(),
-              );
+              let points = await adapter.getHistoricalData(symbolToQuery, startDate, new Date());
 
               // Auto-append .JK suffix if 4-letter Indonesian stock fails
-              if (
-                points.length === 0 &&
-                symbolToQuery.length === 4 &&
-                !symbolToQuery.includes(".")
-              ) {
+              if (points.length === 0 && symbolToQuery.length === 4 && !symbolToQuery.includes(".")) {
                 symbolToQuery = `${symbolToQuery}.JK`;
-                points = await adapter.getHistoricalData(
-                  symbolToQuery,
-                  startDate,
-                  new Date(),
-                );
+                points = await adapter.getHistoricalData(symbolToQuery, startDate, new Date());
               }
 
               if (points && points.length > 0) {
@@ -195,25 +169,14 @@ export class ScreenerService {
                 const sma50Vals = calculateSMA(closePrices, 50);
                 const sma200Vals = calculateSMA(closePrices, 200);
                 const rsiVals = calculateRSI(closePrices, 14);
-                const atrVals = calculateATR(
-                  highPrices,
-                  lowPrices,
-                  closePrices,
-                  14,
-                );
+                const atrVals = calculateATR(highPrices, lowPrices, closePrices, 14);
                 const avgVol10Vals = calculateSMA(volumeVals, 10);
                 const avgVol20Vals = calculateSMA(volumeVals, 20);
 
                 // Compute 1Y highs/lows for position score (lookback 252 days)
-                const yearHighVals: (number | null)[] = new Array(
-                  points.length,
-                ).fill(null);
-                const yearLowVals: (number | null)[] = new Array(
-                  points.length,
-                ).fill(null);
-                const priceReturn1YVals: (number | null)[] = new Array(
-                  points.length,
-                ).fill(null);
+                const yearHighVals: (number | null)[] = new Array(points.length).fill(null);
+                const yearLowVals: (number | null)[] = new Array(points.length).fill(null);
+                const priceReturn1YVals: (number | null)[] = new Array(points.length).fill(null);
 
                 for (let i = 0; i < points.length; i++) {
                   let startIdx = Math.max(0, i - 252);
@@ -227,16 +190,11 @@ export class ScreenerService {
                     yearHighVals[i] = highest;
                     yearLowVals[i] = lowest;
                     const prevYearPrice = closePrices[startIdx];
-                    priceReturn1YVals[i] =
-                      ((closePrices[i] - prevYearPrice) / prevYearPrice) * 100;
+                    priceReturn1YVals[i] = ((closePrices[i] - prevYearPrice) / prevYearPrice) * 100;
                   }
                 }
 
-                const {
-                  macd: macdVals,
-                  signal: macdSignalVals,
-                  histogram: macdHistVals,
-                } = calculateMACD(closePrices);
+                const { macd: macdVals, signal: macdSignalVals, histogram: macdHistVals } = calculateMACD(closePrices);
 
                 const insertItems: NewStockData[] = [];
 
@@ -249,8 +207,7 @@ export class ScreenerService {
 
                   const prevClose = j > 0 ? points[j - 1].close : p.open;
                   const change = p.close - prevClose;
-                  const changePercent =
-                    prevClose !== 0 ? (change / prevClose) * 100 : 0;
+                  const changePercent = prevClose !== 0 ? (change / prevClose) * 100 : 0;
 
                   const metrics: ScoreMetrics = {
                     close: p.close,
@@ -301,27 +258,18 @@ export class ScreenerService {
                 }
 
                 if (insertItems.length > 0) {
-                  const upserted =
-                    await this.repository.upsertStockData(insertItems);
+                  const upserted = await this.repository.upsertStockData(insertItems);
                   insertedCount += upserted.length;
-                  this.logAndBroadcast(
-                    `[Historical Sync] [SUCCESS] ${stock.symbol} synced successfully. Saved ${upserted.length} bars.`
-                  );
+                  this.logAndBroadcast(`[Historical Sync] [SUCCESS] ${stock.symbol} synced successfully. Saved ${upserted.length} bars.`);
                 } else {
-                  this.logAndBroadcast(
-                    `[Historical Sync] [SUCCESS] ${stock.symbol} synced successfully. No data points matched target date ${targetDateStr}`
-                  );
+                  this.logAndBroadcast(`[Historical Sync] [SUCCESS] ${stock.symbol} synced successfully. No data points matched target date ${targetDateStr}`);
                 }
               } else {
-                this.logAndBroadcast(
-                  `[Historical Sync] [FAILED] ${stock.symbol} failed to fetch chart/historical data.`
-                );
+                this.logAndBroadcast(`[Historical Sync] [FAILED] ${stock.symbol} failed to fetch chart/historical data.`);
                 failedSymbols.push(stock.symbol);
               }
             } catch (err) {
-              this.logAndBroadcast(
-                `[Historical Sync] [ERROR] Error syncing individual stock ${stock.symbol}: ${err instanceof Error ? err.message : String(err)}`
-              );
+              this.logAndBroadcast(`[Historical Sync] [ERROR] Error syncing individual stock ${stock.symbol}: ${err instanceof Error ? err.message : String(err)}`);
               failedSymbols.push(stock.symbol);
             }
           }),
@@ -329,22 +277,16 @@ export class ScreenerService {
       }
 
       const successCount = allStocks.length - failedSymbols.length;
-      this.logAndBroadcast(
-        `[Historical Sync] Sync completed. Success: ${successCount}/${allStocks.length} symbols. Saved ${insertedCount} total points.`
-      );
+      this.logAndBroadcast(`[Historical Sync] Sync completed. Success: ${successCount}/${allStocks.length} symbols. Saved ${insertedCount} total points.`);
 
       historicalSyncState = {
         status: "success",
-        error:
-          failedSymbols.length > 0
-            ? `Synced with warnings. Failed symbols: ${failedSymbols.join(", ")}`
-            : null,
+        error: failedSymbols.length > 0 ? `Synced with warnings. Failed symbols: ${failedSymbols.join(", ")}` : null,
         lastSyncAt: new Date().toISOString(),
       };
 
       await this.repository.createStockLog({
-        status:
-          failedSymbols.length === allStocks.length ? "failed" : "success",
+        status: failedSymbols.length === allStocks.length ? "failed" : "success",
         message: `Sync completed for target date: ${targetDateStr}. Success ${successCount}/${allStocks.length} symbols. Total points: ${insertedCount}.`,
         symbolsCount: insertedCount,
       });
@@ -375,24 +317,11 @@ export class ScreenerService {
     }
   }
 
-  async getStockData(query: {
-    page: number;
-    limit: number;
-    search?: string;
-    date?: string;
-    watchlist?: boolean;
-    exchange?: string;
-    strategy?: string;
-  }) {
+  async getStockData(query: { page: number; limit: number; search?: string; date?: string; watchlist?: boolean; exchange?: string; strategy?: string }) {
     return this.repository.getStockData(query);
   }
 
-  async getStockHistoricalData(
-    symbol: string,
-    limit = 100,
-    timeframe?: string,
-    strategy?: string,
-  ) {
+  async getStockHistoricalData(symbol: string, limit = 100, timeframe?: string, strategy?: string) {
     try {
       const adapter = await this.getAdapter();
       let symbolToQuery = symbol.toUpperCase();
@@ -415,33 +344,16 @@ export class ScreenerService {
         interval = "1d";
       }
 
-      let points = await adapter.getHistoricalData(
-        symbolToQuery,
-        startDate,
-        new Date(),
-        interval,
-      );
+      let points = await adapter.getHistoricalData(symbolToQuery, startDate, new Date(), interval);
 
       // Auto-append .JK suffix if 4-letter Indonesian stock fails
-      if (
-        points.length === 0 &&
-        symbolToQuery.length === 4 &&
-        !symbolToQuery.includes(".")
-      ) {
+      if (points.length === 0 && symbolToQuery.length === 4 && !symbolToQuery.includes(".")) {
         symbolToQuery = `${symbolToQuery}.JK`;
-        points = await adapter.getHistoricalData(
-          symbolToQuery,
-          startDate,
-          new Date(),
-          interval,
-        );
+        points = await adapter.getHistoricalData(symbolToQuery, startDate, new Date(), interval);
       }
 
       if (!points || points.length === 0) {
-        console.warn(
-          "[ScreenerService] External API returned 0 points for symbol. Falling back to DB. Symbol:",
-          symbol.removeNewline(),
-        );
+        console.warn("[ScreenerService] External API returned 0 points for symbol. Falling back to DB. Symbol:", symbol.removeNewline());
         return this.repository.getStockHistoricalData(symbol, limit);
       }
 
@@ -454,32 +366,25 @@ export class ScreenerService {
       const ema50Vals = calculateEMA(closePrices, 50);
       const ema200Vals = calculateEMA(closePrices, 200);
       const rsiVals = calculateRSI(closePrices, 14);
-      const {
-        macd: macdVals,
-        signal: macdSignalVals,
-        histogram: macdHistVals,
-      } = calculateMACD(closePrices);
+      const { macd: macdVals, signal: macdSignalVals, histogram: macdHistVals } = calculateMACD(closePrices);
 
       // Fetch stock metadata (company name) from database if possible
-      const stockRecord = await this.repository
-        .getAllStocks()
-        .then((list) =>
-          list.find((s) => s.symbol.toUpperCase() === symbol.toUpperCase()),
-        );
+      const stockRecord = await this.repository.getAllStocks().then((list) => list.find((s) => s.symbol.toUpperCase() === symbol.toUpperCase()));
       const companyName = stockRecord?.name || symbol;
 
       // Fetch scores from database to merge with live data
       const dbPoints = await this.repository.getStockHistoricalData(symbol, 5000);
-      const dbScoresMap = new Map<string, {
-        dayScore: number | null;
-        swingScore: number | null;
-        positionScore: number | null;
-        scorePayload: any;
-      }>();
+      const dbScoresMap = new Map<
+        string,
+        {
+          dayScore: number | null;
+          swingScore: number | null;
+          positionScore: number | null;
+          scorePayload: any;
+        }
+      >();
       for (const dbPt of dbPoints) {
-        const dateStr = dbPt.date instanceof Date 
-          ? dbPt.date.toISOString().split('T')[0]
-          : new Date(dbPt.date).toISOString().split('T')[0];
+        const dateStr = dbPt.date instanceof Date ? dbPt.date.toISOString().split("T")[0] : new Date(dbPt.date).toISOString().split("T")[0];
         dbScoresMap.set(dateStr, {
           dayScore: dbPt.dayScore,
           swingScore: dbPt.swingScore,
@@ -489,9 +394,7 @@ export class ScreenerService {
       }
 
       const formattedPoints = points.map((p, index) => {
-        const dateStr = p.date instanceof Date
-          ? p.date.toISOString().split('T')[0]
-          : new Date(p.date).toISOString().split('T')[0];
+        const dateStr = p.date instanceof Date ? p.date.toISOString().split("T")[0] : new Date(p.date).toISOString().split("T")[0];
         const dbScore = dbScoresMap.get(dateStr);
 
         return {
@@ -499,9 +402,9 @@ export class ScreenerService {
           symbol: symbol.toUpperCase(),
           name: companyName,
           date: p.date,
-        open: p.open,
-        high: p.high,
-        low: p.low,
+          open: p.open,
+          high: p.high,
+          low: p.low,
           close: p.close,
           volume: p.volume,
           ema9: ema9Vals[index],
@@ -525,11 +428,7 @@ export class ScreenerService {
       }
       return formattedPoints.slice(-limit);
     } catch (error) {
-      console.error(
-        "[ScreenerService] Failed to get live historical data for symbol:",
-        symbol.removeNewline(),
-        error,
-      );
+      console.error("[ScreenerService] Failed to get live historical data for symbol:", symbol.removeNewline(), error);
       // Fallback to database
       return this.repository.getStockHistoricalData(symbol, limit);
     }

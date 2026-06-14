@@ -1,9 +1,5 @@
 import { UserManagementRepository } from "./user-management.repository";
-import {
-  CreateUserInput,
-  UpdateUserInput,
-  UserQueryInput,
-} from "./user-management.schema";
+import { CreateUserInput, UpdateUserInput, UserQueryInput } from "./user-management.schema";
 import { DataNotFoundError } from "@/core/errors/data-not-found-error";
 import { DataExistError } from "@/core/errors/data-exist-error";
 

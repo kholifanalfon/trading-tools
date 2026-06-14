@@ -6,22 +6,10 @@ import { useWebSocket } from "@/shared/hooks/use-websocket";
 import { useQueryClient } from "@tanstack/react-query";
 import { screenerKeys } from "../screener.keys";
 import { toast } from "sonner";
-import {
-  HistoryIcon,
-  RefreshCwIcon,
-  CheckCircle2Icon,
-  AlertCircleIcon,
-} from "lucide-react";
+import { HistoryIcon, RefreshCwIcon, CheckCircle2Icon, AlertCircleIcon } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { DatePicker } from "@/shared/components/ui/date-picker";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/shared/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/components/ui/table";
 
 export function IngestionLogsPage() {
   const getTodayDateString = () => {
@@ -71,9 +59,7 @@ export function IngestionLogsPage() {
     } else if (data.status === "failed") {
       setIsSyncing(false);
       setSyncStatusText("Failed");
-      toast.error(
-        `Historical stock sync failed: ${data.error || "Unknown error"}`
-      );
+      toast.error(`Historical stock sync failed: ${data.error || "Unknown error"}`);
       queryClient.invalidateQueries({
         queryKey: [...screenerKeys.all, "logs"],
       });
@@ -91,9 +77,7 @@ export function IngestionLogsPage() {
             setIsSyncing(true);
             setSyncStatusText("Syncing...");
           } else {
-            setSyncStatusText(
-              state.status.charAt(0).toUpperCase() + state.status.slice(1),
-            );
+            setSyncStatusText(state.status.charAt(0).toUpperCase() + state.status.slice(1));
           }
         }
       } catch (err) {
@@ -130,34 +114,19 @@ export function IngestionLogsPage() {
             <HistoryIcon className="h-6 w-6" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-foreground">
-              Ingestion Logs
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              View historical logs of stock price synchronization runs from
-              Yahoo Finance.
-            </p>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground">Ingestion Logs</h1>
+            <p className="text-sm text-muted-foreground">View historical logs of stock price synchronization runs from Yahoo Finance.</p>
           </div>
         </div>
 
         {/* Sync Trigger Card */}
         <div className="flex flex-wrap items-center gap-3 bg-card/40 backdrop-blur border border-border/60 rounded-xl px-4 py-2 text-xs">
           <div className="flex items-center gap-2 mr-2">
-            <span className="text-muted-foreground font-semibold">
-              Sync Target Date:
-            </span>
-            <DatePicker
-              value={selectedDate}
-              onChange={setSelectedDate}
-              placeholder="Select date..."
-              className="w-50"
-              disabled={isSyncing}
-            />
+            <span className="text-muted-foreground font-semibold">Sync Target Date:</span>
+            <DatePicker value={selectedDate} onChange={setSelectedDate} placeholder="Select date..." className="w-50" disabled={isSyncing} />
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-muted-foreground font-semibold">
-              Historical Status:
-            </span>
+            <span className="text-muted-foreground font-semibold">Historical Status:</span>
             <span
               className={`px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1 ${
                 syncStatusText === "Syncing..."
@@ -169,15 +138,9 @@ export function IngestionLogsPage() {
                       : "bg-muted/80 text-muted-foreground border border-border"
               }`}
             >
-              {syncStatusText === "Syncing..." && (
-                <RefreshCwIcon className="h-2.5 w-2.5 animate-spin" />
-              )}
-              {syncStatusText === "Success" && (
-                <CheckCircle2Icon className="h-2.5 w-2.5" />
-              )}
-              {syncStatusText === "Failed" && (
-                <AlertCircleIcon className="h-2.5 w-2.5" />
-              )}
+              {syncStatusText === "Syncing..." && <RefreshCwIcon className="h-2.5 w-2.5 animate-spin" />}
+              {syncStatusText === "Success" && <CheckCircle2Icon className="h-2.5 w-2.5" />}
+              {syncStatusText === "Failed" && <AlertCircleIcon className="h-2.5 w-2.5" />}
               {syncStatusText}
             </span>
           </div>
@@ -186,9 +149,7 @@ export function IngestionLogsPage() {
             disabled={isSyncing}
             className="flex items-center gap-1.5 h-8 text-xs px-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition disabled:opacity-50"
           >
-            <RefreshCwIcon
-              className={`h-3 w-3 ${isSyncing ? "animate-spin" : ""}`}
-            />
+            <RefreshCwIcon className={`h-3 w-3 ${isSyncing ? "animate-spin" : ""}`} />
             Sync History
           </Button>
         </div>
@@ -201,9 +162,7 @@ export function IngestionLogsPage() {
           className="bg-zinc-950 border border-border/80 rounded-xl p-4 font-mono text-[11px] text-zinc-300 space-y-1 h-52 overflow-y-auto shadow-inner select-text"
         >
           <div className="text-zinc-500 pb-1.5 border-b border-zinc-800/60 flex items-center justify-between font-sans text-xs">
-            <span className="font-semibold tracking-wider text-indigo-400">
-              LIVE SYNCHRONIZATION CONSOLE
-            </span>
+            <span className="font-semibold tracking-wider text-indigo-400">LIVE SYNCHRONIZATION CONSOLE</span>
             <span className="animate-pulse text-amber-500 font-bold flex items-center gap-1">
               <span className="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
               RUNNING
@@ -211,15 +170,11 @@ export function IngestionLogsPage() {
           </div>
           <div className="pt-2 space-y-1">
             {syncLogs.length === 0 ? (
-              <div className="text-zinc-600 italic">
-                Waiting for sync process to start broadcasting logs...
-              </div>
+              <div className="text-zinc-600 italic">Waiting for sync process to start broadcasting logs...</div>
             ) : (
               syncLogs.map((log, index) => (
                 <div key={index} className="whitespace-pre-wrap leading-relaxed">
-                  <span className="text-zinc-600">
-                    [{new Date().toLocaleTimeString()}]
-                  </span>{" "}
+                  <span className="text-zinc-600">[{new Date().toLocaleTimeString()}]</span>{" "}
                   <span
                     className={
                       log.includes("[ERROR]")
@@ -245,30 +200,17 @@ export function IngestionLogsPage() {
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/30 hover:bg-muted/30">
-              <TableHead className="h-9 px-4 text-xs font-semibold">
-                ID
-              </TableHead>
-              <TableHead className="h-9 px-4 text-xs font-semibold">
-                Status
-              </TableHead>
-              <TableHead className="h-9 px-4 text-xs font-semibold">
-                Message
-              </TableHead>
-              <TableHead className="h-9 px-4 text-xs font-semibold">
-                Symbols Count
-              </TableHead>
-              <TableHead className="h-9 px-4 text-xs font-semibold text-right">
-                Timestamp
-              </TableHead>
+              <TableHead className="h-9 px-4 text-xs font-semibold">ID</TableHead>
+              <TableHead className="h-9 px-4 text-xs font-semibold">Status</TableHead>
+              <TableHead className="h-9 px-4 text-xs font-semibold">Message</TableHead>
+              <TableHead className="h-9 px-4 text-xs font-semibold">Symbols Count</TableHead>
+              <TableHead className="h-9 px-4 text-xs font-semibold text-right">Timestamp</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoadingLogs ? (
               <TableRow>
-                <TableCell
-                  colSpan={5}
-                  className="h-32 text-center text-xs text-muted-foreground"
-                >
+                <TableCell colSpan={5} className="h-32 text-center text-xs text-muted-foreground">
                   <div className="flex flex-col items-center justify-center gap-1.5">
                     <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
                     <span>Loading ingestion logs...</span>
@@ -277,48 +219,29 @@ export function IngestionLogsPage() {
               </TableRow>
             ) : !logs || logs.length === 0 ? (
               <TableRow>
-                <TableCell
-                  colSpan={5}
-                  className="h-32 text-center text-xs text-muted-foreground"
-                >
-                  No synchronization runs logged. Use the "Sync History" button
-                  to start ingestion.
+                <TableCell colSpan={5} className="h-32 text-center text-xs text-muted-foreground">
+                  No synchronization runs logged. Use the "Sync History" button to start ingestion.
                 </TableCell>
               </TableRow>
             ) : (
               logs.map((log) => (
                 <TableRow key={log.id} className="hover:bg-muted/20">
-                  <TableCell className="py-2.5 px-4 font-semibold text-xs text-muted-foreground">
-                    #{log.id}
-                  </TableCell>
+                  <TableCell className="py-2.5 px-4 font-semibold text-xs text-muted-foreground">#{log.id}</TableCell>
                   <TableCell className="py-2.5 px-4 text-xs">
                     <span
                       className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider ${
-                        log.status === "success"
-                          ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                          : "bg-rose-500/10 text-rose-400 border border-rose-500/20"
+                        log.status === "success" ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : "bg-rose-500/10 text-rose-400 border border-rose-500/20"
                       }`}
                     >
-                      {log.status === "success" ? (
-                        <CheckCircle2Icon className="h-3 w-3" />
-                      ) : (
-                        <AlertCircleIcon className="h-3 w-3" />
-                      )}
+                      {log.status === "success" ? <CheckCircle2Icon className="h-3 w-3" /> : <AlertCircleIcon className="h-3 w-3" />}
                       {log.status}
                     </span>
                   </TableCell>
-                  <TableCell
-                    className="py-2.5 px-4 text-xs text-foreground font-medium max-w-md truncate"
-                    title={log.message}
-                  >
+                  <TableCell className="py-2.5 px-4 text-xs text-foreground font-medium max-w-md truncate" title={log.message}>
                     {log.message}
                   </TableCell>
-                  <TableCell className="py-2.5 px-4 text-xs text-muted-foreground font-mono">
-                    {log.symbolsCount}
-                  </TableCell>
-                  <TableCell className="py-2.5 px-4 text-xs text-muted-foreground text-right">
-                    {new Date(log.createdAt).toLocaleString()}
-                  </TableCell>
+                  <TableCell className="py-2.5 px-4 text-xs text-muted-foreground font-mono">{log.symbolsCount}</TableCell>
+                  <TableCell className="py-2.5 px-4 text-xs text-muted-foreground text-right">{new Date(log.createdAt).toLocaleString()}</TableCell>
                 </TableRow>
               ))
             )}

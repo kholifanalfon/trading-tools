@@ -13,26 +13,16 @@ export interface InfoPresenterProps {
   onTestBackendSentry: () => void;
 }
 
-export function InfoPresenter({
-  backendStack,
-  isLoading,
-  error,
-  frontendStack,
-  onTestFrontendSentry,
-  onTestBackendSentry,
-}: InfoPresenterProps) {
+export function InfoPresenter({ backendStack, isLoading, error, frontendStack, onTestFrontendSentry, onTestBackendSentry }: InfoPresenterProps) {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
       <div className="max-w-6xl mx-auto px-6 py-20">
-        
         {/* Header Section */}
         <div className="text-center space-y-4 mb-16">
           <Badge variant="indigo" className="px-3 py-1 font-mono tracking-wider">
             ARCHITECTURE SPECIFICATION
           </Badge>
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">
-            System Tech Stack
-          </h1>
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground">System Tech Stack</h1>
           <p className="max-w-xl mx-auto text-muted-foreground text-sm sm:text-base">
             An overview of the client and server technologies utilized within this workspace environment.
           </p>
@@ -72,16 +62,13 @@ export function InfoPresenter({
 
         {/* Stack Grid - Shadcn Default Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          
           {/* Frontend Stack Card */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-6 border-b border-border">
               <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
                 <span className="text-indigo-400 font-mono">01.</span> Frontend Application
               </CardTitle>
-              <Badge variant="indigo">
-                React + Vite
-              </Badge>
+              <Badge variant="indigo">React + Vite</Badge>
             </CardHeader>
             <CardContent className="pt-6">
               <div className="divide-y divide-border">
@@ -91,9 +78,7 @@ export function InfoPresenter({
                       <h3 className="font-semibold text-foreground">{tech.name}</h3>
                       <p className="text-xs text-muted-foreground mt-1">{tech.desc}</p>
                     </div>
-                    <span className="text-xs text-muted-foreground bg-muted px-2.5 py-1 rounded-md border border-border font-mono whitespace-nowrap">
-                      {tech.type}
-                    </span>
+                    <span className="text-xs text-muted-foreground bg-muted px-2.5 py-1 rounded-md border border-border font-mono whitespace-nowrap">{tech.type}</span>
                   </div>
                 ))}
               </div>
@@ -106,9 +91,7 @@ export function InfoPresenter({
               <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2">
                 <span className="text-emerald-400 font-mono">02.</span> Backend Module
               </CardTitle>
-              <Badge variant="emerald">
-                Express + Bun
-              </Badge>
+              <Badge variant="emerald">Express + Bun</Badge>
             </CardHeader>
             <CardContent className="pt-6">
               {isLoading ? (
@@ -127,9 +110,7 @@ export function InfoPresenter({
                       <h3 className="font-semibold text-foreground">Runtime Engine</h3>
                       <p className="text-xs text-muted-foreground mt-1">High-performance JavaScript runtime</p>
                     </div>
-                    <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">
-                      {backendStack.runtime}
-                    </span>
+                    <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">{backendStack.runtime}</span>
                   </div>
 
                   <div className="py-4 flex items-start justify-between gap-4">
@@ -137,9 +118,7 @@ export function InfoPresenter({
                       <h3 className="font-semibold text-foreground">HTTP Framework</h3>
                       <p className="text-xs text-muted-foreground mt-1">Minimalist and flexible routing layer</p>
                     </div>
-                    <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">
-                      {backendStack.framework}
-                    </span>
+                    <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">{backendStack.framework}</span>
                   </div>
 
                   <div className="py-4 flex items-start justify-between gap-4">
@@ -147,9 +126,7 @@ export function InfoPresenter({
                       <h3 className="font-semibold text-foreground">Database ORM</h3>
                       <p className="text-xs text-muted-foreground mt-1">Type-safe SQL queries</p>
                     </div>
-                    <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">
-                      {backendStack.orm}
-                    </span>
+                    <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">{backendStack.orm}</span>
                   </div>
 
                   <div className="py-4 flex items-start justify-between gap-4">
@@ -157,9 +134,7 @@ export function InfoPresenter({
                       <h3 className="font-semibold text-foreground">Primary Database</h3>
                       <p className="text-xs text-muted-foreground mt-1">Relational database and connection layer</p>
                     </div>
-                    <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">
-                      {backendStack.database}
-                    </span>
+                    <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">{backendStack.database}</span>
                   </div>
 
                   <div className="py-4 flex items-start justify-between gap-4">
@@ -167,9 +142,7 @@ export function InfoPresenter({
                       <h3 className="font-semibold text-foreground">Structured Logger</h3>
                       <p className="text-xs text-muted-foreground mt-1">Performance-focused logger</p>
                     </div>
-                    <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">
-                      {backendStack.logger}
-                    </span>
+                    <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">{backendStack.logger}</span>
                   </div>
 
                   <div className="py-4 flex items-start justify-between gap-4">
@@ -177,9 +150,7 @@ export function InfoPresenter({
                       <h3 className="font-semibold text-foreground">Input Validation</h3>
                       <p className="text-xs text-muted-foreground mt-1">TypeScript-first schema validation</p>
                     </div>
-                    <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">
-                      {backendStack.validation}
-                    </span>
+                    <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">{backendStack.validation}</span>
                   </div>
 
                   <div className="py-4 flex items-start justify-between gap-4">
@@ -187,9 +158,7 @@ export function InfoPresenter({
                       <h3 className="font-semibold text-foreground">Authentication</h3>
                       <p className="text-xs text-muted-foreground mt-1">JWT payload sign, verify, and encryption</p>
                     </div>
-                    <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">
-                      {backendStack.auth}
-                    </span>
+                    <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">{backendStack.auth}</span>
                   </div>
 
                   {backendStack.version && (
@@ -198,9 +167,7 @@ export function InfoPresenter({
                         <h3 className="font-semibold text-foreground">API Version</h3>
                         <p className="text-xs text-muted-foreground mt-1">Current active endpoint version</p>
                       </div>
-                      <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">
-                        {backendStack.version}
-                      </span>
+                      <span className="text-xs text-muted-foreground bg-muted border border-border px-2.5 py-1 rounded-md font-mono">{backendStack.version}</span>
                     </div>
                   )}
                 </div>
@@ -212,4 +179,3 @@ export function InfoPresenter({
     </div>
   );
 }
-

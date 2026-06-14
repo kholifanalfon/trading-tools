@@ -6,11 +6,7 @@ import { AuthRepository } from "@/modules/auth/auth.repository";
 const secret = new TextEncoder().encode(config.BE_JWT_SECRET);
 const authRepository = new AuthRepository();
 
-export async function requireAuth(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
+export async function requireAuth(req: Request, res: Response, next: NextFunction) {
   try {
     const token = req.signedCookies?.token;
     if (typeof token !== "string" || !token.trim()) {

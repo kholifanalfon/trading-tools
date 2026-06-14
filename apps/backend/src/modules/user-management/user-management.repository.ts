@@ -6,14 +6,9 @@ import { CreateUserInput, UpdateUserInput, UserQueryInput } from "./user-managem
 export class UserManagementRepository {
   async getUsers(query: UserQueryInput) {
     const offset = (query.page - 1) * query.limit;
-    
+
     // Build filter condition
-    const searchFilter = query.search
-      ? or(
-          like(users.fullName, `%${query.search}%`),
-          like(users.email, `%${query.search}%`)
-        )
-      : undefined;
+    const searchFilter = query.search ? or(like(users.fullName, `%${query.search}%`), like(users.email, `%${query.search}%`)) : undefined;
 
     // Fetch user items
     const items = await db
@@ -66,11 +61,7 @@ export class UserManagementRepository {
   }
 
   async getUserByEmail(email: string) {
-    const result = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, email))
-      .limit(1);
+    const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
     return result[0] || null;
   }
 
@@ -103,29 +94,22 @@ export class UserManagementRepository {
     if (data.isActive !== undefined) updateData.isActive = data.isActive;
     updateData.updatedAt = new Date();
 
-    const result = await db
-      .update(users)
-      .set(updateData)
-      .where(eq(users.id, id))
-      .returning({
-        id: users.id,
-        fullName: users.fullName,
-        email: users.email,
-        role: users.role,
-        isActive: users.isActive,
-        createdAt: users.createdAt,
-        updatedAt: users.updatedAt,
-      });
+    const result = await db.update(users).set(updateData).where(eq(users.id, id)).returning({
+      id: users.id,
+      fullName: users.fullName,
+      email: users.email,
+      role: users.role,
+      isActive: users.isActive,
+      createdAt: users.createdAt,
+      updatedAt: users.updatedAt,
+    });
     return result[0] || null;
   }
 
   async deleteUser(id: number) {
-    const result = await db
-      .delete(users)
-      .where(eq(users.id, id))
-      .returning({
-        id: users.id,
-      });
+    const result = await db.delete(users).where(eq(users.id, id)).returning({
+      id: users.id,
+    });
     return result[0] || null;
   }
 }

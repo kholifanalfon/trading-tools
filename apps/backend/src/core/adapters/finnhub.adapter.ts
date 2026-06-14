@@ -1,11 +1,5 @@
-import {
-  ScreenerProviderAdapter,
-  HistoricalDataPoint,
-} from "./provider.adapter";
-import {
-  StockSearchResult,
-  StockQuote,
-} from "@/modules/screener/screener.schema";
+import { ScreenerProviderAdapter, HistoricalDataPoint } from "./provider.adapter";
+import { StockSearchResult, StockQuote } from "@/modules/screener/screener.schema";
 import { getFinnhubClient } from "@/core/finnhub";
 import { FinnhubError } from "@/core/errors/finnhub-error";
 
@@ -14,10 +8,7 @@ export class FinnhubAdapter implements ScreenerProviderAdapter {
 
   constructor(apiKey: string) {
     if (!apiKey) {
-      throw new FinnhubError(
-        "Finnhub API key is not configured. Please set it in Settings.",
-        400,
-      );
+      throw new FinnhubError("Finnhub API key is not configured. Please set it in Settings.", 400);
     }
     this.apiKey = apiKey;
   }
@@ -38,10 +29,7 @@ export class FinnhubAdapter implements ScreenerProviderAdapter {
         type: item.type || "Common Stock",
       }));
     } catch (err) {
-      throw new FinnhubError(
-        `Finnhub search failed: ${err instanceof Error ? err.message : String(err)}`,
-        500,
-      );
+      throw new FinnhubError(`Finnhub search failed: ${err instanceof Error ? err.message : String(err)}`, 500);
     }
   }
 
@@ -55,10 +43,7 @@ export class FinnhubAdapter implements ScreenerProviderAdapter {
         });
       });
       if (data.c === 0 && data.o === 0) {
-        throw new FinnhubError(
-          `Symbol ${symbol} not found on Finnhub or has no quote data.`,
-          404,
-        );
+        throw new FinnhubError(`Symbol ${symbol} not found on Finnhub or has no quote data.`, 404);
       }
       return {
         symbol: symbol.toUpperCase(),
@@ -71,19 +56,11 @@ export class FinnhubAdapter implements ScreenerProviderAdapter {
         previousClose: data.pc || 0,
       };
     } catch (err) {
-      throw new FinnhubError(
-        `Finnhub quote failed: ${err instanceof Error ? err.message : String(err)}`,
-        err instanceof FinnhubError ? err.status : 500,
-      );
+      throw new FinnhubError(`Finnhub quote failed: ${err instanceof Error ? err.message : String(err)}`, err instanceof FinnhubError ? err.status : 500);
     }
   }
 
-  async getHistoricalData(
-    symbol: string,
-    fromDate: Date,
-    toDate: Date,
-    interval = "1d",
-  ): Promise<HistoricalDataPoint[]> {
+  async getHistoricalData(symbol: string, fromDate: Date, toDate: Date, interval = "1d"): Promise<HistoricalDataPoint[]> {
     const client = getFinnhubClient(this.apiKey);
     try {
       const fromUnix = Math.floor(fromDate.getTime() / 1000);
@@ -99,16 +76,10 @@ export class FinnhubAdapter implements ScreenerProviderAdapter {
 
       // Resolution: 'D' for daily candles
       const data: any = await new Promise((resolve, reject) => {
-        client.stockCandles(
-          symbol.toUpperCase(),
-          resolution,
-          fromUnix,
-          toUnix,
-          (error: any, data: any) => {
-            if (error) reject(error);
-            else resolve(data);
-          },
-        );
+        client.stockCandles(symbol.toUpperCase(), resolution, fromUnix, toUnix, (error: any, data: any) => {
+          if (error) reject(error);
+          else resolve(data);
+        });
       });
 
       if (!data || data.s !== "ok" || !Array.isArray(data.t)) {
@@ -131,11 +102,7 @@ export class FinnhubAdapter implements ScreenerProviderAdapter {
       }
       return points;
     } catch (err) {
-      console.warn(
-        "Finnhub stockCandles failed for symbol:",
-        symbol.removeNewline(),
-        err,
-      );
+      console.warn("Finnhub stockCandles failed for symbol:", symbol.removeNewline(), err);
       return [];
     }
   }

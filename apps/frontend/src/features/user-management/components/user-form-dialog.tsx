@@ -7,13 +7,7 @@ import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Field, FieldGroup, FieldLabel } from "@/shared/components/ui/field";
 import { ErrorDisplay } from "@/shared/components/ui/error-display";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/shared/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/shared/components/ui/dialog";
 
 export interface UserFormDialogProps {
   isOpen: boolean;
@@ -24,14 +18,7 @@ export interface UserFormDialogProps {
   error: unknown;
 }
 
-export function UserFormDialog({
-  isOpen,
-  onClose,
-  onSubmit,
-  user,
-  isLoading,
-  error,
-}: UserFormDialogProps) {
+export function UserFormDialog({ isOpen, onClose, onSubmit, user, isLoading, error }: UserFormDialogProps) {
   const isEdit = !!user;
 
   const {
@@ -75,13 +62,9 @@ export function UserFormDialog({
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>
-            {isEdit ? "Edit User Record" : "Register New User"}
-          </DialogTitle>
+          <DialogTitle>{isEdit ? "Edit User Record" : "Register New User"}</DialogTitle>
           <DialogDescription>
-            {isEdit
-              ? "Modify the selected user's details and active state below."
-              : "Provide details to register a new user in the workspace."}
+            {isEdit ? "Modify the selected user's details and active state below." : "Provide details to register a new user in the workspace."}
           </DialogDescription>
         </DialogHeader>
 
@@ -92,53 +75,23 @@ export function UserFormDialog({
             {/* Name */}
             <Field>
               <FieldLabel htmlFor="name">Full Name</FieldLabel>
-              <Input
-                id="name"
-                type="text"
-                placeholder="John Doe"
-                disabled={isLoading}
-                {...register("name")}
-              />
-              {errors.name && (
-                <p className="text-xs text-destructive font-semibold mt-1">
-                  {errors.name.message as string}
-                </p>
-              )}
+              <Input id="name" type="text" placeholder="John Doe" disabled={isLoading} {...register("name")} />
+              {errors.name && <p className="text-xs text-destructive font-semibold mt-1">{errors.name.message as string}</p>}
             </Field>
 
             {/* Email */}
             <Field>
               <FieldLabel htmlFor="email">Email Address</FieldLabel>
-              <Input
-                id="email"
-                type="email"
-                placeholder="john@example.com"
-                disabled={isLoading}
-                {...register("email")}
-              />
-              {errors.email && (
-                <p className="text-xs text-destructive font-semibold mt-1">
-                  {errors.email.message as string}
-                </p>
-              )}
+              <Input id="email" type="email" placeholder="john@example.com" disabled={isLoading} {...register("email")} />
+              {errors.email && <p className="text-xs text-destructive font-semibold mt-1">{errors.email.message as string}</p>}
             </Field>
 
             {/* Password - Only for Create */}
             {!isEdit && (
               <Field>
                 <FieldLabel htmlFor="password">Password</FieldLabel>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="••••••••"
-                  disabled={isLoading}
-                  {...register("password")}
-                />
-                {errors.password && (
-                  <p className="text-xs text-destructive font-semibold mt-1">
-                    {errors.password.message as string}
-                  </p>
-                )}
+                <Input id="password" type="password" placeholder="••••••••" disabled={isLoading} {...register("password")} />
+                {errors.password && <p className="text-xs text-destructive font-semibold mt-1">{errors.password.message as string}</p>}
               </Field>
             )}
 
@@ -151,26 +104,20 @@ export function UserFormDialog({
                 {...register("role")}
                 className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 text-foreground"
               >
-                <option value="user" className="bg-card text-foreground">User</option>
-                <option value="admin" className="bg-card text-foreground">Admin</option>
+                <option value="user" className="bg-card text-foreground">
+                  User
+                </option>
+                <option value="admin" className="bg-card text-foreground">
+                  Admin
+                </option>
               </select>
-              {errors.role && (
-                <p className="text-xs text-destructive font-semibold mt-1">
-                  {errors.role.message as string}
-                </p>
-              )}
+              {errors.role && <p className="text-xs text-destructive font-semibold mt-1">{errors.role.message as string}</p>}
             </Field>
 
             {/* Status - Only for Edit */}
             {isEdit && (
               <div className="flex items-center gap-3">
-                <input
-                  id="isActive"
-                  type="checkbox"
-                  disabled={isLoading}
-                  {...register("isActive")}
-                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                />
+                <input id="isActive" type="checkbox" disabled={isLoading} {...register("isActive")} className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
                 <FieldLabel htmlFor="isActive" className="cursor-pointer select-none">
                   Account Status: Active
                 </FieldLabel>
@@ -180,12 +127,7 @@ export function UserFormDialog({
 
           {/* Footer buttons */}
           <div className="flex justify-end gap-3 pt-4 border-t border-border">
-            <Button
-              variant="outline"
-              type="button"
-              onClick={onClose}
-              disabled={isLoading}
-            >
+            <Button variant="outline" type="button" onClick={onClose} disabled={isLoading}>
               Cancel
             </Button>
             <Button type="submit" disabled={isLoading}>

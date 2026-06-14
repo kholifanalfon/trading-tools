@@ -29,14 +29,10 @@ export class AuthService {
 
     // Dummy hash of same algorithm structure to execute verification when user is not found,
     // preventing user enumeration via timing analysis.
-    const dummyHash =
-      "$argon2id$v=19$m=65536,t=2,p=1$YHZwLuqWbhVFmYtOuCqtsKaxnCJX0TZie1kuwXEhw/I$a3hUn0MEkMpYeMWZXM9P5NlJnlRQOuK0AosnU8CD6us";
+    const dummyHash = "$argon2id$v=19$m=65536,t=2,p=1$YHZwLuqWbhVFmYtOuCqtsKaxnCJX0TZie1kuwXEhw/I$a3hUn0MEkMpYeMWZXM9P5NlJnlRQOuK0AosnU8CD6us";
     const passwordToVerify = user ? user.userPassword : dummyHash;
 
-    const isPasswordValid = await Bun.password.verify(
-      data.password,
-      passwordToVerify,
-    );
+    const isPasswordValid = await Bun.password.verify(data.password, passwordToVerify);
 
     if (!user || !isPasswordValid) {
       throw new UnauthorizedError();
@@ -52,10 +48,6 @@ export class AuthService {
   }
 
   private async generateToken(payload: { id: number; email: string }) {
-    return new SignJWT(payload)
-      .setProtectedHeader({ alg: "HS256" })
-      .setIssuedAt()
-      .setExpirationTime("7d")
-      .sign(this.secret);
+    return new SignJWT(payload).setProtectedHeader({ alg: "HS256" }).setIssuedAt().setExpirationTime("7d").sign(this.secret);
   }
 }

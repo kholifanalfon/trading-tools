@@ -13,7 +13,6 @@ export function ProfilePage() {
 
   const handleSave = (data: ProfileInput) => {
     setProfile(data);
-    console.log("Profile saved successfully:", data);
   };
 
   return (

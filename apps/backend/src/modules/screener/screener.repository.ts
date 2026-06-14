@@ -57,40 +57,19 @@ export class ScreenerRepository {
   }
 
   async getLatestLogs(limit = 10) {
-    return db
-      .select()
-      .from(stockLogs)
-      .orderBy(desc(stockLogs.createdAt))
-      .limit(limit);
+    return db.select().from(stockLogs).orderBy(desc(stockLogs.createdAt)).limit(limit);
   }
 
-  async getStockData(query: {
-    page: number;
-    limit: number;
-    search?: string;
-    date?: string;
-    watchlist?: boolean;
-    exchange?: string;
-    strategy?: string;
-  }) {
+  async getStockData(query: { page: number; limit: number; search?: string; date?: string; watchlist?: boolean; exchange?: string; strategy?: string }) {
     const offset = (query.page - 1) * query.limit;
 
-    const searchFilter = query.search
-      ? like(stockData.symbol, `%${query.search.toUpperCase()}%`)
-      : undefined;
+    const searchFilter = query.search ? like(stockData.symbol, `%${query.search.toUpperCase()}%`) : undefined;
 
-    const dateFilter = query.date
-      ? eq(sql`${stockData.date}::date`, sql`${query.date}::date`)
-      : undefined;
+    const dateFilter = query.date ? eq(sql`${stockData.date}::date`, sql`${query.date}::date`) : undefined;
 
-    const watchlistFilter =
-      query.watchlist !== undefined
-        ? eq(stocks.watchlist, query.watchlist)
-        : undefined;
+    const watchlistFilter = query.watchlist !== undefined ? eq(stocks.watchlist, query.watchlist) : undefined;
 
-    const exchangeFilter = query.exchange
-      ? eq(stocks.exchange, query.exchange)
-      : undefined;
+    const exchangeFilter = query.exchange ? eq(stocks.exchange, query.exchange) : undefined;
 
     let strategyFilter = undefined;
     if (query.strategy === "day") {
@@ -101,13 +80,7 @@ export class ScreenerRepository {
       strategyFilter = sql`${stockData.positionScore} IS NOT NULL`;
     }
 
-    const filters = and(
-      searchFilter,
-      dateFilter,
-      watchlistFilter,
-      exchangeFilter,
-      strategyFilter,
-    );
+    const filters = and(searchFilter, dateFilter, watchlistFilter, exchangeFilter, strategyFilter);
 
     let orderByClauses = [desc(stockData.date)];
     if (query.strategy === "day") {

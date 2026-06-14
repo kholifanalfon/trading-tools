@@ -25,15 +25,10 @@ export function parseWebSocketKey(key?: WebSocketKey) {
   return { event: key, room: undefined };
 }
 
-export function useWebSocket(
-  key?: WebSocketKey,
-  onMessage?: (data: any) => void,
-): ClientSocket {
+export function useWebSocket(key?: WebSocketKey, onMessage?: (data: any) => void): ClientSocket {
   const socket = useContext(WebSocketContext);
   if (!socket) {
-    throw new WebSocketError(
-      "useWebSocket must be used within a WebSocketProvider",
-    );
+    throw new WebSocketError("useWebSocket must be used within a WebSocketProvider");
   }
 
   const { event, room } = parseWebSocketKey(key);

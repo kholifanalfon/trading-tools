@@ -1,12 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useTheme } from "@/shared/components/theme-provider";
-import {
-  createChart,
-  ColorType,
-  CandlestickSeries,
-  LineSeries,
-  HistogramSeries,
-} from "lightweight-charts";
+import { createChart, ColorType, CandlestickSeries, LineSeries, HistogramSeries } from "lightweight-charts";
 
 export interface StockChartCanvasProps {
   historicalData: any[];
@@ -21,18 +15,7 @@ export interface StockChartCanvasProps {
   chartType: "candlestick" | "line";
 }
 
-export function StockChartCanvas({
-  historicalData,
-  isLoading,
-  timeframe,
-  showEma9,
-  showEma21,
-  showEma50,
-  showEma200,
-  showRsi,
-  showMacd,
-  chartType,
-}: StockChartCanvasProps) {
+export function StockChartCanvas({ historicalData, isLoading, timeframe, showEma9, showEma21, showEma50, showEma200, showRsi, showMacd, chartType }: StockChartCanvasProps) {
   const { theme } = useTheme();
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
@@ -42,8 +25,7 @@ export function StockChartCanvas({
 
   // Determine dynamic chart dimensions based on viewport height
   const getChartDimensions = () => {
-    const isMobile =
-      typeof window !== "undefined" ? window.innerWidth < 768 : false;
+    const isMobile = typeof window !== "undefined" ? window.innerWidth < 768 : false;
 
     const vh = typeof window !== "undefined" ? window.innerHeight : 800;
     const offset = isMobile ? 150 : 260;
@@ -64,11 +46,7 @@ export function StockChartCanvas({
   const dims = getChartDimensions();
 
   useEffect(() => {
-    if (
-      isLoading ||
-      historicalData.length === 0 ||
-      !chartContainerRef.current
-    ) {
+    if (isLoading || historicalData.length === 0 || !chartContainerRef.current) {
       return;
     }
 
@@ -94,17 +72,12 @@ export function StockChartCanvas({
           macdHist: d.macdHist ? Number(d.macdHist) : null,
         };
       })
-      .filter(
-        (item, index, self) =>
-          item.time &&
-          self.findIndex((t) => Math.abs(t.time - item.time) < 60) === index,
-      )
+      .filter((item, index, self) => item.time && self.findIndex((t) => Math.abs(t.time - item.time) < 60) === index)
       .sort((a, b) => a.time - b.time);
 
     if (chartData.length === 0) return;
 
-    const isDark =
-      document.documentElement.classList.contains("dark") || theme === "dark";
+    const isDark = document.documentElement.classList.contains("dark") || theme === "dark";
 
     const colors = {
       background: isDark ? "#09090b" : "#ffffff",
@@ -233,9 +206,7 @@ export function StockChartCanvas({
     if (chartType === "candlestick") {
       mainSeries.setData(chartData);
     } else {
-      mainSeries.setData(
-        chartData.map((d) => ({ time: d.time, value: d.close })),
-      );
+      mainSeries.setData(chartData.map((d) => ({ time: d.time, value: d.close })));
     }
 
     const emas = [
@@ -289,10 +260,7 @@ export function StockChartCanvas({
       chartData.map((d) => ({
         time: d.time,
         value: d.volume,
-        color:
-          d.close >= d.open
-            ? "rgba(34, 197, 94, 0.15)"
-            : "rgba(239, 68, 68, 0.15)",
+        color: d.close >= d.open ? "rgba(34, 197, 94, 0.15)" : "rgba(239, 68, 68, 0.15)",
       })),
     );
 
@@ -307,9 +275,7 @@ export function StockChartCanvas({
         },
         rsiPaneIndex,
       );
-      const rsiData = chartData
-        .filter((d) => d.rsi !== null)
-        .map((d) => ({ time: d.time, value: Number(d.rsi) }));
+      const rsiData = chartData.filter((d) => d.rsi !== null).map((d) => ({ time: d.time, value: Number(d.rsi) }));
       rsiSeries.setData(rsiData);
 
       rsiSeries.createPriceLine({
@@ -349,10 +315,7 @@ export function StockChartCanvas({
         .map((d) => ({
           time: d.time,
           value: Number(d.macdHist),
-          color:
-            Number(d.macdHist) >= 0
-              ? "rgba(16, 185, 129, 0.6)"
-              : "rgba(239, 68, 68, 0.6)",
+          color: Number(d.macdHist) >= 0 ? "rgba(16, 185, 129, 0.6)" : "rgba(239, 68, 68, 0.6)",
         }));
       macdHistSeries.setData(histData);
 
@@ -366,9 +329,7 @@ export function StockChartCanvas({
         },
         macdPaneIndex,
       );
-      const macdLineData = chartData
-        .filter((d) => d.macd !== null)
-        .map((d) => ({ time: d.time, value: Number(d.macd) }));
+      const macdLineData = chartData.filter((d) => d.macd !== null).map((d) => ({ time: d.time, value: Number(d.macd) }));
       macdSeries.setData(macdLineData);
 
       const signalSeries = chart.addSeries(
@@ -381,9 +342,7 @@ export function StockChartCanvas({
         },
         macdPaneIndex,
       );
-      const signalLineData = chartData
-        .filter((d) => d.macdSignal !== null)
-        .map((d) => ({ time: d.time, value: Number(d.macdSignal) }));
+      const signalLineData = chartData.filter((d) => d.macdSignal !== null).map((d) => ({ time: d.time, value: Number(d.macdSignal) }));
       signalSeries.setData(signalLineData);
     }
 
@@ -399,14 +358,7 @@ export function StockChartCanvas({
       const tooltip = tooltipRef.current;
       if (!tooltip) return;
 
-      if (
-        param.point === undefined ||
-        !param.time ||
-        param.point.x < 0 ||
-        param.point.x > container.clientWidth ||
-        param.point.y < 0 ||
-        param.point.y > dims.height
-      ) {
+      if (param.point === undefined || !param.time || param.point.x < 0 || param.point.x > container.clientWidth || param.point.y < 0 || param.point.y > dims.height) {
         tooltip.style.display = "none";
         return;
       }
@@ -424,8 +376,7 @@ export function StockChartCanvas({
         month: "short",
         day: "numeric",
         hour: timeframe === "1D" || timeframe === "5D" ? "2-digit" : undefined,
-        minute:
-          timeframe === "1D" || timeframe === "5D" ? "2-digit" : undefined,
+        minute: timeframe === "1D" || timeframe === "5D" ? "2-digit" : undefined,
       });
 
       const openVal = Number(bar.open) ?? 0;
@@ -457,9 +408,7 @@ export function StockChartCanvas({
         </div>
       `;
 
-      const coordinateY = mainSeries.priceToCoordinate(
-        chartType === "candlestick" ? highVal : closeVal,
-      );
+      const coordinateY = mainSeries.priceToCoordinate(chartType === "candlestick" ? highVal : closeVal);
       const coordinateX = param.point.x;
 
       const tooltipWidth = 160;
@@ -478,9 +427,7 @@ export function StockChartCanvas({
       } else {
         top = coordinateY - tooltipHeight - 15;
         if (top < 10) {
-          const coordinateYLow = mainSeries.priceToCoordinate(
-            chartType === "candlestick" ? lowVal : closeVal,
-          );
+          const coordinateYLow = mainSeries.priceToCoordinate(chartType === "candlestick" ? lowVal : closeVal);
           if (coordinateYLow !== null && !isNaN(coordinateYLow)) {
             top = coordinateYLow + 15;
           } else {
@@ -527,21 +474,7 @@ export function StockChartCanvas({
       resizeObserver.disconnect();
       chart.remove();
     };
-  }, [
-    historicalData,
-    isLoading,
-    showEma9,
-    showEma21,
-    showEma50,
-    showEma200,
-    showRsi,
-    showMacd,
-    chartType,
-    theme,
-    timeframe,
-    dims.height,
-    activePanesCount,
-  ]);
+  }, [historicalData, isLoading, showEma9, showEma21, showEma50, showEma200, showRsi, showMacd, chartType, theme, timeframe, dims.height, activePanesCount]);
 
   return (
     <div className="bg-[#09090b] border border-border/80 rounded-xl min-h-[350px] relative overflow-hidden flex flex-col justify-center">
@@ -551,14 +484,9 @@ export function StockChartCanvas({
           <span>Loading chart analytics...</span>
         </div>
       ) : historicalData.length === 0 ? (
-        <div className="text-center text-xs text-muted-foreground">
-          No historical records found.
-        </div>
+        <div className="text-center text-xs text-muted-foreground">No historical records found.</div>
       ) : (
-        <div
-          style={{ height: dims.height }}
-          className="relative w-full transition-all duration-300"
-        >
+        <div style={{ height: dims.height }} className="relative w-full transition-all duration-300">
           <div ref={chartContainerRef} className="w-full h-full" />
           <div
             ref={tooltipRef}

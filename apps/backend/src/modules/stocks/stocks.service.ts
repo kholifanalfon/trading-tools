@@ -23,7 +23,6 @@ export class StocksService {
   }
 
   async getStocks(query: StockQueryInput) {
-
     return this.repository.getStocks(query);
   }
 
@@ -114,7 +113,7 @@ export class StocksService {
       const exchangesPromptList = activeExchanges
         .map(
           (ex: any) =>
-            `- ${ex.name} (Country: ${ex.country}): Recommend exactly ${ex.limit || 15} ticker symbols. Tickers from this exchange MUST use the suffix "${ex.suffix}" in Yahoo Finance formatting (e.g., if suffix is .JK, BBCA becomes BBCA.JK)`
+            `- ${ex.name} (Country: ${ex.country}): Recommend exactly ${ex.limit || 15} ticker symbols. Tickers from this exchange MUST use the suffix "${ex.suffix}" in Yahoo Finance formatting (e.g., if suffix is .JK, BBCA becomes BBCA.JK)`,
         )
         .join("\n");
 
@@ -179,7 +178,6 @@ Strictly enforce the formatting rules above. Do not output tickers without the r
           },
         });
 
-
         const textResponse = result.response.text();
         if (!textResponse) {
           throw new GeminiApiError("No response received from Gemini AI model.");
@@ -190,9 +188,7 @@ Strictly enforce the formatting rules above. Do not output tickers without the r
         if (error instanceof GeminiApiError) {
           throw error;
         }
-        throw new GeminiApiError(
-          `Gemini API execution failed: ${error instanceof Error ? error.message : String(error)}`
-        );
+        throw new GeminiApiError(`Gemini API execution failed: ${error instanceof Error ? error.message : String(error)}`);
       }
 
       if (!Array.isArray(parsedList)) {
@@ -208,7 +204,7 @@ Strictly enforce the formatting rules above. Do not output tickers without the r
             exchange = "IDX";
           } else {
             // Find in activeExchanges configs
-            const matchedEx = activeExchanges.find(ex => ex.suffix && sym.endsWith(ex.suffix.toUpperCase()));
+            const matchedEx = activeExchanges.find((ex) => ex.suffix && sym.endsWith(ex.suffix.toUpperCase()));
             if (matchedEx) {
               exchange = matchedEx.name.includes("IDX") ? "IDX" : matchedEx.name.split(" ")[0];
             }
@@ -254,7 +250,3 @@ Strictly enforce the formatting rules above. Do not output tickers without the r
     }
   }
 }
-
-
-
-
