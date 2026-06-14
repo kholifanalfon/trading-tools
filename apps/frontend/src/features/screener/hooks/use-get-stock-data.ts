@@ -1,5 +1,6 @@
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
-import { getStockDataApi, StockDataQueryParams } from "../services/screener.api";
+import { getStockDataApi } from "../services/screener.api";
+import { StockDataQueryParams } from "../types/screener.types";
 import { screenerKeys } from "../screener.keys";
 import { ApiError } from "@/shared/config/api";
 
@@ -11,15 +12,7 @@ export function useGetStockData(params: StockDataQueryParams) {
   });
 }
 
-export interface StockDataInfiniteParams {
-  limit: number;
-  search?: string;
-  date?: string;
-  watchlist?: boolean;
-  exchange?: string;
-}
-
-export function useGetInfiniteStockData(params: StockDataInfiniteParams) {
+export function useGetInfiniteStockData(params: StockDataQueryParams) {
   return useInfiniteQuery<any, ApiError>({
     queryKey: [...screenerKeys.all, "data", "infinite", params],
     queryFn: ({ pageParam = 1 }) =>

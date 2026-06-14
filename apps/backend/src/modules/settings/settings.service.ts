@@ -52,6 +52,7 @@ export class SettingsService {
       finnhub_api_key: hasFinnhubKey ? API_KEY_MASK : "",
       stock_screener_provider: configObj.stock_screener_provider || "yahoo_finance",
       exchanges_config: JSON.stringify(exchangesConfig),
+      default_strategy: configObj.default_strategy || "day",
     };
   }
 
@@ -78,6 +79,9 @@ export class SettingsService {
     }
     if (data.exchanges_config !== undefined) {
       await this.repository.upsertSetting("exchanges_config", data.exchanges_config);
+    }
+    if (data.default_strategy !== undefined) {
+      await this.repository.upsertSetting("default_strategy", data.default_strategy);
     }
     return this.getSettings();
   }

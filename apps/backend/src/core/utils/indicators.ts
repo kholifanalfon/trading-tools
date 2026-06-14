@@ -10,7 +10,6 @@ export function calculateEMA(prices: number[], period: number): (number | null)[
 
   const k = 2 / (period + 1);
   
-  // Calculate initial Simple Moving Average (SMA) for the first 'period' elements
   let sum = 0;
   for (let i = 0; i < period; i++) {
     sum += prices[i];
@@ -27,6 +26,59 @@ export function calculateEMA(prices: number[], period: number): (number | null)[
 }
 
 /**
+ * Helper to calculate Simple Moving Average (SMA)
+ */
+export function calculateSMA(prices: number[], period: number): (number | null)[] {
+  const sma: (number | null)[] = new Array(prices.length).fill(null);
+  if (prices.length < period) return sma;
+
+  let sum = 0;
+  for (let i = 0; i < period; i++) {
+    sum += prices[i];
+  }
+  sma[period - 1] = sum / period;
+
+  for (let i = period; i < prices.length; i++) {
+    sum = sum + prices[i] - prices[i - period];
+    sma[i] = sum / period;
+  }
+  return sma;
+}
+
+/**
+ * Helper to calculate Average True Range (ATR)
+ */
+export function calculateATR(
+  highs: number[],
+  lows: number[],
+  closes: number[],
+  period: number = 14
+): (number | null)[] {
+  const atr: (number | null)[] = new Array(closes.length).fill(null);
+  if (closes.length <= period) return atr;
+
+  const tr: number[] = new Array(closes.length).fill(0);
+  for (let i = 1; i < closes.length; i++) {
+    const h = highs[i];
+    const l = lows[i];
+    const pc = closes[i - 1];
+    tr[i] = Math.max(h - l, Math.abs(h - pc), Math.abs(l - pc));
+  }
+
+  let sumTR = 0;
+  for (let i = 1; i <= period; i++) {
+    sumTR += tr[i];
+  }
+  atr[period] = sumTR / period;
+
+  for (let i = period + 1; i < closes.length; i++) {
+    atr[i] = (atr[i - 1]! * (period - 1) + tr[i]) / period;
+  }
+
+  return atr;
+}
+
+/**
  * Helper to calculate Relative Strength Index (RSI) using Wilder's smoothing
  */
 export function calculateRSI(prices: number[], period = 14): (number | null)[] {
@@ -38,7 +90,6 @@ export function calculateRSI(prices: number[], period = 14): (number | null)[] {
   let gains = 0;
   let losses = 0;
 
-  // First period changes
   for (let i = 1; i <= period; i++) {
     const diff = prices[i] - prices[i - 1];
     if (diff > 0) {
@@ -87,7 +138,6 @@ export function calculateMACD(
   const emaFast = calculateEMA(prices, fastPeriod);
   const emaSlow = calculateEMA(prices, slowPeriod);
 
-  // MACD Line = EMA(12) - EMA(26)
   for (let i = 0; i < prices.length; i++) {
     const fastVal = emaFast[i];
     const slowVal = emaSlow[i];
@@ -96,8 +146,6 @@ export function calculateMACD(
     }
   }
 
-  // Signal Line = EMA(9) of MACD Line
-  // Filter out the non-null MACD values to calculate the signal line EMA
   const firstMacdIdx = macd.findIndex((val) => val !== null);
   if (firstMacdIdx !== -1 && prices.length >= firstMacdIdx + signalPeriod) {
     const macdSub = macd.slice(firstMacdIdx) as number[];

@@ -20,6 +20,7 @@ import {
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { DatePicker } from "@/shared/components/ui/date-picker";
+import { useGetSettings } from "@/features/settings/hooks/use-get-settings";
 
 export function ScreenerPage() {
   const [search, setSearch] = useState("");
@@ -28,14 +29,28 @@ export function ScreenerPage() {
   const [isSyncing, setIsSyncing] = useState(false);
   const [onlyWatchlist, setOnlyWatchlist] = useState(false);
   const [selectedExchange, setSelectedExchange] = useState<string>("ALL");
+  const [selectedStrategy, setSelectedStrategy] = useState<string>("");
+  const { data: settings } = useGetSettings();
 
-  const handleWatchlistToggle = async (stockId: number, currentWatchlist: boolean, symbol: string) => {
+  useEffect(() => {
+    if (settings && !selectedStrategy) {
+      setSelectedStrategy(settings.default_strategy || "day");
+    }
+  }, [settings, selectedStrategy]);
+
+  const handleWatchlistToggle = async (
+    stockId: number,
+    currentWatchlist: boolean,
+    symbol: string,
+  ) => {
     try {
       await updateStockApi(stockId, { watchlist: !currentWatchlist });
       queryClient.invalidateQueries({
         queryKey: [...screenerKeys.all, "data"],
       });
-      toast.success(`${symbol} ${!currentWatchlist ? "added to" : "removed from"} watchlist.`);
+      toast.success(
+        `${symbol} ${!currentWatchlist ? "added to" : "removed from"} watchlist.`,
+      );
     } catch (err) {
       console.error("Failed to toggle watchlist:", err);
       toast.error("Failed to update watchlist status.");
@@ -114,6 +129,9 @@ export function ScreenerPage() {
     return () => clearTimeout(timer);
   }, [search]);
 
+  const activeStrategy =
+    selectedStrategy || settings?.default_strategy || "day";
+
   const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useGetInfiniteStockData({
       limit: 16, // Use multiple of 1, 2, 4 for clean grid matching
@@ -121,6 +139,7 @@ export function ScreenerPage() {
       date: selectedDate || undefined,
       watchlist: onlyWatchlist ? true : undefined,
       exchange: selectedExchange !== "ALL" ? selectedExchange : undefined,
+      strategy: activeStrategy,
     });
 
   // Fetch next page when bottom is reached
@@ -181,7 +200,9 @@ export function ScreenerPage() {
             onClick={() => setOnlyWatchlist(!onlyWatchlist)}
             className="h-8 text-xs flex items-center gap-1.5 shrink-0"
           >
-            <StarIcon className={`h-3.5 w-3.5 ${onlyWatchlist ? "fill-current text-amber-400" : "text-muted-foreground"}`} />
+            <StarIcon
+              className={`h-3.5 w-3.5 ${onlyWatchlist ? "fill-current text-amber-400" : "text-muted-foreground"}`}
+            />
             Watchlist Only
           </Button>
 
@@ -195,6 +216,17 @@ export function ScreenerPage() {
             <option value="IDX">IDX (Indonesia)</option>
             <option value="NYSE">NYSE (USA)</option>
             <option value="NASDAQ">NASDAQ (USA)</option>
+          </select>
+
+          {/* Strategy Filter */}
+          <select
+            value={activeStrategy}
+            onChange={(e) => setSelectedStrategy(e.target.value)}
+            className="h-8 text-xs bg-background/50 border border-border/70 rounded-md px-2.5 py-1 text-foreground focus:outline-none focus:ring-1 focus:ring-indigo-500/35 cursor-pointer font-medium shrink-0"
+          >
+            <option value="day">Day Trading</option>
+            <option value="swing">Swing Trading</option>
+            <option value="position">Position Trading</option>
           </select>
         </div>
 
@@ -232,7 +264,7 @@ export function ScreenerPage() {
               {stockDataItems.map((item: any) => (
                 <Link
                   key={item.id}
-                  to={`/screener/${item.symbol}`}
+                  to={`/screener/${item.symbol}?strategy=${activeStrategy}`}
                   className="p-4 rounded-xl border border-border bg-card/45 backdrop-blur-md hover:bg-muted/5 transition-all duration-300 flex flex-col justify-between shadow-sm cursor-pointer hover:border-indigo-500/40 hover:shadow-indigo-500/5 group"
                 >
                   <div className="space-y-2">
@@ -244,12 +276,22 @@ export function ScreenerPage() {
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            handleWatchlistToggle(item.stockId, !!item.watchlist, item.symbol);
+                            handleWatchlistToggle(
+                              item.stockId,
+                              !!item.watchlist,
+                              item.symbol,
+                            );
                           }}
                           className="text-amber-500 hover:scale-110 transition-transform focus:outline-none"
-                          title={item.watchlist ? "Remove from Watchlist" : "Add to Watchlist"}
+                          title={
+                            item.watchlist
+                              ? "Remove from Watchlist"
+                              : "Add to Watchlist"
+                          }
                         >
-                          <StarIcon className={`h-3.5 w-3.5 ${item.watchlist ? "fill-amber-500 text-amber-500" : "text-muted-foreground/30"}`} />
+                          <StarIcon
+                            className={`h-3.5 w-3.5 ${item.watchlist ? "fill-amber-500 text-amber-500" : "text-muted-foreground/30"}`}
+                          />
                         </button>
                         <span className="font-bold text-xs text-indigo-400 font-mono">
                           {item.symbol}
@@ -259,13 +301,56 @@ export function ScreenerPage() {
                             {item.exchange}
                           </span>
                         )}
+                        <span className="text-[9px] text-muted-foreground/60 font-mono">
+                          {new Date(item.date).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                          })}
+                        </span>
                       </div>
-                      <span className="text-[9px] text-muted-foreground/60 font-mono">
-                        {new Date(item.date).toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </span>
+                      <div className="flex gap-1 items-center justify-center">
+                        {activeStrategy === "day" && item.dayScore !== null && (
+                          <span
+                            className={`text-[9px] font-bold py-[2px] px-[8px] rounded-full ${
+                              item.dayScore >= 70
+                                ? "text-emerald bg-emerald-500/20"
+                                : item.dayScore >= 40
+                                  ? "text-amber-500 bg-amber-500/20"
+                                  : "text-rose-500 bg-rose-500/20"
+                            }`}
+                          >
+                            {item.dayScore} / 100
+                          </span>
+                        )}
+                        {activeStrategy === "swing" &&
+                          item.swingScore !== null && (
+                            <span
+                              className={`text-[9px] font-bold py-[2px] px-[8px] rounded-full ${
+                                item.swingScore >= 70
+                                  ? "text-emerald-500 bg-emerald-500/20"
+                                  : item.swingScore >= 40
+                                    ? "text-amber-500 bg-amber-500/20"
+                                    : "text-rose-500 bg-rose-500/20"
+                              }`}
+                            >
+                              {item.swingScore} / 100
+                            </span>
+                          )}
+                        {activeStrategy === "position" &&
+                          item.positionScore !== null && (
+                            <span
+                              className={`text-[9px] font-bold py-[2px] px-[8px] rounded-full ${
+                                item.positionScore >= 70
+                                  ? "text-emerald-500 bg-emerald-500/20"
+                                  : item.positionScore >= 40
+                                    ? "text-amber-500 bg-amber-500/20"
+                                    : "text-rose-500 bg-rose-500/20"
+                              }`}
+                            >
+                              {item.positionScore} / 100
+                            </span>
+                          )}
+                      </div>
                     </div>
 
                     {/* Row 2: Price | Icon Change (Change%) */}
@@ -318,7 +403,7 @@ export function ScreenerPage() {
 
                     {/* Row 3: Company Name */}
                     <div
-                      className="text-[10px] text-muted-foreground truncate font-medium border-t border-border/20 uppercase"
+                      className="text-[10px] text-muted-foreground truncate font-medium border-t border-border/20 uppercase pt-2 mt-2"
                       title={item.name}
                     >
                       {item.name || "-"}

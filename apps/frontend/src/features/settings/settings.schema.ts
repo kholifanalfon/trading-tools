@@ -6,6 +6,7 @@ export const UpdateSettingsFormSchema = z.object({
   finnhub_api_key: z.string().optional(),
   stock_screener_provider: z.enum(["finnhub", "yahoo_finance"]).default("yahoo_finance"),
   exchanges_config: z.string().optional(),
+  default_strategy: z.string().optional(),
 });
 
 

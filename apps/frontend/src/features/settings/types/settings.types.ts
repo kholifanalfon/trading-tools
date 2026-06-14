@@ -4,6 +4,7 @@ export interface GeminiSettings {
   finnhub_api_key?: string;
   stock_screener_provider?: "finnhub" | "yahoo_finance";
   exchanges_config?: string;
+  default_strategy?: string;
 }
 
 export interface UpdateGeminiSettingsPayload {
@@ -12,6 +13,5 @@ export interface UpdateGeminiSettingsPayload {
   finnhub_api_key?: string;
   stock_screener_provider?: "finnhub" | "yahoo_finance";
   exchanges_config?: string;
+  default_strategy?: string;
 }
-
-

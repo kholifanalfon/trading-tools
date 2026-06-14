@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useGetSyncLogs } from "../hooks/use-get-sync-logs";
 import { useSyncHistorical } from "../hooks/use-sync-historical";
 import { getHistoricalSyncStatusApi } from "../services/screener.api";
@@ -34,11 +34,27 @@ export function IngestionLogsPage() {
   const [selectedDate, setSelectedDate] = useState(getTodayDateString());
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncStatusText, setSyncStatusText] = useState("Idle");
+  const [syncLogs, setSyncLogs] = useState<string[]>([]);
 
+  const terminalRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
 
   const { data: logs, isLoading: isLoadingLogs } = useGetSyncLogs();
   const syncHistoricalMutation = useSyncHistorical();
+
+  // Listen to live logs
+  useWebSocket(["screener", "sync-log"], (data) => {
+    if (data.message) {
+      setSyncLogs((prev) => [...prev, data.message]);
+    }
+  });
+
+  // Auto scroll to bottom of logs
+  useEffect(() => {
+    if (terminalRef.current) {
+      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+    }
+  }, [syncLogs, isSyncing]);
 
   // Listen to historical sync updates in real-time via WebSockets
   useWebSocket(["screener", "sync-status"], (data) => {
@@ -56,7 +72,7 @@ export function IngestionLogsPage() {
       setIsSyncing(false);
       setSyncStatusText("Failed");
       toast.error(
-        `Historical stock sync failed: ${data.error || "Unknown error"}`,
+        `Historical stock sync failed: ${data.error || "Unknown error"}`
       );
       queryClient.invalidateQueries({
         queryKey: [...screenerKeys.all, "logs"],
@@ -95,6 +111,7 @@ export function IngestionLogsPage() {
     try {
       setIsSyncing(true);
       setSyncStatusText("Syncing...");
+      setSyncLogs([]);
       await syncHistoricalMutation.mutateAsync(selectedDate);
       toast.success("Historical data sync started in the background!");
     } catch (err) {
@@ -176,6 +193,52 @@ export function IngestionLogsPage() {
           </Button>
         </div>
       </div>
+
+      {/* Live Logs Terminal */}
+      {isSyncing && (
+        <div
+          ref={terminalRef}
+          className="bg-zinc-950 border border-border/80 rounded-xl p-4 font-mono text-[11px] text-zinc-300 space-y-1 h-52 overflow-y-auto shadow-inner select-text"
+        >
+          <div className="text-zinc-500 pb-1.5 border-b border-zinc-800/60 flex items-center justify-between font-sans text-xs">
+            <span className="font-semibold tracking-wider text-indigo-400">
+              LIVE SYNCHRONIZATION CONSOLE
+            </span>
+            <span className="animate-pulse text-amber-500 font-bold flex items-center gap-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
+              RUNNING
+            </span>
+          </div>
+          <div className="pt-2 space-y-1">
+            {syncLogs.length === 0 ? (
+              <div className="text-zinc-600 italic">
+                Waiting for sync process to start broadcasting logs...
+              </div>
+            ) : (
+              syncLogs.map((log, index) => (
+                <div key={index} className="whitespace-pre-wrap leading-relaxed">
+                  <span className="text-zinc-600">
+                    [{new Date().toLocaleTimeString()}]
+                  </span>{" "}
+                  <span
+                    className={
+                      log.includes("[ERROR]")
+                        ? "text-red-400 font-semibold"
+                        : log.includes("[FAILED]")
+                          ? "text-rose-400 font-semibold"
+                          : log.includes("[SUCCESS]")
+                            ? "text-emerald-400 font-semibold"
+                            : "text-zinc-300"
+                    }
+                  >
+                    {log}
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Main Logs Table Card */}
       <div className="rounded-lg border border-border bg-card/45 backdrop-blur-md shadow-sm overflow-hidden">

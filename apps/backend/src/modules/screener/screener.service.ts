@@ -16,7 +16,11 @@ import {
   calculateEMA,
   calculateRSI,
   calculateMACD,
+  calculateSMA,
+  calculateATR,
 } from "@/core/utils/indicators";
+import { calculateAllScores } from "@/core/utils/scoring.utils";
+import { ScoreMetrics } from "@/core/types/scoring.types";
 
 let historicalSyncState: SyncHistoricalState = {
   status: "idle",
@@ -34,6 +38,13 @@ export class ScreenerService {
 
   async getLatestLogs() {
     return this.repository.getLatestLogs();
+  }
+
+  private logAndBroadcast(message: string) {
+    console.log(message);
+    webSocketService.broadcast(["screener", "sync-log"], {
+      message,
+    });
   }
 
   private async getProviderConfig() {
@@ -126,11 +137,8 @@ export class ScreenerService {
 
     // Fetch individually in parallel chunks of 10
     try {
-      console.log(
-        "[Historical Sync] Starting historical sync for target date:",
-        targetDateStr.removeNewline(),
-        ". Total symbols:",
-        allStocks.length,
+      this.logAndBroadcast(
+        `[Historical Sync] Starting historical sync for target date: ${targetDateStr}. Total symbols: ${allStocks.length}`
       );
       let insertedCount = 0;
       const failedSymbols: string[] = [];
@@ -139,8 +147,8 @@ export class ScreenerService {
 
       for (let i = 0; i < allStocks.length; i += chunkSize) {
         const chunk = allStocks.slice(i, i + chunkSize);
-        console.log(
-          `[Historical Sync] Processing batch ${Math.floor(i / chunkSize) + 1}/${Math.ceil(allStocks.length / chunkSize)} (${chunk.length} symbols)...`,
+        this.logAndBroadcast(
+          `[Historical Sync] Processing batch ${Math.floor(i / chunkSize) + 1}/${Math.ceil(allStocks.length / chunkSize)} (${chunk.length} symbols)...`
         );
 
         await Promise.all(
@@ -175,11 +183,55 @@ export class ScreenerService {
                 points.sort((a, b) => a.date.getTime() - b.date.getTime());
 
                 const closePrices = points.map((p) => p.close);
+                const openPrices = points.map((p) => p.open);
+                const highPrices = points.map((p) => p.high);
+                const lowPrices = points.map((p) => p.low);
+                const volumeVals = points.map((p) => p.volume);
+
                 const ema9Vals = calculateEMA(closePrices, 9);
                 const ema21Vals = calculateEMA(closePrices, 21);
                 const ema50Vals = calculateEMA(closePrices, 50);
                 const ema200Vals = calculateEMA(closePrices, 200);
+                const sma50Vals = calculateSMA(closePrices, 50);
+                const sma200Vals = calculateSMA(closePrices, 200);
                 const rsiVals = calculateRSI(closePrices, 14);
+                const atrVals = calculateATR(
+                  highPrices,
+                  lowPrices,
+                  closePrices,
+                  14,
+                );
+                const avgVol10Vals = calculateSMA(volumeVals, 10);
+                const avgVol20Vals = calculateSMA(volumeVals, 20);
+
+                // Compute 1Y highs/lows for position score (lookback 252 days)
+                const yearHighVals: (number | null)[] = new Array(
+                  points.length,
+                ).fill(null);
+                const yearLowVals: (number | null)[] = new Array(
+                  points.length,
+                ).fill(null);
+                const priceReturn1YVals: (number | null)[] = new Array(
+                  points.length,
+                ).fill(null);
+
+                for (let i = 0; i < points.length; i++) {
+                  let startIdx = Math.max(0, i - 252);
+                  if (i >= 252) {
+                    let highest = -Infinity;
+                    let lowest = Infinity;
+                    for (let k = startIdx; k <= i; k++) {
+                      if (highPrices[k] > highest) highest = highPrices[k];
+                      if (lowPrices[k] < lowest) lowest = lowPrices[k];
+                    }
+                    yearHighVals[i] = highest;
+                    yearLowVals[i] = lowest;
+                    const prevYearPrice = closePrices[startIdx];
+                    priceReturn1YVals[i] =
+                      ((closePrices[i] - prevYearPrice) / prevYearPrice) * 100;
+                  }
+                }
+
                 const {
                   macd: macdVals,
                   signal: macdSignalVals,
@@ -200,6 +252,28 @@ export class ScreenerService {
                   const changePercent =
                     prevClose !== 0 ? (change / prevClose) * 100 : 0;
 
+                  const metrics: ScoreMetrics = {
+                    close: p.close,
+                    open: p.open,
+                    prevClose,
+                    volume: p.volume,
+                    avgVolume10: avgVol10Vals[j],
+                    avgVolume20: avgVol20Vals[j],
+                    atr14: atrVals[j],
+                    rsi14: rsiVals[j],
+                    ema20: ema21Vals[j], // using 21 as 20
+                    ema50: ema50Vals[j],
+                    sma50: sma50Vals[j],
+                    sma200: sma200Vals[j],
+                    macdLine: macdVals[j],
+                    macdSignal: macdSignalVals[j],
+                    macdHist: macdHistVals[j],
+                    yearHigh: yearHighVals[j],
+                    priceReturn1Y: priceReturn1YVals[j],
+                  };
+
+                  const scores = calculateAllScores(metrics);
+
                   insertItems.push({
                     stockId: stock.id,
                     symbol: stock.symbol.toUpperCase(),
@@ -211,6 +285,10 @@ export class ScreenerService {
                     volume: p.volume,
                     change,
                     changePercent,
+                    dayScore: scores.dayScore.total,
+                    swingScore: scores.swingScore.total,
+                    positionScore: scores.positionScore.total,
+                    scorePayload: scores,
                     ema9: ema9Vals[j],
                     ema21: ema21Vals[j],
                     ema50: ema50Vals[j],
@@ -226,35 +304,23 @@ export class ScreenerService {
                   const upserted =
                     await this.repository.upsertStockData(insertItems);
                   insertedCount += upserted.length;
-                  console.log(
-                    "[Historical Sync] [SUCCESS]",
-                    stock.symbol,
-                    "synced successfully. Saved",
-                    upserted.length,
-                    "bars.",
+                  this.logAndBroadcast(
+                    `[Historical Sync] [SUCCESS] ${stock.symbol} synced successfully. Saved ${upserted.length} bars.`
                   );
                 } else {
-                  console.log(
-                    "[Historical Sync] [SUCCESS]",
-                    stock.symbol,
-                    "synced successfully. No data points matched target date",
-                    targetDateStr.removeNewline(),
+                  this.logAndBroadcast(
+                    `[Historical Sync] [SUCCESS] ${stock.symbol} synced successfully. No data points matched target date ${targetDateStr}`
                   );
                 }
               } else {
-                console.warn(
-                  "[Historical Sync] [FAILED]",
-                  stock.symbol,
-                  "failed to fetch chart/historical data.",
+                this.logAndBroadcast(
+                  `[Historical Sync] [FAILED] ${stock.symbol} failed to fetch chart/historical data.`
                 );
                 failedSymbols.push(stock.symbol);
               }
             } catch (err) {
-              console.error(
-                "[Historical Sync] [ERROR] Error syncing individual stock",
-                stock.symbol,
-                ":",
-                err,
+              this.logAndBroadcast(
+                `[Historical Sync] [ERROR] Error syncing individual stock ${stock.symbol}: ${err instanceof Error ? err.message : String(err)}`
               );
               failedSymbols.push(stock.symbol);
             }
@@ -263,8 +329,8 @@ export class ScreenerService {
       }
 
       const successCount = allStocks.length - failedSymbols.length;
-      console.log(
-        `[Historical Sync] Sync completed. Success: ${successCount}/${allStocks.length} symbols. Saved ${insertedCount} total points.`,
+      this.logAndBroadcast(
+        `[Historical Sync] Sync completed. Success: ${successCount}/${allStocks.length} symbols. Saved ${insertedCount} total points.`
       );
 
       historicalSyncState = {
@@ -316,6 +382,7 @@ export class ScreenerService {
     date?: string;
     watchlist?: boolean;
     exchange?: string;
+    strategy?: string;
   }) {
     return this.repository.getStockData(query);
   }
@@ -324,6 +391,7 @@ export class ScreenerService {
     symbol: string,
     limit = 100,
     timeframe?: string,
+    strategy?: string,
   ) {
     try {
       const adapter = await this.getAdapter();
@@ -400,25 +468,56 @@ export class ScreenerService {
         );
       const companyName = stockRecord?.name || symbol;
 
-      const formattedPoints = points.map((p, index) => ({
-        id: index,
-        symbol: symbol.toUpperCase(),
-        name: companyName,
-        date: p.date,
+      // Fetch scores from database to merge with live data
+      const dbPoints = await this.repository.getStockHistoricalData(symbol, 5000);
+      const dbScoresMap = new Map<string, {
+        dayScore: number | null;
+        swingScore: number | null;
+        positionScore: number | null;
+        scorePayload: any;
+      }>();
+      for (const dbPt of dbPoints) {
+        const dateStr = dbPt.date instanceof Date 
+          ? dbPt.date.toISOString().split('T')[0]
+          : new Date(dbPt.date).toISOString().split('T')[0];
+        dbScoresMap.set(dateStr, {
+          dayScore: dbPt.dayScore,
+          swingScore: dbPt.swingScore,
+          positionScore: dbPt.positionScore,
+          scorePayload: dbPt.scorePayload,
+        });
+      }
+
+      const formattedPoints = points.map((p, index) => {
+        const dateStr = p.date instanceof Date
+          ? p.date.toISOString().split('T')[0]
+          : new Date(p.date).toISOString().split('T')[0];
+        const dbScore = dbScoresMap.get(dateStr);
+
+        return {
+          id: index,
+          symbol: symbol.toUpperCase(),
+          name: companyName,
+          date: p.date,
         open: p.open,
         high: p.high,
         low: p.low,
-        close: p.close,
-        volume: p.volume,
-        ema9: ema9Vals[index],
-        ema21: ema21Vals[index],
-        ema50: ema50Vals[index],
-        ema200: ema200Vals[index],
-        rsi: rsiVals[index],
-        macd: macdVals[index],
-        macdSignal: macdSignalVals[index],
-        macdHist: macdHistVals[index],
-      }));
+          close: p.close,
+          volume: p.volume,
+          ema9: ema9Vals[index],
+          ema21: ema21Vals[index],
+          ema50: ema50Vals[index],
+          ema200: ema200Vals[index],
+          rsi: rsiVals[index],
+          macd: macdVals[index],
+          macdSignal: macdSignalVals[index],
+          macdHist: macdHistVals[index],
+          dayScore: dbScore?.dayScore ?? null,
+          swingScore: dbScore?.swingScore ?? null,
+          positionScore: dbScore?.positionScore ?? null,
+          scorePayload: dbScore?.scorePayload ?? null,
+        };
+      });
 
       // Return the latest N items specified by limit
       if (timeframe === "1D" || timeframe === "5D") {
