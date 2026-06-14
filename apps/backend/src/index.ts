@@ -16,6 +16,11 @@ import { navigationBlocker } from "@/core/middlewares/navigation-blocker.middlew
 import { requestIdMiddleware } from "@/core/middlewares/request-id.middleware";
 import { requestLogger } from "@/core/middlewares/request-logger.middleware";
 
+// Implement String.prototype.removeNewline globally
+String.prototype.removeNewline = function (this: string) {
+  return this.replace(/[\r\n]+/g, "");
+};
+
 // Initialize Sentry first to capture all activity
 if (config.BE_SENTRY_DSN) {
   Sentry.init({
