@@ -1,5 +1,11 @@
-import { ScreenerProviderAdapter, HistoricalDataPoint } from "./provider.adapter";
-import { StockSearchResult, StockQuote } from "@/modules/screener/screener.schema";
+import {
+  ScreenerProviderAdapter,
+  HistoricalDataPoint,
+} from "./provider.adapter";
+import {
+  StockSearchResult,
+  StockQuote,
+} from "@/modules/screener/screener.schema";
 import { yahooFinance } from "@/core/yahoo-finance";
 import { AppError } from "@/core/errors/app-error";
 
@@ -56,15 +62,21 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
     interval = "1d",
   ): Promise<HistoricalDataPoint[]> {
     try {
-      // For intraday intervals (60m, 90m, etc.), Yahoo Finance chart requires period1 and period2 
+      // For intraday intervals (60m, 90m, etc.), Yahoo Finance chart requires period1 and period2
       // as Date objects or epoch timestamps, not simple YYYY-MM-DD strings.
       const isIntraday = interval.endsWith("m") || interval.endsWith("h");
-      const period1 = isIntraday ? fromDate : fromDate.toISOString().split("T")[0];
+      const period1 = isIntraday
+        ? fromDate
+        : fromDate.toISOString().split("T")[0];
       const period2 = isIntraday ? toDate : toDate.toISOString().split("T")[0];
-      const result = await yahooFinance.chart(symbol, { period1: period1 as any, period2: period2 as any, interval: interval as any });
-      
+      const result = await yahooFinance.chart(symbol, {
+        period1: period1 as any,
+        period2: period2 as any,
+        interval: interval as any,
+      });
+
       if (!result || !result.quotes) return [];
-      
+
       return result.quotes
         .filter(
           (q): q is typeof q & { date: Date; close: number } =>
@@ -83,7 +95,11 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
         }));
     } catch (err) {
       // Return empty array if request fails (e.g. invalid symbol or offline)
-      console.warn("Yahoo Finance chart failed for symbol:", symbol, err);
+      console.warn(
+        "Yahoo Finance chart failed for symbol:",
+        symbol.removeNewline(),
+        err,
+      );
       return [];
     }
   }

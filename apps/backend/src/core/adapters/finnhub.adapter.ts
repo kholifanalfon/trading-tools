@@ -1,5 +1,11 @@
-import { ScreenerProviderAdapter, HistoricalDataPoint } from "./provider.adapter";
-import { StockSearchResult, StockQuote } from "@/modules/screener/screener.schema";
+import {
+  ScreenerProviderAdapter,
+  HistoricalDataPoint,
+} from "./provider.adapter";
+import {
+  StockSearchResult,
+  StockQuote,
+} from "@/modules/screener/screener.schema";
 import { getFinnhubClient } from "@/core/finnhub";
 import { FinnhubError } from "@/core/errors/finnhub-error";
 
@@ -82,7 +88,7 @@ export class FinnhubAdapter implements ScreenerProviderAdapter {
     try {
       const fromUnix = Math.floor(fromDate.getTime() / 1000);
       const toUnix = Math.floor(toDate.getTime() / 1000);
-      
+
       // Translate interval: 60m -> '60', 90m -> 'D' (Finnhub doesn't support 90m directly, fallback to 'D' or '60')
       let resolution = "D";
       if (interval === "60m" || interval === "60") {
@@ -125,7 +131,11 @@ export class FinnhubAdapter implements ScreenerProviderAdapter {
       }
       return points;
     } catch (err) {
-      console.warn("Finnhub stockCandles failed for symbol:", symbol, err);
+      console.warn(
+        "Finnhub stockCandles failed for symbol:",
+        symbol.removeNewline(),
+        err,
+      );
       return [];
     }
   }

@@ -12,7 +12,11 @@ import {
 import { ScreenerProviderAdapter } from "@/core/adapters/provider.adapter";
 import { YahooFinanceAdapter } from "@/core/adapters/yahoo-finance.adapter";
 import { FinnhubAdapter } from "@/core/adapters/finnhub.adapter";
-import { calculateEMA, calculateRSI, calculateMACD } from "@/core/utils/indicators";
+import {
+  calculateEMA,
+  calculateRSI,
+  calculateMACD,
+} from "@/core/utils/indicators";
 
 let historicalSyncState: SyncHistoricalState = {
   status: "idle",
@@ -124,7 +128,7 @@ export class ScreenerService {
     try {
       console.log(
         "[Historical Sync] Starting historical sync for target date:",
-        targetDateStr,
+        targetDateStr.removeNewline(),
         ". Total symbols:",
         allStocks.length,
       );
@@ -176,12 +180,15 @@ export class ScreenerService {
                 const ema50Vals = calculateEMA(closePrices, 50);
                 const ema200Vals = calculateEMA(closePrices, 200);
                 const rsiVals = calculateRSI(closePrices, 14);
-                const { macd: macdVals, signal: macdSignalVals, histogram: macdHistVals } =
-                  calculateMACD(closePrices);
+                const {
+                  macd: macdVals,
+                  signal: macdSignalVals,
+                  histogram: macdHistVals,
+                } = calculateMACD(closePrices);
 
                 const insertItems: NewStockData[] = [];
 
-                 for (let j = 0; j < points.length; j++) {
+                for (let j = 0; j < points.length; j++) {
                   const p = points[j];
                   const dataPointDateStr = getLocalDateString(p.date);
 
@@ -190,7 +197,8 @@ export class ScreenerService {
 
                   const prevClose = j > 0 ? points[j - 1].close : p.open;
                   const change = p.close - prevClose;
-                  const changePercent = prevClose !== 0 ? (change / prevClose) * 100 : 0;
+                  const changePercent =
+                    prevClose !== 0 ? (change / prevClose) * 100 : 0;
 
                   insertItems.push({
                     stockId: stock.id,
@@ -230,7 +238,7 @@ export class ScreenerService {
                     "[Historical Sync] [SUCCESS]",
                     stock.symbol,
                     "synced successfully. No data points matched target date",
-                    targetDateStr,
+                    targetDateStr.removeNewline(),
                   );
                 }
               } else {
@@ -301,11 +309,22 @@ export class ScreenerService {
     }
   }
 
-  async getStockData(query: { page: number; limit: number; search?: string; date?: string; watchlist?: boolean; exchange?: string }) {
+  async getStockData(query: {
+    page: number;
+    limit: number;
+    search?: string;
+    date?: string;
+    watchlist?: boolean;
+    exchange?: string;
+  }) {
     return this.repository.getStockData(query);
   }
 
-  async getStockHistoricalData(symbol: string, limit = 100, timeframe?: string) {
+  async getStockHistoricalData(
+    symbol: string,
+    limit = 100,
+    timeframe?: string,
+  ) {
     try {
       const adapter = await this.getAdapter();
       let symbolToQuery = symbol.toUpperCase();
@@ -353,7 +372,7 @@ export class ScreenerService {
       if (!points || points.length === 0) {
         console.warn(
           "[ScreenerService] External API returned 0 points for symbol. Falling back to DB. Symbol:",
-          symbol,
+          symbol.removeNewline(),
         );
         return this.repository.getStockHistoricalData(symbol, limit);
       }
@@ -409,7 +428,7 @@ export class ScreenerService {
     } catch (error) {
       console.error(
         "[ScreenerService] Failed to get live historical data for symbol:",
-        symbol,
+        symbol.removeNewline(),
         error,
       );
       // Fallback to database
