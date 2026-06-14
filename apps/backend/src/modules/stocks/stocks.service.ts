@@ -82,6 +82,7 @@ export class StocksService {
       const settingsRepo = new SettingsRepository();
       const apiKeySetting = await settingsRepo.getSettingByKey("gemini_api_key");
       const modelSetting = await settingsRepo.getSettingByKey("gemini_model");
+      const exchangesSetting = await settingsRepo.getSettingByKey("exchanges_config");
 
       const encryptedApiKey = apiKeySetting?.value;
       const model = modelSetting?.value || "gemini-1.5-flash";
@@ -91,6 +92,33 @@ export class StocksService {
       }
 
       const apiKey = decrypt(encryptedApiKey);
+
+      let activeExchanges: any[] = [];
+      if (exchangesSetting?.value) {
+        try {
+          const parsed = JSON.parse(exchangesSetting.value);
+          activeExchanges = parsed.filter((ex: any) => ex.enabled);
+        } catch (err) {
+          console.error("Failed to parse exchanges_config:", err);
+        }
+      }
+
+      if (activeExchanges.length === 0) {
+        activeExchanges = [
+          { name: "IDX / BEI", suffix: ".JK", country: "Indonesia" },
+          { name: "NYSE", suffix: "", country: "USA" },
+          { name: "NASDAQ", suffix: "", country: "USA" },
+        ];
+      }
+
+      const exchangesPromptList = activeExchanges
+        .map(
+          (ex: any) =>
+            `- ${ex.name} (Country: ${ex.country}): Recommend exactly ${ex.limit || 15} ticker symbols. Tickers from this exchange MUST use the suffix "${ex.suffix}" in Yahoo Finance formatting (e.g., if suffix is .JK, BBCA becomes BBCA.JK)`
+        )
+        .join("\n");
+
+      const totalLimit = activeExchanges.reduce((sum, ex) => sum + (ex.limit || 15), 0);
 
       let parsedList: Array<{ symbol: string; name: string; sector: string; price: number }>;
       try {
@@ -108,7 +136,7 @@ export class StocksService {
             properties: {
               symbol: {
                 type: "STRING" as const,
-                description: "Ticker symbol of the stock in uppercase (max 10 characters, e.g. BBCA, AAPL)",
+                description: "Ticker symbol of the stock with its Yahoo Finance suffix in uppercase (e.g. BBCA.JK, AAPL)",
               },
               name: {
                 type: "STRING" as const,
@@ -120,12 +148,19 @@ export class StocksService {
               },
               price: {
                 type: "INTEGER" as const,
-                description: "Realistic stock price in IDR",
+                description: "Realistic stock price in IDR or USD equivalent in IDR",
               },
             },
             required: ["symbol", "name", "sector", "price"],
           },
         };
+
+        const promptText = `Recommend exactly ${totalLimit} profitable stock ticker symbols currently suitable for trading.
+You MUST ONLY recommend tickers from the following enabled stock exchanges:
+${exchangesPromptList}
+
+For each stock, ensure you format the symbol EXACTLY as required by Yahoo Finance for that exchange (e.g., BBCA.JK for Indonesian stocks, AAPL for NASDAQ/NYSE stocks).
+Strictly enforce the formatting rules above. Do not output tickers without the required suffix.`;
 
         const result = await modelInstance.generateContent({
           contents: [
@@ -133,7 +168,7 @@ export class StocksService {
               role: "user",
               parts: [
                 {
-                  text: "Recommend exactly 50 profitable stock ticker symbols currently suitable for trading. Include mixed global and Indonesian stock tickers (e.g. AAPL, MSFT, BBCA, TLKM).",
+                  text: promptText,
                 },
               ],
             },
@@ -143,6 +178,7 @@ export class StocksService {
             responseSchema: responseSchema as any,
           },
         });
+
 
         const textResponse = result.response.text();
         if (!textResponse) {
@@ -166,11 +202,23 @@ export class StocksService {
       const upsertedStocks = [];
       for (const item of parsedList) {
         if (item.symbol && item.name && item.sector && typeof item.price === "number") {
+          const sym = item.symbol.toUpperCase().trim();
+          let exchange = "NYSE";
+          if (sym.endsWith(".JK")) {
+            exchange = "IDX";
+          } else {
+            // Find in activeExchanges configs
+            const matchedEx = activeExchanges.find(ex => ex.suffix && sym.endsWith(ex.suffix.toUpperCase()));
+            if (matchedEx) {
+              exchange = matchedEx.name.includes("IDX") ? "IDX" : matchedEx.name.split(" ")[0];
+            }
+          }
           const result = await this.repository.upsertStock({
-            symbol: item.symbol.toUpperCase().trim(),
+            symbol: sym,
             name: item.name.trim(),
             sector: item.sector.trim(),
             price: Math.round(item.price),
+            exchange: exchange,
           });
           upsertedStocks.push(result);
         }

@@ -98,6 +98,19 @@ export function StockListPage() {
     }
   };
 
+  const handleWatchlistToggle = async (stock: Stock) => {
+    try {
+      await updateStockMutation.mutateAsync({
+        id: stock.id,
+        data: { watchlist: !stock.watchlist },
+      });
+      toast.success(`${stock.symbol} ${!stock.watchlist ? "added to" : "removed from"} watchlist.`);
+    } catch (err) {
+      console.error("Failed to toggle watchlist:", err);
+      toast.error("Failed to update watchlist status.");
+    }
+  };
+
 
   const handleFormSubmit = async (formData: any) => {
     try {
@@ -138,6 +151,7 @@ export function StockListPage() {
         onEditClick={handleEditClick}
         onDeleteClick={handleDeleteClick}
         onSyncClick={handleSyncClick}
+        onWatchlistToggle={handleWatchlistToggle}
         isLoading={isLoading}
         isSyncing={isSyncing}
       />

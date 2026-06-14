@@ -46,6 +46,8 @@ export function StockFormDialog({
       name: "",
       sector: "",
       price: "",
+      exchange: "IDX",
+      watchlist: false,
     },
   });
 
@@ -57,6 +59,8 @@ export function StockFormDialog({
           name: stock.name,
           sector: stock.sector,
           price: String(stock.price),
+          exchange: stock.exchange || "IDX",
+          watchlist: !!stock.watchlist,
         });
       } else {
         reset({
@@ -64,6 +68,8 @@ export function StockFormDialog({
           name: "",
           sector: "",
           price: "",
+          exchange: "IDX",
+          watchlist: false,
         });
       }
     }
@@ -139,7 +145,7 @@ export function StockFormDialog({
               )}
             </Field>
 
-            {/* Price */}
+             {/* Price */}
             <Field>
               <FieldLabel htmlFor="price">Price (IDR)</FieldLabel>
               <Input
@@ -154,6 +160,35 @@ export function StockFormDialog({
                   {errors.price.message as string}
                 </p>
               )}
+            </Field>
+
+            {/* Exchange */}
+            <Field>
+              <FieldLabel htmlFor="exchange">Exchange</FieldLabel>
+              <Input
+                id="exchange"
+                type="text"
+                placeholder="e.g. IDX, NYSE, NASDAQ"
+                disabled={isLoading}
+                {...register("exchange")}
+              />
+              {errors.exchange && (
+                <p className="text-xs text-destructive font-semibold mt-1">
+                  {errors.exchange.message as string}
+                </p>
+              )}
+            </Field>
+
+            {/* Watchlist */}
+            <Field className="flex items-center gap-2 pt-2">
+              <input
+                id="watchlist"
+                type="checkbox"
+                disabled={isLoading}
+                {...register("watchlist")}
+                className="rounded border-border bg-[#09090b] text-indigo-500 h-4 w-4 focus:ring-0 cursor-pointer accent-indigo-500"
+              />
+              <FieldLabel htmlFor="watchlist" className="cursor-pointer select-none text-xs font-semibold">Add to Watchlist</FieldLabel>
             </Field>
           </FieldGroup>
 

@@ -16,7 +16,12 @@ import { AuthRegisterPage } from "./features/auth/pages/auth-register.page";
 import { UserManagementListPage } from "./features/user-management/pages/user-management-list.page";
 import { StockListPage } from "./features/stocks/pages/stock-list.page";
 import { SettingsPage } from "./features/settings/pages/settings.page";
+import { ScreenerPage } from "./features/screener/pages/screener.page";
+import { IngestionLogsPage } from "./features/screener/pages/ingestion-logs.page";
+import { StockDetailPage } from "./features/screener/pages/stock-detail.page";
 import { ThemeProvider } from "./shared/components/theme-provider";
+
+
 import { ThemeToggle } from "./shared/components/ui/theme-toggle";
 import { TooltipProvider } from "./shared/components/ui/tooltip";
 import {
@@ -72,7 +77,11 @@ export function App() {
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/user-management" element={<UserManagementListPage />} />
                 <Route path="/stocks" element={<StockListPage />} />
+                <Route path="/screener" element={<ScreenerPage />} />
+                <Route path="/screener/:symbol" element={<StockDetailPage />} />
+                <Route path="/ingestion-logs" element={<IngestionLogsPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
+
               </Route>
             </Routes>
           </BrowserRouter>
@@ -152,13 +161,21 @@ function PlatformLayout() {
     pageName = "User Management";
   } else if (location.pathname === "/stocks") {
     pageName = "Stock Management";
+  } else if (location.pathname === "/screener") {
+    pageName = "Stock Screener";
+  } else if (location.pathname.startsWith("/screener/")) {
+    pageName = "Stock Detail";
+  } else if (location.pathname === "/ingestion-logs") {
+    pageName = "Ingestion Logs";
   } else if (location.pathname === "/settings") {
     pageName = "Settings";
+
   } else if (location.pathname === "/dashboard") {
     pageName = "Dashboard";
   } else if (location.pathname === "/orders") {
     pageName = "Orders";
   }
+
 
 
   return (
@@ -204,7 +221,7 @@ function PlatformLayout() {
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 bg-background p-6">
+        <main className="flex-1 bg-background p-6 overflow-y-auto custom-scrollbar">
           <Outlet />
         </main>
       </SidebarInset>
