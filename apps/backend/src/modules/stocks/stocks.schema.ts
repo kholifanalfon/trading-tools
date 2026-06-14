@@ -15,6 +15,8 @@ export const CreateStockSchema = z.object({
     .min(1, "Sector is required")
     .max(50, "Sector must be at most 50 characters"),
   price: z.number().int().min(0, "Price must be non-negative"),
+  watchlist: z.boolean().default(false).optional(),
+  exchange: z.string().max(20).default("IDX").optional(),
 });
 
 export const UpdateStockSchema = z.object({
@@ -35,6 +37,8 @@ export const UpdateStockSchema = z.object({
     .max(50, "Sector must be at most 50 characters")
     .optional(),
   price: z.number().int().min(0, "Price must be non-negative").optional(),
+  watchlist: z.boolean().optional(),
+  exchange: z.string().max(20).optional(),
 });
 
 export const StockQuerySchema = z.object({
@@ -43,6 +47,8 @@ export const StockQuerySchema = z.object({
     .preprocess((val) => Number(val) || 10, z.number().min(1).max(100))
     .default(10),
   search: z.string().optional(),
+  watchlist: z.preprocess((val) => val === "true" || val === true, z.boolean()).optional(),
+  exchange: z.string().optional(),
 });
 
 export const SyncStateSchema = z.object({

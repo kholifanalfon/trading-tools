@@ -21,4 +21,13 @@ export class SettingsController {
       next(error);
     }
   };
+
+  syncExchanges = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = await this.service.syncExchanges();
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
 }

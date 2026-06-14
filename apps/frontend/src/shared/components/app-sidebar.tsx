@@ -19,6 +19,7 @@ import {
   UserIcon,
   TrendingUpIcon,
   SettingsIcon,
+  HistoryIcon,
 } from "lucide-react";
 
 import { useAuthStore } from "@/shared/stores/auth.store";
@@ -70,6 +71,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           icon: <TrendingUpIcon />,
         },
         {
+          title: "Stock Screener",
+          url: "/screener",
+          icon: <TrendingUpIcon />,
+        },
+        {
+          title: "Ingestion Logs",
+          url: "/ingestion-logs",
+          icon: <HistoryIcon />,
+        },
+        {
           title: "Settings",
           url: "/settings",
           icon: <SettingsIcon />,
@@ -77,6 +88,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       ],
     });
   }
+
+
 
 
   return (

@@ -13,5 +13,6 @@ router.use(requireAdmin);
 
 router.get("/", controller.getSettings);
 router.put("/", validateBody(UpdateSettingsSchema), controller.updateSettings);
+router.post("/exchanges/sync", controller.syncExchanges);
 
 export const settingsRoutes = router;

@@ -16,6 +16,8 @@ import { navigationBlocker } from "@/core/middlewares/navigation-blocker.middlew
 import { requestIdMiddleware } from "@/core/middlewares/request-id.middleware";
 import { requestLogger } from "@/core/middlewares/request-logger.middleware";
 
+import "@/core/utils/string-extensions";
+
 // Initialize Sentry first to capture all activity
 if (config.BE_SENTRY_DSN) {
   Sentry.init({

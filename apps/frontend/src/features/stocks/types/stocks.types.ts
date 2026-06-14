@@ -4,6 +4,8 @@ export interface Stock {
   name: string;
   sector: string;
   price: number;
+  watchlist: boolean;
+  exchange: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -13,6 +15,8 @@ export interface CreateStockPayload {
   name: string;
   sector: string;
   price: number;
+  watchlist?: boolean;
+  exchange?: string;
 }
 
 export interface UpdateStockPayload {
@@ -20,12 +24,16 @@ export interface UpdateStockPayload {
   name?: string;
   sector?: string;
   price?: number;
+  watchlist?: boolean;
+  exchange?: string;
 }
 
 export interface StockQuery {
   page: number;
   limit: number;
   search?: string;
+  watchlist?: boolean;
+  exchange?: string;
 }
 
 export interface StockListResponse {

@@ -1,4 +1,4 @@
-import { eq, like, or, sql, asc } from "drizzle-orm";
+import { eq, like, or, sql, asc, and } from "drizzle-orm";
 import { db } from "@/db/db";
 import { stocks } from "@/db/schema";
 import {
@@ -19,10 +19,20 @@ export class StocksRepository {
         )
       : undefined;
 
+    const watchlistFilter = query.watchlist !== undefined
+      ? eq(stocks.watchlist, query.watchlist)
+      : undefined;
+
+    const exchangeFilter = query.exchange
+      ? eq(stocks.exchange, query.exchange)
+      : undefined;
+
+    const filters = and(searchFilter, watchlistFilter, exchangeFilter);
+
     const items = await db
       .select()
       .from(stocks)
-      .where(searchFilter)
+      .where(filters)
       .limit(query.limit)
       .offset(offset)
       .orderBy(asc(stocks.symbol));
@@ -30,7 +40,7 @@ export class StocksRepository {
     const totalResult = await db
       .select({ count: sql<number>`count(*)` })
       .from(stocks)
-      .where(searchFilter);
+      .where(filters);
     const total = Number(totalResult[0]?.count || 0);
 
     return {
@@ -60,7 +70,7 @@ export class StocksRepository {
     return result[0] || null;
   }
 
-  async createStock(data: CreateStockInput) {
+  async createStock(data: CreateStockInput & { exchange?: string; watchlist?: boolean }) {
     const result = await db
       .insert(stocks)
       .values({
@@ -68,6 +78,8 @@ export class StocksRepository {
         name: data.name,
         sector: data.sector,
         price: data.price,
+        watchlist: data.watchlist ?? false,
+        exchange: data.exchange ?? "IDX",
       })
       .returning();
     return result[0];
@@ -79,6 +91,8 @@ export class StocksRepository {
     if (data.name !== undefined) updateData.name = data.name;
     if (data.sector !== undefined) updateData.sector = data.sector;
     if (data.price !== undefined) updateData.price = data.price;
+    if (data.watchlist !== undefined) updateData.watchlist = data.watchlist;
+    if (data.exchange !== undefined) updateData.exchange = data.exchange;
     updateData.updatedAt = new Date();
 
     const result = await db
@@ -96,7 +110,7 @@ export class StocksRepository {
     return result[0] || null;
   }
 
-  async upsertStock(data: CreateStockInput) {
+  async upsertStock(data: CreateStockInput & { exchange?: string; watchlist?: boolean }) {
     const result = await db
       .insert(stocks)
       .values({
@@ -104,6 +118,8 @@ export class StocksRepository {
         name: data.name,
         sector: data.sector,
         price: data.price,
+        watchlist: data.watchlist ?? false,
+        exchange: data.exchange ?? "IDX",
       })
       .onConflictDoUpdate({
         target: stocks.symbol,
@@ -111,6 +127,7 @@ export class StocksRepository {
           name: data.name,
           sector: data.sector,
           price: data.price,
+          exchange: data.exchange ?? "IDX",
           updatedAt: new Date(),
         },
       })

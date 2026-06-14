@@ -20,6 +20,7 @@
     "db:migrate": "bun run commands/db-migrate.ts",
     "db:introspect": "bun run commands/db-introspect.ts",
     "db:seed": "bun run commands/db-seed.ts",
+    "db:refresh": "bun run commands/db-refresh.ts",
     "make:schema": "bun run commands/make-schema.ts",
     "make:seeder": "bun run commands/make-seeder.ts"
   },
@@ -30,5 +31,9 @@
   "overrides": {
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "postgres": "^3.4.9"
   }
 }

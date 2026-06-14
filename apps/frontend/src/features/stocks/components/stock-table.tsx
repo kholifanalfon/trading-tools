@@ -1,5 +1,5 @@
 import { Stock } from "../types/stocks.types";
-import { Edit2Icon, Trash2Icon, PlusIcon, SearchIcon, ChevronLeftIcon, ChevronRightIcon, SparklesIcon } from "lucide-react";
+import { Edit2Icon, Trash2Icon, PlusIcon, SearchIcon, ChevronLeftIcon, ChevronRightIcon, SparklesIcon, StarIcon } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import {
@@ -23,6 +23,7 @@ export interface StockTableProps {
   onEditClick: (stock: Stock) => void;
   onDeleteClick: (stock: Stock) => void;
   onSyncClick: () => void;
+  onWatchlistToggle: (stock: Stock) => void;
   isLoading: boolean;
   isSyncing: boolean;
 }
@@ -39,6 +40,7 @@ export function StockTable({
   onEditClick,
   onDeleteClick,
   onSyncClick,
+  onWatchlistToggle,
   isLoading,
   isSyncing,
 }: StockTableProps) {
@@ -80,7 +82,9 @@ export function StockTable({
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/30 hover:bg-muted/30">
+              <TableHead className="h-8 px-4 text-xs font-semibold w-[60px] text-center">Watch</TableHead>
               <TableHead className="h-8 px-4 text-xs font-semibold">Symbol</TableHead>
+              <TableHead className="h-8 px-4 text-xs font-semibold">Exchange</TableHead>
               <TableHead className="h-8 px-4 text-xs font-semibold">Name</TableHead>
               <TableHead className="h-8 px-4 text-xs font-semibold">Sector</TableHead>
               <TableHead className="h-8 px-4 text-xs font-semibold">Price (IDR)</TableHead>
@@ -91,7 +95,7 @@ export function StockTable({
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={6} className="h-24 text-center text-xs text-muted-foreground">
+                <TableCell colSpan={8} className="h-24 text-center text-xs text-muted-foreground">
                   <div className="flex flex-col items-center justify-center gap-1.5">
                     <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
                     <span>Loading...</span>
@@ -100,15 +104,31 @@ export function StockTable({
               </TableRow>
             ) : stocks.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="h-24 text-center text-xs text-muted-foreground">
+                <TableCell colSpan={8} className="h-24 text-center text-xs text-muted-foreground">
                   No stock records found.
                 </TableCell>
               </TableRow>
             ) : (
               stocks.map((stock) => (
                 <TableRow key={stock.id} className="hover:bg-muted/20">
+                  <TableCell className="py-2 px-4 text-center">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => onWatchlistToggle(stock)}
+                      className="h-7 w-7 p-0 text-amber-500 hover:bg-amber-500/10 focus:ring-0"
+                      title={stock.watchlist ? "Remove from Watchlist" : "Add to Watchlist"}
+                    >
+                      <StarIcon
+                        className={`h-4 w-4 ${stock.watchlist ? "fill-amber-500 text-amber-500" : "text-muted-foreground/60"}`}
+                      />
+                    </Button>
+                  </TableCell>
                   <TableCell className="py-2 px-4 font-semibold text-xs text-indigo-400 font-mono">
                     {stock.symbol}
+                  </TableCell>
+                  <TableCell className="py-2 px-4 text-xs font-bold font-mono text-muted-foreground">
+                    {stock.exchange || "IDX"}
                   </TableCell>
                   <TableCell className="py-2 px-4 text-xs text-foreground font-medium">{stock.name}</TableCell>
                   <TableCell className="py-2 px-4 text-xs text-muted-foreground">{stock.sector}</TableCell>

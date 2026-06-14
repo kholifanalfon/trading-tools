@@ -10,3 +10,8 @@ export async function updateSettingsApi(data: UpdateGeminiSettingsPayload): Prom
   const response = await api.put<GeminiSettings>("/settings", data);
   return response.data;
 }
+
+export async function syncExchangesApi(): Promise<GeminiSettings> {
+  const response = await api.post<GeminiSettings>("/settings/exchanges/sync");
+  return response.data;
+}
