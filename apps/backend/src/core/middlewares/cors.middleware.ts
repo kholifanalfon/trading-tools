@@ -11,14 +11,6 @@ export const corsMiddleware = cors({
     }
   },
   credentials: true,
-  allowedHeaders: [
-    "Origin",
-    "X-Requested-With",
-    "Content-Type",
-    "Accept",
-    "Authorization",
-    "Cookie",
-    "X-XSRF-TOKEN",
-  ],
+  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization", "Cookie", "X-XSRF-TOKEN"],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 });

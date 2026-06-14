@@ -1,11 +1,5 @@
-import {
-  ScreenerProviderAdapter,
-  HistoricalDataPoint,
-} from "./provider.adapter";
-import {
-  StockSearchResult,
-  StockQuote,
-} from "@/modules/screener/screener.schema";
+import { ScreenerProviderAdapter, HistoricalDataPoint } from "./provider.adapter";
+import { StockSearchResult, StockQuote } from "@/modules/screener/screener.schema";
 import { yahooFinance } from "@/core/yahoo-finance";
 import { AppError } from "@/core/errors/app-error";
 
@@ -15,22 +9,14 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
       const data = await yahooFinance.search(query);
       const quotes = (data.quotes || []) as any[];
       return quotes
-        .filter(
-          (q) =>
-            q.quoteType === "EQUITY" ||
-            q.quoteType === "ETF" ||
-            q.quoteType === "MUTUALFUND",
-        )
+        .filter((q) => q.quoteType === "EQUITY" || q.quoteType === "ETF" || q.quoteType === "MUTUALFUND")
         .map((item) => ({
           symbol: item.symbol || "",
           description: item.longname || item.shortname || item.symbol || "",
           type: item.quoteType || "EQUITY",
         }));
     } catch (err) {
-      throw new AppError(
-        `Yahoo Finance search failed: ${err instanceof Error ? err.message : String(err)}`,
-        500,
-      );
+      throw new AppError(`Yahoo Finance search failed: ${err instanceof Error ? err.message : String(err)}`, 500);
     }
   }
 
@@ -48,26 +34,16 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
         previousClose: quote.regularMarketPreviousClose || 0,
       };
     } catch (err) {
-      throw new AppError(
-        `Yahoo Finance quote failed: ${err instanceof Error ? err.message : String(err)}`,
-        404,
-      );
+      throw new AppError(`Yahoo Finance quote failed: ${err instanceof Error ? err.message : String(err)}`, 404);
     }
   }
 
-  async getHistoricalData(
-    symbol: string,
-    fromDate: Date,
-    toDate: Date,
-    interval = "1d",
-  ): Promise<HistoricalDataPoint[]> {
+  async getHistoricalData(symbol: string, fromDate: Date, toDate: Date, interval = "1d"): Promise<HistoricalDataPoint[]> {
     try {
       // For intraday intervals (60m, 90m, etc.), Yahoo Finance chart requires period1 and period2
       // as Date objects or epoch timestamps, not simple YYYY-MM-DD strings.
       const isIntraday = interval.endsWith("m") || interval.endsWith("h");
-      const period1 = isIntraday
-        ? fromDate
-        : fromDate.toISOString().split("T")[0];
+      const period1 = isIntraday ? fromDate : fromDate.toISOString().split("T")[0];
       const period2 = isIntraday ? toDate : toDate.toISOString().split("T")[0];
       const result = await yahooFinance.chart(symbol, {
         period1: period1 as any,
@@ -78,13 +54,7 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
       if (!result || !result.quotes) return [];
 
       return result.quotes
-        .filter(
-          (q): q is typeof q & { date: Date; close: number } =>
-            q.date !== null &&
-            q.date !== undefined &&
-            q.close !== null &&
-            q.close !== undefined,
-        )
+        .filter((q): q is typeof q & { date: Date; close: number } => q.date !== null && q.date !== undefined && q.close !== null && q.close !== undefined)
         .map((q) => ({
           date: new Date(q.date),
           open: q.open ?? q.close,
@@ -95,11 +65,7 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
         }));
     } catch (err) {
       // Return empty array if request fails (e.g. invalid symbol or offline)
-      console.warn(
-        "Yahoo Finance chart failed for symbol:",
-        symbol.removeNewline(),
-        err,
-      );
+      console.warn("Yahoo Finance chart failed for symbol:", symbol.removeNewline(), err);
       return [];
     }
   }

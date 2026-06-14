@@ -1,41 +1,21 @@
 import { eq, like, or, sql, asc, and } from "drizzle-orm";
 import { db } from "@/db/db";
 import { stocks } from "@/db/schema";
-import {
-  CreateStockInput,
-  UpdateStockInput,
-  StockQueryInput,
-} from "./stocks.schema";
+import { CreateStockInput, UpdateStockInput, StockQueryInput } from "./stocks.schema";
 
 export class StocksRepository {
   async getStocks(query: StockQueryInput) {
     const offset = (query.page - 1) * query.limit;
 
-    const searchFilter = query.search
-      ? or(
-          like(stocks.symbol, `%${query.search}%`),
-          like(stocks.name, `%${query.search}%`),
-          like(stocks.sector, `%${query.search}%`),
-        )
-      : undefined;
+    const searchFilter = query.search ? or(like(stocks.symbol, `%${query.search}%`), like(stocks.name, `%${query.search}%`), like(stocks.sector, `%${query.search}%`)) : undefined;
 
-    const watchlistFilter = query.watchlist !== undefined
-      ? eq(stocks.watchlist, query.watchlist)
-      : undefined;
+    const watchlistFilter = query.watchlist !== undefined ? eq(stocks.watchlist, query.watchlist) : undefined;
 
-    const exchangeFilter = query.exchange
-      ? eq(stocks.exchange, query.exchange)
-      : undefined;
+    const exchangeFilter = query.exchange ? eq(stocks.exchange, query.exchange) : undefined;
 
     const filters = and(searchFilter, watchlistFilter, exchangeFilter);
 
-    const items = await db
-      .select()
-      .from(stocks)
-      .where(filters)
-      .limit(query.limit)
-      .offset(offset)
-      .orderBy(asc(stocks.symbol));
+    const items = await db.select().from(stocks).where(filters).limit(query.limit).offset(offset).orderBy(asc(stocks.symbol));
 
     const totalResult = await db
       .select({ count: sql<number>`count(*)` })
@@ -53,20 +33,12 @@ export class StocksRepository {
   }
 
   async getStockById(id: number) {
-    const result = await db
-      .select()
-      .from(stocks)
-      .where(eq(stocks.id, id))
-      .limit(1);
+    const result = await db.select().from(stocks).where(eq(stocks.id, id)).limit(1);
     return result[0] || null;
   }
 
   async getStockBySymbol(symbol: string) {
-    const result = await db
-      .select()
-      .from(stocks)
-      .where(eq(stocks.symbol, symbol))
-      .limit(1);
+    const result = await db.select().from(stocks).where(eq(stocks.symbol, symbol)).limit(1);
     return result[0] || null;
   }
 
@@ -95,11 +67,7 @@ export class StocksRepository {
     if (data.exchange !== undefined) updateData.exchange = data.exchange;
     updateData.updatedAt = new Date();
 
-    const result = await db
-      .update(stocks)
-      .set(updateData)
-      .where(eq(stocks.id, id))
-      .returning();
+    const result = await db.update(stocks).set(updateData).where(eq(stocks.id, id)).returning();
     return result[0] || null;
   }
 

@@ -77,9 +77,7 @@ app.get("/health", (req, res) => {
 app.use(errorHandler);
 
 const server = app.listen(config.BE_PORT, () => {
-  logger.info(
-    `🚀 Backend server is running on http://localhost:${config.BE_PORT}`,
-  );
+  logger.info(`🚀 Backend server is running on http://localhost:${config.BE_PORT}`);
 });
 
 // Initialize WebSocket Service on the HTTP server

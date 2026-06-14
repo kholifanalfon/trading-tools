@@ -38,19 +38,10 @@ export function QuoteDetails({ quote, symbol, isLoading, onRefresh }: QuoteDetai
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border/50 pb-4">
           <div>
-            <h3 className="text-xl font-bold font-mono tracking-wider text-indigo-400">
-              {quote.symbol}
-            </h3>
+            <h3 className="text-xl font-bold font-mono tracking-wider text-indigo-400">{quote.symbol}</h3>
             <p className="text-[10px] text-muted-foreground uppercase font-semibold">Real-Time Quote</p>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={onRefresh}
-            disabled={isLoading}
-            className="h-8 px-2.5 text-xs flex items-center gap-1.5"
-            title="Refresh Quote"
-          >
+          <Button variant="outline" size="sm" onClick={onRefresh} disabled={isLoading} className="h-8 px-2.5 text-xs flex items-center gap-1.5" title="Refresh Quote">
             <RefreshCwIcon className={`h-3 w-3 ${isLoading ? "animate-spin" : ""}`} />
             Refresh
           </Button>
@@ -59,22 +50,17 @@ export function QuoteDetails({ quote, symbol, isLoading, onRefresh }: QuoteDetai
         {/* Price & Changes */}
         <div className="flex items-baseline justify-between">
           <div className="space-y-1">
-            <span className="text-3xl font-extrabold font-mono text-foreground">
-              {quote.currentPrice.toLocaleString("en-US", { maximumFractionDigits: 4 })}
-            </span>
+            <span className="text-3xl font-extrabold font-mono text-foreground">{quote.currentPrice.toLocaleString("en-US", { maximumFractionDigits: 4 })}</span>
           </div>
           <div
             className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${
-              isPositive
-                ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                : "bg-rose-500/10 text-rose-400 border border-rose-500/20"
+              isPositive ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : "bg-rose-500/10 text-rose-400 border border-rose-500/20"
             }`}
           >
             {isPositive ? <ArrowUpRightIcon className="h-4.5 w-4.5" /> : <ArrowDownRightIcon className="h-4.5 w-4.5" />}
             <span className="font-mono">
               {isPositive ? "+" : ""}
-              {quote.change.toLocaleString("en-US", { maximumFractionDigits: 4 })} (
-              {isPositive ? "+" : ""}
+              {quote.change.toLocaleString("en-US", { maximumFractionDigits: 4 })} ({isPositive ? "+" : ""}
               {quote.percentChange.toFixed(2)}%)
             </span>
           </div>
@@ -84,27 +70,19 @@ export function QuoteDetails({ quote, symbol, isLoading, onRefresh }: QuoteDetai
         <div className="grid grid-cols-2 gap-4 border-t border-border/50 pt-4">
           <div className="space-y-1.5 p-3 rounded-lg bg-muted/20 border border-border/40">
             <span className="text-[10px] text-muted-foreground font-semibold block uppercase">Open</span>
-            <span className="text-xs font-bold font-mono text-foreground">
-              {quote.open.toLocaleString("en-US", { maximumFractionDigits: 4 })}
-            </span>
+            <span className="text-xs font-bold font-mono text-foreground">{quote.open.toLocaleString("en-US", { maximumFractionDigits: 4 })}</span>
           </div>
           <div className="space-y-1.5 p-3 rounded-lg bg-muted/20 border border-border/40">
             <span className="text-[10px] text-muted-foreground font-semibold block uppercase">Prev Close</span>
-            <span className="text-xs font-bold font-mono text-foreground">
-              {quote.previousClose.toLocaleString("en-US", { maximumFractionDigits: 4 })}
-            </span>
+            <span className="text-xs font-bold font-mono text-foreground">{quote.previousClose.toLocaleString("en-US", { maximumFractionDigits: 4 })}</span>
           </div>
           <div className="space-y-1.5 p-3 rounded-lg bg-muted/20 border border-border/40">
             <span className="text-[10px] text-muted-foreground font-semibold block uppercase">Daily High</span>
-            <span className="text-xs font-bold font-mono text-foreground text-emerald-400">
-              {quote.high.toLocaleString("en-US", { maximumFractionDigits: 4 })}
-            </span>
+            <span className="text-xs font-bold font-mono text-foreground text-emerald-400">{quote.high.toLocaleString("en-US", { maximumFractionDigits: 4 })}</span>
           </div>
           <div className="space-y-1.5 p-3 rounded-lg bg-muted/20 border border-border/40">
             <span className="text-[10px] text-muted-foreground font-semibold block uppercase">Daily Low</span>
-            <span className="text-xs font-bold font-mono text-foreground text-rose-400">
-              {quote.low.toLocaleString("en-US", { maximumFractionDigits: 4 })}
-            </span>
+            <span className="text-xs font-bold font-mono text-foreground text-rose-400">{quote.low.toLocaleString("en-US", { maximumFractionDigits: 4 })}</span>
           </div>
         </div>
       </div>

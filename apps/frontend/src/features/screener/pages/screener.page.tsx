@@ -9,14 +9,7 @@ import { screenerKeys } from "../screener.keys";
 import { toast } from "sonner";
 import { useInView } from "react-intersection-observer";
 import { updateStockApi } from "@/features/stocks/services/stocks.api";
-import {
-  TrendingUpIcon,
-  SearchIcon,
-  RefreshCw,
-  ArrowUpIcon,
-  ArrowDownIcon,
-  StarIcon,
-} from "lucide-react";
+import { TrendingUpIcon, SearchIcon, RefreshCw, ArrowUpIcon, ArrowDownIcon, StarIcon } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { DatePicker } from "@/shared/components/ui/date-picker";
@@ -38,19 +31,13 @@ export function ScreenerPage() {
     }
   }, [settings, selectedStrategy]);
 
-  const handleWatchlistToggle = async (
-    stockId: number,
-    currentWatchlist: boolean,
-    symbol: string,
-  ) => {
+  const handleWatchlistToggle = async (stockId: number, currentWatchlist: boolean, symbol: string) => {
     try {
       await updateStockApi(stockId, { watchlist: !currentWatchlist });
       queryClient.invalidateQueries({
         queryKey: [...screenerKeys.all, "data"],
       });
-      toast.success(
-        `${symbol} ${!currentWatchlist ? "added to" : "removed from"} watchlist.`,
-      );
+      toast.success(`${symbol} ${!currentWatchlist ? "added to" : "removed from"} watchlist.`);
     } catch (err) {
       console.error("Failed to toggle watchlist:", err);
       toast.error("Failed to update watchlist status.");
@@ -75,9 +62,7 @@ export function ScreenerPage() {
       });
     } else if (data.status === "failed") {
       setIsSyncing(false);
-      toast.error(
-        `Historical stock sync failed: ${data.error || "Unknown error"}`,
-      );
+      toast.error(`Historical stock sync failed: ${data.error || "Unknown error"}`);
       queryClient.invalidateQueries({
         queryKey: [...screenerKeys.all, "data"],
       });
@@ -111,9 +96,7 @@ export function ScreenerPage() {
       setIsSyncing(true);
       const targetDate = selectedDate || new Date().toISOString().split("T")[0];
       await syncHistoricalMutation.mutateAsync(targetDate);
-      toast.success(
-        `Historical data sync started for ${targetDate} in the background!`,
-      );
+      toast.success(`Historical data sync started for ${targetDate} in the background!`);
     } catch (err) {
       console.error("Failed to start sync:", err);
       toast.error(err instanceof Error ? err.message : "Sync trigger failed");
@@ -129,18 +112,16 @@ export function ScreenerPage() {
     return () => clearTimeout(timer);
   }, [search]);
 
-  const activeStrategy =
-    selectedStrategy || settings?.default_strategy || "day";
+  const activeStrategy = selectedStrategy || settings?.default_strategy || "day";
 
-  const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
-    useGetInfiniteStockData({
-      limit: 16, // Use multiple of 1, 2, 4 for clean grid matching
-      search: debouncedSearch || undefined,
-      date: selectedDate || undefined,
-      watchlist: onlyWatchlist ? true : undefined,
-      exchange: selectedExchange !== "ALL" ? selectedExchange : undefined,
-      strategy: activeStrategy,
-    });
+  const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useGetInfiniteStockData({
+    limit: 16, // Use multiple of 1, 2, 4 for clean grid matching
+    search: debouncedSearch || undefined,
+    date: selectedDate || undefined,
+    watchlist: onlyWatchlist ? true : undefined,
+    exchange: selectedExchange !== "ALL" ? selectedExchange : undefined,
+    strategy: activeStrategy,
+  });
 
   // Fetch next page when bottom is reached
   useEffect(() => {
@@ -161,13 +142,8 @@ export function ScreenerPage() {
           <TrendingUpIcon className="h-6 w-6" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-foreground">
-            Stock Screener
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Analyze historical daily stock prices loaded from local database
-            ingestion runs.
-          </p>
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">Stock Screener</h1>
+          <p className="text-sm text-muted-foreground">Analyze historical daily stock prices loaded from local database ingestion runs.</p>
         </div>
       </div>
 
@@ -186,12 +162,7 @@ export function ScreenerPage() {
           </div>
 
           {/* Date Filter */}
-          <DatePicker
-            value={selectedDate}
-            onChange={setSelectedDate}
-            placeholder="Filter by date..."
-            className="w-full sm:w-48"
-          />
+          <DatePicker value={selectedDate} onChange={setSelectedDate} placeholder="Filter by date..." className="w-full sm:w-48" />
 
           {/* Watchlist Toggle */}
           <Button
@@ -200,9 +171,7 @@ export function ScreenerPage() {
             onClick={() => setOnlyWatchlist(!onlyWatchlist)}
             className="h-8 text-xs flex items-center gap-1.5 shrink-0"
           >
-            <StarIcon
-              className={`h-3.5 w-3.5 ${onlyWatchlist ? "fill-current text-amber-400" : "text-muted-foreground"}`}
-            />
+            <StarIcon className={`h-3.5 w-3.5 ${onlyWatchlist ? "fill-current text-amber-400" : "text-muted-foreground"}`} />
             Watchlist Only
           </Button>
 
@@ -238,9 +207,7 @@ export function ScreenerPage() {
             size="sm"
             className="h-8 text-xs px-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition flex items-center gap-1.5"
           >
-            <RefreshCw
-              className={`h-3.5 w-3.5 ${isSyncing ? "animate-spin" : ""}`}
-            />
+            <RefreshCw className={`h-3.5 w-3.5 ${isSyncing ? "animate-spin" : ""}`} />
             {isSyncing ? "Syncing..." : "Sync Stock Data"}
           </Button>
         </div>
@@ -255,8 +222,7 @@ export function ScreenerPage() {
           </div>
         ) : stockDataItems.length === 0 ? (
           <div className="h-64 flex items-center justify-center text-xs text-muted-foreground p-4 text-center border border-border bg-card/45 backdrop-blur-md rounded-lg shadow-sm">
-            No stock data records found in database. Please run historical sync
-            on Ingestion Logs.
+            No stock data records found in database. Please run historical sync on Ingestion Logs.
           </div>
         ) : (
           <>
@@ -276,30 +242,16 @@ export function ScreenerPage() {
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            handleWatchlistToggle(
-                              item.stockId,
-                              !!item.watchlist,
-                              item.symbol,
-                            );
+                            handleWatchlistToggle(item.stockId, !!item.watchlist, item.symbol);
                           }}
                           className="text-amber-500 hover:scale-110 transition-transform focus:outline-none"
-                          title={
-                            item.watchlist
-                              ? "Remove from Watchlist"
-                              : "Add to Watchlist"
-                          }
+                          title={item.watchlist ? "Remove from Watchlist" : "Add to Watchlist"}
                         >
-                          <StarIcon
-                            className={`h-3.5 w-3.5 ${item.watchlist ? "fill-amber-500 text-amber-500" : "text-muted-foreground/30"}`}
-                          />
+                          <StarIcon className={`h-3.5 w-3.5 ${item.watchlist ? "fill-amber-500 text-amber-500" : "text-muted-foreground/30"}`} />
                         </button>
-                        <span className="font-bold text-xs text-indigo-400 font-mono">
-                          {item.symbol}
-                        </span>
+                        <span className="font-bold text-xs text-indigo-400 font-mono">{item.symbol}</span>
                         {item.exchange && (
-                          <span className="text-[8px] font-bold font-mono text-muted-foreground/50 bg-muted px-1 rounded border border-border/20 uppercase">
-                            {item.exchange}
-                          </span>
+                          <span className="text-[8px] font-bold font-mono text-muted-foreground/50 bg-muted px-1 rounded border border-border/20 uppercase">{item.exchange}</span>
                         )}
                         <span className="text-[9px] text-muted-foreground/60 font-mono">
                           {new Date(item.date).toLocaleDateString("en-US", {
@@ -312,100 +264,70 @@ export function ScreenerPage() {
                         {activeStrategy === "day" && item.dayScore !== null && (
                           <span
                             className={`text-[9px] font-bold py-[2px] px-[8px] rounded-full ${
-                              item.dayScore >= 70
-                                ? "text-emerald bg-emerald-500/20"
-                                : item.dayScore >= 40
-                                  ? "text-amber-500 bg-amber-500/20"
-                                  : "text-rose-500 bg-rose-500/20"
+                              item.dayScore >= 70 ? "text-emerald bg-emerald-500/20" : item.dayScore >= 40 ? "text-amber-500 bg-amber-500/20" : "text-rose-500 bg-rose-500/20"
                             }`}
                           >
                             {item.dayScore} / 100
                           </span>
                         )}
-                        {activeStrategy === "swing" &&
-                          item.swingScore !== null && (
-                            <span
-                              className={`text-[9px] font-bold py-[2px] px-[8px] rounded-full ${
-                                item.swingScore >= 70
-                                  ? "text-emerald-500 bg-emerald-500/20"
-                                  : item.swingScore >= 40
-                                    ? "text-amber-500 bg-amber-500/20"
-                                    : "text-rose-500 bg-rose-500/20"
-                              }`}
-                            >
-                              {item.swingScore} / 100
-                            </span>
-                          )}
-                        {activeStrategy === "position" &&
-                          item.positionScore !== null && (
-                            <span
-                              className={`text-[9px] font-bold py-[2px] px-[8px] rounded-full ${
-                                item.positionScore >= 70
-                                  ? "text-emerald-500 bg-emerald-500/20"
-                                  : item.positionScore >= 40
-                                    ? "text-amber-500 bg-amber-500/20"
-                                    : "text-rose-500 bg-rose-500/20"
-                              }`}
-                            >
-                              {item.positionScore} / 100
-                            </span>
-                          )}
+                        {activeStrategy === "swing" && item.swingScore !== null && (
+                          <span
+                            className={`text-[9px] font-bold py-[2px] px-[8px] rounded-full ${
+                              item.swingScore >= 70
+                                ? "text-emerald-500 bg-emerald-500/20"
+                                : item.swingScore >= 40
+                                  ? "text-amber-500 bg-amber-500/20"
+                                  : "text-rose-500 bg-rose-500/20"
+                            }`}
+                          >
+                            {item.swingScore} / 100
+                          </span>
+                        )}
+                        {activeStrategy === "position" && item.positionScore !== null && (
+                          <span
+                            className={`text-[9px] font-bold py-[2px] px-[8px] rounded-full ${
+                              item.positionScore >= 70
+                                ? "text-emerald-500 bg-emerald-500/20"
+                                : item.positionScore >= 40
+                                  ? "text-amber-500 bg-amber-500/20"
+                                  : "text-rose-500 bg-rose-500/20"
+                            }`}
+                          >
+                            {item.positionScore} / 100
+                          </span>
+                        )}
                       </div>
                     </div>
 
                     {/* Row 2: Price | Icon Change (Change%) */}
                     <div className="flex justify-between items-center gap-1.5 flex-wrap">
                       <div className="flex flex-col">
-                        <span className="text-[9px] text-muted-foreground/60 uppercase">
-                          Harga Terakhir
-                        </span>
+                        <span className="text-[9px] text-muted-foreground/60 uppercase">Harga Terakhir</span>
                         <span className="text-md font-bold font-mono text-foreground">
                           {item.close.toLocaleString("en-US", {
                             maximumFractionDigits: 2,
                           })}
-                          <span
-                            className={`text-[10px] pl-2 ${
-                              item.change >= 0
-                                ? "text-green-500"
-                                : "text-red-500"
-                            }`}
-                          >
+                          <span className={`text-[10px] pl-2 ${item.change >= 0 ? "text-green-500" : "text-red-500"}`}>
                             {item.change >= 0 ? "+" : "-"}
                             {Math.abs(item.change).toFixed(2)}
                           </span>
                         </span>
                       </div>
                       <div className="flex flex-col items-end">
-                        <span className="text-[9px] text-muted-foreground/60 uppercase">
-                          Perubahan Harian
-                        </span>
-                        {item.change !== null &&
-                        item.change !== undefined &&
-                        item.changePercent !== null &&
-                        item.changePercent !== undefined ? (
-                          <span
-                            className={`inline-flex items-center gap-0.5 text-,d font-bold font-mono ${item.change >= 0 ? "text-green-500" : "text-red-500"}`}
-                          >
-                            {item.change >= 0 ? (
-                              <ArrowUpIcon className="h-3.5 w-3.5 shrink-0" />
-                            ) : (
-                              <ArrowDownIcon className="h-3.5 w-3.5 shrink-0" />
-                            )}
+                        <span className="text-[9px] text-muted-foreground/60 uppercase">Perubahan Harian</span>
+                        {item.change !== null && item.change !== undefined && item.changePercent !== null && item.changePercent !== undefined ? (
+                          <span className={`inline-flex items-center gap-0.5 text-,d font-bold font-mono ${item.change >= 0 ? "text-green-500" : "text-red-500"}`}>
+                            {item.change >= 0 ? <ArrowUpIcon className="h-3.5 w-3.5 shrink-0" /> : <ArrowDownIcon className="h-3.5 w-3.5 shrink-0" />}
                             {Math.abs(item.changePercent).toFixed(2)}%
                           </span>
                         ) : (
-                          <span className="text-xs text-muted-foreground/45">
-                            -
-                          </span>
+                          <span className="text-xs text-muted-foreground/45">-</span>
                         )}
                       </div>
                     </div>
 
                     {/* Row 3: Company Name */}
-                    <div
-                      className="text-[10px] text-muted-foreground truncate font-medium border-t border-border/20 uppercase pt-2 mt-2"
-                      title={item.name}
-                    >
+                    <div className="text-[10px] text-muted-foreground truncate font-medium border-t border-border/20 uppercase pt-2 mt-2" title={item.name}>
                       {item.name || "-"}
                     </div>
                   </div>
@@ -421,13 +343,9 @@ export function ScreenerPage() {
                   <span>Loading more stocks...</span>
                 </div>
               ) : hasNextPage ? (
-                <span className="text-xs text-muted-foreground/60">
-                  Scroll down to load more
-                </span>
+                <span className="text-xs text-muted-foreground/60">Scroll down to load more</span>
               ) : (
-                <span className="text-xs text-muted-foreground/40 font-medium">
-                  Showing all {total} stocks
-                </span>
+                <span className="text-xs text-muted-foreground/40 font-medium">Showing all {total} stocks</span>
               )}
             </div>
           </>

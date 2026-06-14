@@ -13,5 +13,4 @@ export function useSyncHistorical() {
       queryClient.invalidateQueries({ queryKey: [...screenerKeys.all, "logs"] });
     },
   });
-
 }

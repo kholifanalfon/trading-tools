@@ -42,11 +42,7 @@ export function ScreenerSearch({ onSearch, isLoading }: ScreenerSearchProps) {
             disabled={isLoading}
           />
         </div>
-        <Button
-          type="submit"
-          disabled={isLoading || !query.trim()}
-          className="h-10 text-xs px-5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition"
-        >
+        <Button type="submit" disabled={isLoading || !query.trim()} className="h-10 text-xs px-5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition">
           {isLoading ? "Searching..." : "Search"}
         </Button>
       </form>

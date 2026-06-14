@@ -15,8 +15,7 @@ export function useGetStockData(params: StockDataQueryParams) {
 export function useGetInfiniteStockData(params: StockDataQueryParams) {
   return useInfiniteQuery<any, ApiError>({
     queryKey: [...screenerKeys.all, "data", "infinite", params],
-    queryFn: ({ pageParam = 1 }) =>
-      getStockDataApi({ ...params, page: pageParam as number }),
+    queryFn: ({ pageParam = 1 }) => getStockDataApi({ ...params, page: pageParam as number }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.totalPages) {

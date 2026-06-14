@@ -17,6 +17,4 @@ router.post("/sync-history", validateBody(SyncHistoryBodySchema), controller.sta
 router.get("/sync-history/status", controller.getHistoricalSyncStatus);
 router.get("/sync-history/logs", controller.getSyncLogs);
 
-
-
 export const screenerRoutes = router;

@@ -9,7 +9,7 @@ export function calculateEMA(prices: number[], period: number): (number | null)[
   }
 
   const k = 2 / (period + 1);
-  
+
   let sum = 0;
   for (let i = 0; i < period; i++) {
     sum += prices[i];
@@ -48,12 +48,7 @@ export function calculateSMA(prices: number[], period: number): (number | null)[
 /**
  * Helper to calculate Average True Range (ATR)
  */
-export function calculateATR(
-  highs: number[],
-  lows: number[],
-  closes: number[],
-  period: number = 14
-): (number | null)[] {
+export function calculateATR(highs: number[], lows: number[], closes: number[], period: number = 14): (number | null)[] {
   const atr: (number | null)[] = new Array(closes.length).fill(null);
   if (closes.length <= period) return atr;
 
@@ -125,7 +120,7 @@ export function calculateMACD(
   prices: number[],
   fastPeriod = 12,
   slowPeriod = 26,
-  signalPeriod = 9
+  signalPeriod = 9,
 ): {
   macd: (number | null)[];
   signal: (number | null)[];

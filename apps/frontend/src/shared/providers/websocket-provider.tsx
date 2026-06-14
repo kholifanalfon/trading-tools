@@ -5,8 +5,6 @@ import { useAuthStore } from "@/shared/stores/auth.store";
 const API_URL = import.meta.env.FE_VITE_API_URL || "http://localhost:3000";
 const WS_URL = API_URL.replace(/^http/, "ws");
 
-console.log(WS_URL);
-
 export const WebSocketContext = createContext<ClientSocket | null>(null);
 
 export function WebSocketProvider({ children }: { children: React.ReactNode }) {
@@ -35,10 +33,7 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
       }
     },
     emit: (event, data) => {
-      if (
-        socketRef.current &&
-        socketRef.current.readyState === WebSocket.OPEN
-      ) {
+      if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
         socketRef.current.send(JSON.stringify({ event, data }));
       }
     },
@@ -98,15 +93,10 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
         socketRef.current = null;
         if (active) {
           if (e.code === 1008) {
-            console.warn(
-              "WebSocket closed due to policy violation. Reconnecting with standard delay.",
-            );
+            console.warn("WebSocket closed due to policy violation. Reconnecting with standard delay.");
           }
 
-          const delay = Math.min(
-            1000 * Math.pow(2, reconnectAttemptsRef.current),
-            16000,
-          );
+          const delay = Math.min(1000 * Math.pow(2, reconnectAttemptsRef.current), 16000);
           reconnectAttemptsRef.current += 1;
 
           reconnectTimeoutRef.current = window.setTimeout(() => {
@@ -137,9 +127,5 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
     };
   }, [isAuthenticated]);
 
-  return (
-    <WebSocketContext.Provider value={clientSocketRef.current}>
-      {children}
-    </WebSocketContext.Provider>
-  );
+  return <WebSocketContext.Provider value={clientSocketRef.current}>{children}</WebSocketContext.Provider>;
 }

@@ -5,12 +5,7 @@ import { logger } from "./logger";
 import { config } from "./config";
 import { AppError } from "@/core/errors/app-error";
 
-export function errorHandler(
-  err: any,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
   let status = err.status || 500;
   let message = err.message || "Internal Server Error";
   let details: any = undefined;
@@ -62,7 +57,7 @@ export function errorHandler(
       path: req.path,
       method: req.method,
     },
-    `An error occurred: ${message}`
+    `An error occurred: ${message}`,
   );
 
   const isProduction = process.env.NODE_ENV === "production";

@@ -13,9 +13,7 @@ export const StockDataQuerySchema = z.object({
   limit: z.string().transform(Number).default("10"),
   search: z.string().optional(),
   date: z.string().optional(),
-  watchlist: z
-    .preprocess((val) => val === "true" || val === true, z.boolean())
-    .optional(),
+  watchlist: z.preprocess((val) => val === "true" || val === true, z.boolean()).optional(),
   exchange: z.string().optional(),
   strategy: z.string().optional(),
 });

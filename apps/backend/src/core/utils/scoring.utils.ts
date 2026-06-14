@@ -69,7 +69,7 @@ export function calculateSwingScore(metrics: ScoreMetrics) {
   }
 
   // 4. Volume Trend [10 pts]
-  if (metrics.avgVolume20 !== null && metrics.volume > metrics.avgVolume20 && (metrics.close > (metrics.prevClose || 0))) {
+  if (metrics.avgVolume20 !== null && metrics.volume > metrics.avgVolume20 && metrics.close > (metrics.prevClose || 0)) {
     volumeScore = 10;
   }
 
@@ -99,19 +99,21 @@ export function calculatePositionScore(metrics: ScoreMetrics) {
   // 2. Price Strength (52-Week High) [25 pts]
   if (metrics.yearHigh !== null && metrics.yearHigh > 0) {
     const diffToHigh = (metrics.yearHigh - metrics.close) / metrics.yearHigh;
-    if (diffToHigh <= 0.10) priceStrengthScore = 25;
+    if (diffToHigh <= 0.1) priceStrengthScore = 25;
   }
 
   // 3. Long-term Momentum (1-Year Return) [20 pts]
   if (metrics.priceReturn1Y !== null) {
-    if (metrics.priceReturn1Y > 20) momentumScore = 20; // > 20% return
+    if (metrics.priceReturn1Y > 20)
+      momentumScore = 20; // > 20% return
     else if (metrics.priceReturn1Y > 10) momentumScore = 10;
   }
 
   // 4. Low Volatility (Steady Growth) [15 pts]
   if (metrics.atr14 !== null && metrics.close > 0) {
     const atrPercent = (metrics.atr14 / metrics.close) * 100;
-    if (atrPercent < 3) volatilityScore = 15; // Low ATR is good for position
+    if (atrPercent < 3)
+      volatilityScore = 15; // Low ATR is good for position
     else if (atrPercent < 5) volatilityScore = 5;
   }
 
@@ -124,6 +126,6 @@ export function calculateAllScores(metrics: ScoreMetrics): ScorePayload {
   return {
     dayScore: calculateDayScore(metrics),
     swingScore: calculateSwingScore(metrics),
-    positionScore: calculatePositionScore(metrics)
+    positionScore: calculatePositionScore(metrics),
   };
 }

@@ -1,12 +1,5 @@
 import { StockSearchResult } from "../types/screener.types";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/shared/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/shared/components/ui/table";
 import { Button } from "@/shared/components/ui/button";
 import { TrendingUpIcon } from "lucide-react";
 
@@ -17,12 +10,7 @@ export interface ScreenerResultsProps {
   selectedSymbol: string | null;
 }
 
-export function ScreenerResults({
-  results,
-  onSelectSymbol,
-  isLoading,
-  selectedSymbol,
-}: ScreenerResultsProps) {
+export function ScreenerResults({ results, onSelectSymbol, isLoading, selectedSymbol }: ScreenerResultsProps) {
   return (
     <div className="rounded-lg border border-border bg-card/45 backdrop-blur-md shadow-sm overflow-hidden">
       <Table>
@@ -52,22 +40,11 @@ export function ScreenerResults({
             </TableRow>
           ) : (
             results.map((item) => (
-              <TableRow
-                key={item.symbol}
-                className={`hover:bg-muted/20 transition-colors ${
-                  selectedSymbol === item.symbol ? "bg-indigo-500/5 hover:bg-indigo-500/10" : ""
-                }`}
-              >
-                <TableCell className="py-2.5 px-4 font-semibold text-xs text-indigo-400 font-mono">
-                  {item.symbol}
-                </TableCell>
-                <TableCell className="py-2.5 px-4 text-xs text-foreground font-medium">
-                  {item.description}
-                </TableCell>
+              <TableRow key={item.symbol} className={`hover:bg-muted/20 transition-colors ${selectedSymbol === item.symbol ? "bg-indigo-500/5 hover:bg-indigo-500/10" : ""}`}>
+                <TableCell className="py-2.5 px-4 font-semibold text-xs text-indigo-400 font-mono">{item.symbol}</TableCell>
+                <TableCell className="py-2.5 px-4 text-xs text-foreground font-medium">{item.description}</TableCell>
                 <TableCell className="py-2.5 px-4 text-xs text-muted-foreground">
-                  <span className="inline-block px-1.5 py-0.5 rounded bg-muted/65 text-[10px] uppercase font-semibold">
-                    {item.type}
-                  </span>
+                  <span className="inline-block px-1.5 py-0.5 rounded bg-muted/65 text-[10px] uppercase font-semibold">{item.type}</span>
                 </TableCell>
                 <TableCell className="py-2.5 px-4 text-right">
                   <Button

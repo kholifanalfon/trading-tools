@@ -8,11 +8,7 @@ export class SettingsRepository {
   }
 
   async getSettingByKey(key: string) {
-    const result = await db
-      .select()
-      .from(settings)
-      .where(eq(settings.key, key))
-      .limit(1);
+    const result = await db.select().from(settings).where(eq(settings.key, key)).limit(1);
     return result[0] || null;
   }
 

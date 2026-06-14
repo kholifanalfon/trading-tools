@@ -18,19 +18,11 @@ export function StockDetailPage() {
   // Google Stock style timeframes
   // 1D: 1 day, 5D: 5 days, 1M: ~22 trading days, 6M: ~130 trading days,
   // YTD: from Jan 1st of current year, 1Y: ~252 trading days, 5Y: ~1260 trading days, MAX: 5000 days
-  const [timeframe, setTimeframe] = useState<
-    "1D" | "5D" | "1M" | "6M" | "YTD" | "1Y" | "5Y" | "MAX"
-  >("1M");
-  const [activeScoreTab, setActiveScoreTab] = useState<
-    "day" | "swing" | "position"
-  >("day");
+  const [timeframe, setTimeframe] = useState<"1D" | "5D" | "1M" | "6M" | "YTD" | "1Y" | "5Y" | "MAX">("1M");
+  const [activeScoreTab, setActiveScoreTab] = useState<"day" | "swing" | "position">("day");
 
   useEffect(() => {
-    if (
-      urlStrategy === "day" ||
-      urlStrategy === "swing" ||
-      urlStrategy === "position"
-    ) {
+    if (urlStrategy === "day" || urlStrategy === "swing" || urlStrategy === "position") {
       setActiveScoreTab(urlStrategy);
     } else if (settings?.default_strategy) {
       setActiveScoreTab(settings.default_strategy as any);
@@ -76,17 +68,9 @@ export function StockDetailPage() {
   // Indicator visibility toggles
   const [showRsi, setShowRsi] = useState(true);
   const [showMacd, setShowMacd] = useState(true);
-  const [chartType, setChartType] = useState<"candlestick" | "line">(
-    "candlestick",
-  );
+  const [chartType, setChartType] = useState<"candlestick" | "line">("candlestick");
 
-  const { data: historicalData = [], isLoading } = useGetStockHistoricalData(
-    symbol,
-    currentLimit,
-    timeframe,
-    activeScoreTab,
-  );
-
+  const { data: historicalData = [], isLoading } = useGetStockHistoricalData(symbol, currentLimit, timeframe, activeScoreTab);
 
   const { data: quote } = useGetQuote(symbol);
 
@@ -95,8 +79,7 @@ export function StockDetailPage() {
   const companyName = latestData?.name || symbol;
 
   // Find the latest point with score payload, or fall back to the latest entry
-  const latestDataWithScore =
-    [...historicalData].reverse().find((d) => d.scorePayload) || latestData;
+  const latestDataWithScore = [...historicalData].reverse().find((d) => d.scorePayload) || latestData;
 
   // Safe parse scorePayload
   let scorePayload: any = null;
@@ -123,26 +106,15 @@ export function StockDetailPage() {
       {/* Header Panel */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-border/50 pb-5 shrink-0">
         <div className="flex items-center gap-3">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => navigate("/screener")}
-            className="h-8 w-8 p-0 rounded-xl"
-          >
+          <Button variant="outline" size="sm" onClick={() => navigate("/screener")} className="h-8 w-8 p-0 rounded-xl">
             <ChevronLeftIcon className="h-4 w-4" />
           </Button>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-bold text-xs text-indigo-400 font-mono bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
-                {symbol}
-              </span>
-              <h1 className="text-xl font-bold tracking-tight text-foreground line-clamp-1">
-                {companyName}
-              </h1>
+              <span className="font-bold text-xs text-indigo-400 font-mono bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">{symbol}</span>
+              <h1 className="text-xl font-bold tracking-tight text-foreground line-clamp-1">{companyName}</h1>
             </div>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Historical performance data & technical indicators analytics
-            </p>
+            <p className="text-xs text-muted-foreground mt-0.5">Historical performance data & technical indicators analytics</p>
           </div>
         </div>
 
@@ -150,20 +122,14 @@ export function StockDetailPage() {
         {quote && (
           <div className="flex items-center gap-4 bg-muted/20 px-4 py-2 rounded-xl border border-border/40">
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
-                Latest Close Price
-              </p>
+              <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Latest Close Price</p>
               <div className="flex items-baseline gap-2">
                 <span className="text-lg font-bold font-mono text-foreground">
                   {quote.currentPrice.toLocaleString("en-US", {
                     maximumFractionDigits: 4,
                   })}
                 </span>
-                <span
-                  className={`text-xs font-bold font-mono ${
-                    priceChange >= 0 ? "text-green-500" : "text-red-500"
-                  }`}
-                >
+                <span className={`text-xs font-bold font-mono ${priceChange >= 0 ? "text-green-500" : "text-red-500"}`}>
                   {priceChange >= 0 ? "+" : ""}
                   {priceChange.toFixed(2)} ({priceChangePercent.toFixed(2)}%)
                 </span>
@@ -270,9 +236,7 @@ export function StockDetailPage() {
 
               {/* Google Stock Timeframe Selector */}
               <div className="flex items-center gap-0.5 bg-muted/30 p-0.5 rounded-lg border border-border/30 w-full">
-                {(
-                  ["1D", "5D", "1M", "6M", "YTD", "1Y", "5Y", "MAX"] as const
-                ).map((tf) => (
+                {(["1D", "5D", "1M", "6M", "YTD", "1Y", "5Y", "MAX"] as const).map((tf) => (
                   <Button
                     key={tf}
                     variant={timeframe === tf ? "default" : "ghost"}
@@ -304,12 +268,7 @@ export function StockDetailPage() {
 
         {/* Right Side: Detailed Stats & Indicator Interpretations */}
         <div className="space-y-4">
-          <StrategyScoreCard
-            scorePayload={scorePayload}
-            date={latestDataWithScore?.date || null}
-            activeScoreTab={activeScoreTab}
-            setActiveScoreTab={setActiveScoreTab}
-          />
+          <StrategyScoreCard scorePayload={scorePayload} date={latestDataWithScore?.date || null} activeScoreTab={activeScoreTab} setActiveScoreTab={setActiveScoreTab} />
 
           {/* Latest Stock Metrics */}
           <div className="bg-card/45 border border-border p-4 rounded-xl space-y-3 shadow-sm">
@@ -320,50 +279,28 @@ export function StockDetailPage() {
             {quote ? (
               <div className="grid grid-cols-2 gap-1 text-xs font-mono">
                 <div className="bg-muted/10 rounded-lg border border-border/20">
-                  <span className="block text-[9px] text-muted-foreground uppercase">
-                    Open
-                  </span>
-                  <span className="font-bold text-foreground">
-                    {quote.open?.toLocaleString()}
-                  </span>
+                  <span className="block text-[9px] text-muted-foreground uppercase">Open</span>
+                  <span className="font-bold text-foreground">{quote.open?.toLocaleString()}</span>
                 </div>
                 <div className="bg-muted/10 rounded-lg border border-border/20">
-                  <span className="block text-[9px] text-muted-foreground uppercase">
-                    Close
-                  </span>
-                  <span className="font-bold text-foreground">
-                    {quote.currentPrice?.toLocaleString()}
-                  </span>
+                  <span className="block text-[9px] text-muted-foreground uppercase">Close</span>
+                  <span className="font-bold text-foreground">{quote.currentPrice?.toLocaleString()}</span>
                 </div>
                 <div className="bg-muted/10 rounded-lg border border-border/20">
-                  <span className="block text-[9px] text-muted-foreground uppercase">
-                    High
-                  </span>
-                  <span className="font-bold text-foreground text-green-500">
-                    {quote.high?.toLocaleString()}
-                  </span>
+                  <span className="block text-[9px] text-muted-foreground uppercase">High</span>
+                  <span className="font-bold text-foreground text-green-500">{quote.high?.toLocaleString()}</span>
                 </div>
                 <div className="bg-muted/10 rounded-lg border border-border/20">
-                  <span className="block text-[9px] text-muted-foreground uppercase">
-                    Low
-                  </span>
-                  <span className="font-bold text-foreground text-red-500">
-                    {quote.low?.toLocaleString()}
-                  </span>
+                  <span className="block text-[9px] text-muted-foreground uppercase">Low</span>
+                  <span className="font-bold text-foreground text-red-500">{quote.low?.toLocaleString()}</span>
                 </div>
                 <div className="col-span-2 bg-muted/10 rounded-lg border border-border/20">
-                  <span className="block text-[9px] text-muted-foreground uppercase">
-                    Volume
-                  </span>
-                  <span className="font-bold text-foreground">
-                    {latestData?.volume?.toLocaleString() ?? "-"}
-                  </span>
+                  <span className="block text-[9px] text-muted-foreground uppercase">Volume</span>
+                  <span className="font-bold text-foreground">{latestData?.volume?.toLocaleString() ?? "-"}</span>
                 </div>
               </div>
             ) : (
-              <p className="text-xs text-muted-foreground">
-                No latest quote available.
-              </p>
+              <p className="text-xs text-muted-foreground">No latest quote available.</p>
             )}
           </div>
 
@@ -379,20 +316,14 @@ export function StockDetailPage() {
                 <div className="space-y-1">
                   <div className="flex justify-between font-mono">
                     <span className="text-muted-foreground">RSI (14)</span>
-                    <span className="font-bold text-amber-500">
-                      {latestData.rsi ? latestData.rsi.toFixed(2) : "-"}
-                    </span>
+                    <span className="font-bold text-amber-500">{latestData.rsi ? latestData.rsi.toFixed(2) : "-"}</span>
                   </div>
                   {latestData.rsi && (
                     <div className="text-[10px] text-muted-foreground italic">
                       {latestData.rsi >= 70 ? (
-                        <span className="text-red-500 font-semibold">
-                          Overbought (Sell Signal)
-                        </span>
+                        <span className="text-red-500 font-semibold">Overbought (Sell Signal)</span>
                       ) : latestData.rsi <= 30 ? (
-                        <span className="text-green-500 font-semibold">
-                          Oversold (Buy Signal)
-                        </span>
+                        <span className="text-green-500 font-semibold">Oversold (Buy Signal)</span>
                       ) : (
                         <span>Neutral Momentum</span>
                       )}
@@ -402,45 +333,31 @@ export function StockDetailPage() {
 
                 {/* EMAs Alignment */}
                 <div className="space-y-1.5">
-                  <span className="text-muted-foreground block">
-                    Moving Averages (EMA)
-                  </span>
+                  <span className="text-muted-foreground block">Moving Averages (EMA)</span>
                   <div className="grid grid-cols-2 gap-2 font-mono text-[10px]">
                     <div className="flex justify-between border-b border-border/30 pb-0.5">
                       <span className="text-muted-foreground">EMA 9:</span>
-                      <span>
-                        {latestData.ema9 ? latestData.ema9.toFixed(2) : "-"}
-                      </span>
+                      <span>{latestData.ema9 ? latestData.ema9.toFixed(2) : "-"}</span>
                     </div>
                     <div className="flex justify-between border-b border-border/30 pb-0.5">
                       <span className="text-muted-foreground">EMA 21:</span>
-                      <span>
-                        {latestData.ema21 ? latestData.ema21.toFixed(2) : "-"}
-                      </span>
+                      <span>{latestData.ema21 ? latestData.ema21.toFixed(2) : "-"}</span>
                     </div>
                     <div className="flex justify-between border-b border-border/30 pb-0.5">
                       <span className="text-muted-foreground">EMA 50:</span>
-                      <span>
-                        {latestData.ema50 ? latestData.ema50.toFixed(2) : "-"}
-                      </span>
+                      <span>{latestData.ema50 ? latestData.ema50.toFixed(2) : "-"}</span>
                     </div>
                     <div className="flex justify-between border-b border-border/30 pb-0.5">
                       <span className="text-muted-foreground">EMA 200:</span>
-                      <span>
-                        {latestData.ema200 ? latestData.ema200.toFixed(2) : "-"}
-                      </span>
+                      <span>{latestData.ema200 ? latestData.ema200.toFixed(2) : "-"}</span>
                     </div>
                   </div>
                   {latestData.ema9 && latestData.ema21 && (
                     <div className="text-[10px] text-muted-foreground italic pt-1">
                       {latestData.ema9 > latestData.ema21 ? (
-                        <span className="text-green-500 font-semibold">
-                          Bullish Crossover (EMA 9 &gt; 21)
-                        </span>
+                        <span className="text-green-500 font-semibold">Bullish Crossover (EMA 9 &gt; 21)</span>
                       ) : (
-                        <span className="text-red-500 font-semibold">
-                          Bearish Crossover (EMA 9 &lt; 21)
-                        </span>
+                        <span className="text-red-500 font-semibold">Bearish Crossover (EMA 9 &lt; 21)</span>
                       )}
                     </div>
                   )}
@@ -450,51 +367,29 @@ export function StockDetailPage() {
                 <div className="space-y-1">
                   <div className="flex justify-between font-mono">
                     <span className="text-muted-foreground">MACD</span>
-                    <span>
-                      {latestData.macd ? latestData.macd.toFixed(2) : "-"}
-                    </span>
+                    <span>{latestData.macd ? latestData.macd.toFixed(2) : "-"}</span>
                   </div>
                   <div className="flex justify-between font-mono text-[10px] text-muted-foreground">
                     <span>Signal Line:</span>
-                    <span>
-                      {latestData.macdSignal
-                        ? latestData.macdSignal.toFixed(2)
-                        : "-"}
-                    </span>
+                    <span>{latestData.macdSignal ? latestData.macdSignal.toFixed(2) : "-"}</span>
                   </div>
                   <div className="flex justify-between font-mono text-[10px] text-muted-foreground border-b border-border/30 pb-1.5">
                     <span>Histogram:</span>
-                    <span
-                      className={
-                        latestData.macdHist >= 0
-                          ? "text-green-500"
-                          : "text-red-500"
-                      }
-                    >
-                      {latestData.macdHist
-                        ? latestData.macdHist.toFixed(2)
-                        : "-"}
-                    </span>
+                    <span className={latestData.macdHist >= 0 ? "text-green-500" : "text-red-500"}>{latestData.macdHist ? latestData.macdHist.toFixed(2) : "-"}</span>
                   </div>
                   {latestData.macd && latestData.macdSignal && (
                     <div className="text-[10px] text-muted-foreground italic">
                       {latestData.macd > latestData.macdSignal ? (
-                        <span className="text-green-500 font-semibold">
-                          Bullish MACD crossover
-                        </span>
+                        <span className="text-green-500 font-semibold">Bullish MACD crossover</span>
                       ) : (
-                        <span className="text-red-500 font-semibold">
-                          Bearish MACD crossover
-                        </span>
+                        <span className="text-red-500 font-semibold">Bearish MACD crossover</span>
                       )}
                     </div>
                   )}
                 </div>
               </div>
             ) : (
-              <p className="text-xs text-muted-foreground">
-                No indicator data available.
-              </p>
+              <p className="text-xs text-muted-foreground">No indicator data available.</p>
             )}
           </div>
         </div>

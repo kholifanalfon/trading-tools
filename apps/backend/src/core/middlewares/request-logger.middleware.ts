@@ -11,17 +11,20 @@ export function requestLogger(req: Request, res: Response, next: NextFunction) {
   const cleanUrl = sanitizeLogValue(req.url || "");
 
   // Log incoming request details
-  logger.info({
-    requestId: req.id,
-    method: cleanMethod,
-    url: cleanUrl,
-    ip: req.ip || req.socket.remoteAddress,
-  }, `Incoming Request: ${cleanMethod} ${cleanUrl}`);
+  logger.info(
+    {
+      requestId: req.id,
+      method: cleanMethod,
+      url: cleanUrl,
+      ip: req.ip || req.socket.remoteAddress,
+    },
+    `Incoming Request: ${cleanMethod} ${cleanUrl}`,
+  );
 
   // Listen to request completion to log duration and response status
   res.on("finish", () => {
     const duration = Date.now() - start;
-    
+
     // Use levels conditionally: warn on 4xx, error on 5xx, info otherwise
     const logData = {
       requestId: req.id,

@@ -5,11 +5,7 @@ import { RegisterInput } from "./auth.schema";
 
 export class AuthRepository {
   async getUserByEmail(email: string) {
-    const result = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, email))
-      .limit(1);
+    const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
     return result[0] || null;
   }
 
