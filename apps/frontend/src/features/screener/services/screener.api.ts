@@ -1,14 +1,5 @@
 import { api } from "@/shared/config/api";
-import { StockSearchResult, StockQuote } from "../types/screener.types";
-
-export interface StockDataQueryParams {
-  page?: number;
-  limit?: number;
-  search?: string;
-  date?: string;
-  watchlist?: boolean;
-  exchange?: string;
-}
+import { StockSearchResult, StockQuote, StockDataQueryParams } from "../types/screener.types";
 
 export async function searchStocksApi(q: string): Promise<StockSearchResult[]> {
   const response = await api.get<{ success: boolean; data: StockSearchResult[] }>(
@@ -42,13 +33,14 @@ export async function getSyncLogsApi(): Promise<any[]> {
 }
 
 export async function getStockDataApi(params: StockDataQueryParams): Promise<{ items: any[]; total: number; page: number; limit: number; totalPages: number }> {
+  console.log(params);
   const response = await api.get<{ success: boolean; data: any }>("/screener/data", { params });
   return response.data.data;
 }
 
-export async function getStockHistoricalDataApi(symbol: string, limit?: number, timeframe?: string): Promise<any[]> {
+export async function getStockHistoricalDataApi(symbol: string, limit?: number, timeframe?: string, strategy?: string): Promise<any[]> {
   const response = await api.get<{ success: boolean; data: any[] }>(`/screener/data/${symbol}`, {
-    params: { limit, timeframe },
+    params: { limit, timeframe, strategy },
   });
   return response.data.data;
 }

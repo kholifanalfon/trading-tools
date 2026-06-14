@@ -6,6 +6,7 @@ import {
   integer,
   doublePrecision,
   uniqueIndex,
+  jsonb,
 } from "drizzle-orm/pg-core";
 import { stocks } from "./stocks.schema";
 
@@ -33,6 +34,10 @@ export const stockData = pgTable(
     macdHist: doublePrecision("macd_hist"),
     change: doublePrecision("change"),
     changePercent: doublePrecision("change_percent"),
+    dayScore: integer("day_score"),
+    swingScore: integer("swing_score"),
+    positionScore: integer("position_score"),
+    scorePayload: jsonb("score_payload"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
   },
   (table) => ({

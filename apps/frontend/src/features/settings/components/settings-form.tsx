@@ -55,6 +55,7 @@ export function SettingsForm({
       finnhub_api_key: "",
       stock_screener_provider: "yahoo_finance",
       exchanges_config: "",
+      default_strategy: "day",
     },
   });
 
@@ -69,6 +70,7 @@ export function SettingsForm({
         stock_screener_provider:
           settings.stock_screener_provider || "yahoo_finance",
         exchanges_config: settings.exchanges_config || "",
+        default_strategy: settings.default_strategy || "day",
       });
 
       if (settings.exchanges_config) {
@@ -254,6 +256,36 @@ export function SettingsForm({
                 {errors.stock_screener_provider && (
                   <p className="text-xs text-destructive font-semibold mt-1">
                     {errors.stock_screener_provider.message}
+                  </p>
+                )}
+              </Field>
+
+              {/* Default Strategy Selection */}
+              <Field className="space-y-1.5">
+                <FieldLabel
+                  htmlFor="default_strategy"
+                  className="text-xs font-semibold text-muted-foreground"
+                >
+                  Default Trading Strategy
+                </FieldLabel>
+                <div className="relative">
+                  <select
+                    id="default_strategy"
+                    disabled={isLoading}
+                    className="flex h-9 w-full rounded-md border border-border/70 bg-background/50 px-3 py-1 text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                    {...register("default_strategy")}
+                  >
+                    <option value="day">Day Trading</option>
+                    <option value="swing">Swing Trading</option>
+                    <option value="position">Position Trading</option>
+                  </select>
+                </div>
+                <p className="text-[9px] text-muted-foreground leading-normal">
+                  Sets the default strategy in the screener list.
+                </p>
+                {errors.default_strategy && (
+                  <p className="text-xs text-destructive font-semibold mt-1">
+                    {errors.default_strategy.message}
                   </p>
                 )}
               </Field>

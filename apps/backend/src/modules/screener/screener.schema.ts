@@ -13,8 +13,11 @@ export const StockDataQuerySchema = z.object({
   limit: z.string().transform(Number).default("10"),
   search: z.string().optional(),
   date: z.string().optional(),
-  watchlist: z.preprocess((val) => val === "true" || val === true, z.boolean()).optional(),
+  watchlist: z
+    .preprocess((val) => val === "true" || val === true, z.boolean())
+    .optional(),
   exchange: z.string().optional(),
+  strategy: z.string().optional(),
 });
 
 export type StockSearchQuery = z.infer<typeof StockSearchQuerySchema>;
@@ -51,6 +54,3 @@ export const SyncHistoricalStateSchema = z.object({
 export type StockSearchResult = z.infer<typeof StockSearchResultSchema>;
 export type StockQuote = z.infer<typeof StockQuoteSchema>;
 export type SyncHistoricalState = z.infer<typeof SyncHistoricalStateSchema>;
-
-
-

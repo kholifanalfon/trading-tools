@@ -14,3 +14,13 @@ export interface StockQuote {
   open: number;
   previousClose: number;
 }
+
+export interface StockDataQueryParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  date?: string;
+  watchlist?: boolean;
+  exchange?: string;
+  strategy?: string;
+}

@@ -30,7 +30,11 @@ export class ScreenerController {
     }
   };
 
-  startHistoricalSync = async (req: Request, res: Response, next: NextFunction) => {
+  startHistoricalSync = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
     try {
       const result = await this.service.startHistoricalSync(req.body.date);
       res.status(202).json({
@@ -42,8 +46,11 @@ export class ScreenerController {
     }
   };
 
-
-  getHistoricalSyncStatus = async (req: Request, res: Response, next: NextFunction) => {
+  getHistoricalSyncStatus = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
     try {
       const result = this.service.getHistoricalSyncState();
       res.status(200).json({
@@ -81,8 +88,17 @@ export class ScreenerController {
             ? false
             : undefined;
       const exchange = req.query.exchange as string | undefined;
+      const strategy = req.query.strategy as string | undefined;
 
-      const result = await this.service.getStockData({ page, limit, search, date, watchlist, exchange });
+      const result = await this.service.getStockData({
+        page,
+        limit,
+        search,
+        date,
+        watchlist,
+        exchange,
+        strategy,
+      });
       res.status(200).json({
         success: true,
         data: result,
@@ -92,12 +108,22 @@ export class ScreenerController {
     }
   };
 
-  getStockHistoricalData = async (req: Request, res: Response, next: NextFunction) => {
+  getStockHistoricalData = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
     try {
       const symbol = req.params.symbol as string;
       const limit = req.query.limit ? Number(req.query.limit) : 100;
       const timeframe = req.query.timeframe as string | undefined;
-      const result = await this.service.getStockHistoricalData(symbol, limit, timeframe);
+      const strategy = req.query.strategy as string | undefined;
+      const result = await this.service.getStockHistoricalData(
+        symbol,
+        limit,
+        timeframe,
+        strategy,
+      );
       res.status(200).json({
         success: true,
         data: result,
@@ -107,4 +133,3 @@ export class ScreenerController {
     }
   };
 }
-

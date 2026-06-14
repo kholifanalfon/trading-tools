@@ -38,6 +38,10 @@ export class ScreenerRepository {
             macdHist: sql`EXCLUDED.macd_hist`,
             change: sql`EXCLUDED.change`,
             changePercent: sql`EXCLUDED.change_percent`,
+            dayScore: sql`EXCLUDED.day_score`,
+            swingScore: sql`EXCLUDED.swing_score`,
+            positionScore: sql`EXCLUDED.position_score`,
+            scorePayload: sql`EXCLUDED.score_payload`,
           },
         })
         .returning();
@@ -67,6 +71,7 @@ export class ScreenerRepository {
     date?: string;
     watchlist?: boolean;
     exchange?: string;
+    strategy?: string;
   }) {
     const offset = (query.page - 1) * query.limit;
 
@@ -78,15 +83,40 @@ export class ScreenerRepository {
       ? eq(sql`${stockData.date}::date`, sql`${query.date}::date`)
       : undefined;
 
-    const watchlistFilter = query.watchlist !== undefined
-      ? eq(stocks.watchlist, query.watchlist)
-      : undefined;
+    const watchlistFilter =
+      query.watchlist !== undefined
+        ? eq(stocks.watchlist, query.watchlist)
+        : undefined;
 
     const exchangeFilter = query.exchange
       ? eq(stocks.exchange, query.exchange)
       : undefined;
 
-    const filters = and(searchFilter, dateFilter, watchlistFilter, exchangeFilter);
+    let strategyFilter = undefined;
+    if (query.strategy === "day") {
+      strategyFilter = sql`${stockData.dayScore} IS NOT NULL`;
+    } else if (query.strategy === "swing") {
+      strategyFilter = sql`${stockData.swingScore} IS NOT NULL`;
+    } else if (query.strategy === "position") {
+      strategyFilter = sql`${stockData.positionScore} IS NOT NULL`;
+    }
+
+    const filters = and(
+      searchFilter,
+      dateFilter,
+      watchlistFilter,
+      exchangeFilter,
+      strategyFilter,
+    );
+
+    let orderByClauses = [desc(stockData.date)];
+    if (query.strategy === "day") {
+      orderByClauses = [desc(stockData.dayScore), desc(stockData.date)];
+    } else if (query.strategy === "swing") {
+      orderByClauses = [desc(stockData.swingScore), desc(stockData.date)];
+    } else if (query.strategy === "position") {
+      orderByClauses = [desc(stockData.positionScore), desc(stockData.date)];
+    }
 
     const items = await db
       .select({
@@ -109,6 +139,10 @@ export class ScreenerRepository {
         macdHist: stockData.macdHist,
         change: stockData.change,
         changePercent: stockData.changePercent,
+        dayScore: stockData.dayScore,
+        swingScore: stockData.swingScore,
+        positionScore: stockData.positionScore,
+        scorePayload: stockData.scorePayload,
         name: stocks.name,
         watchlist: stocks.watchlist,
       })
@@ -117,7 +151,7 @@ export class ScreenerRepository {
       .where(filters)
       .limit(query.limit)
       .offset(offset)
-      .orderBy(desc(stockData.date));
+      .orderBy(...orderByClauses);
 
     const totalResult = await db
       .select({ count: sql<number>`count(*)` })
@@ -157,6 +191,10 @@ export class ScreenerRepository {
         macdHist: stockData.macdHist,
         change: stockData.change,
         changePercent: stockData.changePercent,
+        dayScore: stockData.dayScore,
+        swingScore: stockData.swingScore,
+        positionScore: stockData.positionScore,
+        scorePayload: stockData.scorePayload,
         name: stocks.name,
       })
       .from(stockData)

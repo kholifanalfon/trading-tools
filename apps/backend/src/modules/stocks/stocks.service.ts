@@ -155,7 +155,7 @@ export class StocksService {
           },
         };
 
-        const promptText = `Recommend exactly ${totalLimit} profitable stock ticker symbols currently suitable for trading.
+        const promptText = `Recommend exactly ${totalLimit} stock ticker symbols that are currently highly profitable (generating positive net income/earnings) and have shown strong performance recently, and are highly suitable for active trading strategies such as Day Trading (high intraday volume and momentum), Swing Trading (clear medium-term trend and setups), or Position Trading (strong steady uptrends and growth).
 You MUST ONLY recommend tickers from the following enabled stock exchanges:
 ${exchangesPromptList}
 
