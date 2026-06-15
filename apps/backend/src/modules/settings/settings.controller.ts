@@ -30,4 +30,23 @@ export class SettingsController {
       next(error);
     }
   };
+
+  getScoringRules = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = await this.service.getScoringRules();
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  updateScoringRules = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = await this.service.updateScoringRules(req.body);
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
+

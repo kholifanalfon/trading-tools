@@ -5,7 +5,8 @@ import { YahooFinanceAdapter } from "@/core/adapters/yahoo-finance.adapter";
 import { FinnhubAdapter } from "@/core/adapters/finnhub.adapter";
 import { ScreenerProviderAdapter, HistoricalDataPoint } from "@/core/types/api-stock-provider.types";
 import { calculateEMA, calculateRSI, calculateMACD, calculateSMA, calculateATR } from "@/core/utils/indicators";
-import { calculateAllScores } from "@/core/utils/scoring.utils";
+import { calculateAllScores, mapRulesToConfig } from "@/core/utils/scoring.utils";
+import { ScoringRulesRepository } from "../screener/scoring-rules.repository";
 import { ScoreMetrics } from "@/core/types/scoring.types";
 import { LiveStockDataQuery } from "./live-screener.schema";
 import { SettingsClientService } from "../settings/settings-client.services";
@@ -27,6 +28,7 @@ export class LiveScreenerService {
   private stocksRepo = new StocksRepository();
   private cache = new Map<string, CacheEntry>();
   private CACHE_TTL = 60 * 1000; // 60 seconds
+  private scoringRulesRepo = new ScoringRulesRepository();
 
   private async getProviderConfig() {
     const list = await this.settingsRepo.getAllSettings();
@@ -59,6 +61,9 @@ export class LiveScreenerService {
 
   async getLiveStockData(query: LiveStockDataQuery) {
     const { search, watchlist, exchange, strategy, page, limit } = query;
+
+    const rules = await this.scoringRulesRepo.getAllRules();
+    const rulesConfig = mapRulesToConfig(rules);
 
     let screenedStocks: any[] = [];
     this.logAndBroadcast(`[Live Stock Data] Starting live stock data sync`);
@@ -242,7 +247,7 @@ export class LiveScreenerService {
               priceReturn1Y,
             };
 
-            const scores = calculateAllScores(metrics);
+            const scores = calculateAllScores(metrics, rulesConfig);
 
             this.logAndBroadcast(
               `[Live Stock Data] [SUCCESS] ${stock.symbol} calculated: Day ${scores.dayScore.total}, Swing ${scores.swingScore.total}, Position ${scores.positionScore.total}`,

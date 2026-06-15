@@ -68,6 +68,8 @@ app.use(csrfProtection);
 // Register routes
 app.use("/api/v1", v1Router);
 
+import { initializeDatabase } from "@/core/startup";
+
 // Basic health check route
 app.get("/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
@@ -76,9 +78,11 @@ app.get("/health", (req, res) => {
 // Global Error Handler
 app.use(errorHandler);
 
-const server = app.listen(config.BE_PORT, () => {
+const server = app.listen(config.BE_PORT, async () => {
   logger.info(`🚀 Backend server is running on http://localhost:${config.BE_PORT}`);
+  await initializeDatabase();
 });
 
 // Initialize WebSocket Service on the HTTP server
 webSocketService.initialize(server);
+

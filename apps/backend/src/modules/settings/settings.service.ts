@@ -1,6 +1,7 @@
 import { SettingsRepository } from "./settings.repository";
 import { UpdateSettingsInput } from "./settings.schema";
 import { encrypt } from "@/core/utils/crypto";
+import { ScoringRulesRepository } from "../screener/scoring-rules.repository";
 
 export const API_KEY_MASK = "••••••••••••••••";
 
@@ -113,4 +114,22 @@ export class SettingsService {
     await this.repository.upsertSetting("exchanges_config", JSON.stringify(mergedExchanges));
     return this.getSettings();
   }
+
+  private scoringRulesRepo = new ScoringRulesRepository();
+
+  async getScoringRules() {
+    return this.scoringRulesRepo.getAllRules();
+  }
+
+  async updateScoringRules(data: { rules: { id: number; value: number; weight: number }[] }) {
+    const updated = [];
+    for (const rule of data.rules) {
+      const res = await this.scoringRulesRepo.updateRule(rule.id, rule.value, rule.weight);
+      if (res) {
+        updated.push(res);
+      }
+    }
+    return updated;
+  }
 }
+

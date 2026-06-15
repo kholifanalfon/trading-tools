@@ -9,7 +9,8 @@ import { ScreenerProviderAdapter } from "@/core/types/api-stock-provider.types";
 import { YahooFinanceAdapter } from "@/core/adapters/yahoo-finance.adapter";
 import { FinnhubAdapter } from "@/core/adapters/finnhub.adapter";
 import { calculateEMA, calculateRSI, calculateMACD, calculateSMA, calculateATR } from "@/core/utils/indicators";
-import { calculateAllScores } from "@/core/utils/scoring.utils";
+import { calculateAllScores, mapRulesToConfig } from "@/core/utils/scoring.utils";
+import { ScoringRulesRepository } from "./scoring-rules.repository";
 import { ScoreMetrics } from "@/core/types/scoring.types";
 
 let historicalSyncState: SyncHistoricalState = {
@@ -21,6 +22,7 @@ let historicalSyncState: SyncHistoricalState = {
 export class ScreenerService {
   private repository = new ScreenerRepository();
   private settingsRepo = new SettingsRepository();
+  private scoringRulesRepo = new ScoringRulesRepository();
 
   getHistoricalSyncState(): SyncHistoricalState {
     return historicalSyncState;
@@ -127,6 +129,9 @@ export class ScreenerService {
 
     // Fetch individually in parallel chunks of 10
     try {
+      const rules = await this.scoringRulesRepo.getAllRules();
+      const rulesConfig = mapRulesToConfig(rules);
+
       this.logAndBroadcast(`[Historical Sync] Starting historical sync for target date: ${targetDateStr}. Total symbols: ${allStocks.length}`);
       let insertedCount = 0;
       const failedSymbols: string[] = [];
@@ -229,7 +234,7 @@ export class ScreenerService {
                     priceReturn1Y: priceReturn1YVals[j],
                   };
 
-                  const scores = calculateAllScores(metrics);
+                  const scores = calculateAllScores(metrics, rulesConfig);
 
                   insertItems.push({
                     stockId: stock.id,

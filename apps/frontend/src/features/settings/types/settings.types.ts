@@ -15,3 +15,24 @@ export interface UpdateGeminiSettingsPayload {
   exchanges_config?: string;
   default_strategy?: string;
 }
+
+export interface ScoringRule {
+  id: number;
+  strategy: string;
+  parameterName: string;
+  value: number;
+  weight: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UpdateScoringRuleInput {
+  id: number;
+  value: number;
+  weight: number;
+}
+
+export interface UpdateScoringRulesBatchPayload {
+  rules: UpdateScoringRuleInput[];
+}
+

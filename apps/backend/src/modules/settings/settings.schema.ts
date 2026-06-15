@@ -10,3 +10,16 @@ export const UpdateSettingsSchema = z.object({
 });
 
 export type UpdateSettingsInput = z.infer<typeof UpdateSettingsSchema>;
+
+export const UpdateScoringRuleSchema = z.object({
+  id: z.number(),
+  value: z.number(),
+  weight: z.number().int(),
+});
+
+export const UpdateScoringRulesBatchSchema = z.object({
+  rules: z.array(UpdateScoringRuleSchema),
+});
+
+export type UpdateScoringRulesBatchInput = z.infer<typeof UpdateScoringRulesBatchSchema>;
+
