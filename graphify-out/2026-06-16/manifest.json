@@ -10,13 +10,13 @@
     "semantic_hash": "1726c2a954a6e12cf4e084a70389ef91"
   },
   "apps/backend/src/core/adapters/finnhub.adapter.ts": {
-    "mtime": 1781543854.698557,
-    "ast_hash": "066d956a2900bc5adc932f55b889b12e",
+    "mtime": 1781542233.1060548,
+    "ast_hash": "ba730afe9354df73faa3fcb5d9a7cfc1",
     "semantic_hash": ""
   },
   "apps/backend/src/core/adapters/yahoo-finance.adapter.ts": {
-    "mtime": 1781544943.7945774,
-    "ast_hash": "b5f2be514ccb0a59d823967c3a74abfb",
+    "mtime": 1781542220.6541493,
+    "ast_hash": "544f30a988a88961f298b30ad5dcbbe0",
     "semantic_hash": ""
   },
   "apps/backend/src/core/config.ts": {
@@ -345,9 +345,9 @@
     "semantic_hash": ""
   },
   "apps/backend/src/modules/stocks/stocks.controller.ts": {
-    "mtime": 1781543897.6238537,
-    "ast_hash": "83b66c521d912c5bc64367c04b743b5b",
-    "semantic_hash": ""
+    "mtime": 1781444458.3474288,
+    "ast_hash": "92508f198d1cd3117a5ef5b997ecd215",
+    "semantic_hash": "92508f198d1cd3117a5ef5b997ecd215"
   },
   "apps/backend/src/modules/stocks/stocks.repository.ts": {
     "mtime": 1781444484.6185958,
@@ -365,9 +365,9 @@
     "semantic_hash": "4b4f0ac84c2a5badbb05d265c6111027"
   },
   "apps/backend/src/modules/stocks/stocks.service.ts": {
-    "mtime": 1781543893.8511202,
-    "ast_hash": "e9027a6be85601851814b8b406246a50",
-    "semantic_hash": ""
+    "mtime": 1781444475.5752485,
+    "ast_hash": "486ba3ef8d53f04d5ea50b441b35d295",
+    "semantic_hash": "486ba3ef8d53f04d5ea50b441b35d295"
   },
   "apps/backend/src/modules/user-management/user-management.controller.ts": {
     "mtime": 1781444494.9302049,
@@ -745,9 +745,9 @@
     "semantic_hash": "6d67154aaeeab6a0e4429db62f310c60"
   },
   "apps/frontend/src/features/stocks/services/stocks.api.ts": {
-    "mtime": 1781543918.2805085,
-    "ast_hash": "7d34169a1cc1440aba70eb4aafd418ad",
-    "semantic_hash": ""
+    "mtime": 1781444770.8171637,
+    "ast_hash": "525202c0c9c11251da303323b84eca13",
+    "semantic_hash": "525202c0c9c11251da303323b84eca13"
   },
   "apps/frontend/src/features/stocks/stocks.keys.ts": {
     "mtime": 1781444775.1444254,
@@ -1400,13 +1400,13 @@
     "semantic_hash": ""
   },
   "apps/backend/src/modules/live-screener/live-screener.service.ts": {
-    "mtime": 1781544795.3217692,
-    "ast_hash": "f2148ff89d07733540e3ef726eabfbfe",
+    "mtime": 1781542816.9839544,
+    "ast_hash": "4441faaac68f5871acc3dca4f3381fd2",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/live-screener/hooks/use-get-live-stock-data.ts": {
-    "mtime": 1781544362.4553049,
-    "ast_hash": "fa5f30957d24d0eaf118642787119191",
+    "mtime": 1781536819.3724968,
+    "ast_hash": "c0e52e8047e46631646419939729e1af",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/live-screener/live-screener.keys.ts": {
@@ -1415,8 +1415,8 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/live-screener/pages/live-screener.page.tsx": {
-    "mtime": 1781544671.0455527,
-    "ast_hash": "a4d4a0faeef3b049610d2a47b267044d",
+    "mtime": 1781542941.4148772,
+    "ast_hash": "c17c8882a8eff2d203ef11332d458eb5",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/live-screener/services/live-screener.api.ts": {
@@ -1425,8 +1425,8 @@
     "semantic_hash": ""
   },
   "apps/backend/src/core/types/api-stock-provider.types.ts": {
-    "mtime": 1781543850.7609346,
-    "ast_hash": "11c30567349cb68064ef559a7a87d3ef",
+    "mtime": 1781542202.1105516,
+    "ast_hash": "dcaf17e07e66723b89446d07f5f194ae",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/settings/settings-client.services.ts": {

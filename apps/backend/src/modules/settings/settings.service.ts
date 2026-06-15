@@ -5,20 +5,20 @@ import { encrypt } from "@/core/utils/crypto";
 export const API_KEY_MASK = "••••••••••••••••";
 
 export const MASTER_EXCHANGES = [
-  { id: "idx", name: "IDX / BEI", suffix: ".JK", enabled: true, limit: 15, country: "Indonesia" },
-  { id: "nyse", name: "NYSE", suffix: "", enabled: true, limit: 15, country: "USA" },
-  { id: "nasdaq", name: "NASDAQ", suffix: "", enabled: true, limit: 15, country: "USA" },
-  { id: "sgx", name: "SGX", suffix: ".SI", enabled: false, limit: 15, country: "Singapore" },
-  { id: "klse", name: "KLSE", suffix: ".KL", enabled: false, limit: 15, country: "Malaysia" },
-  { id: "hkex", name: "HKEX", suffix: ".HK", enabled: false, limit: 15, country: "Hong Kong" },
-  { id: "sse", name: "SSE", suffix: ".SS", enabled: false, limit: 15, country: "China (Shanghai)" },
-  { id: "szse", name: "SZSE", suffix: ".SZ", enabled: false, limit: 15, country: "China (Shenzhen)" },
-  { id: "lse", name: "LSE", suffix: ".L", enabled: false, limit: 15, country: "United Kingdom" },
-  { id: "tyo", name: "TYO", suffix: ".T", enabled: false, limit: 15, country: "Japan" },
-  { id: "asx", name: "ASX", suffix: ".AX", enabled: false, limit: 15, country: "Australia" },
-  { id: "tsx", name: "TSX", suffix: ".TO", enabled: false, limit: 15, country: "Canada" },
-  { id: "nse", name: "NSE", suffix: ".NS", enabled: false, limit: 15, country: "India" },
-  { id: "bse", name: "BSE", suffix: ".BO", enabled: false, limit: 15, country: "India" },
+  { id: "idx", name: "IDX / BEI", suffix: ".JK", enabled: true, limit: 15, country: "Indonesia", countryId: "ID" },
+  { id: "nyse", name: "NYSE", suffix: "", enabled: true, limit: 15, country: "USA", countryId: "US" },
+  { id: "nasdaq", name: "NASDAQ", suffix: "", enabled: true, limit: 15, country: "USA", countryId: "US" },
+  { id: "sgx", name: "SGX", suffix: ".SI", enabled: false, limit: 15, country: "Singapore", countryId: "SG" },
+  { id: "klse", name: "KLSE", suffix: ".KL", enabled: false, limit: 15, country: "Malaysia", countryId: "MY" },
+  { id: "hkex", name: "HKEX", suffix: ".HK", enabled: false, limit: 15, country: "Hong Kong", countryId: "HK" },
+  { id: "sse", name: "SSE", suffix: ".SS", enabled: false, limit: 15, country: "China (Shanghai)", countryId: "CN" },
+  { id: "szse", name: "SZSE", suffix: ".SZ", enabled: false, limit: 15, country: "China (Shenzhen)", countryId: "CN" },
+  { id: "lse", name: "LSE", suffix: ".L", enabled: false, limit: 15, country: "United Kingdom", countryId: "GB" },
+  { id: "tyo", name: "TYO", suffix: ".T", enabled: false, limit: 15, country: "Japan", countryId: "JP" },
+  { id: "asx", name: "ASX", suffix: ".AX", enabled: false, limit: 15, country: "Australia", countryId: "AU" },
+  { id: "tsx", name: "TSX", suffix: ".TO", enabled: false, limit: 15, country: "Canada", countryId: "CA" },
+  { id: "nse", name: "NSE", suffix: ".NS", enabled: false, limit: 15, country: "India", countryId: "IN" },
+  { id: "bse", name: "BSE", suffix: ".BO", enabled: false, limit: 15, country: "India", countryId: "IN" },
 ];
 
 export const DEFAULT_EXCHANGES = MASTER_EXCHANGES;

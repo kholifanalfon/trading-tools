@@ -18,7 +18,7 @@ export async function createStockApi(data: CreateStockPayload): Promise<Stock> {
   return response.data;
 }
 
-export async function updateStockApi(id: number, data: UpdateStockPayload): Promise<Stock> {
+export async function updateStockApi(id: number | string, data: UpdateStockPayload): Promise<Stock> {
   const response = await api.put<Stock>(`/stocks/${id}`, data);
   return response.data;
 }

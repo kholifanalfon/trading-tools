@@ -1,4 +1,4 @@
-import { ScreenerProviderAdapter, HistoricalDataPoint } from "../types/provider.types";
+import { ScreenerProviderAdapter, HistoricalDataPoint, StockProviderSchema } from "../types/api-stock-provider.types";
 import { StockSearchResult, StockQuote } from "@/modules/screener/screener.schema";
 import { getFinnhubClient } from "@/core/finnhub";
 import { FinnhubError } from "@/core/errors/finnhub-error";
@@ -105,5 +105,9 @@ export class FinnhubAdapter implements ScreenerProviderAdapter {
       console.warn("Finnhub stockCandles failed for symbol:", symbol.removeNewline(), err);
       return [];
     }
+  }
+
+  async getScreenedStocks(strategy: string, regions: string[], limit: number = 50, page: number = 1, search?: string): Promise<StockProviderSchema[]> {
+    throw new FinnhubError("getScreenedStocks is not implemented or supported by Finnhub provider", 501);
   }
 }

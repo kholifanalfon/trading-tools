@@ -10,14 +10,14 @@
     "semantic_hash": "1726c2a954a6e12cf4e084a70389ef91"
   },
   "apps/backend/src/core/adapters/finnhub.adapter.ts": {
-    "mtime": 1781482189.8784604,
-    "ast_hash": "e3ee9191faac8bd4279015b134e21990",
-    "semantic_hash": "e3ee9191faac8bd4279015b134e21990"
+    "mtime": 1781539629.57811,
+    "ast_hash": "e8f74be8c6a4b9b5712a04ab62eb236c",
+    "semantic_hash": ""
   },
   "apps/backend/src/core/adapters/yahoo-finance.adapter.ts": {
-    "mtime": 1781482189.8777955,
-    "ast_hash": "80b91e316b16aa912a961e3de8ce1311",
-    "semantic_hash": "80b91e316b16aa912a961e3de8ce1311"
+    "mtime": 1781539879.142397,
+    "ast_hash": "bd55f153f607878e1bfae93d81c23ad1",
+    "semantic_hash": ""
   },
   "apps/backend/src/core/config.ts": {
     "mtime": 1781444594.2526658,
@@ -118,11 +118,6 @@
     "mtime": 1781444564.4437292,
     "ast_hash": "7277bb7acbd6d8b9113ec8e1e3726044",
     "semantic_hash": "7277bb7acbd6d8b9113ec8e1e3726044"
-  },
-  "apps/backend/src/core/types/provider.types.ts": {
-    "mtime": 1781444534.7462435,
-    "ast_hash": "3a576b341b0cb56914b46191481e0c00",
-    "semantic_hash": "3a576b341b0cb56914b46191481e0c00"
   },
   "apps/backend/src/core/types/scoring.types.ts": {
     "mtime": 1781444570.2467804,
@@ -300,7 +295,7 @@
     "semantic_hash": "d716ba431ef7b20cfa8cc3ef431a40ed"
   },
   "apps/backend/src/modules/screener/screener.controller.ts": {
-    "mtime": 1781444416.0541577,
+    "mtime": 1781536582.2612472,
     "ast_hash": "63879f762e5b0dd465df413a1585e942",
     "semantic_hash": "63879f762e5b0dd465df413a1585e942"
   },
@@ -310,19 +305,19 @@
     "semantic_hash": "3ff5e08540d5d7ee5761961363b70a7f"
   },
   "apps/backend/src/modules/screener/screener.routes.ts": {
-    "mtime": 1781444420.4460995,
+    "mtime": 1781536588.1811175,
     "ast_hash": "a42361d444dbcd2a974bc9f68d07f7d1",
     "semantic_hash": "a42361d444dbcd2a974bc9f68d07f7d1"
   },
   "apps/backend/src/modules/screener/screener.schema.ts": {
-    "mtime": 1781444421.9616873,
+    "mtime": 1781536288.6691098,
     "ast_hash": "1b0c90e39c6dfdf334a15ba678d8bff5",
     "semantic_hash": "1b0c90e39c6dfdf334a15ba678d8bff5"
   },
   "apps/backend/src/modules/screener/screener.service.ts": {
-    "mtime": 1781482189.8671465,
-    "ast_hash": "0c3df9b854a8dced320dc86293962183",
-    "semantic_hash": "0c3df9b854a8dced320dc86293962183"
+    "mtime": 1781539013.91575,
+    "ast_hash": "24d74093584634b5e3bd10d872ef05f0",
+    "semantic_hash": ""
   },
   "apps/backend/src/modules/settings/settings.controller.ts": {
     "mtime": 1781444447.1532528,
@@ -345,9 +340,9 @@
     "semantic_hash": "89f751cd14835c1972e5a2ec407de30d"
   },
   "apps/backend/src/modules/settings/settings.service.ts": {
-    "mtime": 1781444453.371399,
-    "ast_hash": "669a7c19abc4aa45285a84959827312f",
-    "semantic_hash": "669a7c19abc4aa45285a84959827312f"
+    "mtime": 1781537486.6610727,
+    "ast_hash": "c03e0b982df04d1b87955dcd9e6308b5",
+    "semantic_hash": ""
   },
   "apps/backend/src/modules/stocks/stocks.controller.ts": {
     "mtime": 1781444458.3474288,
@@ -400,9 +395,9 @@
     "semantic_hash": "9a03febb04a43d4559a26fc4927bc92f"
   },
   "apps/backend/src/routes/v1.router.ts": {
-    "mtime": 1781444519.006347,
-    "ast_hash": "63eb63613a9b72ac16e64288541a9a7d",
-    "semantic_hash": "63eb63613a9b72ac16e64288541a9a7d"
+    "mtime": 1781536791.3696897,
+    "ast_hash": "5836a293a74bea358ecef9041a5a40d3",
+    "semantic_hash": ""
   },
   "apps/backend/src/types/declarations.d.ts": {
     "mtime": 1781444522.284042,
@@ -480,9 +475,9 @@
     "semantic_hash": "ef3ba2a81ba19f8ea5ddf625521e96f0"
   },
   "apps/frontend/src/App.tsx": {
-    "mtime": 1781422929.3507843,
-    "ast_hash": "c878857bd88dae995ae74a2522fea0c6",
-    "semantic_hash": "c878857bd88dae995ae74a2522fea0c6"
+    "mtime": 1781536843.0439014,
+    "ast_hash": "defa2c8eeebbf0d7f1c10745bb24698d",
+    "semantic_hash": ""
   },
   "apps/frontend/src/features/auth/auth.schema.ts": {
     "mtime": 1781444650.2690973,
@@ -650,12 +645,12 @@
     "semantic_hash": "5d86d92ed950464ffcc04097af646b93"
   },
   "apps/frontend/src/features/screener/screener.keys.ts": {
-    "mtime": 1781444725.661755,
+    "mtime": 1781536288.669676,
     "ast_hash": "84c0a24dee113c6509f752f034df4ab9",
     "semantic_hash": "84c0a24dee113c6509f752f034df4ab9"
   },
   "apps/frontend/src/features/screener/services/screener.api.ts": {
-    "mtime": 1781444721.4190567,
+    "mtime": 1781536288.669935,
     "ast_hash": "eb210ab919c992befbde90b0b24aec30",
     "semantic_hash": "eb210ab919c992befbde90b0b24aec30"
   },
@@ -710,7 +705,7 @@
     "semantic_hash": "3868e623a9548c356aad3dc52b8c3e08"
   },
   "apps/frontend/src/features/stocks/components/stock-form-dialog.tsx": {
-    "mtime": 1781444752.9518259,
+    "mtime": 1781536288.6701632,
     "ast_hash": "e128bcc67899100d228a72605399e5d2",
     "semantic_hash": "e128bcc67899100d228a72605399e5d2"
   },
@@ -745,7 +740,7 @@
     "semantic_hash": "6ff829d8d9824f722a006a516a6acb8b"
   },
   "apps/frontend/src/features/stocks/pages/stock-list.page.tsx": {
-    "mtime": 1781444769.4324222,
+    "mtime": 1781536288.6706104,
     "ast_hash": "6d67154aaeeab6a0e4429db62f310c60",
     "semantic_hash": "6d67154aaeeab6a0e4429db62f310c60"
   },
@@ -835,9 +830,9 @@
     "semantic_hash": "1ae0997031dd022167831372fdd87428"
   },
   "apps/frontend/src/shared/components/app-sidebar.tsx": {
-    "mtime": 1781415211.2807455,
-    "ast_hash": "56f2123e63f0e0f36a4d7501491bfb77",
-    "semantic_hash": "56f2123e63f0e0f36a4d7501491bfb77"
+    "mtime": 1781536847.747452,
+    "ast_hash": "5f0a2e2545c75ac24a75958ca428e2bb",
+    "semantic_hash": ""
   },
   "apps/frontend/src/shared/components/global-error-container.tsx": {
     "mtime": 1781320493.7416422,
@@ -1310,9 +1305,9 @@
     "semantic_hash": "44e20591fcf7823f2edd0b3550180594"
   },
   "docker-compose.yml": {
-    "mtime": 1781320493.7526453,
-    "ast_hash": "4f0a31ee787e25328c65730e05bce47c",
-    "semantic_hash": "4f0a31ee787e25328c65730e05bce47c"
+    "mtime": 1781513459.3053925,
+    "ast_hash": "4a5cbe6660cd2a0fbd12997024fb048a",
+    "semantic_hash": ""
   },
   "frontend-guidelines.md": {
     "mtime": 1781191755.7499552,
@@ -1383,5 +1378,65 @@
     "mtime": 1781187137.9470828,
     "ast_hash": "9960a24288958394ac50e57ff638b036",
     "semantic_hash": "9960a24288958394ac50e57ff638b036"
+  },
+  "apps/backend/src/modules/live-screener/live-screener.controller.ts": {
+    "mtime": 1781536776.0531702,
+    "ast_hash": "aabd021b56388f2ef8931ffe76b1f4a8",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/live-screener/live-screener.repository.ts": {
+    "mtime": 1781536757.7802076,
+    "ast_hash": "561c04ec8af378fcea0b616f86837ad7",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/live-screener/live-screener.routes.ts": {
+    "mtime": 1781536781.9661431,
+    "ast_hash": "17a094ec9151579c349311ee213ee344",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/live-screener/live-screener.schema.ts": {
+    "mtime": 1781536752.4295857,
+    "ast_hash": "2ce4704972f4cf42b0240249c4b773f2",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/live-screener/live-screener.service.ts": {
+    "mtime": 1781539720.7070186,
+    "ast_hash": "9064c9e384a014b8a125124d763e8a44",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/live-screener/hooks/use-get-live-stock-data.ts": {
+    "mtime": 1781536819.3724968,
+    "ast_hash": "c0e52e8047e46631646419939729e1af",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/live-screener/live-screener.keys.ts": {
+    "mtime": 1781536815.7879941,
+    "ast_hash": "5c5175afe95391e1f5c5feac255a4133",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/live-screener/pages/live-screener.page.tsx": {
+    "mtime": 1781536828.526306,
+    "ast_hash": "7d9e41f47d3dca93449c467b7d0e5245",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/live-screener/services/live-screener.api.ts": {
+    "mtime": 1781536797.2074583,
+    "ast_hash": "57c08617745421da45dcbb5029dce514",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/core/types/api-stock-provider.types.ts": {
+    "mtime": 1781539633.9808958,
+    "ast_hash": "f165f10cba1df2ae7436266a8b33b30f",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/settings/settings-client.services.ts": {
+    "mtime": 1781537914.3653185,
+    "ast_hash": "adb51aca91f68e892fee6ba6947bbbce",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/settings/settings-client.types.ts": {
+    "mtime": 1781537668.011098,
+    "ast_hash": "a51d4d953e9fce732945fd802c9d177d",
+    "semantic_hash": ""
   }
 }

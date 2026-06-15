@@ -39,9 +39,12 @@ export class StocksController {
 
   updateStock = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const id = Number(req.params.id);
+      const idStr = req.params.id;
+      const id = Number(idStr);
       if (isNaN(id)) {
-        res.status(400).json({ error: "Invalid stock ID" });
+        const symbol = idStr.toUpperCase();
+        const stock = await this.service.upsertStockBySymbol(symbol, req.body);
+        res.status(200).json(stock);
         return;
       }
       const stock = await this.service.updateStock(id, req.body);

@@ -76,6 +76,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           icon: <TrendingUpIcon />,
         },
         {
+          title: "Live Screener",
+          url: "/live-screener",
+          icon: <TrendingUpIcon />,
+        },
+        {
           title: "Ingestion Logs",
           url: "/ingestion-logs",
           icon: <HistoryIcon />,

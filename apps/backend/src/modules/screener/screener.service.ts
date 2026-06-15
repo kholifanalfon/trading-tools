@@ -5,7 +5,7 @@ import { AppError } from "@/core/errors/app-error";
 import { webSocketService } from "@/core/websocket";
 import { NewStockData } from "@/db/schemas/stock-data.schema";
 import { StockSearchResult, StockQuote, SyncHistoricalState } from "./screener.schema";
-import { ScreenerProviderAdapter } from "@/core/types/provider.types";
+import { ScreenerProviderAdapter } from "@/core/types/api-stock-provider.types";
 import { YahooFinanceAdapter } from "@/core/adapters/yahoo-finance.adapter";
 import { FinnhubAdapter } from "@/core/adapters/finnhub.adapter";
 import { calculateEMA, calculateRSI, calculateMACD, calculateSMA, calculateATR } from "@/core/utils/indicators";

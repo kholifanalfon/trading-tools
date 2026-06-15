@@ -58,6 +58,22 @@ export class StocksService {
     return this.repository.updateStock(id, data);
   }
 
+  async upsertStockBySymbol(symbol: string, data: UpdateStockInput) {
+    const existing = await this.repository.getStockBySymbol(symbol);
+    if (existing) {
+      return this.repository.updateStock(existing.id, data);
+    } else {
+      return this.repository.createStock({
+        symbol: symbol,
+        name: data.name || symbol,
+        sector: data.sector || "Unassigned",
+        price: data.price || 0,
+        exchange: data.exchange || "IDX",
+        watchlist: data.watchlist ?? false,
+      });
+    }
+  }
+
   async deleteStock(id: number) {
     const existing = await this.repository.getStockById(id);
     if (!existing) {
