@@ -18,6 +18,8 @@ COPY apps/frontend ./apps/frontend
 # Set environment variables for build
 ARG FE_VITE_API_URL
 ENV FE_VITE_API_URL=$FE_VITE_API_URL
+ARG FE_VITE_SENTRY_DSN
+ENV FE_VITE_SENTRY_DSN=$FE_VITE_SENTRY_DSN
 
 # Build static assets
 RUN bun run --cwd apps/frontend build

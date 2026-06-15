@@ -42,9 +42,8 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
     try {
       // For intraday intervals (60m, 90m, etc.), Yahoo Finance chart requires period1 and period2
       // as Date objects or epoch timestamps, not simple YYYY-MM-DD strings.
-      const isIntraday = interval.endsWith("m") || interval.endsWith("h");
-      const period1 = isIntraday ? fromDate : fromDate.toISOString().split("T")[0];
-      const period2 = isIntraday ? toDate : toDate.toISOString().split("T")[0];
+      const period1 = fromDate;
+      const period2 = toDate;
       const result = await yahooFinance.chart(symbol, {
         period1: period1 as any,
         period2: period2 as any,

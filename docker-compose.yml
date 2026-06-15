@@ -53,7 +53,8 @@ services:
       - .env
     environment:
       - BE_REDIS_URL=redis://redis:6379
-      - BE_DATABASE_URL=postgresql://postgres:postgres@pgbouncer:6432/trading_db?sslmode=disable
+      - BE_DATABASE_URL=${BE_DATABASE_URL}
+      - BE_SENTRY_DSN=${BE_SENTRY_DSN}
     depends_on:
       pgbouncer:
         condition: service_started
@@ -68,6 +69,7 @@ services:
       dockerfile: docker/frontend/Dockerfile
       args:
         - FE_VITE_API_URL=${FE_VITE_API_URL:-backend:3021}
+        - FE_VITE_SENTRY_DSN=${FE_VITE_SENTRY_DSN}
     env_file:
       - .env
     container_name: trading_frontend
