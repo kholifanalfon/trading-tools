@@ -1,4 +1,4 @@
-import { ScreenerProviderAdapter, HistoricalDataPoint } from "./provider.adapter";
+import { ScreenerProviderAdapter, HistoricalDataPoint } from "../types/provider.types";
 import { StockSearchResult, StockQuote } from "@/modules/screener/screener.schema";
 import { yahooFinance } from "@/core/yahoo-finance";
 import { AppError } from "@/core/errors/app-error";

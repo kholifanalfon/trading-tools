@@ -1,4 +1,4 @@
-import { ScreenerProviderAdapter, HistoricalDataPoint } from "./provider.adapter";
+import { ScreenerProviderAdapter, HistoricalDataPoint } from "../types/provider.types";
 import { StockSearchResult, StockQuote } from "@/modules/screener/screener.schema";
 import { getFinnhubClient } from "@/core/finnhub";
 import { FinnhubError } from "@/core/errors/finnhub-error";
