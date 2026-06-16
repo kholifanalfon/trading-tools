@@ -577,7 +577,7 @@
       "label": "YahooFinanceAdapter",
       "file_type": "code",
       "source_file": "apps/backend/src/core/adapters/yahoo-finance.adapter.ts",
-      "source_location": "L7",
+      "source_location": "L6",
       "_origin": "ast",
       "id": "adapters_yahoo_finance_adapter_yahoofinanceadapter",
       "community": 2,
@@ -587,7 +587,7 @@
       "label": ".searchStocks()",
       "file_type": "code",
       "source_file": "apps/backend/src/core/adapters/yahoo-finance.adapter.ts",
-      "source_location": "L8",
+      "source_location": "L7",
       "_origin": "ast",
       "id": "adapters_yahoo_finance_adapter_yahoofinanceadapter_searchstocks",
       "community": 2,
@@ -597,7 +597,7 @@
       "label": ".getQuote()",
       "file_type": "code",
       "source_file": "apps/backend/src/core/adapters/yahoo-finance.adapter.ts",
-      "source_location": "L24",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "adapters_yahoo_finance_adapter_yahoofinanceadapter_getquote",
       "community": 2,
@@ -607,7 +607,7 @@
       "label": ".getHistoricalData()",
       "file_type": "code",
       "source_file": "apps/backend/src/core/adapters/yahoo-finance.adapter.ts",
-      "source_location": "L48",
+      "source_location": "L47",
       "_origin": "ast",
       "id": "adapters_yahoo_finance_adapter_yahoofinanceadapter_gethistoricaldata",
       "community": 2,
@@ -617,7 +617,7 @@
       "label": ".getScreenedStocks()",
       "file_type": "code",
       "source_file": "apps/backend/src/core/adapters/yahoo-finance.adapter.ts",
-      "source_location": "L79",
+      "source_location": "L78",
       "_origin": "ast",
       "id": "adapters_yahoo_finance_adapter_yahoofinanceadapter_getscreenedstocks",
       "community": 17,
@@ -26197,9 +26197,9 @@
       "source_file": "apps/frontend/src/features/backtest/backtest.keys.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backtest_backtest_keys",
-      "target": "backtest_backtest_keys_backtestkeys",
-      "confidence_score": 1.0
+      "target": "backtest_backtest_keys_backtestkeys"
     },
     {
       "relation": "imports_from",
@@ -26208,9 +26208,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "backtest_backtest_keys",
-      "confidence_score": 1.0
+      "target": "backtest_backtest_keys"
     },
     {
       "relation": "imports",
@@ -26219,9 +26219,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "backtest_backtest_keys_backtestkeys",
-      "confidence_score": 1.0
+      "target": "backtest_backtest_keys_backtestkeys"
     },
     {
       "relation": "contains",
@@ -26250,9 +26250,9 @@
       "source_file": "apps/frontend/src/features/backtest/pages/backtest.page.tsx",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_backtest_page",
-      "target": "backtest_backtest_schema_backtestformschema",
-      "confidence_score": 1.0
+      "target": "backtest_backtest_schema_backtestformschema"
     },
     {
       "relation": "imports",
@@ -26261,9 +26261,9 @@
       "source_file": "apps/frontend/src/features/backtest/pages/backtest.page.tsx",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_backtest_page",
-      "target": "backtest_backtest_schema_backtestforminput",
-      "confidence_score": 1.0
+      "target": "backtest_backtest_schema_backtestforminput"
     },
     {
       "relation": "contains",
@@ -26271,9 +26271,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/backtest-charts.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_backtest_charts",
-      "target": "components_backtest_charts_backtestcharts",
-      "confidence_score": 1.0
+      "target": "components_backtest_charts_backtestcharts"
     },
     {
       "relation": "contains",
@@ -26281,9 +26281,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/backtest-charts.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_backtest_charts",
-      "target": "components_backtest_charts_backtestchartsprops",
-      "confidence_score": 1.0
+      "target": "components_backtest_charts_backtestchartsprops"
     },
     {
       "relation": "imports_from",
@@ -26292,9 +26292,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/backtest-charts.tsx",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_backtest_charts",
-      "target": "types_backtest_types",
-      "confidence_score": 1.0
+      "target": "types_backtest_types"
     },
     {
       "relation": "imports",
@@ -26303,9 +26303,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/backtest-charts.tsx",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_backtest_charts",
-      "target": "types_backtest_types_backtestresult",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_backtestresult"
     },
     {
       "relation": "imports_from",
@@ -26314,9 +26314,9 @@
       "source_file": "apps/frontend/src/features/backtest/pages/backtest.page.tsx",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_backtest_page",
-      "target": "components_backtest_charts",
-      "confidence_score": 1.0
+      "target": "components_backtest_charts"
     },
     {
       "relation": "references",
@@ -26325,9 +26325,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/backtest-charts.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_backtest_charts_backtestchartsprops",
-      "target": "types_backtest_types_backtestresult",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_backtestresult"
     },
     {
       "relation": "imports",
@@ -26336,9 +26336,9 @@
       "source_file": "apps/frontend/src/features/backtest/pages/backtest.page.tsx",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_backtest_page",
-      "target": "components_backtest_charts_backtestcharts",
-      "confidence_score": 1.0
+      "target": "components_backtest_charts_backtestcharts"
     },
     {
       "relation": "contains",
@@ -26346,9 +26346,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/optimization-modal.tsx",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_optimization_modal",
-      "target": "components_optimization_modal_optimizationmodal",
-      "confidence_score": 1.0
+      "target": "components_optimization_modal_optimizationmodal"
     },
     {
       "relation": "contains",
@@ -26356,9 +26356,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/optimization-modal.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_optimization_modal",
-      "target": "components_optimization_modal_optimizationmodalprops",
-      "confidence_score": 1.0
+      "target": "components_optimization_modal_optimizationmodalprops"
     },
     {
       "relation": "imports_from",
@@ -26367,9 +26367,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/optimization-modal.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_optimization_modal",
-      "target": "types_backtest_types",
-      "confidence_score": 1.0
+      "target": "types_backtest_types"
     },
     {
       "relation": "imports",
@@ -26378,9 +26378,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/optimization-modal.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_optimization_modal",
-      "target": "types_backtest_types_aialternativeresponse",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_aialternativeresponse"
     },
     {
       "relation": "imports",
@@ -26389,9 +26389,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/optimization-modal.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_optimization_modal",
-      "target": "types_backtest_types_optimizationbaseline",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_optimizationbaseline"
     },
     {
       "relation": "imports_from",
@@ -26400,9 +26400,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/optimization-modal.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_optimization_modal",
-      "target": "ui_button",
-      "confidence_score": 1.0
+      "target": "ui_button"
     },
     {
       "relation": "imports",
@@ -26411,9 +26411,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/optimization-modal.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_optimization_modal",
-      "target": "ui_button_button",
-      "confidence_score": 1.0
+      "target": "ui_button_button"
     },
     {
       "relation": "imports_from",
@@ -26422,9 +26422,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/optimization-modal.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_optimization_modal",
-      "target": "ui_dialog",
-      "confidence_score": 1.0
+      "target": "ui_dialog"
     },
     {
       "relation": "imports",
@@ -26433,9 +26433,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/optimization-modal.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_optimization_modal",
-      "target": "ui_dialog_dialogcontent",
-      "confidence_score": 1.0
+      "target": "ui_dialog_dialogcontent"
     },
     {
       "relation": "imports",
@@ -26444,9 +26444,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/optimization-modal.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_optimization_modal",
-      "target": "ui_dialog_dialogdescription",
-      "confidence_score": 1.0
+      "target": "ui_dialog_dialogdescription"
     },
     {
       "relation": "imports",
@@ -26455,9 +26455,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/optimization-modal.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_optimization_modal",
-      "target": "ui_dialog_dialogheader",
-      "confidence_score": 1.0
+      "target": "ui_dialog_dialogheader"
     },
     {
       "relation": "imports",
@@ -26466,9 +26466,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/optimization-modal.tsx",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_optimization_modal",
-      "target": "ui_dialog_dialogtitle",
-      "confidence_score": 1.0
+      "target": "ui_dialog_dialogtitle"
     },
     {
       "relation": "imports_from",
@@ -26477,9 +26477,9 @@
       "source_file": "apps/frontend/src/features/backtest/pages/backtest.page.tsx",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_backtest_page",
-      "target": "components_optimization_modal",
-      "confidence_score": 1.0
+      "target": "components_optimization_modal"
     },
     {
       "relation": "references",
@@ -26488,9 +26488,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/optimization-modal.tsx",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_optimization_modal_optimizationmodalprops",
-      "target": "types_backtest_types_aialternativeresponse",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_aialternativeresponse"
     },
     {
       "relation": "references",
@@ -26499,9 +26499,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/optimization-modal.tsx",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_optimization_modal_optimizationmodalprops",
-      "target": "types_backtest_types_optimizationbaseline",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_optimizationbaseline"
     },
     {
       "relation": "imports",
@@ -26510,9 +26510,9 @@
       "source_file": "apps/frontend/src/features/backtest/pages/backtest.page.tsx",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_backtest_page",
-      "target": "components_optimization_modal_optimizationmodal",
-      "confidence_score": 1.0
+      "target": "components_optimization_modal_optimizationmodal"
     },
     {
       "relation": "contains",
@@ -26520,9 +26520,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/trades-table.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_trades_table",
-      "target": "components_trades_table_tradestable",
-      "confidence_score": 1.0
+      "target": "components_trades_table_tradestable"
     },
     {
       "relation": "contains",
@@ -26530,9 +26530,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/trades-table.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_trades_table",
-      "target": "components_trades_table_tradestableprops",
-      "confidence_score": 1.0
+      "target": "components_trades_table_tradestableprops"
     },
     {
       "relation": "imports_from",
@@ -26541,9 +26541,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/trades-table.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_trades_table",
-      "target": "types_backtest_types",
-      "confidence_score": 1.0
+      "target": "types_backtest_types"
     },
     {
       "relation": "imports",
@@ -26552,9 +26552,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/trades-table.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_trades_table",
-      "target": "types_backtest_types_backtestresult",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_backtestresult"
     },
     {
       "relation": "imports_from",
@@ -26563,9 +26563,9 @@
       "source_file": "apps/frontend/src/features/backtest/pages/backtest.page.tsx",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_backtest_page",
-      "target": "components_trades_table",
-      "confidence_score": 1.0
+      "target": "components_trades_table"
     },
     {
       "relation": "references",
@@ -26574,9 +26574,9 @@
       "source_file": "apps/frontend/src/features/backtest/components/trades-table.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_trades_table_tradestableprops",
-      "target": "types_backtest_types_backtestresult",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_backtestresult"
     },
     {
       "relation": "imports",
@@ -26585,9 +26585,9 @@
       "source_file": "apps/frontend/src/features/backtest/pages/backtest.page.tsx",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_backtest_page",
-      "target": "components_trades_table_tradestable",
-      "confidence_score": 1.0
+      "target": "components_trades_table_tradestable"
     },
     {
       "relation": "imports_from",
@@ -26596,9 +26596,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "config_api",
-      "confidence_score": 1.0
+      "target": "config_api"
     },
     {
       "relation": "imports",
@@ -26607,9 +26607,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "config_api_apierror",
-      "confidence_score": 1.0
+      "target": "config_api_apierror"
     },
     {
       "relation": "contains",
@@ -26617,9 +26617,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "hooks_use_backtest_usegetaialternative",
-      "confidence_score": 1.0
+      "target": "hooks_use_backtest_usegetaialternative"
     },
     {
       "relation": "contains",
@@ -26627,9 +26627,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "hooks_use_backtest_usegetbacktestreports",
-      "confidence_score": 1.0
+      "target": "hooks_use_backtest_usegetbacktestreports"
     },
     {
       "relation": "contains",
@@ -26637,9 +26637,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "hooks_use_backtest_userunbacktest",
-      "confidence_score": 1.0
+      "target": "hooks_use_backtest_userunbacktest"
     },
     {
       "relation": "contains",
@@ -26647,9 +26647,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L45",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "hooks_use_backtest_userunmultistockoptimization",
-      "confidence_score": 1.0
+      "target": "hooks_use_backtest_userunmultistockoptimization"
     },
     {
       "relation": "contains",
@@ -26657,9 +26657,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "hooks_use_backtest_userunoptimization",
-      "confidence_score": 1.0
+      "target": "hooks_use_backtest_userunoptimization"
     },
     {
       "relation": "imports_from",
@@ -26668,9 +26668,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "services_backtest_api",
-      "confidence_score": 1.0
+      "target": "services_backtest_api"
     },
     {
       "relation": "imports",
@@ -26679,9 +26679,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "services_backtest_api_getaialternativeapi",
-      "confidence_score": 1.0
+      "target": "services_backtest_api_getaialternativeapi"
     },
     {
       "relation": "imports",
@@ -26690,9 +26690,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "services_backtest_api_getbacktestreportsapi",
-      "confidence_score": 1.0
+      "target": "services_backtest_api_getbacktestreportsapi"
     },
     {
       "relation": "imports",
@@ -26701,9 +26701,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "services_backtest_api_runbacktestapi",
-      "confidence_score": 1.0
+      "target": "services_backtest_api_runbacktestapi"
     },
     {
       "relation": "imports",
@@ -26712,9 +26712,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "services_backtest_api_runmultistockoptimizationapi",
-      "confidence_score": 1.0
+      "target": "services_backtest_api_runmultistockoptimizationapi"
     },
     {
       "relation": "imports",
@@ -26723,9 +26723,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "services_backtest_api_runoptimizationapi",
-      "confidence_score": 1.0
+      "target": "services_backtest_api_runoptimizationapi"
     },
     {
       "relation": "imports_from",
@@ -26734,9 +26734,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "types_backtest_types",
-      "confidence_score": 1.0
+      "target": "types_backtest_types"
     },
     {
       "relation": "imports",
@@ -26745,9 +26745,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "types_backtest_types_aialternativerequest",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_aialternativerequest"
     },
     {
       "relation": "imports",
@@ -26756,9 +26756,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "types_backtest_types_aialternativeresponse",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_aialternativeresponse"
     },
     {
       "relation": "imports",
@@ -26767,9 +26767,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "types_backtest_types_runbacktestpayload",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_runbacktestpayload"
     },
     {
       "relation": "imports",
@@ -26778,9 +26778,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "types_backtest_types_runbacktestresponse",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_runbacktestresponse"
     },
     {
       "relation": "imports",
@@ -26789,9 +26789,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "types_backtest_types_runmultistockoptimizationpayload",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_runmultistockoptimizationpayload"
     },
     {
       "relation": "imports",
@@ -26800,9 +26800,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "types_backtest_types_runmultistockoptimizationresponse",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_runmultistockoptimizationresponse"
     },
     {
       "relation": "imports",
@@ -26811,9 +26811,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "types_backtest_types_runoptimizationresponse",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_runoptimizationresponse"
     },
     {
       "relation": "imports",
@@ -26822,9 +26822,9 @@
       "source_file": "apps/frontend/src/features/backtest/hooks/use-backtest.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "hooks_use_backtest",
-      "target": "types_backtest_types_savedreport",
-      "confidence_score": 1.0
+      "target": "types_backtest_types_savedreport"
     },
     {
       "relation": "imports_from",
@@ -26833,9 +26833,9 @@
       "source_file": "apps/frontend/src/features/backtest/pages/backtest.page.tsx",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_backtest_page",
-      "target": "hooks_use_backtest",
-      "confidence_score": 1.0
+      "target": "hooks_use_backtest"
     },
     {
       "relation": "imports",
@@ -26844,9 +26844,9 @@
       "source_file": "apps/frontend/src/features/backtest/pages/backtest.page.tsx",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_backtest_page",
-      "target": "hooks_use_backtest_usegetbacktestreports",
-      "confidence_score": 1.0
+      "target": "hooks_use_backtest_usegetbacktestreports"
     },
     {
       "relation": "calls",
@@ -26866,9 +26866,9 @@
       "source_file": "apps/frontend/src/features/backtest/pages/backtest.page.tsx",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_backtest_page",
-      "target": "hooks_use_backtest_userunbacktest",
-      "confidence_score": 1.0
+      "target": "hooks_use_backtest_userunbacktest"
     },
     {
       "relation": "calls",
@@ -26888,9 +26888,9 @@
       "source_file": "apps/frontend/src/features/backtest/pages/backtest.page.tsx",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_backtest_page",
-      "target": "hooks_use_backtest_userunoptimization",
-      "confidence_score": 1.0
+      "target": "hooks_use_backtest_userunoptimization"
     },
     {
       "relation": "calls",
@@ -26910,9 +26910,9 @@
       "source_file": "apps/frontend/src/features/backtest/pages/backtest.page.tsx",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_backtest_page",
-      "target": "hooks_use_backtest_userunmultistockoptimization",
-      "confidence_score": 1.0
+      "target": "hooks_use_backtest_userunmultistockoptimization"
     },
     {
       "relation": "calls",
@@ -26932,9 +26932,9 @@
       "source_file": "apps/frontend/src/features/backtest/pages/backtest.page.tsx",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "pages_backtest_page",
-      "target": "hooks_use_backtest_usegetaialternative",
-      "confidence_score": 1.0
+      "target": "hooks_use_backtest_usegetaialternative"
     },
     {
       "relation": "calls",
@@ -42739,5 +42739,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "3c75ba1c719e1951fb3169061e9217e621795f2a"
+  "built_at_commit": "10a293adc7ee9efebdbacd39351decbd9084c258"
 }

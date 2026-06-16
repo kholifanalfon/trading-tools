@@ -8,3 +8,10 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+interface Window {
+  __ENV__?: {
+    FE_VITE_API_URL?: string;
+    FE_VITE_SENTRY_DSN?: string;
+  };
+}

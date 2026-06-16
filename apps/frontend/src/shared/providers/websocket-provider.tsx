@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useRef } from "react";
 import { WsMessage, ClientSocket } from "@/shared/types/websocket.types";
 import { useAuthStore } from "@/shared/stores/auth.store";
 
-const API_URL = import.meta.env.FE_VITE_API_URL || "http://localhost:3000";
+const API_URL = window.__ENV__?.FE_VITE_API_URL || import.meta.env.FE_VITE_API_URL || "http://localhost:3000";
 const WS_URL = API_URL.replace(/^http/, "ws");
 
 export const WebSocketContext = createContext<ClientSocket | null>(null);

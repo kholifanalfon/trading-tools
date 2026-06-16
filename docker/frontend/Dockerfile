@@ -31,4 +31,4 @@ COPY docker/frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/bin/sh", "-c", "echo \"window.__ENV__ = { FE_VITE_API_URL: '${FE_VITE_API_URL}', FE_VITE_SENTRY_DSN: '${FE_VITE_SENTRY_DSN}' };\" > /usr/share/nginx/html/config.js && nginx -g 'daemon off;'"]
