@@ -63,7 +63,7 @@ app.use(xssClean);
 app.use(cookieParser(config.BE_JWT_SECRET));
 
 // Enable CSRF protection
-app.use(csrfProtection);
+// app.use(csrfProtection);
 
 // Register routes
 app.use("/api/v1", v1Router);
@@ -85,4 +85,3 @@ const server = app.listen(config.BE_PORT, async () => {
 
 // Initialize WebSocket Service on the HTTP server
 webSocketService.initialize(server);
-
