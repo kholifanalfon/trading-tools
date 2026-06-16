@@ -4,7 +4,7 @@ import { config } from "@/core/config";
 
 const isProduction = process.env.NODE_ENV === "production";
 
-const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
+export const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
   getSecret: () => config.BE_JWT_SECRET,
   getSessionIdentifier: (req: Request) => {
     // Use the session JWT token cookie if present, otherwise empty string for anonymous users
@@ -13,7 +13,7 @@ const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
   cookieName: "XSRF-TOKEN",
   cookieOptions: {
     httpOnly: false, // Must be readable by Axios
-    sameSite: "lax",
+    sameSite: isProduction ? "none" : "lax",
     secure: isProduction,
     path: "/",
   },
