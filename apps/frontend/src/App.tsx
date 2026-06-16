@@ -18,8 +18,10 @@ import { UserManagementListPage } from "./features/user-management/pages/user-ma
 import { StockListPage } from "./features/stocks/pages/stock-list.page";
 import { SettingsPage } from "./features/settings/pages/settings.page";
 import { ScreenerPage } from "./features/screener/pages/screener.page";
+import { LiveScreenerPage } from "./features/live-screener/pages/live-screener.page";
 import { IngestionLogsPage } from "./features/screener/pages/ingestion-logs.page";
 import { StockDetailPage } from "./features/screener/pages/stock-detail.page";
+import { BacktestPage } from "./features/backtest/pages/backtest.page";
 import { ThemeProvider } from "./shared/components/theme-provider";
 
 
@@ -80,6 +82,8 @@ export function App() {
                 <Route path="/user-management" element={<UserManagementListPage />} />
                 <Route path="/stocks" element={<StockListPage />} />
                 <Route path="/screener" element={<ScreenerPage />} />
+                <Route path="/live-screener" element={<LiveScreenerPage />} />
+                <Route path="/backtest" element={<BacktestPage />} />
                 <Route path="/screener/:symbol" element={<StockDetailPage />} />
                 <Route path="/ingestion-logs" element={<IngestionLogsPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
@@ -166,6 +170,10 @@ function PlatformLayout() {
     pageName = "Stock Management";
   } else if (location.pathname === "/screener") {
     pageName = "Stock Screener";
+  } else if (location.pathname === "/live-screener") {
+    pageName = "Live Screener";
+  } else if (location.pathname === "/backtest") {
+    pageName = "AI Backtesting";
   } else if (location.pathname.startsWith("/screener/")) {
     pageName = "Stock Detail";
   } else if (location.pathname === "/ingestion-logs") {

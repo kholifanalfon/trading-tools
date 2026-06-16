@@ -41,6 +41,8 @@ export const StockQuoteSchema = z.object({
   low: z.number(),
   open: z.number(),
   previousClose: z.number(),
+  lastUpdateTime: z.string().optional(),
+  delayedMinutes: z.number().optional(),
 });
 
 export const SyncHistoricalStateSchema = z.object({

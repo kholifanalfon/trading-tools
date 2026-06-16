@@ -43,6 +43,13 @@
       "when": 1781410900412,
       "tag": "0005_kind_network",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1781551063155,
+      "tag": "0006_silent_smasher",
+      "breakpoints": true
     }
   ]
 }

@@ -1,24 +1,25 @@
 import { SettingsRepository } from "./settings.repository";
 import { UpdateSettingsInput } from "./settings.schema";
 import { encrypt } from "@/core/utils/crypto";
+import { ScoringRulesRepository } from "../screener/scoring-rules.repository";
 
 export const API_KEY_MASK = "••••••••••••••••";
 
 export const MASTER_EXCHANGES = [
-  { id: "idx", name: "IDX / BEI", suffix: ".JK", enabled: true, limit: 15, country: "Indonesia" },
-  { id: "nyse", name: "NYSE", suffix: "", enabled: true, limit: 15, country: "USA" },
-  { id: "nasdaq", name: "NASDAQ", suffix: "", enabled: true, limit: 15, country: "USA" },
-  { id: "sgx", name: "SGX", suffix: ".SI", enabled: false, limit: 15, country: "Singapore" },
-  { id: "klse", name: "KLSE", suffix: ".KL", enabled: false, limit: 15, country: "Malaysia" },
-  { id: "hkex", name: "HKEX", suffix: ".HK", enabled: false, limit: 15, country: "Hong Kong" },
-  { id: "sse", name: "SSE", suffix: ".SS", enabled: false, limit: 15, country: "China (Shanghai)" },
-  { id: "szse", name: "SZSE", suffix: ".SZ", enabled: false, limit: 15, country: "China (Shenzhen)" },
-  { id: "lse", name: "LSE", suffix: ".L", enabled: false, limit: 15, country: "United Kingdom" },
-  { id: "tyo", name: "TYO", suffix: ".T", enabled: false, limit: 15, country: "Japan" },
-  { id: "asx", name: "ASX", suffix: ".AX", enabled: false, limit: 15, country: "Australia" },
-  { id: "tsx", name: "TSX", suffix: ".TO", enabled: false, limit: 15, country: "Canada" },
-  { id: "nse", name: "NSE", suffix: ".NS", enabled: false, limit: 15, country: "India" },
-  { id: "bse", name: "BSE", suffix: ".BO", enabled: false, limit: 15, country: "India" },
+  { id: "idx", name: "IDX / BEI", suffix: ".JK", enabled: true, limit: 15, country: "Indonesia", countryId: "ID" },
+  { id: "nyse", name: "NYSE", suffix: "", enabled: true, limit: 15, country: "USA", countryId: "US" },
+  { id: "nasdaq", name: "NASDAQ", suffix: "", enabled: true, limit: 15, country: "USA", countryId: "US" },
+  { id: "sgx", name: "SGX", suffix: ".SI", enabled: false, limit: 15, country: "Singapore", countryId: "SG" },
+  { id: "klse", name: "KLSE", suffix: ".KL", enabled: false, limit: 15, country: "Malaysia", countryId: "MY" },
+  { id: "hkex", name: "HKEX", suffix: ".HK", enabled: false, limit: 15, country: "Hong Kong", countryId: "HK" },
+  { id: "sse", name: "SSE", suffix: ".SS", enabled: false, limit: 15, country: "China (Shanghai)", countryId: "CN" },
+  { id: "szse", name: "SZSE", suffix: ".SZ", enabled: false, limit: 15, country: "China (Shenzhen)", countryId: "CN" },
+  { id: "lse", name: "LSE", suffix: ".L", enabled: false, limit: 15, country: "United Kingdom", countryId: "GB" },
+  { id: "tyo", name: "TYO", suffix: ".T", enabled: false, limit: 15, country: "Japan", countryId: "JP" },
+  { id: "asx", name: "ASX", suffix: ".AX", enabled: false, limit: 15, country: "Australia", countryId: "AU" },
+  { id: "tsx", name: "TSX", suffix: ".TO", enabled: false, limit: 15, country: "Canada", countryId: "CA" },
+  { id: "nse", name: "NSE", suffix: ".NS", enabled: false, limit: 15, country: "India", countryId: "IN" },
+  { id: "bse", name: "BSE", suffix: ".BO", enabled: false, limit: 15, country: "India", countryId: "IN" },
 ];
 
 export const DEFAULT_EXCHANGES = MASTER_EXCHANGES;
@@ -53,6 +54,9 @@ export class SettingsService {
       stock_screener_provider: configObj.stock_screener_provider || "yahoo_finance",
       exchanges_config: JSON.stringify(exchangesConfig),
       default_strategy: configObj.default_strategy || "day",
+      screener_rules_day: configObj.screener_rules_day || '[]',
+      screener_rules_swing: configObj.screener_rules_swing || '[]',
+      screener_rules_position: configObj.screener_rules_position || '[]',
     };
   }
 
@@ -82,6 +86,15 @@ export class SettingsService {
     }
     if (data.default_strategy !== undefined) {
       await this.repository.upsertSetting("default_strategy", data.default_strategy);
+    }
+    if (data.screener_rules_day !== undefined) {
+      await this.repository.upsertSetting("screener_rules_day", data.screener_rules_day);
+    }
+    if (data.screener_rules_swing !== undefined) {
+      await this.repository.upsertSetting("screener_rules_swing", data.screener_rules_swing);
+    }
+    if (data.screener_rules_position !== undefined) {
+      await this.repository.upsertSetting("screener_rules_position", data.screener_rules_position);
     }
     return this.getSettings();
   }
@@ -113,4 +126,118 @@ export class SettingsService {
     await this.repository.upsertSetting("exchanges_config", JSON.stringify(mergedExchanges));
     return this.getSettings();
   }
+
+  private scoringRulesRepo = new ScoringRulesRepository();
+
+  async getScoringRules() {
+    return this.scoringRulesRepo.getAllRules();
+  }
+
+  async updateScoringRules(data: { rules: { id: number; value: number; weight: number }[] }) {
+    const updated = [];
+    for (const rule of data.rules) {
+      const res = await this.scoringRulesRepo.updateRule(rule.id, rule.value, rule.weight);
+      if (res) {
+        updated.push(res);
+      }
+    }
+    return updated;
+  }
+
+  async getAiScreenerRecommendation(strategy: "day" | "swing" | "position") {
+    const list = await this.repository.getAllSettings();
+    const configObj: Record<string, string> = {};
+    for (const item of list) {
+      configObj[item.key] = item.value;
+    }
+
+    const { decrypt } = await import("@/core/utils/crypto");
+    const { GeminiAdapter } = await import("@/core/adapters/gemini.adapter");
+
+    const encryptedKey = configObj.gemini_api_key;
+    const apiKey = encryptedKey ? decrypt(encryptedKey) : "";
+    const model = configObj.gemini_model || "gemini-1.5-flash";
+
+    const gemini = new GeminiAdapter(apiKey, model);
+
+    const prompt = `
+You are an expert financial analyst. Recommend stock screening rules (pre-filters) for a "${strategy}" trading strategy.
+The screener will query Yahoo Finance. Here are the ONLY supported operand field keys:
+- "percentchange" (Daily Return %)
+- "dayvolume" (Daily Volume in shares)
+- "regularmarketprice" (Regular Price)
+- "intradaymarketcap" (Intraday Market Cap)
+- "forwardpe" (Forward P/E)
+- "returnonequity" (Return on Equity ROE %)
+- "averagevolume" (Average Volume)
+- "trailingpe" (Trailing P/E)
+- "pricetobook" (Price to Book P/B)
+- "dividendyield" (Dividend Yield %)
+- "operatingmargins" (Operating Margin %)
+- "epsforward" (Forward EPS)
+- "pegratio" (PEG Ratio)
+- "twohundreddaymovingaverage" (200-Day Moving Average)
+- "fiftydaymovingaverage" (50-Day Moving Average)
+- "fiftytwoweekhigh" (52-Week High)
+- "fiftytwoweeklow" (52-Week Low)
+
+Supported operators:
+- "gt" (Greater Than)
+- "lt" (Less Than)
+- "eq" (Equal To)
+- "btwn" (Between / Range)
+
+Please recommend a list of 3 to 6 optimized rules for "${strategy}" strategy.
+For each rule, you must provide:
+- "field" (string): one of the supported operands.
+- "operator" (string): one of the supported operators.
+- "value" (number): the threshold or min boundary value.
+- "valueMax" (number, optional): max boundary value (required if operator is "btwn").
+- "justification" (string): a brief explanation in Indonesian (max 15 words) of why this filter and value is recommended for "${strategy}" trading.
+
+You must return your response in raw JSON format, containing exactly:
+{
+  "rules": [
+    { "field": "percentchange", "operator": "gt", "value": 0, "justification": "Mencari momentum return positif hari ini." },
+    ...
+  ]
 }
+
+Return ONLY the raw JSON block. Do not include markdown code fence wrappers or backticks.
+`;
+
+    let responseText = await gemini.generateAnalysis(prompt);
+    responseText = responseText.replace(/^```json\s*/i, "").replace(/```$/, "").trim();
+    try {
+      return JSON.parse(responseText);
+    } catch (err) {
+      console.error("Failed to parse Gemini recommendation:", responseText, err);
+      if (strategy === "day") {
+        return {
+          rules: [
+            { field: "percentchange", operator: "gt", value: 0, justification: "Mencari momentum return positif hari ini." },
+            { field: "dayvolume", operator: "gt", value: 1000000, justification: "Menjamin likuiditas tinggi untuk intraday." },
+            { field: "regularmarketprice", operator: "gt", value: 100, justification: "Menghindari saham receh berisiko." }
+          ]
+        };
+      } else if (strategy === "swing") {
+        return {
+          rules: [
+            { field: "dayvolume", operator: "gt", value: 500000, justification: "Likuiditas memadai untuk hold beberapa hari." },
+            { field: "intradaymarketcap", operator: "gt", value: 1000000000000, justification: "Memilih saham mid-to-large cap." },
+            { field: "percentchange", operator: "gt", value: 0, justification: "Tren jangka pendek sedang naik." }
+          ]
+        };
+      } else {
+        return {
+          rules: [
+            { field: "forwardpe", operator: "btwn", value: 5, valueMax: 25, justification: "Valuasi wajar untuk investasi jangka panjang." },
+            { field: "returnonequity", operator: "gt", value: 15, justification: "Efisiensi bisnis tinggi (ROE > 15%)." },
+            { field: "averagevolume", operator: "gt", value: 2000000, justification: "Volume rata-rata sangat likuid." }
+          ]
+        };
+      }
+    }
+  }
+}
+

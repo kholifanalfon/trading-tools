@@ -13,6 +13,8 @@ export interface StockQuote {
   low: number;
   open: number;
   previousClose: number;
+  lastUpdateTime?: string;
+  delayedMinutes?: number;
 }
 
 export interface StockDataQueryParams {

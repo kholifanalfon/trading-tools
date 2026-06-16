@@ -4,8 +4,11 @@ import { userManagementRoutes } from "@/modules/user-management/user-management.
 import { stocksRoutes } from "@/modules/stocks/stocks.routes";
 import { settingsRoutes } from "@/modules/settings/settings.routes";
 import { screenerRoutes } from "@/modules/screener/screener.routes";
+import { liveScreenerRoutes } from "@/modules/live-screener/live-screener.routes";
+import { backtestRoutes } from "@/modules/backtest/backtest.routes";
 
 const v1Router = Router();
+
 
 // Info route returning tech stack details
 v1Router.get("/", (req, res) => {
@@ -31,5 +34,7 @@ v1Router.use("/user-management", userManagementRoutes);
 v1Router.use("/stocks", stocksRoutes);
 v1Router.use("/settings", settingsRoutes);
 v1Router.use("/screener", screenerRoutes);
+v1Router.use("/live-screener", liveScreenerRoutes);
+v1Router.use("/backtest", backtestRoutes);
 
 export { v1Router };

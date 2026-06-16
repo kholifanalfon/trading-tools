@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { useGetStockHistoricalData } from "../hooks/use-get-stock-detail";
 import { useGetQuote } from "../hooks/use-get-quote";
 import { useGetSettings } from "@/features/settings/hooks/use-get-settings";
@@ -11,6 +11,7 @@ import { StockChartCanvas } from "../components/stock-chart-canvas";
 export function StockDetailPage() {
   const { symbol = "" } = useParams<{ symbol: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams] = useSearchParams();
   const urlStrategy = searchParams.get("strategy");
   const { data: settings } = useGetSettings();
@@ -106,7 +107,7 @@ export function StockDetailPage() {
       {/* Header Panel */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-border/50 pb-5 shrink-0">
         <div className="flex items-center gap-3">
-          <Button variant="outline" size="sm" onClick={() => navigate("/screener")} className="h-8 w-8 p-0 rounded-xl">
+          <Button variant="outline" size="sm" onClick={() => navigate(location.state?.from || "/screener")} className="h-8 w-8 p-0 rounded-xl">
             <ChevronLeftIcon className="h-4 w-4" />
           </Button>
           <div>
@@ -122,8 +123,10 @@ export function StockDetailPage() {
         {quote && (
           <div className="flex items-center gap-4 bg-muted/20 px-4 py-2 rounded-xl border border-border/40">
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Latest Close Price</p>
-              <div className="flex items-baseline gap-2">
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Latest Close Price</span>
+              </div>
+              <div className="flex items-baseline gap-2 mt-0.5">
                 <span className="text-lg font-bold font-mono text-foreground">
                   {quote.currentPrice.toLocaleString("en-US", {
                     maximumFractionDigits: 4,
@@ -134,6 +137,13 @@ export function StockDetailPage() {
                   {priceChange.toFixed(2)} ({priceChangePercent.toFixed(2)}%)
                 </span>
               </div>
+              {quote.lastUpdateTime && (
+                <span className="text-[9px] text-muted-foreground font-mono font-medium">
+                  ({new Date(quote.lastUpdateTime).toLocaleDateString("id-ID", { month: "short", day: "numeric" })},{" "}
+                  {new Date(quote.lastUpdateTime).toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })}
+                  {quote.delayedMinutes ? ` | delayed ${quote.delayedMinutes}m` : ""})
+                </span>
+              )}
             </div>
           </div>
         )}

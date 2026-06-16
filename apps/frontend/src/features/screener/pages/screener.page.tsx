@@ -231,6 +231,7 @@ export function ScreenerPage() {
                 <Link
                   key={item.id}
                   to={`/screener/${item.symbol}?strategy=${activeStrategy}`}
+                  state={{ from: "/screener" }}
                   className="p-4 rounded-xl border border-border bg-card/45 backdrop-blur-md hover:bg-muted/5 transition-all duration-300 flex flex-col justify-between shadow-sm cursor-pointer hover:border-indigo-500/40 hover:shadow-indigo-500/5 group"
                 >
                   <div className="space-y-2">
