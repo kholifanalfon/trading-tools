@@ -6,7 +6,7 @@ import { $ } from "bun";
 
 console.log("🔄 Applying migrations to database...");
 try {
-  await $`cd apps/backend && bunx drizzle-kit push`;
+  await $`cd apps/backend && bunx drizzle-kit push:pg`;
   console.log("✅ Migrations applied successfully.");
 } catch (error) {
   console.error("❌ Failed to apply migrations:", error);

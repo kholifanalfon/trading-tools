@@ -1,194 +1,120 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { NavMain } from "@/shared/components/nav-main"
-import { NavProjects } from "@/shared/components/nav-projects"
-import { NavUser } from "@/shared/components/nav-user"
-import { TeamSwitcher } from "@/shared/components/team-switcher"
+import { NavMain } from "@/shared/components/nav-main";
+import { NavUser } from "@/shared/components/nav-user";
+import { TeamSwitcher } from "@/shared/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/shared/components/ui/sidebar"
-import { GalleryVerticalEndIcon, AudioLinesIcon, TerminalIcon, TerminalSquareIcon, BotIcon, BookOpenIcon, Settings2Icon, FrameIcon, PieChartIcon, MapIcon } from "lucide-react"
+} from "@/shared/components/ui/sidebar";
+import {
+  GalleryVerticalEndIcon,
+  AudioLinesIcon,
+  TerminalIcon,
+  UserIcon,
+  TrendingUpIcon,
+  SettingsIcon,
+  HistoryIcon,
+  LineChartIcon,
+} from "lucide-react";
+
+import { useAuthStore } from "@/shared/stores/auth.store";
 
 // This is sample data.
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   teams: [
     {
       name: "Acme Inc",
-      logo: (
-        <GalleryVerticalEndIcon
-        />
-      ),
+      logo: <GalleryVerticalEndIcon />,
       plan: "Enterprise",
     },
     {
       name: "Acme Corp.",
-      logo: (
-        <AudioLinesIcon
-        />
-      ),
+      logo: <AudioLinesIcon />,
       plan: "Startup",
     },
     {
       name: "Evil Corp.",
-      logo: (
-        <TerminalIcon
-        />
-      ),
+      logo: <TerminalIcon />,
       plan: "Free",
     },
   ],
-  navMain: [
-    {
-      title: "Playground",
-      url: "#",
-      icon: (
-        <TerminalSquareIcon
-        />
-      ),
-      isActive: true,
+};
+
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const user = useAuthStore((state) => state.user);
+
+  const sidebarUser = {
+    name: user?.fullName || "Guest User",
+    email: user?.email || "guest@example.com",
+    avatar:
+      "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar/avatar8.jpg",
+  };
+
+  const navMain = [];
+  if (user?.role === "admin") {
+    navMain.push({
+      title: "Master",
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "User Management",
+          url: "/user-management",
+          icon: <UserIcon />,
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "Stock Management",
+          url: "/stocks",
+          icon: <TrendingUpIcon />,
+        },
+        {
+          title: "Stock Screener",
+          url: "/screener",
+          icon: <TrendingUpIcon />,
+        },
+        {
+          title: "Live Screener",
+          url: "/live-screener",
+          icon: <TrendingUpIcon />,
+        },
+        {
+          title: "Ingestion Logs",
+          url: "/ingestion-logs",
+          icon: <HistoryIcon />,
+        },
+        {
+          title: "AI Backtesting",
+          url: "/backtest",
+          icon: <LineChartIcon />,
         },
         {
           title: "Settings",
-          url: "#",
+          url: "/settings",
+          icon: <SettingsIcon />,
         },
       ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: (
-        <BotIcon
-        />
-      ),
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: (
-        <BookOpenIcon
-        />
-      ),
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: (
-        <Settings2Icon
-        />
-      ),
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: (
-        <FrameIcon
-        />
-      ),
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: (
-        <PieChartIcon
-        />
-      ),
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: (
-        <MapIcon
-        />
-      ),
-    },
-  ],
-}
+    });
+  }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        {navMain.length > 0 && <NavMain items={navMain} />}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={sidebarUser} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

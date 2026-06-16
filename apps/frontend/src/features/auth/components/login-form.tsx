@@ -1,36 +1,22 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginInput, LoginSchema } from "../auth.schema";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/shared/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Button } from "@/shared/components/ui/button";
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-  FieldSeparator,
-} from "@/shared/components/ui/field";
+import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSeparator } from "@/shared/components/ui/field";
 import { Input } from "@/shared/components/ui/input";
+
+import { ErrorDisplay } from "@/shared/components/ui/error-display";
+import { ApiError } from "@/shared/config/api";
 
 export interface LoginFormProps {
   onSubmit: (data: LoginInput) => void;
   isLoading: boolean;
-  error: string | null;
+  error: ApiError | null;
   onNavigateToRegister: () => void;
 }
 
-export function LoginForm({
-  onSubmit,
-  isLoading,
-  error,
-  onNavigateToRegister,
-}: LoginFormProps) {
+export function LoginForm({ onSubmit, isLoading, error, onNavigateToRegister }: LoginFormProps) {
   const {
     register,
     handleSubmit,
@@ -47,27 +33,19 @@ export function LoginForm({
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
         <a href="#" className="flex items-center gap-2 self-center font-medium">
-          <div className="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground font-mono font-bold text-xs">
-            ▲
-          </div>
+          <div className="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground font-mono font-bold text-xs">▲</div>
           Antigravity Trading
         </a>
         <div className="flex flex-col gap-6">
           <Card>
             <CardHeader className="text-center">
               <CardTitle className="text-xl">Welcome back</CardTitle>
-              <CardDescription>
-                Login with your Apple or Google account
-              </CardDescription>
+              <CardDescription>Login with your Apple or Google account</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <FieldGroup>
-                  {error && (
-                    <div className="p-3 border border-destructive/20 bg-destructive/10 text-destructive text-xs font-semibold rounded-md">
-                      {error}
-                    </div>
-                  )}
+                  <ErrorDisplay error={error} />
 
                   <Field>
                     <Button variant="outline" type="button" className="w-full">
@@ -90,47 +68,23 @@ export function LoginForm({
                     </Button>
                   </Field>
 
-                  <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                    Or continue with
-                  </FieldSeparator>
+                  <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">Or continue with</FieldSeparator>
 
                   <Field>
                     <FieldLabel htmlFor="email">Email</FieldLabel>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="m@example.com"
-                      disabled={isLoading}
-                      {...register("email")}
-                    />
-                    {errors.email && (
-                      <p className="text-xs text-destructive font-semibold mt-1">
-                        {errors.email.message}
-                      </p>
-                    )}
+                    <Input id="email" type="email" placeholder="m@example.com" disabled={isLoading} {...register("email")} />
+                    {errors.email && <p className="text-xs text-destructive font-semibold mt-1">{errors.email.message}</p>}
                   </Field>
 
                   <Field>
                     <div className="flex items-center">
                       <FieldLabel htmlFor="password">Password</FieldLabel>
-                      <a
-                        href="#"
-                        className="ml-auto text-sm underline-offset-4 hover:underline text-muted-foreground"
-                      >
+                      <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline text-muted-foreground">
                         Forgot your password?
                       </a>
                     </div>
-                    <Input
-                      id="password"
-                      type="password"
-                      disabled={isLoading}
-                      {...register("password")}
-                    />
-                    {errors.password && (
-                      <p className="text-xs text-destructive font-semibold mt-1">
-                        {errors.password.message}
-                      </p>
-                    )}
+                    <Input id="password" type="password" disabled={isLoading} {...register("password")} />
+                    {errors.password && <p className="text-xs text-destructive font-semibold mt-1">{errors.password.message}</p>}
                   </Field>
 
                   <Field>
@@ -139,11 +93,7 @@ export function LoginForm({
                     </Button>
                     <FieldDescription className="text-center mt-2">
                       Don&apos;t have an account?{" "}
-                      <button
-                        type="button"
-                        onClick={onNavigateToRegister}
-                        className="underline underline-offset-4 hover:text-primary font-medium focus:outline-none"
-                      >
+                      <button type="button" onClick={onNavigateToRegister} className="underline underline-offset-4 hover:text-primary font-medium focus:outline-none">
                         Sign up
                       </button>
                     </FieldDescription>
@@ -153,8 +103,7 @@ export function LoginForm({
             </CardContent>
           </Card>
           <FieldDescription className="px-6 text-center text-xs">
-            By clicking continue, you agree to our{" "}
-            <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+            By clicking continue, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
           </FieldDescription>
         </div>
       </div>

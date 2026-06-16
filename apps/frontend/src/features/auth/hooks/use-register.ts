@@ -1,35 +1,18 @@
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { RegisterInput } from "../auth.schema";
+import { registerApi } from "../services/auth.api";
+import { ApiError } from "@/shared/config/api";
 
 export function useRegister() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const registerMutation = async (
-    data: RegisterInput,
-    options?: { onSuccess?: () => void }
-  ) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      if (data.email === "error@example.com") {
-        throw new Error("Email already in use");
-      }
-
-      options?.onSuccess?.();
-    } catch (err: any) {
-      setError(err.message || "Something went wrong");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const mutation = useMutation<void, ApiError, RegisterInput>({
+    mutationFn: async (data: RegisterInput) => {
+      await registerApi(data);
+    },
+  });
 
   return {
-    mutate: registerMutation,
-    isLoading,
-    error,
+    mutate: mutation.mutate,
+    isLoading: mutation.isPending,
+    error: mutation.error,
   };
 }

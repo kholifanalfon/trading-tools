@@ -1,0 +1,44 @@
+export interface GeminiSettings {
+  gemini_api_key: string;
+  gemini_model: string;
+  finnhub_api_key?: string;
+  stock_screener_provider?: "finnhub" | "yahoo_finance";
+  exchanges_config?: string;
+  default_strategy?: string;
+  screener_rules_day?: string;
+  screener_rules_swing?: string;
+  screener_rules_position?: string;
+}
+
+export interface UpdateGeminiSettingsPayload {
+  gemini_api_key?: string;
+  gemini_model: string;
+  finnhub_api_key?: string;
+  stock_screener_provider?: "finnhub" | "yahoo_finance";
+  exchanges_config?: string;
+  default_strategy?: string;
+  screener_rules_day?: string;
+  screener_rules_swing?: string;
+  screener_rules_position?: string;
+}
+
+export interface ScoringRule {
+  id: number;
+  strategy: string;
+  parameterName: string;
+  value: number;
+  weight: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UpdateScoringRuleInput {
+  id: number;
+  value: number;
+  weight: number;
+}
+
+export interface UpdateScoringRulesBatchPayload {
+  rules: UpdateScoringRuleInput[];
+}
+

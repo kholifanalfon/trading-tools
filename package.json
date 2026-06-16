@@ -7,9 +7,11 @@
   ],
   "scripts": {
     "dev:backend": "bun --cwd apps/backend dev",
+    "dev:backend:pinorama": "bun --cwd apps/backend dev:pinorama",
     "dev:frontend": "bun --cwd apps/frontend dev",
     "dev:docs": "bun --cwd apps/docs start",
     "dev": "bun run --parallel dev:docs dev:backend dev:frontend",
+    "dev:pinorama": "bun run --parallel dev:docs dev:backend:pinorama dev:frontend",
     "build:backend": "bun --cwd apps/backend type-check",
     "build:frontend": "bun --cwd apps/frontend build",
     "build:docs": "bun --cwd apps/docs build",
@@ -18,8 +20,9 @@
     "db:migrate": "bun run commands/db-migrate.ts",
     "db:introspect": "bun run commands/db-introspect.ts",
     "db:seed": "bun run commands/db-seed.ts",
-    "make:migration": "bun run commands/make-migration.ts",
-    "make-seeder": "bun run commands/make-seeder.ts"
+    "db:refresh": "bun run commands/db-refresh.ts",
+    "make:schema": "bun run commands/make-schema.ts",
+    "make:seeder": "bun run commands/make-seeder.ts"
   },
   "devDependencies": {
     "@types/node": "^25.9.3",
@@ -28,5 +31,9 @@
   "overrides": {
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "postgres": "^3.4.9"
   }
 }

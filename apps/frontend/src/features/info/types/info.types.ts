@@ -6,4 +6,5 @@ export interface TechStackInfo {
   logger: string;
   validation: string;
   auth: string;
+  version: string;
 }

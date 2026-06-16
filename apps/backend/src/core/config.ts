@@ -10,6 +10,11 @@ const envSchema = z.object({
   BE_DATABASE_URL: z.string().url(),
   BE_JWT_SECRET: z.string().min(32),
   BE_LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]).default("info"),
+  BE_CORS_ALLOWED_ORIGINS: z
+    .string()
+    .default("http://localhost:8082,http://127.0.0.1:8082,http://localhost:5173,http://127.0.0.1:5173")
+    .transform((val) => val.split(",").map((origin) => origin.trim())),
+  BE_SENTRY_DSN: z.string().url().optional().or(z.literal("")),
 });
 
 const parsed = envSchema.safeParse(process.env);

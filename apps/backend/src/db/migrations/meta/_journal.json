@@ -1,0 +1,55 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1781352241644,
+      "tag": "0000_bent_tusk",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1781355602326,
+      "tag": "0001_dapper_living_tribunal",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1781371747447,
+      "tag": "0002_known_nebula",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1781378157493,
+      "tag": "0003_clumsy_night_thrasher",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1781408965488,
+      "tag": "0004_wise_gravity",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1781410900412,
+      "tag": "0005_kind_network",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1781551063155,
+      "tag": "0006_silent_smasher",
+      "breakpoints": true
+    }
+  ]
+}

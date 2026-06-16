@@ -6,7 +6,7 @@ import { $ } from "bun";
 
 console.log("🔄 Generating migration from schema changes...");
 try {
-  await $`cd apps/backend && bunx drizzle-kit generate`;
+  await $`cd apps/backend && bunx drizzle-kit generate:pg`;
   console.log("✅ Migration generated successfully.");
 } catch (error) {
   console.error("❌ Failed to generate migration:", error);

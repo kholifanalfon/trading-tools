@@ -24,11 +24,13 @@ services:
     ports:
       - "6543:6432"
     environment:
+      - LISTEN_PORT=6432
       - DB_HOST=db
       - DB_PORT=5432
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=trading_db
+      - AUTH_TYPE=scram-sha-256
       - POOL_MODE=transaction
       - MAX_CLIENT_CONN=100
       - DEFAULT_POOL_SIZE=20
@@ -49,8 +51,14 @@ services:
       - "${BE_PORT:-3000}:${BE_PORT:-3000}"
     env_file:
       - .env
+    environment:
+      - BE_REDIS_URL=redis://redis:6379
+      - BE_DATABASE_URL=${BE_DATABASE_URL}
+      - BE_SENTRY_DSN=${BE_SENTRY_DSN}
     depends_on:
       pgbouncer:
+        condition: service_started
+      redis:
         condition: service_started
     networks:
       - trading_net
@@ -61,6 +69,7 @@ services:
       dockerfile: docker/frontend/Dockerfile
       args:
         - FE_VITE_API_URL=${FE_VITE_API_URL:-backend:3021}
+        - FE_VITE_SENTRY_DSN=${FE_VITE_SENTRY_DSN}
     env_file:
       - .env
     container_name: trading_frontend
@@ -71,8 +80,58 @@ services:
     networks:
       - trading_net
 
+  redis:
+    image: redis:7-alpine
+    container_name: trading_redis
+    ports:
+      - "6372:6379"
+    volumes:
+      - redisdata:/data
+    networks:
+      - trading_net
+
+  glitchtip-db:
+    image: postgres:15-alpine
+    container_name: trading_glitchtip_db
+    environment:
+      POSTGRES_USER: glitchtip
+      POSTGRES_PASSWORD: glitchtip_password
+      POSTGRES_DB: glitchtip
+    volumes:
+      - glitchtip_pgdata:/var/lib/postgresql/data
+    networks:
+      - trading_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U glitchtip -d glitchtip"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  glitchtip:
+    image: glitchtip/glitchtip:latest
+    container_name: trading_glitchtip
+    command: ./bin/run-all-in-one.sh
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://glitchtip:glitchtip_password@glitchtip-db:5432/glitchtip
+      - SECRET_KEY=glitchtip_super_secret_key_1234567890
+      - GLITCHTIP_DOMAIN=http://localhost:8000
+      - DEFAULT_FROM_EMAIL=glitchtip@example.com
+      - VALKEY_URL=
+      - GLITCHTIP_ALLOW_REGISTRATION=True
+      - GLITCHTIP_REQUIRE_EMAIL_VERIFICATION=False
+      - EMAIL_URL=consolemail://
+    depends_on:
+      glitchtip-db:
+        condition: service_healthy
+    networks:
+      - trading_net
+
 volumes:
   pgdata:
+  redisdata:
+  glitchtip_pgdata:
 
 networks:
   trading_net:

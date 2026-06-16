@@ -10,7 +10,6 @@ export function AuthLoginPage() {
   const handleSubmit = (data: LoginInput) => {
     mutate(data, {
       onSuccess: () => {
-        // Redirect to homepage/landing page on successful login
         navigate("/");
       },
     });
@@ -20,12 +19,5 @@ export function AuthLoginPage() {
     navigate("/register");
   };
 
-  return (
-    <LoginForm
-      onSubmit={handleSubmit}
-      isLoading={isLoading}
-      error={error}
-      onNavigateToRegister={handleNavigateToRegister}
-    />
-  );
+  return <LoginForm onSubmit={handleSubmit} isLoading={isLoading} error={error} onNavigateToRegister={handleNavigateToRegister} />;
 }

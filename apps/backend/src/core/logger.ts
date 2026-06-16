@@ -3,12 +3,15 @@ import { config } from "./config";
 
 export const logger = pino({
   level: config.BE_LOG_LEVEL,
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true,
-      translateTime: "HH:MM:ss.l",
-      ignore: "pid,hostname",
-    },
-  },
+  transport:
+    process.env.PINORAMA === "true"
+      ? undefined
+      : {
+          target: "pino-pretty",
+          options: {
+            colorize: true,
+            translateTime: "HH:MM:ss.l",
+            ignore: "pid,hostname",
+          },
+        },
 });

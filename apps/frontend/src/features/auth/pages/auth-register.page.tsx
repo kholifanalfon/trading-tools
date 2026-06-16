@@ -20,12 +20,5 @@ export function AuthRegisterPage() {
     navigate("/login");
   };
 
-  return (
-    <RegisterForm
-      onSubmit={handleSubmit}
-      isLoading={isLoading}
-      error={error}
-      onNavigateToLogin={handleNavigateToLogin}
-    />
-  );
+  return <RegisterForm onSubmit={handleSubmit} isLoading={isLoading} error={error} onNavigateToLogin={handleNavigateToLogin} />;
 }
