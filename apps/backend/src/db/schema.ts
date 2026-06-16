@@ -10,3 +10,6 @@ export * from "./schemas/stock-logs.schema";
 
 export * from "./schemas/scoring-rules.schema";
 
+export * from "./schemas/backtest-reports.schema";
+
+

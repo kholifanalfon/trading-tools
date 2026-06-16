@@ -20,6 +20,7 @@ import {
   TrendingUpIcon,
   SettingsIcon,
   HistoryIcon,
+  LineChartIcon,
 } from "lucide-react";
 
 import { useAuthStore } from "@/shared/stores/auth.store";
@@ -84,6 +85,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           title: "Ingestion Logs",
           url: "/ingestion-logs",
           icon: <HistoryIcon />,
+        },
+        {
+          title: "AI Backtesting",
+          url: "/backtest",
+          icon: <LineChartIcon />,
         },
         {
           title: "Settings",

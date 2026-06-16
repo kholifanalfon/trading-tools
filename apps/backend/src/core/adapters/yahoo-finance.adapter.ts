@@ -33,6 +33,12 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
         low: quote.regularMarketDayLow || quote.regularMarketPrice || 0,
         open: quote.regularMarketOpen || quote.regularMarketPrice || 0,
         previousClose: quote.regularMarketPreviousClose || 0,
+        lastUpdateTime: quote.regularMarketTime
+          ? (quote.regularMarketTime instanceof Date
+              ? quote.regularMarketTime.toISOString()
+              : new Date(Number(quote.regularMarketTime) * (String(quote.regularMarketTime).length <= 10 ? 1000 : 1)).toISOString())
+          : undefined,
+        delayedMinutes: quote.exchangeDataDelayedBy ?? undefined,
       };
     } catch (err) {
       throw new AppError(`Yahoo Finance quote failed: ${err instanceof Error ? err.message : String(err)}`, 404);

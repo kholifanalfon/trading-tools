@@ -361,6 +361,7 @@ export function LiveScreenerPage() {
                 <Link
                   key={item.id}
                   to={`/screener/${item.symbol}?strategy=${activeStrategy}`}
+                  state={{ from: "/live-screener" }}
                   className="p-4 rounded-xl border border-border bg-card/45 backdrop-blur-md hover:bg-muted/5 transition-all duration-300 flex flex-col justify-between shadow-sm cursor-pointer hover:border-emerald-500/40 hover:shadow-emerald-500/5 group"
                 >
                   <div className="space-y-2">
