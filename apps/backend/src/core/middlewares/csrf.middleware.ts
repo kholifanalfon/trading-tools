@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { doubleCsrf } from "csrf-csrf";
 import { config } from "@/core/config";
 
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === "production" || !!process.env.FLY_APP_NAME;
 
 export const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
   getSecret: () => config.BE_JWT_SECRET,

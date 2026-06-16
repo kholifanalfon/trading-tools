@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { AuthService } from "./auth.service";
 
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === "production" || !!process.env.FLY_APP_NAME;
 
 export class AuthController {
   private authService = new AuthService();

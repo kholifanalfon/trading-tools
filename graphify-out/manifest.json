@@ -85,8 +85,8 @@
     "semantic_hash": "e99cf858f17429e647e1d56163ea7e47"
   },
   "apps/backend/src/core/middlewares/csrf.middleware.ts": {
-    "mtime": 1781637335.4183655,
-    "ast_hash": "7787b3b75fe96355b769eeb7362635c6",
+    "mtime": 1781638596.7819974,
+    "ast_hash": "b369f6b8efdb7360d7f1ec0560807e4b",
     "semantic_hash": ""
   },
   "apps/backend/src/core/middlewares/navigation-blocker.middleware.ts": {
@@ -270,8 +270,8 @@
     "semantic_hash": ""
   },
   "apps/backend/src/modules/auth/auth.controller.ts": {
-    "mtime": 1781638412.6215978,
-    "ast_hash": "e71ded6fbf80766723d0a02fb94fab6a",
+    "mtime": 1781638592.5335608,
+    "ast_hash": "e8f820c83792eda7192d56f3d9648e41",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/auth/auth.repository.ts": {
