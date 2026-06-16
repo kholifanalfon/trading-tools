@@ -1,10 +1,11 @@
 import { db } from "@/db/db";
 import { backtestReports, scoringRules } from "@/db/schema";
 import { YahooFinanceAdapter } from "@/core/adapters/yahoo-finance.adapter";
-import { runBacktestSimulation, BacktestParams, BacktestResult } from "./backtest.engine";
+import { runBacktestSimulation } from "./backtest.engine";
 import { webSocketService } from "@/core/websocket";
-import { runStrategyOptimization, runMultiStockOptimization, OptimizationGridItem } from "./backtest.optimizer";
-import { SettingsClientService } from "../settings/settings-client.services";
+import { runStrategyOptimization, runMultiStockOptimization } from "./backtest.optimizer";
+import { BacktestParams, BacktestResult, OptimizationGridItem } from "./backtest.types";
+import { SettingsClientService } from "../settings/settings-client.service";
 import { mapRulesToConfig } from "@/core/utils/scoring.utils";
 import { SettingsRepository } from "../settings/settings.repository";
 import { GeminiAdapter } from "@/core/adapters/gemini.adapter";
@@ -173,16 +174,8 @@ export class BacktestService {
     });
 
     this.logAndBroadcast(`[Optimization] Running Grid Search simulation...`);
-    const optimizationGrid = runStrategyOptimization(
-      symbol,
-      candles,
-      strategy,
-      rulesConfig,
-      buyThreshold,
-      sellThreshold,
-      stopLossPercent,
-      takeProfitPercent,
-      (msg) => this.logAndBroadcast(`[Optimization] ${msg}`)
+    const optimizationGrid = runStrategyOptimization(symbol, candles, strategy, rulesConfig, buyThreshold, sellThreshold, stopLossPercent, takeProfitPercent, (msg) =>
+      this.logAndBroadcast(`[Optimization] ${msg}`),
     );
 
     this.logAndBroadcast(`[Optimization] [SUCCESS] Grid search completed!`);
@@ -231,7 +224,7 @@ export class BacktestService {
           points = await this.stockAdapter.getHistoricalData(ticker, startDate, new Date());
         }
         candlesMap[symbol] = points;
-      })
+      }),
     );
 
     this.logAndBroadcast(`[Optimization] Historical data loaded. Retrieving active scoring rules`);
@@ -269,16 +262,8 @@ export class BacktestService {
     const divisor = activeCount || 1;
 
     this.logAndBroadcast(`[Optimization] Running global Grid Search simulation...`);
-    const optimizationGrid = runMultiStockOptimization(
-      symbols,
-      candlesMap,
-      strategy,
-      rulesConfig,
-      buyThreshold,
-      sellThreshold,
-      stopLossPercent,
-      takeProfitPercent,
-      (msg) => this.logAndBroadcast(`[Optimization] ${msg}`)
+    const optimizationGrid = runMultiStockOptimization(symbols, candlesMap, strategy, rulesConfig, buyThreshold, sellThreshold, stopLossPercent, takeProfitPercent, (msg) =>
+      this.logAndBroadcast(`[Optimization] ${msg}`),
     );
 
     this.logAndBroadcast(`[Optimization] [SUCCESS] Global optimization completed successfully!`);
@@ -343,7 +328,10 @@ Return ONLY the raw JSON block. Do not include markdown code fence wrappers or b
 `;
 
     let responseText = await gemini.generateAnalysis(prompt);
-    responseText = responseText.replace(/^```json\s*/i, "").replace(/```$/, "").trim();
+    responseText = responseText
+      .replace(/^```json\s*/i, "")
+      .replace(/```$/, "")
+      .trim();
     try {
       const parsed = JSON.parse(responseText);
       // Ensure alternativeMetrics exists
@@ -370,7 +358,7 @@ Return ONLY the raw JSON block. Do not include markdown code fence wrappers or b
           winRatePercent: afterMetrics.winRatePercent,
           maxDrawdownPercent: afterMetrics.maxDrawdownPercent,
           totalTrades: afterMetrics.totalTrades,
-        }
+        },
       };
     }
   }

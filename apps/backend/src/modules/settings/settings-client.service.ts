@@ -1,5 +1,5 @@
 import { SettingsRepository } from "./settings.repository";
-import { SettingsClientExchageSchema, SettingsClientServiceSchema } from "./settings-client.types";
+import { SettingsClientExchageSchema, SettingsClientServiceSchema } from "./settings-client.type";
 
 export class SettingsClientService implements SettingsClientServiceSchema {
   private repository = new SettingsRepository();

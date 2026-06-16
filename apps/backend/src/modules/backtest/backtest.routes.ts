@@ -2,32 +2,7 @@ import { Router } from "express";
 import { BacktestController } from "./backtest.controller";
 import { requireAuth } from "@/core/middlewares/auth.middleware";
 import { validateBody } from "@/core/middlewares/validation.middleware";
-import { z } from "zod";
-
-const RunBacktestSchema = z.object({
-  symbol: z.string().min(1, "Symbol is required"),
-  strategy: z.enum(["day", "swing", "position"]),
-  buyThreshold: z.number().min(0).max(100),
-  sellThreshold: z.number().min(0).max(100),
-  stopLossPercent: z.number(),
-  takeProfitPercent: z.number(),
-});
-
-const RunMultiBacktestSchema = z.object({
-  strategy: z.enum(["day", "swing", "position"]),
-  buyThreshold: z.number().min(0).max(100),
-  sellThreshold: z.number().min(0).max(100),
-  stopLossPercent: z.number(),
-  takeProfitPercent: z.number(),
-});
-
-const AiAlternativeSchema = z.object({
-  strategy: z.enum(["day", "swing", "position"]),
-  beforeParams: z.record(z.any()),
-  beforeMetrics: z.record(z.any()),
-  afterParams: z.record(z.any()),
-  afterMetrics: z.record(z.any()),
-});
+import { AiAlternativeSchema, RunBacktestSchema, RunMultiBacktestSchema } from "./backtest.schema";
 
 const router = Router();
 const controller = new BacktestController();

@@ -1,22 +1,7 @@
 import { HistoricalDataPoint } from "@/core/types/api-stock-provider.types";
-import { runBacktestSimulation, BacktestParams, BacktestResult } from "./backtest.engine";
+import { runBacktestSimulation } from "./backtest.engine";
 import { ScoringRulesConfig } from "@/core/utils/scoring.utils";
-
-export interface OptimizationGridItem {
-  parameters: Record<string, number>;
-  weightProfile?: string;
-  metrics: {
-    totalReturnPercent: number;
-    winRatePercent: number;
-    maxDrawdownPercent: number;
-    totalTrades: number;
-  };
-}
-
-export interface WeightProfile {
-  name: string;
-  weights: Record<string, number>;
-}
+import { BacktestParams, BacktestResult, OptimizationGridItem, WeightProfile } from "./backtest.types";
 
 export const STRATEGY_WEIGHT_PROFILES: Record<"day" | "swing" | "position", WeightProfile[]> = {
   day: [
@@ -34,7 +19,7 @@ export const STRATEGY_WEIGHT_PROFILES: Record<"day" | "swing" | "position", Weig
         rsi_oversold: 15,
         liquidity_high: 10,
         liquidity_medium: 5,
-      }
+      },
     },
     {
       name: "Volume & Gap Momentum",
@@ -50,7 +35,7 @@ export const STRATEGY_WEIGHT_PROFILES: Record<"day" | "swing" | "position", Weig
         rsi_oversold: 5,
         liquidity_high: 5,
         liquidity_medium: 3,
-      }
+      },
     },
     {
       name: "Volatility Heavy",
@@ -66,8 +51,8 @@ export const STRATEGY_WEIGHT_PROFILES: Record<"day" | "swing" | "position", Weig
         rsi_oversold: 10,
         liquidity_high: 10,
         liquidity_medium: 5,
-      }
-    }
+      },
+    },
   ],
   swing: [
     {
@@ -82,7 +67,7 @@ export const STRATEGY_WEIGHT_PROFILES: Record<"day" | "swing" | "position", Weig
         rsi_neutral_exit: 10,
         volume_above_average: 10,
         proximity_ema20_percent: 10,
-      }
+      },
     },
     {
       name: "Trend Heavy",
@@ -96,7 +81,7 @@ export const STRATEGY_WEIGHT_PROFILES: Record<"day" | "swing" | "position", Weig
         rsi_neutral_exit: 5,
         volume_above_average: 5,
         proximity_ema20_percent: 5,
-      }
+      },
     },
     {
       name: "Momentum Heavy",
@@ -110,8 +95,8 @@ export const STRATEGY_WEIGHT_PROFILES: Record<"day" | "swing" | "position", Weig
         rsi_neutral_exit: 15,
         volume_above_average: 10,
         proximity_ema20_percent: 20,
-      }
-    }
+      },
+    },
   ],
   position: [
     {
@@ -124,7 +109,7 @@ export const STRATEGY_WEIGHT_PROFILES: Record<"day" | "swing" | "position", Weig
         momentum_1y_medium: 10,
         volatility_atr_low: 15,
         volatility_atr_medium: 5,
-      }
+      },
     },
     {
       name: "Trend Following",
@@ -136,7 +121,7 @@ export const STRATEGY_WEIGHT_PROFILES: Record<"day" | "swing" | "position", Weig
         momentum_1y_medium: 5,
         volatility_atr_low: 10,
         volatility_atr_medium: 5,
-      }
+      },
     },
     {
       name: "Value & Growth Pullback",
@@ -148,9 +133,9 @@ export const STRATEGY_WEIGHT_PROFILES: Record<"day" | "swing" | "position", Weig
         momentum_1y_medium: 15,
         volatility_atr_low: 20,
         volatility_atr_medium: 10,
-      }
-    }
-  ]
+      },
+    },
+  ],
 };
 
 export function runStrategyOptimization(
@@ -162,7 +147,7 @@ export function runStrategyOptimization(
   sellThreshold: number,
   stopLossPercent: number,
   takeProfitPercent: number,
-  onProgress?: (message: string) => void
+  onProgress?: (message: string) => void,
 ): OptimizationGridItem[] {
   const results: OptimizationGridItem[] = [];
 
@@ -277,7 +262,7 @@ export function runMultiStockOptimization(
   sellThreshold: number,
   stopLossPercent: number,
   takeProfitPercent: number,
-  onProgress?: (message: string) => void
+  onProgress?: (message: string) => void,
 ): OptimizationGridItem[] {
   const results: OptimizationGridItem[] = [];
 
@@ -400,4 +385,3 @@ export function runMultiStockOptimization(
   // Sort by average totalReturnPercent descending
   return results.sort((a, b) => b.metrics.totalReturnPercent - a.metrics.totalReturnPercent);
 }
-

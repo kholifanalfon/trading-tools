@@ -2,49 +2,9 @@ import { HistoricalDataPoint } from "@/core/types/api-stock-provider.types";
 import { calculateEMA, calculateRSI, calculateMACD, calculateSMA, calculateATR } from "@/core/utils/indicators";
 import { calculateDayScore, calculateSwingScore, calculatePositionScore, ScoringRulesConfig } from "@/core/utils/scoring.utils";
 import { ScoreMetrics } from "@/core/types/scoring.types";
+import { BacktestParams, BacktestResult, TradeLog } from "./backtest.types";
 
-export interface BacktestParams {
-  strategy: "day" | "swing" | "position";
-  rulesConfig: ScoringRulesConfig;
-  buyThreshold: number;
-  sellThreshold: number;
-  stopLossPercent: number; // e.g. -2.0 for -2%
-  takeProfitPercent: number; // e.g. 6.0 for +6%
-  initialCapital?: number;
-}
-
-export interface TradeLog {
-  id: number;
-  symbol: string;
-  entryDate: Date;
-  entryPrice: number;
-  exitDate: Date;
-  exitPrice: number;
-  profitPercent: number;
-  profitAmount: number;
-  exitReason: "score_crossover" | "stop_loss" | "take_profit" | "end_of_period";
-  holdingDays: number;
-}
-
-export interface BacktestResult {
-  initialCapital: number;
-  finalCapital: number;
-  totalReturnPercent: number;
-  winRatePercent: number;
-  maxDrawdownPercent: number;
-  sharpeRatio: number;
-  totalTrades: number;
-  winningTrades: number;
-  losingTrades: number;
-  trades: TradeLog[];
-  equityCurve: { date: Date; capital: number; benchmark: number }[];
-}
-
-export function runBacktestSimulation(
-  symbol: string,
-  candles: HistoricalDataPoint[],
-  params: BacktestParams
-): BacktestResult {
+export function runBacktestSimulation(symbol: string, candles: HistoricalDataPoint[], params: BacktestParams): BacktestResult {
   const initialCapital = params.initialCapital || 1_000_000_000_000; // 1 Trillion IDR
   const { strategy, rulesConfig, buyThreshold, sellThreshold, stopLossPercent, takeProfitPercent } = params;
 
@@ -197,7 +157,7 @@ export function runBacktestSimulation(
         }
 
         capital = sharesCount * currentPrice;
-        const profitAmount = capital - (sharesCount * entryPrice);
+        const profitAmount = capital - sharesCount * entryPrice;
         const holdingDays = entryDate ? Math.ceil((candle.date.getTime() - entryDate.getTime()) / (1000 * 60 * 60 * 24)) : 0;
 
         trades.push({

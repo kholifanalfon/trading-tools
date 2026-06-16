@@ -9,7 +9,7 @@ import { calculateAllScores, mapRulesToConfig } from "@/core/utils/scoring.utils
 import { ScoringRulesRepository } from "../screener/scoring-rules.repository";
 import { ScoreMetrics } from "@/core/types/scoring.types";
 import { LiveStockDataQuery } from "./live-screener.schema";
-import { SettingsClientService } from "../settings/settings-client.services";
+import { SettingsClientService } from "../settings/settings-client.service";
 import { webSocketService } from "@/core/websocket";
 import { StocksRepository } from "../stocks/stocks.repository";
 import { db } from "@/db/db";
@@ -73,7 +73,7 @@ export class LiveScreenerService {
     const cached = this.cache.get(cacheKey);
     const now = Date.now();
 
-    if (cached && (now - cached.timestamp < this.CACHE_TTL)) {
+    if (cached && now - cached.timestamp < this.CACHE_TTL) {
       this.logAndBroadcast(`[Live Stock Data] Using cached screened stocks (${cached.items.length} symbols)`);
       screenedStocks = cached.items;
     } else {

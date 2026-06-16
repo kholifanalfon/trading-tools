@@ -1400,8 +1400,8 @@
     "semantic_hash": ""
   },
   "apps/backend/src/modules/live-screener/live-screener.service.ts": {
-    "mtime": 1781549846.485744,
-    "ast_hash": "92f413d3df83cb6a1ecaa296f475ded5",
+    "mtime": 1781573533.1391816,
+    "ast_hash": "7e37453b7731a2531188b07a8df03435",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/live-screener/hooks/use-get-live-stock-data.ts": {
@@ -1427,16 +1427,6 @@
   "apps/backend/src/core/types/api-stock-provider.types.ts": {
     "mtime": 1781543850.7609346,
     "ast_hash": "11c30567349cb68064ef559a7a87d3ef",
-    "semantic_hash": ""
-  },
-  "apps/backend/src/modules/settings/settings-client.services.ts": {
-    "mtime": 1781541195.657741,
-    "ast_hash": "32b2d43cf1ade3b4fd708d69ff94ad13",
-    "semantic_hash": ""
-  },
-  "apps/backend/src/modules/settings/settings-client.types.ts": {
-    "mtime": 1781537668.011098,
-    "ast_hash": "a51d4d953e9fce732945fd802c9d177d",
     "semantic_hash": ""
   },
   "apps/backend/src/core/adapters/gemini.adapter.ts": {
@@ -1470,23 +1460,23 @@
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.engine.ts": {
-    "mtime": 1781550341.225932,
-    "ast_hash": "340d64f5b5f8c88383fd81a75cb80f47",
+    "mtime": 1781573824.7498572,
+    "ast_hash": "e474cbe1c426e91c76b5a224f9782d0c",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.optimizer.ts": {
-    "mtime": 1781553009.9110339,
-    "ast_hash": "6d18f41296e1fcc35a63098ee70007b9",
+    "mtime": 1781573898.5982013,
+    "ast_hash": "b99aaa7a4eb15971254f5fd6f246c267",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.routes.ts": {
-    "mtime": 1781553237.1041207,
-    "ast_hash": "4b9f22cf9e5c1efec8a1f76ca4cc243c",
+    "mtime": 1781573714.9234145,
+    "ast_hash": "7fcfb9dd4a9810ea19a7f179add5c5f3",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.service.ts": {
-    "mtime": 1781553748.608919,
-    "ast_hash": "7e0d3b31f3690f2d620223ec1f5ab63f",
+    "mtime": 1781574066.7149513,
+    "ast_hash": "7bd0eb2631f51ea539c044ae0f5957e0",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/screener/scoring-rules.repository.ts": {
@@ -1495,13 +1485,13 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/pages/backtest.page.tsx": {
-    "mtime": 1781554091.492328,
-    "ast_hash": "45b130a69effab5ff21078b0bdb871a3",
+    "mtime": 1781574211.0308726,
+    "ast_hash": "82e81df3c1ab7ad678b7158e415ccbe1",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/services/backtest.api.ts": {
-    "mtime": 1781553753.5824432,
-    "ast_hash": "8aed52fa4ef8db1ec29235b7b7f69780",
+    "mtime": 1781574047.0206656,
+    "ast_hash": "103f1b58c29bcc81961be8f07cef7a1e",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/components/scoring-rules-form.tsx": {
@@ -1532,6 +1522,61 @@
   "apps/backend/src/db/migrations/meta/0006_snapshot.json": {
     "mtime": 1781551063.155697,
     "ast_hash": "e6746dff0d8d68c11f1afad9e0e32c6f",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/backtest/backtest.schema.ts": {
+    "mtime": 1781573705.6791909,
+    "ast_hash": "beb302f32ca6478371d9d10d75e9479b",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/backtest/backtest.types.ts": {
+    "mtime": 1781573879.730088,
+    "ast_hash": "7b73cddc926225ef2350dfd4858fed3c",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/settings/settings-client.service.ts": {
+    "mtime": 1781573539.9084895,
+    "ast_hash": "7e1320eee0b70e117533240f7f39cb8d",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/settings/settings-client.type.ts": {
+    "mtime": 1781537668.011098,
+    "ast_hash": "a51d4d953e9fce732945fd802c9d177d",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/backtest/backtest.schema.ts": {
+    "mtime": 1781574055.0082111,
+    "ast_hash": "dc89f440c62e690d31f3fdd72d6afeba",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/backtest/types/backtest.types.ts": {
+    "mtime": 1781574043.0332713,
+    "ast_hash": "f702f89c42d3b3c09db6d9747352be81",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/backtest/backtest.keys.ts": {
+    "mtime": 1781574131.117811,
+    "ast_hash": "29373d14c7df86ffe885f9af284b0c2b",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/backtest/components/backtest-charts.tsx": {
+    "mtime": 1781574147.805719,
+    "ast_hash": "c9f982b482c23614c5d1d693f98aaa90",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/backtest/components/optimization-modal.tsx": {
+    "mtime": 1781574203.6690319,
+    "ast_hash": "5516659f648e82ac1d70364af340ca05",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/backtest/components/trades-table.tsx": {
+    "mtime": 1781574154.1805565,
+    "ast_hash": "c8ce34ff38754ef8578285517b505091",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/backtest/hooks/use-backtest.ts": {
+    "mtime": 1781574135.7857778,
+    "ast_hash": "172385fa0d9715ef8bdb93c05e346dfe",
     "semantic_hash": ""
   }
 }
