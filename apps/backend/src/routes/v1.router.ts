@@ -6,6 +6,7 @@ import { settingsRoutes } from "@/modules/settings/settings.routes";
 import { screenerRoutes } from "@/modules/screener/screener.routes";
 import { liveScreenerRoutes } from "@/modules/live-screener/live-screener.routes";
 import { backtestRoutes } from "@/modules/backtest/backtest.routes";
+import { generateCsrfToken } from "@/core/middlewares/csrf.middleware";
 
 const v1Router = Router();
 
@@ -22,6 +23,12 @@ v1Router.get("/", (req, res) => {
     auth: "Jose (JWT)",
     version: "v1.0.0",
   });
+});
+
+// CSRF token endpoint
+v1Router.get("/csrf-token", (req, res) => {
+  const token = generateCsrfToken(req, res);
+  res.json({ csrfToken: token });
 });
 
 // Sentry test endpoint

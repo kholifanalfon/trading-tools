@@ -17,14 +17,7 @@ export class ApiError extends Error {
   public readonly requestId?: string;
   public readonly details?: any;
 
-  constructor(
-    message: string,
-    type: "application" | "server",
-    status: number,
-    code: string,
-    requestId?: string,
-    details?: any,
-  ) {
+  constructor(message: string, type: "application" | "server", status: number, code: string, requestId?: string, details?: any) {
     super(message);
     this.name = "ApiError";
     this.type = type;
@@ -73,14 +66,19 @@ export async function initCsrf(): Promise<string> {
   }
 }
 
-// Request interceptor to manually attach CSRF token for cross-origin requests
+// Request interceptor to manually attach CSRF token and Auth token
 api.interceptors.request.use(
   (config) => {
-    // If it's a GET, HEAD, or OPTIONS request, don't block if there's no CSRF token
     const xsrfToken = csrfTokenInMemory || getCookie("XSRF-TOKEN");
     if (xsrfToken && config.headers) {
       config.headers["X-XSRF-TOKEN"] = xsrfToken;
     }
+
+    const token = localStorage.getItem("token");
+    if (token && config.headers) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+
     return config;
   },
   (error) => {
@@ -94,33 +92,12 @@ api.interceptors.response.use(
   (error) => {
     if (axios.isAxiosError(error) && error.response) {
       const data = error.response.data;
-      if (
-        data &&
-        typeof data === "object" &&
-        "type" in data &&
-        "status" in data
-      ) {
-        return Promise.reject(
-          new ApiError(
-            data.message || "An error occurred",
-            data.type,
-            data.status,
-            data.code || "UNKNOWN_ERROR",
-            data.requestId,
-            data.details,
-          ),
-        );
+      if (data && typeof data === "object" && "type" in data && "status" in data) {
+        return Promise.reject(new ApiError(data.message || "An error occurred", data.type, data.status, data.code || "UNKNOWN_ERROR", data.requestId, data.details));
       }
     }
 
     // Fallback for network issues or generic errors
-    return Promise.reject(
-      new ApiError(
-        error.message || "Network Connection Error",
-        "server",
-        error.response?.status || 500,
-        "NETWORK_ERROR",
-      ),
-    );
+    return Promise.reject(new ApiError(error.message || "Network Connection Error", "server", error.response?.status || 500, "NETWORK_ERROR"));
   },
 );

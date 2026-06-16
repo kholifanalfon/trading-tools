@@ -19,7 +19,8 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   login: async (data: LoginInput) => {
     try {
-      const user = await loginApi(data);
+      const { user, token } = await loginApi(data);
+      localStorage.setItem("token", token);
       set({ user, isAuthenticated: true });
     } catch (error) {
       throw error;
@@ -29,8 +30,11 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: async () => {
     try {
       await logoutApi();
+      localStorage.removeItem("token");
       set({ user: null, isAuthenticated: false });
     } catch (error) {
+      localStorage.removeItem("token"); // Clean up even if api fails
+      set({ user: null, isAuthenticated: false });
       throw error;
     }
   },
@@ -41,6 +45,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       const user = await getMeApi();
       set({ user, isAuthenticated: true, isLoading: false });
     } catch (error) {
+      localStorage.removeItem("token"); // Clean up invalid token
       set({ user: null, isAuthenticated: false, isLoading: false });
     }
   },
