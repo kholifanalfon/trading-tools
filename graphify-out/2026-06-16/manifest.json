@@ -1485,8 +1485,8 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/pages/backtest.page.tsx": {
-    "mtime": 1781574050.8557703,
-    "ast_hash": "52d2c8bb9c4d9625b351be20fa35b7b1",
+    "mtime": 1781574211.0308726,
+    "ast_hash": "82e81df3c1ab7ad678b7158e415ccbe1",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/services/backtest.api.ts": {
@@ -1552,6 +1552,31 @@
   "apps/frontend/src/features/backtest/types/backtest.types.ts": {
     "mtime": 1781574043.0332713,
     "ast_hash": "f702f89c42d3b3c09db6d9747352be81",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/backtest/backtest.keys.ts": {
+    "mtime": 1781574131.117811,
+    "ast_hash": "29373d14c7df86ffe885f9af284b0c2b",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/backtest/components/backtest-charts.tsx": {
+    "mtime": 1781574147.805719,
+    "ast_hash": "c9f982b482c23614c5d1d693f98aaa90",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/backtest/components/optimization-modal.tsx": {
+    "mtime": 1781574203.6690319,
+    "ast_hash": "5516659f648e82ac1d70364af340ca05",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/backtest/components/trades-table.tsx": {
+    "mtime": 1781574154.1805565,
+    "ast_hash": "c8ce34ff38754ef8578285517b505091",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/backtest/hooks/use-backtest.ts": {
+    "mtime": 1781574135.7857778,
+    "ast_hash": "172385fa0d9715ef8bdb93c05e346dfe",
     "semantic_hash": ""
   }
 }

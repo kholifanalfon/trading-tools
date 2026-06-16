@@ -1,0 +1,137 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: trading_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${BE_DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${BE_DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${BE_DB_NAME:-trading_db}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5431:5432" # Keep internal Postgres accessible on custom port if needed
+    networks:
+      - trading_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${BE_DB_USER:-postgres} -d ${BE_DB_NAME:-trading_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pgbouncer:
+    image: edoburu/pgbouncer:latest
+    container_name: trading_pgbouncer
+    restart: always
+    ports:
+      - "6543:6432"
+    environment:
+      - LISTEN_PORT=6432
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=${BE_DB_USER:-postgres}
+      - DB_PASSWORD=${BE_DB_PASSWORD:-postgres}
+      - DB_NAME=${BE_DB_NAME:-trading_db}
+      - AUTH_TYPE=scram-sha-256
+      - POOL_MODE=transaction
+      - MAX_CLIENT_CONN=200
+      - DEFAULT_POOL_SIZE=30
+      - MIN_POOL_SIZE=10
+      - RESERVE_POOL_SIZE=5
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - trading_net
+
+  backend:
+    image: ghcr.io/kholifanalfon/trading-backend:${IMAGE_TAG:-latest}
+    container_name: trading_backend
+    restart: always
+    ports:
+      - "${BE_PORT:-3082}:${BE_PORT:-3082}"
+    env_file:
+      - .env
+    environment:
+      - BE_REDIS_URL=redis://redis:6379
+      - BE_DATABASE_URL=postgresql://${BE_DB_USER:-postgres}:${BE_DB_PASSWORD:-postgres}@pgbouncer:6432/${BE_DB_NAME:-trading_db}?sslmode=disable
+    depends_on:
+      pgbouncer:
+        condition: service_started
+      redis:
+        condition: service_started
+    networks:
+      - trading_net
+
+  frontend:
+    image: ghcr.io/kholifanalfon/trading-frontend:${IMAGE_TAG:-latest}
+    container_name: trading_frontend
+    restart: always
+    ports:
+      - "${FE_PORT:-8082}:80"
+    env_file:
+      - .env
+    depends_on:
+      - backend
+    networks:
+      - trading_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: trading_redis
+    restart: always
+    ports:
+      - "6372:6379"
+    volumes:
+      - redisdata:/data
+    networks:
+      - trading_net
+
+  glitchtip-db:
+    image: postgres:15-alpine
+    container_name: trading_glitchtip_db
+    restart: always
+    environment:
+      POSTGRES_USER: glitchtip
+      POSTGRES_PASSWORD: glitchtip_password
+      POSTGRES_DB: glitchtip
+    volumes:
+      - glitchtip_pgdata:/var/lib/postgresql/data
+    networks:
+      - trading_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U glitchtip -d glitchtip"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  glitchtip:
+    image: glitchtip/glitchtip:latest
+    container_name: trading_glitchtip
+    command: ./bin/run-all-in-one.sh
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://glitchtip:glitchtip_password@glitchtip-db:5432/glitchtip
+      - SECRET_KEY=${BE_JWT_SECRET:-glitchtip_super_secret_key_1234567890}
+      - GLITCHTIP_DOMAIN=${GLITCHTIP_DOMAIN:-http://localhost:8000}
+      - DEFAULT_FROM_EMAIL=glitchtip@example.com
+      - VALKEY_URL=
+      - GLITCHTIP_ALLOW_REGISTRATION=True
+      - GLITCHTIP_REQUIRE_EMAIL_VERIFICATION=False
+      - EMAIL_URL=consolemail://
+    depends_on:
+      glitchtip-db:
+        condition: service_healthy
+    networks:
+      - trading_net
+
+volumes:
+  pgdata:
+  redisdata:
+  glitchtip_pgdata:
+
+networks:
+  trading_net:
+    driver: bridge

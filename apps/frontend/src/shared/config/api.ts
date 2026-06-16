@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.FE_VITE_API_URL || "http://localhost:3000";
+const API_URL = window.__ENV__?.FE_VITE_API_URL || import.meta.env.FE_VITE_API_URL || "http://localhost:3000";
 
 // Helper to get cookie value by name
 function getCookie(name: string): string | undefined {
