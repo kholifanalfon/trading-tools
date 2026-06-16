@@ -17,9 +17,7 @@ permissions:
   contents: read
   packages: read
 
-
 jobs:
-
   # Deploy ke production — membutuhkan approval manual
   deploy-production:
     name: Deploy to Production
@@ -45,25 +43,35 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # ------------------------------------------------------------
-      # Ganti bagian ini dengan mekanisme deploy yang digunakan:
-      # Contoh: SSH ke server, kubectl apply, docker stack deploy, dsb.
-      # ------------------------------------------------------------
-      - name: Deploy Backend
+      - name: Prepare .env file from .env.example
         run: |
-          echo "🚀 Deploying trading-backend:${{ steps.tag.outputs.version }} to production"
-          # Contoh SSH deploy:
-          # ssh user@prod-server "docker pull ghcr.io/${{ github.repository_owner }}/trading-backend:${{ steps.tag.outputs.version }} && docker service update --image ghcr.io/${{ github.repository_owner }}/trading-backend:${{ steps.tag.outputs.version }} trading-backend"
+          cp .env.example .env
+          # Append the dynamic release tag so docker-compose uses the correct images
 
-      - name: Deploy Frontend
-        run: |
-          echo "🚀 Deploying trading-frontend:${{ steps.tag.outputs.version }} to production"
-          # ssh user@prod-server "..."
+      - name: Copy Files (.env & docker-compose.server.yml) to Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          source: "docker-compose.server.yml,.env"
+          target: ${{ secrets.TARGET_DIR || '~/' }}
 
-      - name: Deploy Docs
-        run: |
-          echo "🚀 Deploying trading-docs:${{ steps.tag.outputs.version }} to production"
-          # ssh user@prod-server "..."
+      - name: Deploy and Start Services via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            cd ${{ secrets.TARGET_DIR || '~/' }}
+            mv -f docker-compose.server.yml docker-compose.yml || true
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            docker compose pull
+            docker compose up -d
+            docker image prune -f
 
       - name: Notify Deployment Success
         run: |
