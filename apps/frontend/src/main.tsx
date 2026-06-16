@@ -55,8 +55,21 @@ if (sentryDsn) {
   });
 }
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+import { initCsrf } from "@/shared/config/api";
+
+const renderApp = () => {
+  createRoot(document.getElementById("root")!).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+};
+
+// Fetch CSRF token first, then render the application
+initCsrf()
+  .then(renderApp)
+  .catch((err) => {
+    console.error("Initialization error (CSRF):", err);
+    // Fallback to rendering the app anyway so users get friendly error state instead of blank screen
+    renderApp();
+  });

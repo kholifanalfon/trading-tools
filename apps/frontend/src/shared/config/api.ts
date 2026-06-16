@@ -60,10 +60,24 @@ export const api = axios.create({
   },
 });
 
+let csrfTokenInMemory: string | null = null;
+
+export async function initCsrf(): Promise<string> {
+  try {
+    const response = await api.get<{ csrfToken: string }>("/csrf-token");
+    csrfTokenInMemory = response.data.csrfToken;
+    return csrfTokenInMemory;
+  } catch (error) {
+    console.error("Failed to fetch CSRF token:", error);
+    throw error;
+  }
+}
+
 // Request interceptor to manually attach CSRF token for cross-origin requests
 api.interceptors.request.use(
   (config) => {
-    const xsrfToken = getCookie("XSRF-TOKEN");
+    // If it's a GET, HEAD, or OPTIONS request, don't block if there's no CSRF token
+    const xsrfToken = csrfTokenInMemory || getCookie("XSRF-TOKEN");
     if (xsrfToken && config.headers) {
       config.headers["X-XSRF-TOKEN"] = xsrfToken;
     }
