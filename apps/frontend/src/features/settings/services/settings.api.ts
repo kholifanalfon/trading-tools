@@ -26,3 +26,8 @@ export async function updateScoringRulesApi(data: UpdateScoringRulesBatchPayload
   return response.data;
 }
 
+export async function getAiScreenerRecommendationApi(strategy: "day" | "swing" | "position"): Promise<{ rules: { field: string; operator: string; value: number; valueMax?: number; justification: string }[] }> {
+  const response = await api.post<{ rules: { field: string; operator: string; value: number; valueMax?: number; justification: string }[] }>("/settings/ai-recommendation", { strategy });
+  return response.data;
+}
+

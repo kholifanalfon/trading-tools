@@ -5,6 +5,9 @@ export interface GeminiSettings {
   stock_screener_provider?: "finnhub" | "yahoo_finance";
   exchanges_config?: string;
   default_strategy?: string;
+  screener_rules_day?: string;
+  screener_rules_swing?: string;
+  screener_rules_position?: string;
 }
 
 export interface UpdateGeminiSettingsPayload {
@@ -14,6 +17,9 @@ export interface UpdateGeminiSettingsPayload {
   stock_screener_provider?: "finnhub" | "yahoo_finance";
   exchanges_config?: string;
   default_strategy?: string;
+  screener_rules_day?: string;
+  screener_rules_swing?: string;
+  screener_rules_position?: string;
 }
 
 export interface ScoringRule {

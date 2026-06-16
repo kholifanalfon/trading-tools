@@ -101,60 +101,71 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
       });
     }
 
+    // Dynamically build operands from database settings based on prefix
+    try {
+      const { db } = await import("@/db/db");
+      const { settings } = await import("@/db/schema");
+      const dbSettings = await db.select().from(settings);
+      
+      const keyName = `screener_rules_${strategy}`;
+      const rulesSetting = dbSettings.find((s) => s.key === keyName);
+      
+      if (rulesSetting && rulesSetting.value) {
+        const rules = JSON.parse(rulesSetting.value);
+        for (const rule of rules) {
+          if (!rule.field || !rule.operator) continue;
+
+          if (rule.operator === "btwn") {
+            const valMin = rule.value !== undefined ? Number(rule.value) : 0;
+            const valMax = rule.valueMax !== undefined ? Number(rule.valueMax) : 0;
+            operands.push({
+              operator: "btwn",
+              operands: [rule.field, valMin, valMax],
+            });
+          } else {
+            const val = rule.value !== undefined ? Number(rule.value) : 0;
+            operands.push({
+              operator: rule.operator,
+              operands: [rule.field, val],
+            });
+          }
+        }
+      } else {
+        throw new Error(`Settings key ${keyName} not found or empty`);
+      }
+    } catch (dbErr) {
+      console.warn("Failed to fetch custom settings for Yahoo Finance adapter, falling back to static defaults:", dbErr);
+      // Fallback defaults if database queries fail
+      if (strategy === "day") {
+        operands.push(
+          { operator: "gt", operands: ["percentchange", 0] },
+          { operator: "gt", operands: ["dayvolume", 1000000] },
+          { operator: "gt", operands: ["regularmarketprice", 100] }
+        );
+      } else if (strategy === "swing") {
+        operands.push(
+          { operator: "gt", operands: ["dayvolume", 500000] },
+          { operator: "gt", operands: ["intradaymarketcap", 1000000000000] },
+          { operator: "gt", operands: ["percentchange", 0] }
+        );
+      } else if (strategy === "position") {
+        operands.push(
+          { operator: "btwn", operands: ["forwardpe", 5, 25] },
+          { operator: "gt", operands: ["returnonequity", 15] },
+          { operator: "gt", operands: ["averagevolume", 2000000] }
+        );
+      }
+    }
+
     if (strategy === "day") {
       sortField = "percentchange";
       sortType = "DESC";
-      // Filter stocks with positive daily gain
-      operands.push({
-        operator: "gt",
-        operands: ["percentchange", 0],
-      });
-      // Filter for highly liquid stocks with daily volume > 1,000,000 shares
-      operands.push({
-        operator: "gt",
-        operands: ["dayvolume", 1000000],
-      });
-      // Filter out cheap/penny stocks by requiring price > Rp100
-      operands.push({
-        operator: "gt",
-        operands: ["regularmarketprice", 100],
-      });
     } else if (strategy === "swing") {
       sortField = "percentchange";
       sortType = "DESC";
-      // Filter for active stocks with daily volume > 500,000 shares
-      operands.push({
-        operator: "gt",
-        operands: ["dayvolume", 500000],
-      });
-      // Filter for mid-to-large-cap stocks with market cap > Rp 1 T
-      operands.push({
-        operator: "gt",
-        operands: ["intradaymarketcap", 1000000000000],
-      });
-      // Filter stocks with positive daily gain
-      operands.push({
-        operator: "gt",
-        operands: ["percentchange", 0],
-      });
-    } else if (strategy === "professional") {
+    } else if (strategy === "position") {
       sortField = "intradaymarketcap";
       sortType = "DESC";
-      // Filter for value-oriented stocks with Forward P/E between 5 and 25
-      operands.push({
-        operator: "btwn",
-        operands: ["forwardpe", 5, 25],
-      });
-      // Filter for highly profitable companies with Return on Equity (ROE) > 15%
-      operands.push({
-        operator: "gt",
-        operands: ["returnonequity", 15],
-      });
-      // Filter for high-liquidity stocks with average volume > 2,000,000 shares
-      operands.push({
-        operator: "gt",
-        operands: ["averagevolume", 2000000],
-      });
     }
 
     const body = {

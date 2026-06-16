@@ -48,5 +48,14 @@ export class SettingsController {
       next(error);
     }
   };
+
+  getAiScreenerRecommendation = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = await this.service.getAiScreenerRecommendation(req.body.strategy);
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 

@@ -7,6 +7,9 @@ export const UpdateSettingsSchema = z.object({
   stock_screener_provider: z.enum(["finnhub", "yahoo_finance"]),
   exchanges_config: z.string().optional(),
   default_strategy: z.string().optional(),
+  screener_rules_day: z.string().optional(),
+  screener_rules_swing: z.string().optional(),
+  screener_rules_position: z.string().optional(),
 });
 
 export type UpdateSettingsInput = z.infer<typeof UpdateSettingsSchema>;

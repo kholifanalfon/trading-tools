@@ -1,16 +1,16 @@
 # Graph Report - trading  (2026-06-16)
 
 ## Corpus Check
-- 284 files · ~87,683 words
+- 284 files · ~90,344 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1360 nodes · 2611 edges · 107 communities (93 shown, 14 thin omitted)
+- 1365 nodes · 2628 edges · 99 communities (86 shown, 13 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 7 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5f35be4c`
+- Built from commit: `7e8ac484`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -93,17 +93,9 @@
 - [[_COMMUNITY_Community 91|Community 91]]
 - [[_COMMUNITY_Community 92|Community 92]]
 - [[_COMMUNITY_Community 93|Community 93]]
-- [[_COMMUNITY_Community 94|Community 94]]
-- [[_COMMUNITY_Community 95|Community 95]]
 - [[_COMMUNITY_Community 96|Community 96]]
-- [[_COMMUNITY_Community 97|Community 97]]
 - [[_COMMUNITY_Community 98|Community 98]]
 - [[_COMMUNITY_Community 99|Community 99]]
-- [[_COMMUNITY_Community 100|Community 100]]
-- [[_COMMUNITY_Community 101|Community 101]]
-- [[_COMMUNITY_Community 103|Community 103]]
-- [[_COMMUNITY_Community 104|Community 104]]
-- [[_COMMUNITY_Community 105|Community 105]]
 - [[_COMMUNITY_Community 106|Community 106]]
 - [[_COMMUNITY_Community 110|Community 110]]
 
@@ -120,33 +112,33 @@
 10. `Input` - 15 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `BreadcrumbEllipsis()` --calls--> `cn()`  [EXTRACTED]
-  apps/frontend/src/shared/components/ui/breadcrumb.tsx → apps/frontend/src/shared/utils/cn.ts
+- `NavProjects()` --calls--> `useSidebar()`  [EXTRACTED]
+  apps/frontend/src/shared/components/nav-projects.tsx → apps/frontend/src/shared/components/ui/sidebar.tsx
+- `AvatarBadge()` --calls--> `cn()`  [EXTRACTED]
+  apps/frontend/src/shared/components/ui/avatar.tsx → apps/frontend/src/shared/utils/cn.ts
+- `AvatarGroup()` --calls--> `cn()`  [EXTRACTED]
+  apps/frontend/src/shared/components/ui/avatar.tsx → apps/frontend/src/shared/utils/cn.ts
+- `AvatarGroupCount()` --calls--> `cn()`  [EXTRACTED]
+  apps/frontend/src/shared/components/ui/avatar.tsx → apps/frontend/src/shared/utils/cn.ts
 - `DialogFooter()` --calls--> `cn()`  [EXTRACTED]
   apps/frontend/src/shared/components/ui/dialog.tsx → apps/frontend/src/shared/utils/cn.ts
-- `DropdownMenuCheckboxItem()` --calls--> `cn()`  [EXTRACTED]
-  apps/frontend/src/shared/components/ui/dropdown-menu.tsx → apps/frontend/src/shared/utils/cn.ts
-- `DropdownMenuRadioItem()` --calls--> `cn()`  [EXTRACTED]
-  apps/frontend/src/shared/components/ui/dropdown-menu.tsx → apps/frontend/src/shared/utils/cn.ts
-- `DropdownMenuSubTrigger()` --calls--> `cn()`  [EXTRACTED]
-  apps/frontend/src/shared/components/ui/dropdown-menu.tsx → apps/frontend/src/shared/utils/cn.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (107 total, 14 thin omitted)
+## Communities (99 total, 13 thin omitted)
 
 ### Community 0 - "Frontend Components & Screener UI"
 Cohesion: 0.05
-Nodes (62): LoginFormProps, QuoteDetailsProps, ScreenerResultsProps, StockFormDialogProps, StockTable(), StockTableProps, StrategyScoreCard(), StrategyScoreCardProps (+54 more)
+Nodes (57): LoginFormProps, QuoteDetailsProps, StockFormDialogProps, StockTable(), StockTableProps, StrategyScoreCard(), StrategyScoreCardProps, ApiError (+49 more)
 
 ### Community 1 - "Auth Schemas & Auth Services"
 Cohesion: 0.17
 Nodes (18): UserFormDialogProps, UserTable(), UserTableProps, useCreateUser(), useDeleteUser(), useGetUsers(), useUpdateUser(), UserManagementListPage() (+10 more)
 
 ### Community 2 - "Screener Providers & API Adapters"
-Cohesion: 0.17
-Nodes (8): FinnhubAdapter, YahooFinanceAdapter, getFinnhubClient(), yahooFinance, StockQuote, StockSearchResult, ScreenerProviderAdapter, StockProviderSchema
+Cohesion: 0.05
+Nodes (48): FinnhubAdapter, GeminiAdapter, YahooFinanceAdapter, BacktestParams, BacktestResult, runBacktestSimulation(), TradeLog, OptimizationGridItem (+40 more)
 
 ### Community 3 - "Backend Package & Express Middleware Dependencies"
 Cohesion: 0.05
@@ -157,8 +149,8 @@ Cohesion: 0.08
 Nodes (37): useAsRef(), useLazyRef(), Direction, FileState, FileUpload(), FileUploadClear(), FileUploadClearProps, FileUploadContext (+29 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.19
-Nodes (17): RegisterFormProps, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Field() (+9 more)
+Cohesion: 0.32
+Nodes (11): RegisterFormProps, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, FieldDescription() (+3 more)
 
 ### Community 6 - "Docusaurus Documentation Site Packages"
 Cohesion: 0.06
@@ -169,32 +161,32 @@ Cohesion: 0.06
 Nodes (31): dependencies, dotenv, postgres, devDependencies, @types/node, typescript, name, overrides (+23 more)
 
 ### Community 8 - "User Management Components & Hooks"
-Cohesion: 0.20
-Nodes (15): DropdownMenu(), DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuGroup(), DropdownMenuItem(), DropdownMenuLabel(), DropdownMenuRadioItem(), DropdownMenuSeparator() (+7 more)
+Cohesion: 0.13
+Nodes (22): NavProjects(), Avatar(), AvatarBadge(), AvatarFallback(), AvatarGroup(), AvatarGroupCount(), AvatarImage(), DropdownMenu() (+14 more)
 
 ### Community 9 - "Vibe UI Primitive Component Elements"
-Cohesion: 0.09
-Nodes (24): useIsMobile(), Sheet(), SheetContent, SheetDescription, SheetFooter(), SheetHeader(), SheetOverlay, SheetTitle (+16 more)
+Cohesion: 0.11
+Nodes (18): useIsMobile(), Sheet(), SheetContent, SheetDescription, SheetFooter(), SheetHeader(), SheetOverlay, SheetTitle (+10 more)
 
 ### Community 10 - "React Module"
 Cohesion: 0.07
 Nodes (27): dependencies, axios, class-variance-authority, clsx, date-fns, @fontsource-variable/geist, @hookform/resolvers, lightweight-charts (+19 more)
 
 ### Community 11 - "Community 11"
-Cohesion: 0.14
-Nodes (19): AiAlternativeRequest, AiAlternativeResponse, BacktestResult, getAiAlternativeApi(), getBacktestReportsApi(), OptimizationBaseline, OptimizationGridItem, runBacktestApi() (+11 more)
+Cohesion: 0.19
+Nodes (15): ScreenerResultsProps, ScreenerSearchProps, StockSearchResult, Badge(), BadgeProps, Button, ButtonProps, Table (+7 more)
 
 ### Community 12 - "Sheet Module"
 Cohesion: 0.09
 Nodes (22): aliases, components, hooks, lib, ui, utils, iconLibrary, menuAccent (+14 more)
 
 ### Community 13 - "Settings Module"
-Cohesion: 0.22
-Nodes (10): queryClient, Breadcrumb(), BreadcrumbEllipsis(), BreadcrumbItem(), BreadcrumbLink(), BreadcrumbList(), BreadcrumbPage(), BreadcrumbSeparator() (+2 more)
+Cohesion: 0.15
+Nodes (9): NewStockData, StockData, NewStockLog, StockLog, stockLogs, NewStock, Stock, stocks (+1 more)
 
 ### Community 14 - "Components Module"
 Cohesion: 0.09
-Nodes (22): EnvConfig, envSchema, parsed, errorHandler(), logger, ExtendedWebSocket, secret, corsMiddleware (+14 more)
+Nodes (23): EnvConfig, envSchema, parsed, errorHandler(), logger, initializeDatabase(), ExtendedWebSocket, secret (+15 more)
 
 ### Community 15 - "Error Module"
 Cohesion: 0.10
@@ -205,16 +197,16 @@ Cohesion: 0.10
 Nodes (20): 1. Architecture, 2. File Naming, 3. Code-Level Casing, 4. Design Pattern, 5. Layer Boundaries & Rules, 6. Testing — Backend, Alur Request (Request Lifecycle), Backend Guidelines (+12 more)
 
 ### Community 17 - "App Module"
-Cohesion: 0.07
-Nodes (26): initializeDatabase(), db, queryClient, LiveScreenerRepository, BacktestReport, backtestReports, NewBacktestReport, NewScoringRule (+18 more)
+Cohesion: 0.13
+Nodes (13): db, queryClient, LiveScreenerRepository, NewScoringRule, ScoringRule, scoringRules, NewSetting, Setting (+5 more)
 
 ### Community 18 - "Getstockbyid Module"
 Cohesion: 0.11
 Nodes (18): compilerOptions, allowImportingTsExtensions, erasableSyntaxOnly, jsx, lib, module, moduleDetection, moduleResolution (+10 more)
 
 ### Community 19 - "Community 19"
-Cohesion: 0.24
-Nodes (8): InfoPresenter(), InfoPresenterProps, useGetInfo(), infoKeys, InfoLandingPage(), fetchTechStackInfo(), triggerBackendSentryTest(), TechStackInfo
+Cohesion: 0.12
+Nodes (18): InfoPresenter(), InfoPresenterProps, RegisterForm(), api, useGetInfo(), useRegister(), infoKeys, AuthRegisterPage() (+10 more)
 
 ### Community 20 - "Erasablesyntaxonly Module"
 Cohesion: 0.18
@@ -233,8 +225,8 @@ Cohesion: 0.11
 Nodes (17): compilerOptions, allowImportingTsExtensions, erasableSyntaxOnly, lib, module, moduleDetection, moduleResolution, noEmit (+9 more)
 
 ### Community 24 - "Paths Module"
-Cohesion: 0.27
-Nodes (8): SettingsProfile(), SettingsProfileProps, ProfilePage(), ProfileInput, ProfileSchema, ProfileState, Label, LabelProps
+Cohesion: 0.15
+Nodes (12): LoginForm(), SettingsForm(), SettingsProfile(), SettingsProfileProps, StockFormDialog(), UserFormDialog(), useSyncExchanges(), BacktestPage() (+4 more)
 
 ### Community 25 - "React Module"
 Cohesion: 0.11
@@ -257,16 +249,16 @@ Cohesion: 0.12
 Nodes (15): compilerOptions, baseUrl, esModuleInterop, forceConsistentCasingInFileNames, module, moduleResolution, outDir, paths (+7 more)
 
 ### Community 30 - "Canvas Module"
-Cohesion: 0.18
-Nodes (15): FormInput, ScreenerSearchProps, Button, ButtonProps, DialogContent, DialogDescription, DialogFooter(), DialogHeader() (+7 more)
+Cohesion: 0.19
+Nodes (16): DEFAULT_DAY_RULES, DEFAULT_PROFESSIONAL_RULES, DEFAULT_SWING_RULES, SettingsFormProps, UpdateSettingsFormInput, UpdateSettingsFormSchema, DialogContent, DialogDescription (+8 more)
 
 ### Community 31 - "Getsettings Module"
 Cohesion: 0.12
 Nodes (16): devDependencies, autoprefixer, eslint, @eslint/js, eslint-plugin-react-hooks, eslint-plugin-react-refresh, globals, postcss (+8 more)
 
 ### Community 32 - "Controller Module"
-Cohesion: 0.50
-Nodes (3): LiveScreenerController, controller, router
+Cohesion: 0.18
+Nodes (10): FormInput, Field(), FieldContent(), FieldError(), FieldLegend(), FieldSet(), FieldTitle(), fieldVariants (+2 more)
 
 ### Community 33 - "Community 33"
 Cohesion: 0.21
@@ -277,56 +269,52 @@ Cohesion: 0.17
 Nodes (13): ScreenerController, controller, router, StockDataQuery, StockDataQuerySchema, StockQuoteQuery, StockQuoteQuerySchema, StockQuoteSchema (+5 more)
 
 ### Community 35 - "Community 35"
-Cohesion: 0.14
-Nodes (6): ScoringRulesRepository, UpdateSettingsInput, MASTER_EXCHANGES, SettingsService, encrypt(), SECRET_KEY
+Cohesion: 0.29
+Nodes (4): UpdateSettingsInput, MASTER_EXCHANGES, SettingsService, encrypt()
 
 ### Community 36 - "Community 36"
-Cohesion: 0.32
-Nodes (6): controller, router, CreateStockSchema, StockQuerySchema, SyncStateSchema, UpdateStockSchema
+Cohesion: 0.25
+Nodes (10): data, NavMain(), NavUser(), TeamSwitcher(), Sidebar(), SidebarContent(), SidebarFooter(), SidebarHeader() (+2 more)
 
 ### Community 37 - "Homepagefeatures Module"
 Cohesion: 0.17
 Nodes (11): 1. Architecture, 2. File & Folder Naming, 3. Suffix Wajib, 4. Code-Level Casing, 5. Design Patterns, 6. Path Alias, 7. Testing — Frontend, 8. Aturan QA (+3 more)
 
 ### Community 38 - "Community 38"
-Cohesion: 0.31
-Nodes (3): SyncState, UpdateStockInput, StocksService
+Cohesion: 0.24
+Nodes (9): Collapsible(), CollapsibleContent(), CollapsibleTrigger(), SidebarGroupLabel(), SidebarMenuAction, SidebarMenuItem(), SidebarMenuSub(), SidebarMenuSubButton (+1 more)
 
 ### Community 39 - "Community 39"
-Cohesion: 0.29
-Nodes (6): WebSocketError, WebSocketKey, WebSocketContext, WS_URL, ClientSocket, WsMessage
+Cohesion: 0.38
+Nodes (4): LiveScreenerController, controller, router, LiveStockDataQuerySchema
 
 ### Community 40 - "Controller Module"
 Cohesion: 0.18
 Nodes (7): filePath, normalizedName, SCHEMA_INDEX_PATH, SCHEMAS_DIR, tableName, typeName, variableName
 
-### Community 41 - "Community 41"
-Cohesion: 0.18
-Nodes (8): CreateStockFormInput, CreateStockFormSchema, UpdateStockFormInput, UpdateStockFormSchema, CreateUserFormInput, CreateUserFormSchema, UpdateUserFormInput, UpdateUserFormSchema
-
 ### Community 42 - "Community 42"
-Cohesion: 0.22
-Nodes (8): LoginForm(), RegisterForm(), StockFormDialog(), UserFormDialog(), parseWebSocketKey(), useWebSocket(), BacktestPage(), PlatformLayout()
+Cohesion: 0.40
+Nodes (4): CreateStockFormInput, CreateStockFormSchema, UpdateStockFormInput, UpdateStockFormSchema
 
 ### Community 43 - "Fail Module"
 Cohesion: 0.20
 Nodes (9): 1. Architecture, 2. File Naming, 3. Code-Level Casing, 4. Design Pattern, 5. Layer Boundaries & Rules, 6. Testing — Backend, Alur Request (Request Lifecycle), Backend Guidelines (+1 more)
 
 ### Community 44 - "Community 44"
-Cohesion: 0.28
+Cohesion: 0.29
 Nodes (6): GlobalErrorContainer(), beforeSend(), generateUUID(), ErrorState, StoredError, useErrorStore
 
 ### Community 45 - "Community 45"
-Cohesion: 0.20
-Nodes (17): ScoringRulesForm(), ScoringRulesFormProps, useGetScoringRules(), useUpdateScoringRules(), useUpdateSettings(), SettingsPage(), getScoringRulesApi(), getSettingsApi() (+9 more)
+Cohesion: 0.09
+Nodes (38): ScoringRulesForm(), ScoringRulesFormProps, useGetScoringRules(), useGetSettings(), useUpdateScoringRules(), useUpdateSettings(), SettingsPage(), AiAlternativeRequest (+30 more)
 
 ### Community 47 - "Login Module"
 Cohesion: 0.25
 Nodes (7): Admonitions, Code Blocks, Front Matter, Images, Links, Markdown Features, MDX and React Components
 
 ### Community 48 - "Community 48"
-Cohesion: 0.20
-Nodes (3): StocksRepository, CreateStockInput, StockQueryInput
+Cohesion: 0.11
+Nodes (10): StocksRepository, CreateStockInput, CreateStockSchema, StockQueryInput, StockQuerySchema, SyncState, SyncStateSchema, UpdateStockInput (+2 more)
 
 ### Community 49 - "Importmeta Module"
 Cohesion: 0.29
@@ -385,28 +373,20 @@ Cohesion: 0.20
 Nodes (9): LoginInput, RegisterInput, controller, router, LoginInputSchema, RegisterInputSchema, authRepository, requireAuth() (+1 more)
 
 ### Community 90 - "Community 90"
-Cohesion: 0.36
-Nodes (6): AppSidebar(), useLogin(), AuthLoginPage(), WebSocketProvider(), AuthLayout(), useAuthStore
+Cohesion: 0.13
+Nodes (17): AppSidebar(), useLogin(), AuthLoginPage(), WebSocketProvider(), AuthLayout(), PlatformLayout(), queryClient, useAuthStore (+9 more)
 
 ### Community 91 - "Community 91"
-Cohesion: 0.50
-Nodes (5): getMeApi(), loginApi(), logoutApi(), AuthState, User
+Cohesion: 0.40
+Nodes (4): CreateUserFormInput, CreateUserFormSchema, UpdateUserFormInput, UpdateUserFormSchema
 
 ### Community 92 - "Community 92"
-Cohesion: 0.12
-Nodes (20): data, NavMain(), NavProjects(), NavUser(), TeamSwitcher(), Collapsible(), CollapsibleContent(), CollapsibleTrigger() (+12 more)
+Cohesion: 0.50
+Nodes (3): BacktestReport, backtestReports, NewBacktestReport
 
 ### Community 93 - "Community 93"
-Cohesion: 0.12
-Nodes (21): Avatar(), AvatarBadge(), AvatarFallback(), AvatarGroup(), AvatarGroupCount(), AvatarImage(), Badge(), BadgeProps (+13 more)
-
-### Community 94 - "Community 94"
-Cohesion: 0.19
-Nodes (18): BacktestParams, BacktestResult, TradeLog, OptimizationGridItem, runMultiStockOptimization(), runStrategyOptimization(), STRATEGY_WEIGHT_PROFILES, WeightProfile (+10 more)
-
-### Community 95 - "Community 95"
-Cohesion: 0.43
-Nodes (5): SettingsForm(), SettingsFormProps, useSyncExchanges(), UpdateSettingsFormInput, UpdateSettingsFormSchema
+Cohesion: 0.14
+Nodes (20): Breadcrumb(), BreadcrumbEllipsis(), BreadcrumbItem(), BreadcrumbLink(), BreadcrumbList(), BreadcrumbPage(), BreadcrumbSeparator(), Calendar() (+12 more)
 
 ### Community 96 - "Community 96"
 Cohesion: 0.40
@@ -420,49 +400,33 @@ Nodes (8): authRoutes, backtestRoutes, liveScreenerRoutes, v1Router, screenerRou
 Cohesion: 0.21
 Nodes (8): requireAdmin(), SettingsController, controller, router, UpdateScoringRulesBatchInput, UpdateScoringRulesBatchSchema, UpdateScoringRuleSchema, UpdateSettingsSchema
 
-### Community 100 - "Community 100"
-Cohesion: 0.26
-Nodes (3): GeminiAdapter, BacktestService, mapRulesToConfig()
-
-### Community 101 - "Community 101"
-Cohesion: 0.60
-Nodes (3): useRegister(), AuthRegisterPage(), registerApi()
-
-### Community 104 - "Community 104"
-Cohesion: 0.47
-Nodes (7): runBacktestSimulation(), historicalSyncState, calculateATR(), calculateEMA(), calculateMACD(), calculateRSI(), calculateSMA()
-
-### Community 105 - "Community 105"
-Cohesion: 0.16
-Nodes (8): WebSocketService, LiveStockDataQuery, LiveStockDataQuerySchema, CacheEntry, SettingsClientService, SettingsClientExchageSchema, SettingsClientServiceSchema, SettingsRepository
-
 ### Community 106 - "Community 106"
-Cohesion: 0.36
-Nodes (5): validateBody(), validateQuery(), UserManagementController, controller, router
+Cohesion: 0.27
+Nodes (7): validateBody(), validateQuery(), controller, router, UserManagementController, controller, router
 
 ### Community 110 - "Community 110"
 Cohesion: 0.28
 Nodes (3): AuthController, AuthRepository, AuthService
 
 ## Knowledge Gaps
-- **490 isolated node(s):** `name`, `version`, `private`, `main`, `dev` (+485 more)
+- **493 isolated node(s):** `name`, `version`, `private`, `main`, `dev` (+488 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `AuthService` connect `Community 110` to `Community 42`?**
-  _High betweenness centrality (0.193) - this node is a cross-community bridge._
-- **Why does `cn()` connect `Community 93` to `Frontend Components & Screener UI`, `React UI Hook Utils & File Upload`, `Community 5`, `User Management Components & Hooks`, `Vibe UI Primitive Component Elements`, `Settings Module`, `Paths Module`, `Community 92`, `Canvas Module`?**
-  _High betweenness centrality (0.084) - this node is a cross-community bridge._
-- **Why does `SettingsProfile()` connect `Paths Module` to `Community 42`, `Community 93`?**
-  _High betweenness centrality (0.064) - this node is a cross-community bridge._
+- **Why does `AuthService` connect `Community 110` to `Paths Module`?**
+  _High betweenness centrality (0.187) - this node is a cross-community bridge._
+- **Why does `cn()` connect `Community 93` to `Controller Module`, `React UI Hook Utils & File Upload`, `Community 5`, `Community 36`, `Community 38`, `User Management Components & Hooks`, `Vibe UI Primitive Component Elements`, `Community 11`, `Paths Module`, `Community 90`, `Canvas Module`?**
+  _High betweenness centrality (0.066) - this node is a cross-community bridge._
+- **Why does `SettingsProfile()` connect `Paths Module` to `Community 93`, `Community 5`?**
+  _High betweenness centrality (0.056) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `private` to the rest of the system?**
-  _490 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _493 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Frontend Components & Screener UI` be split into smaller, more focused modules?**
-  _Cohesion score 0.05222286934575811 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05021929824561404 - nodes in this community are weakly interconnected._
+- **Should `Screener Providers & API Adapters` be split into smaller, more focused modules?**
+  _Cohesion score 0.05044736341138397 - nodes in this community are weakly interconnected._
 - **Should `Backend Package & Express Middleware Dependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.045454545454545456 - nodes in this community are weakly interconnected._
-- **Should `React UI Hook Utils & File Upload` be split into smaller, more focused modules?**
-  _Cohesion score 0.07897793263646923 - nodes in this community are weakly interconnected._
