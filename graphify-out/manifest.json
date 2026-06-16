@@ -85,7 +85,7 @@
     "semantic_hash": "e99cf858f17429e647e1d56163ea7e47"
   },
   "apps/backend/src/core/middlewares/csrf.middleware.ts": {
-    "mtime": 1781637184.348653,
+    "mtime": 1781637335.4183655,
     "ast_hash": "7787b3b75fe96355b769eeb7362635c6",
     "semantic_hash": ""
   },
@@ -265,14 +265,14 @@
     "semantic_hash": ""
   },
   "apps/backend/src/index.ts": {
-    "mtime": 1781549813.213155,
-    "ast_hash": "b464263dba3413b4155138e8dba406dd",
+    "mtime": 1781637937.7024348,
+    "ast_hash": "50282ab1c8eda6d31a8c0cbf2ca7e0f6",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/auth/auth.controller.ts": {
-    "mtime": 1781444429.9598498,
-    "ast_hash": "590e26dc60f923b93fb3d850738e47ef",
-    "semantic_hash": "590e26dc60f923b93fb3d850738e47ef"
+    "mtime": 1781638412.6215978,
+    "ast_hash": "e71ded6fbf80766723d0a02fb94fab6a",
+    "semantic_hash": ""
   },
   "apps/backend/src/modules/auth/auth.repository.ts": {
     "mtime": 1781444432.176617,
@@ -395,7 +395,7 @@
     "semantic_hash": "9a03febb04a43d4559a26fc4927bc92f"
   },
   "apps/backend/src/routes/v1.router.ts": {
-    "mtime": 1781637188.747111,
+    "mtime": 1781637335.4191468,
     "ast_hash": "4f76c618550e2b99781527a45c76da64",
     "semantic_hash": ""
   },
@@ -825,8 +825,8 @@
     "semantic_hash": "5a6fd53fdcf2be529e9cc0b718fde352"
   },
   "apps/frontend/src/main.tsx": {
-    "mtime": 1781637273.2248442,
-    "ast_hash": "0a84039e9cb2c9f3452b9b7ab0d1538d",
+    "mtime": 1781637335.4196389,
+    "ast_hash": "1ae0997031dd022167831372fdd87428",
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/components/app-sidebar.tsx": {
@@ -990,8 +990,8 @@
     "semantic_hash": "604a2be81284c920fdde18474bf85453"
   },
   "apps/frontend/src/shared/config/api.ts": {
-    "mtime": 1781637268.4699547,
-    "ast_hash": "fc909354b8ddf9f6b9435bf83493cf0a",
+    "mtime": 1781637335.419969,
+    "ast_hash": "9a65f59eaba07850a82c23177130bf0f",
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/errors/websocket-error.ts": {
