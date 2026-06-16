@@ -1,6 +1,6 @@
 import { HistoricalDataPoint } from "@/core/types/api-stock-provider.types";
 import { calculateEMA, calculateRSI, calculateMACD, calculateSMA, calculateATR } from "@/core/utils/indicators";
-import { calculateDayScore, calculateSwingScore, calculatePositionScore, ScoringRulesConfig } from "@/core/utils/scoring.utils";
+import { calculateDayScore, calculateSwingScore, calculatePositionScore } from "@/core/utils/scoring.utils";
 import { ScoreMetrics } from "@/core/types/scoring.types";
 import { BacktestParams, BacktestResult, TradeLog } from "./backtest.types";
 
@@ -26,15 +26,12 @@ export function runBacktestSimulation(symbol: string, candles: HistoricalDataPoi
 
   // Pre-calculate indicators
   const closePrices = candles.map((p) => p.close);
-  const openPrices = candles.map((p) => p.open);
   const highPrices = candles.map((p) => p.high);
   const lowPrices = candles.map((p) => p.low);
   const volumeVals = candles.map((p) => p.volume);
 
-  const ema9Vals = calculateEMA(closePrices, 9);
   const ema21Vals = calculateEMA(closePrices, 21);
   const ema50Vals = calculateEMA(closePrices, 50);
-  const ema200Vals = calculateEMA(closePrices, 200);
   const sma50Vals = calculateSMA(closePrices, 50);
   const sma200Vals = calculateSMA(closePrices, 200);
   const rsiVals = calculateRSI(closePrices, 14);

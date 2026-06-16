@@ -70,13 +70,10 @@ export function LiveScreenerPage() {
       const symbol = match ? match[1] : "...";
       if (toastIdRef.current) {
         const displayProgress = totalCountRef.current ? Math.min(processedCountRef.current, totalCountRef.current) : processedCountRef.current;
-        toast.loading(
-          `Processing ${displayProgress}/${totalCountRef.current || "..."} ...\nFetching history & calculating scores (${symbol})`,
-          {
-            id: toastIdRef.current,
-            position: "bottom-right",
-          }
-        );
+        toast.loading(`Processing ${displayProgress}/${totalCountRef.current || "..."} ...\nFetching history & calculating scores (${symbol})`, {
+          id: toastIdRef.current,
+          position: "bottom-right",
+        });
       }
     } else if (log.includes("[SUCCESS]") || log.includes("[FAILED]")) {
       processedCountRef.current += 1;
@@ -84,13 +81,10 @@ export function LiveScreenerPage() {
       const symbol = match ? match[1] : "...";
       if (toastIdRef.current) {
         const displayProgress = totalCountRef.current ? Math.min(processedCountRef.current, totalCountRef.current) : processedCountRef.current;
-        toast.loading(
-          `Processing ${displayProgress}/${totalCountRef.current || "..."} ...\nFetching history & calculating scores (${symbol})`,
-          {
-            id: toastIdRef.current,
-            position: "bottom-right",
-          }
-        );
+        toast.loading(`Processing ${displayProgress}/${totalCountRef.current || "..."} ...\nFetching history & calculating scores (${symbol})`, {
+          id: toastIdRef.current,
+          position: "bottom-right",
+        });
       }
     } else if (log.includes("Completed page processing")) {
       if (toastIdRef.current) {
@@ -102,8 +96,6 @@ export function LiveScreenerPage() {
       }
     }
   });
-
-
 
   useEffect(() => {
     if (settings && !selectedStrategy) {
@@ -146,7 +138,7 @@ export function LiveScreenerPage() {
     },
     {
       enabled: !!settings,
-    }
+    },
   );
 
   // Flatten items across all fetched pages
@@ -159,9 +151,8 @@ export function LiveScreenerPage() {
       return;
     }
 
-    const hasLocalMatches = rawStockDataItems.some((item: any) =>
-      item.symbol.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-      item.name.toLowerCase().includes(debouncedSearch.toLowerCase())
+    const hasLocalMatches = rawStockDataItems.some(
+      (item: any) => item.symbol.toLowerCase().includes(debouncedSearch.toLowerCase()) || item.name.toLowerCase().includes(debouncedSearch.toLowerCase()),
     );
 
     if (!hasLocalMatches) {
@@ -177,24 +168,27 @@ export function LiveScreenerPage() {
       if (item) {
         // Optimistically update frontend cache
         queryClient.setQueryData(
-          [...liveScreenerKeys.all, "data", "infinite", {
-            limit: 16,
-            search: backendSearch || undefined,
-            exchange: selectedExchange !== "ALL" ? selectedExchange : undefined,
-            strategy: activeStrategy
-          }],
+          [
+            ...liveScreenerKeys.all,
+            "data",
+            "infinite",
+            {
+              limit: 16,
+              search: backendSearch || undefined,
+              exchange: selectedExchange !== "ALL" ? selectedExchange : undefined,
+              strategy: activeStrategy,
+            },
+          ],
           (old: any) => {
             if (!old) return old;
             return {
               ...old,
               pages: old.pages.map((page: any) => ({
                 ...page,
-                items: page.items.map((stock: any) =>
-                  stock.symbol === symbol ? { ...stock, watchlist: !currentWatchlist } : stock
-                )
-              }))
+                items: page.items.map((stock: any) => (stock.symbol === symbol ? { ...stock, watchlist: !currentWatchlist } : stock)),
+              })),
             };
-          }
+          },
         );
 
         const updatedStock = await updateStockApi(stockId, {
@@ -208,24 +202,27 @@ export function LiveScreenerPage() {
         // Update the resolved stock ID if it was inserted
         if (updatedStock && typeof stockId === "string") {
           queryClient.setQueryData(
-            [...liveScreenerKeys.all, "data", "infinite", {
-              limit: 16,
-              search: backendSearch || undefined,
-              exchange: selectedExchange !== "ALL" ? selectedExchange : undefined,
-              strategy: activeStrategy
-            }],
+            [
+              ...liveScreenerKeys.all,
+              "data",
+              "infinite",
+              {
+                limit: 16,
+                search: backendSearch || undefined,
+                exchange: selectedExchange !== "ALL" ? selectedExchange : undefined,
+                strategy: activeStrategy,
+              },
+            ],
             (old: any) => {
               if (!old) return old;
               return {
                 ...old,
                 pages: old.pages.map((page: any) => ({
                   ...page,
-                  items: page.items.map((stock: any) =>
-                    stock.symbol === symbol ? { ...stock, stockId: updatedStock.id } : stock
-                  )
-                }))
+                  items: page.items.map((stock: any) => (stock.symbol === symbol ? { ...stock, stockId: updatedStock.id } : stock)),
+                })),
               };
-            }
+            },
           );
         }
 
@@ -245,8 +242,7 @@ export function LiveScreenerPage() {
     // Search filter (unless backend search is active)
     if (!backendSearch && search) {
       const query = search.toLowerCase();
-      const matchSearch = item.symbol.toLowerCase().includes(query) ||
-                          item.name.toLowerCase().includes(query);
+      const matchSearch = item.symbol.toLowerCase().includes(query) || item.name.toLowerCase().includes(query);
       if (!matchSearch) return false;
     }
 
@@ -340,8 +336,6 @@ export function LiveScreenerPage() {
           </Button>
         </div>
       </div>
-
-
 
       {/* Live Stock Data Grid */}
       <div className="space-y-4">
@@ -476,7 +470,7 @@ export function LiveScreenerPage() {
               ) : hasNextPage ? (
                 <Button
                   onClick={() => fetchNextPage()}
-                  disabled={isLoading || isRefreshing || isFetchingNextPage}
+                  disabled={isRefreshing || isFetchingNextPage}
                   variant="outline"
                   size="sm"
                   className="text-xs font-semibold px-4 py-2 border-emerald-500/35 text-emerald-400 hover:bg-emerald-500/10"

@@ -2,7 +2,6 @@ import { ScreenerProviderAdapter, HistoricalDataPoint, StockProviderSchema } fro
 import { StockSearchResult, StockQuote } from "@/modules/screener/screener.schema";
 import { yahooFinance } from "@/core/yahoo-finance";
 import { AppError } from "@/core/errors/app-error";
-import { logger } from "../logger";
 
 export class YahooFinanceAdapter implements ScreenerProviderAdapter {
   async searchStocks(query: string): Promise<StockSearchResult[]> {
@@ -34,9 +33,9 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
         open: quote.regularMarketOpen || quote.regularMarketPrice || 0,
         previousClose: quote.regularMarketPreviousClose || 0,
         lastUpdateTime: quote.regularMarketTime
-          ? (quote.regularMarketTime instanceof Date
-              ? quote.regularMarketTime.toISOString()
-              : new Date(Number(quote.regularMarketTime) * (String(quote.regularMarketTime).length <= 10 ? 1000 : 1)).toISOString())
+          ? quote.regularMarketTime instanceof Date
+            ? quote.regularMarketTime.toISOString()
+            : new Date(Number(quote.regularMarketTime) * (String(quote.regularMarketTime).length <= 10 ? 1000 : 1)).toISOString()
           : undefined,
         delayedMinutes: quote.exchangeDataDelayedBy ?? undefined,
       };
@@ -106,10 +105,10 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
       const { db } = await import("@/db/db");
       const { settings } = await import("@/db/schema");
       const dbSettings = await db.select().from(settings);
-      
+
       const keyName = `screener_rules_${strategy}`;
       const rulesSetting = dbSettings.find((s) => s.key === keyName);
-      
+
       if (rulesSetting && rulesSetting.value) {
         const rules = JSON.parse(rulesSetting.value);
         for (const rule of rules) {
@@ -133,26 +132,26 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
       } else {
         throw new Error(`Settings key ${keyName} not found or empty`);
       }
-    } catch (dbErr) {
-      console.warn("Failed to fetch custom settings for Yahoo Finance adapter, falling back to static defaults:", dbErr);
+    } catch (dbErr: any) {
+      console.warn("Failed to fetch custom settings for Yahoo Finance adapter, falling back to static defaults:", dbErr.removeNewline());
       // Fallback defaults if database queries fail
       if (strategy === "day") {
         operands.push(
           { operator: "gt", operands: ["percentchange", 0] },
           { operator: "gt", operands: ["dayvolume", 1000000] },
-          { operator: "gt", operands: ["regularmarketprice", 100] }
+          { operator: "gt", operands: ["regularmarketprice", 100] },
         );
       } else if (strategy === "swing") {
         operands.push(
           { operator: "gt", operands: ["dayvolume", 500000] },
           { operator: "gt", operands: ["intradaymarketcap", 1000000000000] },
-          { operator: "gt", operands: ["percentchange", 0] }
+          { operator: "gt", operands: ["percentchange", 0] },
         );
       } else if (strategy === "position") {
         operands.push(
           { operator: "btwn", operands: ["forwardpe", 5, 25] },
           { operator: "gt", operands: ["returnonequity", 15] },
-          { operator: "gt", operands: ["averagevolume", 2000000] }
+          { operator: "gt", operands: ["averagevolume", 2000000] },
         );
       }
     }

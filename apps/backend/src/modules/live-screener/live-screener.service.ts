@@ -45,7 +45,7 @@ export class LiveScreenerService {
   }
 
   private logAndBroadcast(message: string) {
-    console.log(message);
+    console.log(message.removeNewline());
     webSocketService.broadcast(["screener", "sync-log"], {
       message,
     });
@@ -60,7 +60,7 @@ export class LiveScreenerService {
   }
 
   async getLiveStockData(query: LiveStockDataQuery) {
-    const { search, watchlist, exchange, strategy, page, limit } = query;
+    const { search, exchange, strategy, page, limit } = query;
 
     const rules = await this.scoringRulesRepo.getAllRules();
     const rulesConfig = mapRulesToConfig(rules);
@@ -156,8 +156,8 @@ export class LiveScreenerService {
                         changePercent: sql`EXCLUDED.change_percent`,
                       },
                     });
-                } catch (dbErr) {
-                  console.error(`Failed to upsert stock_data fallback for watchlisted stock ${stock.symbol}:`, dbErr);
+                } catch (dbErr: any) {
+                  console.error(`Failed to upsert stock_data fallback for watchlisted stock ${stock.symbol}:`, dbErr.removeNewline());
                 }
               }
               return {
@@ -186,7 +186,6 @@ export class LiveScreenerService {
             points.sort((a: HistoricalDataPoint, b: HistoricalDataPoint) => a.date.getTime() - b.date.getTime());
 
             const closePrices = points.map((p: HistoricalDataPoint) => p.close);
-            const openPrices = points.map((p: HistoricalDataPoint) => p.open);
             const highPrices = points.map((p: HistoricalDataPoint) => p.high);
             const lowPrices = points.map((p: HistoricalDataPoint) => p.low);
             const volumeVals = points.map((p: HistoricalDataPoint) => p.volume);
@@ -305,8 +304,8 @@ export class LiveScreenerService {
                       scorePayload: sql`EXCLUDED.score_payload`,
                     },
                   });
-              } catch (dbErr) {
-                console.error(`Failed to upsert stock_data for watchlisted stock ${stock.symbol}:`, dbErr);
+              } catch (dbErr: any) {
+                console.error(`Failed to upsert stock_data for watchlisted stock ${stock.symbol}:`, dbErr.removeNewline());
               }
             }
 

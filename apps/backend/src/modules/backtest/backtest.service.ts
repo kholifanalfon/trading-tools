@@ -4,7 +4,7 @@ import { YahooFinanceAdapter } from "@/core/adapters/yahoo-finance.adapter";
 import { runBacktestSimulation } from "./backtest.engine";
 import { webSocketService } from "@/core/websocket";
 import { runStrategyOptimization, runMultiStockOptimization } from "./backtest.optimizer";
-import { BacktestParams, BacktestResult, OptimizationGridItem } from "./backtest.types";
+import { BacktestParams } from "./backtest.types";
 import { SettingsClientService } from "../settings/settings-client.service";
 import { mapRulesToConfig } from "@/core/utils/scoring.utils";
 import { SettingsRepository } from "../settings/settings.repository";
@@ -131,7 +131,7 @@ export class BacktestService {
   }
 
   private logAndBroadcast(message: string) {
-    console.log(message);
+    console.log(message.removeNewline());
     webSocketService.broadcast(["backtest", "optimize-log"], {
       message,
     });
@@ -349,7 +349,7 @@ Return ONLY the raw JSON block. Do not include markdown code fence wrappers or b
       // Fallback response format
       const fallbackParams: Record<string, { value: number; reason: string }> = {};
       Object.entries(afterParams).forEach(([k, v]) => {
-        fallbackParams[k] = { value: v, reason: "Berdasarkan hasil pencarian optimal grid." };
+        fallbackParams["$" + k] = { value: v, reason: "Berdasarkan hasil pencarian optimal grid." };
       });
       return {
         alternativeParams: fallbackParams,

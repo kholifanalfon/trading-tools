@@ -33,7 +33,7 @@ export class ScreenerService {
   }
 
   private logAndBroadcast(message: string) {
-    console.log(message);
+    console.log(message.removeNewline());
     webSocketService.broadcast(["screener", "sync-log"], {
       message,
     });
