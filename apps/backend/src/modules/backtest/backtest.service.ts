@@ -11,7 +11,7 @@ import { SettingsRepository } from "../settings/settings.repository";
 import { GeminiAdapter } from "@/core/adapters/gemini.adapter";
 import { decrypt } from "@/core/utils/crypto";
 import { AppError } from "@/core/errors/app-error";
-import { eq, desc } from "drizzle-orm";
+import { desc } from "drizzle-orm";
 
 export interface RunBacktestDto {
   symbol: string;
