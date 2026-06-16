@@ -8,7 +8,16 @@ const authRepository = new AuthRepository();
 
 export async function requireAuth(req: Request, res: Response, next: NextFunction) {
   try {
-    const token = req.signedCookies?.token;
+    let token = req.signedCookies?.token;
+
+    // Check Authorization header if cookie is not present
+    if (!token && req.headers.authorization) {
+      const parts = req.headers.authorization.split(" ");
+      if (parts[0] === "Bearer" && parts[1]) {
+        token = parts[1];
+      }
+    }
+
     if (typeof token !== "string" || !token.trim()) {
       throw new Error("Authentication required");
     }

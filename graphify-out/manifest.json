@@ -75,9 +75,9 @@
     "semantic_hash": "da9bf5103c54242a127b7c3a02125b79"
   },
   "apps/backend/src/core/middlewares/auth.middleware.ts": {
-    "mtime": 1781444549.1533167,
-    "ast_hash": "84e74168575a10311c91a0df934e47a0",
-    "semantic_hash": "84e74168575a10311c91a0df934e47a0"
+    "mtime": 1781638922.087059,
+    "ast_hash": "35c5dcbcf9c570336c6ff682ee690e06",
+    "semantic_hash": ""
   },
   "apps/backend/src/core/middlewares/cors.middleware.ts": {
     "mtime": 1781444550.693575,
@@ -270,8 +270,8 @@
     "semantic_hash": ""
   },
   "apps/backend/src/modules/auth/auth.controller.ts": {
-    "mtime": 1781638592.5335608,
-    "ast_hash": "e8f820c83792eda7192d56f3d9648e41",
+    "mtime": 1781638917.8864574,
+    "ast_hash": "dd1dfd356084da5d98e7af6f09f373e0",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/auth/auth.repository.ts": {
@@ -515,9 +515,9 @@
     "semantic_hash": "262c7181121b6bb1619570abdf684181"
   },
   "apps/frontend/src/features/auth/services/auth.api.ts": {
-    "mtime": 1781444644.8789105,
-    "ast_hash": "1739a1c5d880c4ef74434550074faf8e",
-    "semantic_hash": "1739a1c5d880c4ef74434550074faf8e"
+    "mtime": 1781638948.0959694,
+    "ast_hash": "85a5e2d36c197b7977c49712f81c5955",
+    "semantic_hash": ""
   },
   "apps/frontend/src/features/auth/types/auth.types.ts": {
     "mtime": 1781444648.273758,
@@ -990,8 +990,8 @@
     "semantic_hash": "604a2be81284c920fdde18474bf85453"
   },
   "apps/frontend/src/shared/config/api.ts": {
-    "mtime": 1781637335.419969,
-    "ast_hash": "9a65f59eaba07850a82c23177130bf0f",
+    "mtime": 1781638941.8358197,
+    "ast_hash": "e43fb7347fca2bb042e218a975d4316b",
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/errors/websocket-error.ts": {
@@ -1030,9 +1030,9 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/stores/auth.store.ts": {
-    "mtime": 1781444820.168352,
-    "ast_hash": "177e68e0d7eedeb7f12cbf8604056e19",
-    "semantic_hash": "177e68e0d7eedeb7f12cbf8604056e19"
+    "mtime": 1781638953.6681123,
+    "ast_hash": "cdba1ae92455579995a10700032ce564",
+    "semantic_hash": ""
   },
   "apps/frontend/src/shared/stores/error.store.ts": {
     "mtime": 1781444821.2987177,

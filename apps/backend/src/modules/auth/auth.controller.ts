@@ -28,7 +28,7 @@ export class AuthController {
         signed: true,
       });
 
-      res.status(200).json(user);
+      res.status(200).json({ user, token });
     } catch (error) {
       next(error);
     }

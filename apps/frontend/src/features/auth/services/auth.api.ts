@@ -2,8 +2,8 @@ import { api } from "@/shared/config/api";
 import { LoginInput, RegisterInput } from "../auth.schema";
 import { User } from "../types/auth.types";
 
-export async function loginApi(data: LoginInput): Promise<User> {
-  const response = await api.post<User>("/auth/login", data);
+export async function loginApi(data: LoginInput): Promise<{ user: User; token: string }> {
+  const response = await api.post<{ user: User; token: string }>("/auth/login", data);
   return response.data;
 }
 
