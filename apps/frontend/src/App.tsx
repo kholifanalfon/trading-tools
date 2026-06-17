@@ -8,6 +8,7 @@ import {
   useNavigate,
   Outlet,
   Navigate,
+  Link,
 } from "react-router-dom";
 import { useAuthStore } from "@/shared/stores/auth.store";
 import { InfoLandingPage } from "./features/info/pages/info-landing.page";
@@ -23,6 +24,7 @@ import { IngestionLogsPage } from "./features/screener/pages/ingestion-logs.page
 import { StockDetailPage } from "./features/screener/pages/stock-detail.page";
 import { BacktestPage } from "./features/backtest/pages/backtest.page";
 import { ThemeProvider } from "./shared/components/theme-provider";
+import { HomeIcon, TrendingUpIcon, ActivityIcon, CpuIcon, SettingsIcon } from "lucide-react";
 
 
 import { ThemeToggle } from "./shared/components/ui/theme-toggle";
@@ -189,6 +191,14 @@ function PlatformLayout() {
 
 
 
+  const mobileNavItems = [
+    { label: "Home", path: "/", icon: <HomeIcon className="h-5 w-5" /> },
+    { label: "Screener", path: "/screener", icon: <TrendingUpIcon className="h-5 w-5" /> },
+    { label: "Live", path: "/live-screener", icon: <ActivityIcon className="h-5 w-5" /> },
+    { label: "Backtest", path: "/backtest", icon: <CpuIcon className="h-5 w-5" /> },
+    { label: "Settings", path: "/settings", icon: <SettingsIcon className="h-5 w-5" /> },
+  ];
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -232,9 +242,28 @@ function PlatformLayout() {
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 bg-background p-6 overflow-y-auto custom-scrollbar">
+        <main className="flex-1 bg-background p-6 pb-20 md:pb-6 overflow-y-auto custom-scrollbar">
           <Outlet />
         </main>
+
+        {/* Mobile Bottom Navigation Tabs */}
+        <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-card/90 backdrop-blur-lg border-t border-border/60 py-2 px-2 flex items-center justify-around shadow-lg pb-safe">
+          {mobileNavItems.map((item) => {
+            const isActive = location.pathname === item.path;
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`flex flex-col items-center gap-1 py-1 px-3 rounded-lg transition-all ${
+                  isActive ? "text-indigo-400 font-bold scale-105" : "text-muted-foreground hover:text-foreground hover:scale-105"
+                }`}
+              >
+                {item.icon}
+                <span className="text-[9px] tracking-wide font-medium">{item.label}</span>
+              </Link>
+            );
+          })}
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );

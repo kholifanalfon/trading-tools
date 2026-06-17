@@ -42,7 +42,13 @@ export function ScoringRulesForm({ rules, onSubmit, isLoading, error }: ScoringR
   const [activeTab, setActiveTab] = useState<"day" | "swing" | "position">("day");
   const [savedSuccess, setSavedSuccess] = useState(false);
 
-  const { control, register, handleSubmit, reset, formState: { isDirty } } = useForm<FormInput>({
+  const {
+    control,
+    register,
+    handleSubmit,
+    reset,
+    formState: { isDirty },
+  } = useForm<FormInput>({
     defaultValues: {
       rules: [],
     },
@@ -85,23 +91,19 @@ export function ScoringRulesForm({ rules, onSubmit, isLoading, error }: ScoringR
     return "1";
   };
 
-  const filteredFieldsWithIndex = fields
-    .map((field, index) => ({ field, index }))
-    .filter(({ field }) => field.strategy === activeTab);
+  const filteredFieldsWithIndex = fields.map((field, index) => ({ field, index })).filter(({ field }) => field.strategy === activeTab);
 
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-6 max-w-5xl mx-auto">
       <ErrorDisplay error={error} />
 
       {/* Strategy Selector Tabs */}
-      <div className="flex border-b border-border/80">
+      <div className="flex overflow-x-auto w-full sm:w-auto bg-background/50 border border-border/60 p-1 rounded-lg scrollbar-thin custom-scrollbar whitespace-nowrap">
         <button
           type="button"
           onClick={() => setActiveTab("day")}
-          className={`px-5 py-3 text-xs font-semibold border-b-2 transition -mb-px flex items-center gap-2 ${
-            activeTab === "day"
-              ? "border-indigo-500 text-indigo-400 font-bold"
-              : "border-transparent text-muted-foreground hover:text-foreground"
+          className={`px-5 py-3 text-xs font-semibold border-b-2 transition -mb-px flex items-center gap-2 whitespace-nowrap flex-shrink-0 ${
+            activeTab === "day" ? "border-indigo-500 text-indigo-400 font-bold" : "border-transparent text-muted-foreground hover:text-foreground"
           }`}
         >
           <SlidersIcon className="h-3.5 w-3.5" />
@@ -110,10 +112,8 @@ export function ScoringRulesForm({ rules, onSubmit, isLoading, error }: ScoringR
         <button
           type="button"
           onClick={() => setActiveTab("swing")}
-          className={`px-5 py-3 text-xs font-semibold border-b-2 transition -mb-px flex items-center gap-2 ${
-            activeTab === "swing"
-              ? "border-indigo-500 text-indigo-400 font-bold"
-              : "border-transparent text-muted-foreground hover:text-foreground"
+          className={`px-5 py-3 text-xs font-semibold border-b-2 transition -mb-px flex items-center gap-2 whitespace-nowrap flex-shrink-0 ${
+            activeTab === "swing" ? "border-indigo-500 text-indigo-400 font-bold" : "border-transparent text-muted-foreground hover:text-foreground"
           }`}
         >
           <SlidersIcon className="h-3.5 w-3.5" />
@@ -122,10 +122,8 @@ export function ScoringRulesForm({ rules, onSubmit, isLoading, error }: ScoringR
         <button
           type="button"
           onClick={() => setActiveTab("position")}
-          className={`px-5 py-3 text-xs font-semibold border-b-2 transition -mb-px flex items-center gap-2 ${
-            activeTab === "position"
-              ? "border-indigo-500 text-indigo-400 font-bold"
-              : "border-transparent text-muted-foreground hover:text-foreground"
+          className={`px-5 py-3 text-xs font-semibold border-b-2 transition -mb-px flex items-center gap-2 whitespace-nowrap flex-shrink-0 ${
+            activeTab === "position" ? "border-indigo-500 text-indigo-400 font-bold" : "border-transparent text-muted-foreground hover:text-foreground"
           }`}
         >
           <SlidersIcon className="h-3.5 w-3.5" />
@@ -140,19 +138,15 @@ export function ScoringRulesForm({ rules, onSubmit, isLoading, error }: ScoringR
           <p className="text-[11px] text-muted-foreground">Adjust indicator trigger boundaries and point weighting allocations.</p>
         </div>
 
-        <div className="grid grid-cols-1 gap-5">
+        <div className="divide-y divide-border/40">
           {filteredFieldsWithIndex.map(({ field, index }) => (
             <div
               key={field.id}
-              className="flex flex-col md:flex-row md:items-center justify-between p-4 rounded-lg border border-border/60 bg-background/30 hover:bg-muted/10 transition gap-4"
+              className="flex flex-col md:flex-row md:items-center justify-between py-4 hover:bg-muted/5 transition gap-4"
             >
               <div className="space-y-1 max-w-md">
-                <span className="text-xs font-bold text-foreground">
-                  {formatParamName(field.parameterName)}
-                </span>
-                <p className="text-[10px] text-muted-foreground">
-                  Define threshold setting and score reward allocation for {field.parameterName}.
-                </p>
+                <span className="text-xs font-bold text-foreground">{formatParamName(field.parameterName)}</span>
+                <p className="text-[10px] text-muted-foreground">Define threshold setting and score reward allocation for {field.parameterName}.</p>
               </div>
 
               <div className="flex items-center gap-4">
@@ -188,13 +182,7 @@ export function ScoringRulesForm({ rules, onSubmit, isLoading, error }: ScoringR
 
       {/* Form Action Footer */}
       <div className="flex items-center justify-between p-4 bg-card/40 backdrop-blur rounded-xl border border-border/80">
-        <div>
-          {savedSuccess && !isDirty && (
-            <span className="text-xs text-emerald-400 font-semibold animate-fade-in">
-              Scoring rules saved successfully!
-            </span>
-          )}
-        </div>
+        <div>{savedSuccess && !isDirty && <span className="text-xs text-emerald-400 font-semibold animate-fade-in">Scoring rules saved successfully!</span>}</div>
         <Button
           type="submit"
           disabled={isLoading || (!isDirty && rules !== undefined)}

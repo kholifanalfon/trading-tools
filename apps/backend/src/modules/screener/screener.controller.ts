@@ -110,4 +110,30 @@ export class ScreenerController {
       next(error);
     }
   };
+
+  getAiAnalysis = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const symbol = req.params.symbol as string;
+      const result = await this.service.getAiAnalysis(symbol);
+      res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  refreshAiAnalysis = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const symbol = req.params.symbol as string;
+      const result = await this.service.refreshAiAnalysis(symbol);
+      res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }

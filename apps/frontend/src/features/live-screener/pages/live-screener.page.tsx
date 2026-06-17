@@ -329,7 +329,7 @@ export function LiveScreenerPage() {
             onClick={handleRefresh}
             disabled={isRefreshing || isLoading}
             size="sm"
-            className="h-8 text-xs px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition flex items-center gap-1.5"
+            className="w-full md:w-auto h-8 text-xs px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition flex items-center gap-1.5"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
             {isRefreshing ? "Refreshing..." : "Refresh Live Data"}

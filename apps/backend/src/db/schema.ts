@@ -12,4 +12,7 @@ export * from "./schemas/scoring-rules.schema";
 
 export * from "./schemas/backtest-reports.schema";
 
+export * from "./schemas/ai-analyses.schema";
+
+
 

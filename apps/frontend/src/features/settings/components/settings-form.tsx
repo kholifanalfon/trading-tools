@@ -22,19 +22,19 @@ export interface SettingsFormProps {
 const DEFAULT_DAY_RULES = [
   { field: "percentchange", operator: "gt", value: 0 },
   { field: "dayvolume", operator: "gt", value: 1000000 },
-  { field: "regularmarketprice", operator: "gt", value: 100 }
+  { field: "regularmarketprice", operator: "gt", value: 100 },
 ];
 
 const DEFAULT_SWING_RULES = [
   { field: "dayvolume", operator: "gt", value: 500000 },
   { field: "intradaymarketcap", operator: "gt", value: 1000000000000 },
-  { field: "percentchange", operator: "gt", value: 0 }
+  { field: "percentchange", operator: "gt", value: 0 },
 ];
 
 const DEFAULT_POSITION_RULES = [
   { field: "forwardpe", operator: "btwn", value: 5, valueMax: 25 },
   { field: "returnonequity", operator: "gt", value: 15 },
-  { field: "averagevolume", operator: "gt", value: 2000000 }
+  { field: "averagevolume", operator: "gt", value: 2000000 },
 ];
 
 export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsFormProps) {
@@ -54,44 +54,45 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
     formState: { errors, isDirty },
   } = useForm<UpdateSettingsFormInput>({
     resolver: zodResolver(UpdateSettingsFormSchema),
-      defaultValues: {
-        gemini_api_key: "",
-        gemini_model: "gemini-1.5-flash",
-        finnhub_api_key: "",
-        stock_screener_provider: "yahoo_finance",
-        exchanges_config: "",
-        default_strategy: "day",
-        screener_rules_day: JSON.stringify(DEFAULT_DAY_RULES),
-        screener_rules_swing: JSON.stringify(DEFAULT_SWING_RULES),
-        screener_rules_position: JSON.stringify(DEFAULT_POSITION_RULES),
-      },
-    });
-  
-    const selectedProvider = watch("stock_screener_provider");
-  
-    useEffect(() => {
-      if (settings) {
-        reset({
-          gemini_api_key: settings.gemini_api_key || "",
-          gemini_model: settings.gemini_model || "gemini-1.5-flash",
-          finnhub_api_key: settings.finnhub_api_key || "",
-          stock_screener_provider: settings.stock_screener_provider || "yahoo_finance",
-          exchanges_config: settings.exchanges_config || "",
-          default_strategy: settings.default_strategy || "day",
-          screener_rules_day: settings.screener_rules_day && settings.screener_rules_day !== "[]" ? settings.screener_rules_day : JSON.stringify(DEFAULT_DAY_RULES),
-          screener_rules_swing: settings.screener_rules_swing && settings.screener_rules_swing !== "[]" ? settings.screener_rules_swing : JSON.stringify(DEFAULT_SWING_RULES),
-          screener_rules_position: settings.screener_rules_position && settings.screener_rules_position !== "[]" ? settings.screener_rules_position : JSON.stringify(DEFAULT_POSITION_RULES),
-        });
-  
-        if (settings.exchanges_config) {
-          try {
-            setExchanges(JSON.parse(settings.exchanges_config));
-          } catch (err) {
-            console.error("Failed to parse exchanges_config:", err);
-          }
+    defaultValues: {
+      gemini_api_key: "",
+      gemini_model: "gemini-1.5-flash",
+      finnhub_api_key: "",
+      stock_screener_provider: "yahoo_finance",
+      exchanges_config: "",
+      default_strategy: "day",
+      screener_rules_day: JSON.stringify(DEFAULT_DAY_RULES),
+      screener_rules_swing: JSON.stringify(DEFAULT_SWING_RULES),
+      screener_rules_position: JSON.stringify(DEFAULT_POSITION_RULES),
+    },
+  });
+
+  const selectedProvider = watch("stock_screener_provider");
+
+  useEffect(() => {
+    if (settings) {
+      reset({
+        gemini_api_key: settings.gemini_api_key || "",
+        gemini_model: settings.gemini_model || "gemini-1.5-flash",
+        finnhub_api_key: settings.finnhub_api_key || "",
+        stock_screener_provider: settings.stock_screener_provider || "yahoo_finance",
+        exchanges_config: settings.exchanges_config || "",
+        default_strategy: settings.default_strategy || "day",
+        screener_rules_day: settings.screener_rules_day && settings.screener_rules_day !== "[]" ? settings.screener_rules_day : JSON.stringify(DEFAULT_DAY_RULES),
+        screener_rules_swing: settings.screener_rules_swing && settings.screener_rules_swing !== "[]" ? settings.screener_rules_swing : JSON.stringify(DEFAULT_SWING_RULES),
+        screener_rules_position:
+          settings.screener_rules_position && settings.screener_rules_position !== "[]" ? settings.screener_rules_position : JSON.stringify(DEFAULT_POSITION_RULES),
+      });
+
+      if (settings.exchanges_config) {
+        try {
+          setExchanges(JSON.parse(settings.exchanges_config));
+        } catch (err) {
+          console.error("Failed to parse exchanges_config:", err);
         }
       }
-    }, [settings, reset]);
+    }
+  }, [settings, reset]);
 
   // Active Strategy Tab state
   const [activeStrategyTab, setActiveStrategyTab] = useState<"day" | "swing" | "position">("day");
@@ -208,7 +209,7 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
     { value: "twohundreddaymovingaverage", label: "200-Day Moving Average" },
     { value: "fiftydaymovingaverage", label: "50-Day Moving Average" },
     { value: "fiftytwoweekhigh", label: "52-Week High" },
-    { value: "fiftytwoweeklow", label: "52-Week Low" }
+    { value: "fiftytwoweeklow", label: "52-Week Low" },
   ];
 
   const OPERAND_GROUPS = [
@@ -221,15 +222,15 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
         { value: "fiftytwoweekhigh", label: "52-Week High" },
         { value: "fiftytwoweeklow", label: "52-Week Low" },
         { value: "fiftydaymovingaverage", label: "50-Day Moving Average" },
-        { value: "twohundreddaymovingaverage", label: "200-Day Moving Average" }
-      ]
+        { value: "twohundreddaymovingaverage", label: "200-Day Moving Average" },
+      ],
     },
     {
       label: "Volume & Liquidity (Volume & Likuiditas)",
       fields: [
         { value: "dayvolume", label: "Daily Volume (shares)" },
-        { value: "averagevolume", label: "Average Volume" }
-      ]
+        { value: "averagevolume", label: "Average Volume" },
+      ],
     },
     {
       label: "Valuation (Valuasi)",
@@ -237,8 +238,8 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
         { value: "forwardpe", label: "Forward P/E" },
         { value: "trailingpe", label: "Trailing P/E" },
         { value: "pricetobook", label: "Price to Book (P/B)" },
-        { value: "pegratio", label: "PEG Ratio" }
-      ]
+        { value: "pegratio", label: "PEG Ratio" },
+      ],
     },
     {
       label: "Financial Performance (Kinerja Keuangan)",
@@ -246,16 +247,16 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
         { value: "returnonequity", label: "Return on Equity (ROE %)" },
         { value: "operatingmargins", label: "Operating Margin (%)" },
         { value: "epsforward", label: "Forward EPS" },
-        { value: "dividendyield", label: "Dividend Yield (%)" }
-      ]
-    }
+        { value: "dividendyield", label: "Dividend Yield (%)" },
+      ],
+    },
   ];
 
   const AVAILABLE_OPERATORS = [
     { value: "gt", label: "Greater Than" },
     { value: "lt", label: "Less Than" },
     { value: "eq", label: "Equal To" },
-    { value: "btwn", label: "Between (Range)" }
+    { value: "btwn", label: "Between (Range)" },
   ];
 
   const handleExchangeToggle = (id: string) => {
@@ -276,7 +277,7 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
 
   const renderStrategyRules = (strategy: "day" | "swing" | "position", title: string, rules: any[]) => {
     return (
-      <div className="space-y-4 p-4 rounded-xl border border-border/60 bg-background/25 flex flex-col justify-between">
+      <div className="flex flex-col justify-between">
         <div className="space-y-4">
           <div className="flex items-center justify-between border-b border-border/40 pb-2">
             <h3 className="text-sm font-bold text-indigo-400">{title}</h3>
@@ -592,9 +593,9 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
                     {isSyncing ? "Syncing..." : "Sync List"}
                   </Button>
                 </div>
-                <div className="max-h-64 overflow-y-auto pr-1 space-y-3 custom-scrollbar">
+                <div className="max-h-64 overflow-y-auto pr-1 divide-y divide-border/40 custom-scrollbar">
                   {exchanges.map((ex) => (
-                    <div key={ex.id} className="flex items-center justify-between p-3 rounded-lg border border-border/60 bg-background/30 hover:bg-muted/10 transition">
+                    <div key={ex.id} className="flex items-center justify-between py-3 hover:bg-muted/5 transition px-1">
                       <div className="flex items-center gap-3">
                         <input
                           id={`checkbox-${ex.id}`}
@@ -634,7 +635,7 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
       </div>
 
       {/* Card Group 2: Screener Parameter Settings */}
-      <div className="bg-card/45 backdrop-blur-md rounded-xl border border-border/80 p-6 shadow-md space-y-6">
+      <div className="bg-card/45 backdrop-blur-md rounded-xl border border-border/80 p-6 shadow-md flex flex-col space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-border/50 pb-4">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/25">
@@ -647,14 +648,12 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
           </div>
 
           {/* Strategy Tabs Switcher */}
-          <div className="flex bg-background/50 border border-border/60 p-1 rounded-lg self-stretch sm:self-auto">
+          <div className="flex overflow-x-auto w-full sm:w-auto bg-background/50 border border-border/60 p-1 rounded-lg scrollbar-thin custom-scrollbar whitespace-nowrap">
             <button
               type="button"
               onClick={() => setActiveStrategyTab("day")}
-              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition ${
-                activeStrategyTab === "day"
-                  ? "bg-indigo-600 text-white shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
+              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition whitespace-nowrap flex-shrink-0 ${
+                activeStrategyTab === "day" ? "bg-indigo-600 text-white shadow-sm" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Day Strategy
@@ -662,10 +661,8 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
             <button
               type="button"
               onClick={() => setActiveStrategyTab("swing")}
-              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition ${
-                activeStrategyTab === "swing"
-                  ? "bg-indigo-600 text-white shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
+              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition whitespace-nowrap flex-shrink-0 ${
+                activeStrategyTab === "swing" ? "bg-indigo-600 text-white shadow-sm" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Swing Strategy
@@ -673,10 +670,8 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
             <button
               type="button"
               onClick={() => setActiveStrategyTab("position")}
-              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition ${
-                activeStrategyTab === "position"
-                  ? "bg-indigo-600 text-white shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
+              className={`px-3 py-1.5 rounded-md text-xs font-semibold transition whitespace-nowrap flex-shrink-0 ${
+                activeStrategyTab === "position" ? "bg-indigo-600 text-white shadow-sm" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Position Strategy
@@ -706,19 +701,19 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
 
       {/* AI Recommendation Modal */}
       <Dialog open={isRecommendationOpen} onOpenChange={setIsRecommendationOpen}>
-        <DialogContent className="max-w-2xl bg-card border border-border/80 backdrop-blur-lg">
+        <DialogContent className="w-[92vw] max-w-2xl md:max-w-4xl p-4 sm:p-6 bg-card border border-border/80 backdrop-blur-lg overflow-x-hidden">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-indigo-400">
               <SparklesIcon className="h-5 w-5 animate-pulse" />
               Rekomendasi AI Filter Screener
             </DialogTitle>
             <DialogDescription>
-              Gemini merekomendasikan parameter filter pre-screen untuk strategi{" "}
-              <strong className="text-foreground uppercase">{activeStrategyTab}</strong> berdasarkan kondisi pasar saat ini.
+              Gemini merekomendasikan parameter filter pre-screen untuk strategi <strong className="text-foreground uppercase">{activeStrategyTab}</strong> berdasarkan kondisi
+              pasar saat ini.
             </DialogDescription>
           </DialogHeader>
 
-          <div className="py-4">
+          <div className="py-4 min-w-0 w-full">
             {isGeneratingRecommendations ? (
               <div className="p-8 rounded-lg bg-indigo-500/5 border border-indigo-500/10 space-y-3 animate-pulse flex flex-col justify-center items-center h-48">
                 <SparklesIcon className="h-6 w-6 text-indigo-400 animate-bounce" />
@@ -726,13 +721,11 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
                 <div className="h-3 w-1/2 bg-indigo-500/10 rounded"></div>
               </div>
             ) : recommendationError ? (
-              <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-xs text-center">
-                {recommendationError}
-              </div>
+              <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-xs text-center">{recommendationError}</div>
             ) : (
-              <div className="space-y-4">
-                <div className="overflow-hidden rounded-lg border border-border/60 bg-background/30 animate-fade-in">
-                  <table className="w-full border-collapse text-left text-xs">
+              <div className="space-y-4 min-w-0 w-full">
+                <div className="rounded-lg border border-border/60 overflow-x-auto w-full bg-background/30 animate-fade-in">
+                  <table className="w-full min-w-[600px] border-collapse text-left text-xs">
                     <thead>
                       <tr className="border-b border-border/60 bg-muted/40 text-muted-foreground font-semibold">
                         <th className="p-3">Operand</th>
@@ -759,21 +752,15 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
                   </table>
                 </div>
 
-                <div className="flex justify-end gap-3 pt-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setIsRecommendationOpen(false)}
-                    className="h-9 px-4 text-xs font-semibold"
-                  >
+                <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-2 pt-3 border-t border-border/50">
+                  <Button type="button" variant="outline" size="sm" onClick={() => setIsRecommendationOpen(false)} className="h-9 px-4 text-xs font-semibold w-full sm:w-auto">
                     Batal
                   </Button>
                   <Button
                     type="button"
                     size="sm"
                     onClick={handleApplyRecommendations}
-                    className="h-9 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold flex items-center gap-1.5"
+                    className="h-9 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold flex items-center justify-center gap-1.5 w-full sm:w-auto"
                   >
                     <SparklesIcon className="h-3.5 w-3.5" />
                     Terapkan Rekomendasi
