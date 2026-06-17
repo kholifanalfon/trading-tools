@@ -444,14 +444,14 @@ export function StockChartCanvas({ historicalData, isLoading, timeframe, showEma
     chart.subscribeCrosshairMove(handleCrosshairMove);
 
     if (timeframe === "1D" && chartData.length > 0) {
-      const barsToShow = dims.isMobile ? 5 : 7;
+      const barsToShow = dims.isMobile ? 15 : 20;
       const fromIndex = Math.max(0, chartData.length - barsToShow);
       chart.timeScale().setVisibleRange({
         from: chartData[fromIndex].time,
         to: chartData[chartData.length - 1].time,
       });
     } else if (timeframe === "5D" && chartData.length > 0) {
-      const barsToShow = dims.isMobile ? 15 : 35;
+      const barsToShow = dims.isMobile ? 15 : 20;
       const fromIndex = Math.max(0, chartData.length - barsToShow);
       chart.timeScale().setVisibleRange({
         from: chartData[fromIndex].time,
@@ -459,7 +459,7 @@ export function StockChartCanvas({ historicalData, isLoading, timeframe, showEma
       });
     } else {
       if (dims.isMobile && chartData.length > 3) {
-        const fromIndex = Math.max(0, chartData.length - 4);
+        const fromIndex = Math.max(0, chartData.length - 15);
         chart.timeScale().setVisibleRange({
           from: chartData[fromIndex].time,
           to: chartData[chartData.length - 1].time,

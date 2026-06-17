@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "node:path";
+import { VitePWA } from "vite-plugin-pwa";
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -11,7 +12,36 @@ export default defineConfig(({ mode }) => {
   const baseUrl = env.FE_BASE_URL || "/";
 
   return {
-    plugins: [react()],
+    plugins: [
+      react(),
+      VitePWA({
+        registerType: "autoUpdate",
+        injectRegister: "auto",
+        includeAssets: ["favicon.svg"],
+        manifest: {
+          name: "Trading Platform",
+          short_name: "Trading",
+          description: "Trading Screener and Backtesting Platform",
+          theme_color: "#0a0a0c",
+          background_color: "#0a0a0c",
+          display: "standalone",
+          start_url: baseUrl,
+          scope: baseUrl,
+          icons: [
+            {
+              src: "favicon.svg",
+              sizes: "192x192 512x512",
+              type: "image/svg+xml",
+              purpose: "any maskable"
+            }
+          ]
+        },
+        workbox: {
+          globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+          cleanupOutdatedCaches: true
+        }
+      })
+    ],
     base: baseUrl,
     envDir: resolve(__dirname, "../../"),
     envPrefix: ["VITE_", "FE_"], // Allows accessing FE_ variables inside React app

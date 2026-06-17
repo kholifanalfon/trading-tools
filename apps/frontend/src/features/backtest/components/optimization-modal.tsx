@@ -47,7 +47,7 @@ export function OptimizationModal({
 }: OptimizationModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl bg-card border border-border/80 backdrop-blur-lg max-h-[85vh] overflow-y-auto custom-scrollbar">
+      <DialogContent className="w-[92vw] max-w-2xl md:max-w-4xl p-4 sm:p-6 bg-card border border-border/80 backdrop-blur-lg overflow-x-hidden">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-indigo-400">
             <SparklesIcon className="h-5 w-5 animate-pulse" />
@@ -56,19 +56,17 @@ export function OptimizationModal({
           <DialogDescription>
             {isGlobal ? (
               <span>
-                Apply setup optimal ke Database untuk strategi{" "}
-                <strong className="text-foreground uppercase">{strategy}</strong> secara global (Multi-Stock).
+                Apply setup optimal ke Database untuk strategi <strong className="text-foreground uppercase">{strategy}</strong> secara global (Multi-Stock).
               </span>
             ) : (
               <span>
-                Apply setup optimal ke form input untuk strategi{" "}
-                <strong className="text-foreground uppercase">{strategy}</strong> lokal.
+                Apply setup optimal ke form input untuk strategi <strong className="text-foreground uppercase">{strategy}</strong> lokal.
               </span>
             )}
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4 py-3">
+        <div className="space-y-4 py-3 min-w-0 w-full">
           {/* TAB HEADER */}
           <div className="flex bg-muted/40 border border-border/60 p-1 rounded-lg">
             <button
@@ -92,15 +90,15 @@ export function OptimizationModal({
 
           {/* TAB CONTENT: DATA VERSION */}
           {activeTab === "data" && (
-            <div className="space-y-4">
+            <div className="space-y-4 min-w-0 w-full">
               {/* Performance Comparison Table */}
               <div className="space-y-2">
                 <h4 className="text-xs font-bold text-foreground flex items-center gap-1.5">
                   <TrendingUpIcon className="h-3.5 w-3.5 text-indigo-400" />
                   Expected Performance Summary
                 </h4>
-                <div className="rounded-lg border border-border/60 overflow-hidden bg-background/30">
-                  <table className="w-full text-left text-[11px] border-collapse">
+                <div className="rounded-lg border border-border/60 overflow-x-auto w-full bg-background/30">
+                  <table className="w-full min-w-[500px] text-left text-[11px] border-collapse">
                     <thead>
                       <tr className="bg-muted/40 border-b border-border/50 text-[10px] text-muted-foreground uppercase font-bold">
                         <th className="px-3 py-2">Metric</th>
@@ -125,7 +123,9 @@ export function OptimizationModal({
                               {metrics.totalReturnPercent - optimizationBaseline.totalReturnPercent >= 0 ? "▲ +" : "▼ "}
                               {(metrics.totalReturnPercent - optimizationBaseline.totalReturnPercent).toFixed(1)}%
                             </span>
-                          ) : "N/A"}
+                          ) : (
+                            "N/A"
+                          )}
                         </td>
                       </tr>
                       {/* Win Rate */}
@@ -134,16 +134,18 @@ export function OptimizationModal({
                         <td className="px-3 py-2 text-right font-mono text-muted-foreground">
                           {optimizationBaseline ? `${optimizationBaseline.winRatePercent.toFixed(1)}%` : "N/A"}
                         </td>
-                        <td className="px-3 py-2 text-right font-mono font-bold text-foreground">
-                          {metrics ? `${metrics.winRatePercent.toFixed(1)}%` : "N/A"}
-                        </td>
-                        <td className={`px-3 py-2 text-right font-mono font-bold ${optimizationBaseline && metrics && metrics.winRatePercent - optimizationBaseline.winRatePercent >= 0 ? "text-emerald-400" : "text-destructive"}`}>
+                        <td className="px-3 py-2 text-right font-mono font-bold text-foreground">{metrics ? `${metrics.winRatePercent.toFixed(1)}%` : "N/A"}</td>
+                        <td
+                          className={`px-3 py-2 text-right font-mono font-bold ${optimizationBaseline && metrics && metrics.winRatePercent - optimizationBaseline.winRatePercent >= 0 ? "text-emerald-400" : "text-destructive"}`}
+                        >
                           {optimizationBaseline && metrics ? (
                             <span>
                               {metrics.winRatePercent - optimizationBaseline.winRatePercent >= 0 ? "▲ +" : "▼ "}
                               {(metrics.winRatePercent - optimizationBaseline.winRatePercent).toFixed(1)}%
                             </span>
-                          ) : "N/A"}
+                          ) : (
+                            "N/A"
+                          )}
                         </td>
                       </tr>
                       {/* Max Drawdown */}
@@ -152,16 +154,18 @@ export function OptimizationModal({
                         <td className="px-3 py-2 text-right font-mono text-destructive">
                           {optimizationBaseline ? `-${optimizationBaseline.maxDrawdownPercent.toFixed(1)}%` : "N/A"}
                         </td>
-                        <td className="px-3 py-2 text-right font-mono font-bold text-destructive">
-                          {metrics ? `-${metrics.maxDrawdownPercent.toFixed(1)}%` : "N/A"}
-                        </td>
-                        <td className={`px-3 py-2 text-right font-mono font-bold ${optimizationBaseline && metrics && metrics.maxDrawdownPercent - optimizationBaseline.maxDrawdownPercent <= 0 ? "text-emerald-400" : "text-destructive"}`}>
+                        <td className="px-3 py-2 text-right font-mono font-bold text-destructive">{metrics ? `-${metrics.maxDrawdownPercent.toFixed(1)}%` : "N/A"}</td>
+                        <td
+                          className={`px-3 py-2 text-right font-mono font-bold ${optimizationBaseline && metrics && metrics.maxDrawdownPercent - optimizationBaseline.maxDrawdownPercent <= 0 ? "text-emerald-400" : "text-destructive"}`}
+                        >
                           {optimizationBaseline && metrics ? (
                             <span>
                               {metrics.maxDrawdownPercent - optimizationBaseline.maxDrawdownPercent <= 0 ? "▲ -" : "▼ +"}
                               {Math.abs(metrics.maxDrawdownPercent - optimizationBaseline.maxDrawdownPercent).toFixed(1)}%
                             </span>
-                          ) : "N/A"}
+                          ) : (
+                            "N/A"
+                          )}
                         </td>
                       </tr>
                     </tbody>
@@ -175,8 +179,8 @@ export function OptimizationModal({
                   <SlidersHorizontalIcon className="h-3.5 w-3.5 text-indigo-400" />
                   Parameter Threshold Adjustments
                 </h4>
-                <div className="rounded-lg border border-border/60 overflow-hidden bg-background/30">
-                  <table className="w-full text-left text-[11px] border-collapse">
+                <div className="rounded-lg border border-border/60 overflow-x-auto w-full bg-background/30">
+                  <table className="w-full min-w-[600px] text-left text-[11px] border-collapse">
                     <thead>
                       <tr className="bg-muted/40 border-b border-border/50 text-[10px] text-muted-foreground uppercase font-bold">
                         <th className="px-3 py-2">Parameter</th>
@@ -194,14 +198,10 @@ export function OptimizationModal({
 
                           return (
                             <tr key={k} className={`hover:bg-muted/10 transition-colors ${hasChanged ? "bg-indigo-500/5" : ""}`}>
-                              <td className="px-3 py-2 font-medium capitalize text-muted-foreground">
-                                {k.replace(/([A-Z])/g, " $1").toLowerCase()}
-                              </td>
+                              <td className="px-3 py-2 font-medium capitalize text-muted-foreground">{k.replace(/([A-Z])/g, " $1").toLowerCase()}</td>
                               <td className="px-3 py-2 text-right font-mono text-muted-foreground">{beforeVal}</td>
                               <td className={`px-3 py-2 text-right font-mono font-bold ${hasChanged ? "text-emerald-400" : "text-muted-foreground"}`}>{v}</td>
-                              <td className="px-3 py-2 text-[10px] text-muted-foreground leading-snug">
-                                {getParameterChangeDesc(k, beforeVal as number, v)}
-                              </td>
+                              <td className="px-3 py-2 text-[10px] text-muted-foreground leading-snug">{getParameterChangeDesc(k, beforeVal as number, v)}</td>
                             </tr>
                           );
                         })}
@@ -216,8 +216,8 @@ export function OptimizationModal({
                   <SlidersHorizontalIcon className="h-3.5 w-3.5 text-indigo-400" />
                   Indicator Weights Adjustments
                 </h4>
-                <div className="rounded-lg border border-border/60 overflow-hidden bg-background/30">
-                  <table className="w-full text-left text-[11px] border-collapse">
+                <div className="rounded-lg border border-border/60 overflow-x-auto w-full bg-background/30">
+                  <table className="w-full min-w-[600px] text-left text-[11px] border-collapse">
                     <thead>
                       <tr className="bg-muted/40 border-b border-border/50 text-[10px] text-muted-foreground uppercase font-bold">
                         <th className="px-3 py-2">Indicator Rule</th>
@@ -236,14 +236,10 @@ export function OptimizationModal({
 
                           return (
                             <tr key={k} className={`hover:bg-muted/10 transition-colors ${hasChanged ? "bg-indigo-500/5" : ""}`}>
-                              <td className="px-3 py-2 font-medium capitalize text-muted-foreground">
-                                {paramName.replace(/_/g, " ").toLowerCase()}
-                              </td>
+                              <td className="px-3 py-2 font-medium capitalize text-muted-foreground">{paramName.replace(/_/g, " ").toLowerCase()}</td>
                               <td className="px-3 py-2 text-right font-mono text-muted-foreground">{beforeWeight}</td>
                               <td className={`px-3 py-2 text-right font-mono font-bold ${hasChanged ? "text-emerald-400" : "text-muted-foreground"}`}>{v}</td>
-                              <td className="px-3 py-2 text-[10px] text-muted-foreground leading-snug">
-                                {getParameterChangeDesc(k, beforeWeight as number, v)}
-                              </td>
+                              <td className="px-3 py-2 text-[10px] text-muted-foreground leading-snug">{getParameterChangeDesc(k, beforeWeight as number, v)}</td>
                             </tr>
                           );
                         })}
@@ -256,7 +252,7 @@ export function OptimizationModal({
 
           {/* TAB CONTENT: AI SUGGESTION VERSION */}
           {activeTab === "ai" && (
-            <div className="space-y-4">
+            <div className="space-y-4 min-w-0 w-full">
               <div className="flex items-center gap-1.5">
                 <SparklesIcon className="h-4 w-4 text-indigo-400 animate-pulse" />
                 <h4 className="text-xs font-bold text-foreground">AI Proposed Setting Suggestion (Gemini)</h4>
@@ -276,8 +272,8 @@ export function OptimizationModal({
                       <TrendingUpIcon className="h-3.5 w-3.5 text-indigo-400" />
                       Expected Performance Summary (AI Suggestion)
                     </h4>
-                    <div className="rounded-lg border border-border/60 overflow-hidden bg-background/30">
-                      <table className="w-full text-left text-[11px] border-collapse">
+                    <div className="rounded-lg border border-border/60 overflow-x-auto w-full bg-background/30">
+                      <table className="w-full min-w-[500px] text-left text-[11px] border-collapse">
                         <thead>
                           <tr className="bg-muted/40 border-b border-border/50 text-[10px] text-muted-foreground uppercase font-bold">
                             <th className="px-3 py-2">Metric</th>
@@ -293,8 +289,12 @@ export function OptimizationModal({
                             <td className="px-3 py-2 text-right font-mono text-muted-foreground">
                               {optimizationBaseline ? `${optimizationBaseline.totalReturnPercent >= 0 ? "+" : ""}${optimizationBaseline.totalReturnPercent.toFixed(1)}%` : "N/A"}
                             </td>
-                            <td className={`px-3 py-2 text-right font-mono font-bold ${aiAlternative.alternativeMetrics && aiAlternative.alternativeMetrics.totalReturnPercent >= 0 ? "text-emerald-400" : "text-destructive"}`}>
-                              {aiAlternative.alternativeMetrics ? `${aiAlternative.alternativeMetrics.totalReturnPercent >= 0 ? "+" : ""}${aiAlternative.alternativeMetrics.totalReturnPercent.toFixed(1)}%` : "N/A"}
+                            <td
+                              className={`px-3 py-2 text-right font-mono font-bold ${aiAlternative.alternativeMetrics && aiAlternative.alternativeMetrics.totalReturnPercent >= 0 ? "text-emerald-400" : "text-destructive"}`}
+                            >
+                              {aiAlternative.alternativeMetrics
+                                ? `${aiAlternative.alternativeMetrics.totalReturnPercent >= 0 ? "+" : ""}${aiAlternative.alternativeMetrics.totalReturnPercent.toFixed(1)}%`
+                                : "N/A"}
                             </td>
                             <td className="px-3 py-2 text-right font-mono font-bold text-emerald-400">
                               {optimizationBaseline && aiAlternative.alternativeMetrics ? (
@@ -302,7 +302,9 @@ export function OptimizationModal({
                                   {aiAlternative.alternativeMetrics.totalReturnPercent - optimizationBaseline.totalReturnPercent >= 0 ? "▲ +" : "▼ "}
                                   {(aiAlternative.alternativeMetrics.totalReturnPercent - optimizationBaseline.totalReturnPercent).toFixed(1)}%
                                 </span>
-                              ) : "N/A"}
+                              ) : (
+                                "N/A"
+                              )}
                             </td>
                           </tr>
                           {/* Win Rate */}
@@ -314,13 +316,17 @@ export function OptimizationModal({
                             <td className="px-3 py-2 text-right font-mono font-bold text-foreground">
                               {aiAlternative.alternativeMetrics ? `${aiAlternative.alternativeMetrics.winRatePercent.toFixed(1)}%` : "N/A"}
                             </td>
-                            <td className={`px-3 py-2 text-right font-mono font-bold ${optimizationBaseline && aiAlternative.alternativeMetrics && aiAlternative.alternativeMetrics.winRatePercent - optimizationBaseline.winRatePercent >= 0 ? "text-emerald-400" : "text-destructive"}`}>
+                            <td
+                              className={`px-3 py-2 text-right font-mono font-bold ${optimizationBaseline && aiAlternative.alternativeMetrics && aiAlternative.alternativeMetrics.winRatePercent - optimizationBaseline.winRatePercent >= 0 ? "text-emerald-400" : "text-destructive"}`}
+                            >
                               {optimizationBaseline && aiAlternative.alternativeMetrics ? (
                                 <span>
                                   {aiAlternative.alternativeMetrics.winRatePercent - optimizationBaseline.winRatePercent >= 0 ? "▲ +" : "▼ "}
                                   {(aiAlternative.alternativeMetrics.winRatePercent - optimizationBaseline.winRatePercent).toFixed(1)}%
                                 </span>
-                              ) : "N/A"}
+                              ) : (
+                                "N/A"
+                              )}
                             </td>
                           </tr>
                           {/* Max Drawdown */}
@@ -332,13 +338,17 @@ export function OptimizationModal({
                             <td className="px-3 py-2 text-right font-mono font-bold text-destructive">
                               {aiAlternative.alternativeMetrics ? `-${aiAlternative.alternativeMetrics.maxDrawdownPercent.toFixed(1)}%` : "N/A"}
                             </td>
-                            <td className={`px-3 py-2 text-right font-mono font-bold ${optimizationBaseline && aiAlternative.alternativeMetrics && aiAlternative.alternativeMetrics.maxDrawdownPercent - optimizationBaseline.maxDrawdownPercent <= 0 ? "text-emerald-400" : "text-destructive"}`}>
+                            <td
+                              className={`px-3 py-2 text-right font-mono font-bold ${optimizationBaseline && aiAlternative.alternativeMetrics && aiAlternative.alternativeMetrics.maxDrawdownPercent - optimizationBaseline.maxDrawdownPercent <= 0 ? "text-emerald-400" : "text-destructive"}`}
+                            >
                               {optimizationBaseline && aiAlternative.alternativeMetrics ? (
                                 <span>
                                   {aiAlternative.alternativeMetrics.maxDrawdownPercent - optimizationBaseline.maxDrawdownPercent <= 0 ? "▲ -" : "▼ +"}
                                   {Math.abs(aiAlternative.alternativeMetrics.maxDrawdownPercent - optimizationBaseline.maxDrawdownPercent).toFixed(1)}%
                                 </span>
-                              ) : "N/A"}
+                              ) : (
+                                "N/A"
+                              )}
                             </td>
                           </tr>
                         </tbody>
@@ -352,8 +362,8 @@ export function OptimizationModal({
                       <SlidersHorizontalIcon className="h-3.5 w-3.5 text-indigo-400" />
                       Parameter Threshold Adjustments (AI Suggestion)
                     </h4>
-                    <div className="rounded-lg border border-border/60 overflow-hidden bg-background/30">
-                      <table className="w-full text-left text-[11px] border-collapse">
+                    <div className="rounded-lg border border-border/60 overflow-x-auto w-full bg-background/30">
+                      <table className="w-full min-w-[600px] text-left text-[11px] border-collapse">
                         <thead>
                           <tr className="bg-muted/40 border-b border-border/50 text-[10px] text-muted-foreground uppercase font-bold">
                             <th className="px-3 py-2">Parameter</th>
@@ -374,9 +384,7 @@ export function OptimizationModal({
 
                               return (
                                 <tr key={k} className={`hover:bg-muted/10 transition-colors ${hasChanged ? "bg-indigo-500/5" : ""}`}>
-                                  <td className="px-3 py-2 font-medium capitalize text-muted-foreground">
-                                    {k.replace(/([A-Z])/g, " $1").toLowerCase()}
-                                  </td>
+                                  <td className="px-3 py-2 font-medium capitalize text-muted-foreground">{k.replace(/([A-Z])/g, " $1").toLowerCase()}</td>
                                   <td className="px-3 py-2 text-right font-mono text-muted-foreground">{beforeVal}</td>
                                   <td className={`px-3 py-2 text-right font-mono font-bold ${hasChanged ? "text-indigo-400" : "text-muted-foreground"}`}>{aiVal}</td>
                                   <td className="px-3 py-2 text-[10px] text-muted-foreground leading-snug">{aiReason}</td>
@@ -394,8 +402,8 @@ export function OptimizationModal({
                       <SlidersHorizontalIcon className="h-3.5 w-3.5 text-indigo-400" />
                       Indicator Weights Adjustments (AI Suggestion)
                     </h4>
-                    <div className="rounded-lg border border-border/60 overflow-hidden bg-background/30">
-                      <table className="w-full text-left text-[11px] border-collapse">
+                    <div className="rounded-lg border border-border/60 overflow-x-auto w-full bg-background/30">
+                      <table className="w-full min-w-[600px] text-left text-[11px] border-collapse">
                         <thead>
                           <tr className="bg-muted/40 border-b border-border/50 text-[10px] text-muted-foreground uppercase font-bold">
                             <th className="px-3 py-2">Indicator Rule</th>
@@ -417,9 +425,7 @@ export function OptimizationModal({
 
                               return (
                                 <tr key={k} className={`hover:bg-muted/10 transition-colors ${hasChanged ? "bg-indigo-500/5" : ""}`}>
-                                  <td className="px-3 py-2 font-medium capitalize text-muted-foreground">
-                                    {paramName.replace(/_/g, " ").toLowerCase()}
-                                  </td>
+                                  <td className="px-3 py-2 font-medium capitalize text-muted-foreground">{paramName.replace(/_/g, " ").toLowerCase()}</td>
                                   <td className="px-3 py-2 text-right font-mono text-muted-foreground">{beforeWeight}</td>
                                   <td className={`px-3 py-2 text-right font-mono font-bold ${hasChanged ? "text-indigo-400" : "text-muted-foreground"}`}>{aiVal}</td>
                                   <td className="px-3 py-2 text-[10px] text-muted-foreground leading-snug">{aiReason}</td>
@@ -440,19 +446,14 @@ export function OptimizationModal({
           )}
 
           {/* ACTION FOOTER */}
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-border/50">
-            <Button
-              size="sm"
-              variant="outline"
-              className="h-8 text-xs px-4"
-              onClick={() => onOpenChange(false)}
-            >
+          <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-2 pt-3 border-t border-border/50">
+            <Button size="sm" variant="outline" className="h-8 text-xs px-4 w-full sm:w-auto" onClick={() => onOpenChange(false)}>
               Cancel
             </Button>
             {activeTab === "ai" && aiAlternative ? (
               <Button
                 size="sm"
-                className="h-8 text-xs px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold flex items-center gap-1.5"
+                className="h-8 text-xs px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold flex items-center justify-center gap-1.5 w-full sm:w-auto"
                 onClick={onApplyAiAlternative}
               >
                 <SparklesIcon className="h-3.5 w-3.5" />
@@ -461,7 +462,7 @@ export function OptimizationModal({
             ) : (
               <Button
                 size="sm"
-                className={`h-8 text-xs px-4 text-white font-bold ${isGlobal ? "bg-emerald-600 hover:bg-emerald-500" : "bg-indigo-600 hover:bg-indigo-500"}`}
+                className={`h-8 text-xs px-4 text-white font-bold w-full sm:w-auto ${isGlobal ? "bg-emerald-600 hover:bg-emerald-500" : "bg-indigo-600 hover:bg-indigo-500"}`}
                 onClick={onConfirmApply}
               >
                 Confirm & Apply Grid Best

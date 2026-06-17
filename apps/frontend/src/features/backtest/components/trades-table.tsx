@@ -7,7 +7,7 @@ interface TradesTableProps {
 
 export function TradesTable({ backtestResult }: TradesTableProps) {
   return (
-    <div className="max-h-72 overflow-y-auto pr-1">
+    <div className="max-h-72 overflow-y-auto overflow-x-auto pr-1 w-full">
       {backtestResult && backtestResult.trades.length > 0 ? (
         <table className="w-full text-[10px] text-left border-collapse">
           <thead>
