@@ -3,10 +3,12 @@ import { useParams, useNavigate, useSearchParams, useLocation } from "react-rout
 import { useGetStockHistoricalData } from "../hooks/use-get-stock-detail";
 import { useGetQuote } from "../hooks/use-get-quote";
 import { useGetSettings } from "@/features/settings/hooks/use-get-settings";
-import { ChevronLeftIcon, ActivityIcon, DollarSignIcon } from "lucide-react";
+import { ChevronLeftIcon, ActivityIcon, DollarSignIcon, TrendingUpIcon, TrendingDownIcon, MoveRightIcon, SparklesIcon } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { StrategyScoreCard } from "../components/strategy-score-card";
 import { StockChartCanvas } from "../components/stock-chart-canvas";
+import { AiAnalysisCard } from "../components/ai-analysis-card";
+import { useGetAiAnalysis, useRefreshAiAnalysis } from "../hooks/use-ai-analysis";
 
 export function StockDetailPage() {
   const { symbol = "" } = useParams<{ symbol: string }>();
@@ -75,6 +77,18 @@ export function StockDetailPage() {
 
   const { data: quote } = useGetQuote(symbol);
 
+  // AI Analysis — auto-load if no cached data on first visit
+  const { data: aiAnalysis, isLoading: isAiLoading } = useGetAiAnalysis(symbol);
+  const { mutate: triggerAiRefresh, isPending: isAiPending } = useRefreshAiAnalysis(symbol);
+
+  useEffect(() => {
+    if (!isAiLoading && aiAnalysis === null && symbol) {
+      triggerAiRefresh();
+    }
+  }, [isAiLoading, aiAnalysis, symbol]);
+
+  const isAiProcessing = isAiPending || (isAiLoading && !aiAnalysis);
+
   // Latest entry (most recent day)
   const latestData = historicalData[historicalData.length - 1] || null;
   const companyName = latestData?.name || symbol;
@@ -102,12 +116,14 @@ export function StockDetailPage() {
 
   // We've moved the lightweight-charts rendering logic to StockChartCanvas component
 
+  const fromPath = searchParams.get("from");
+
   return (
     <div className="space-y-6 pb-8">
       {/* Header Panel */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-border/50 pb-5 shrink-0">
         <div className="flex items-center gap-3">
-          <Button variant="outline" size="sm" onClick={() => navigate(location.state?.from || "/screener")} className="h-8 w-8 p-0 rounded-xl">
+          <Button variant="outline" size="sm" onClick={() => navigate(fromPath || location.state?.from || "/screener")} className="h-8 w-8 p-0 rounded-xl">
             <ChevronLeftIcon className="h-4 w-4" />
           </Button>
           <div>
@@ -274,6 +290,7 @@ export function StockDetailPage() {
             showMacd={showMacd}
             chartType={chartType}
           />
+          <AiAnalysisCard symbol={symbol} isProcessing={isAiProcessing} />
         </div>
 
         {/* Right Side: Detailed Stats & Indicator Interpretations */}
@@ -401,6 +418,86 @@ export function StockDetailPage() {
             ) : (
               <p className="text-xs text-muted-foreground">No indicator data available.</p>
             )}
+          </div>
+
+          {/* AI Quick Summary — Prediction, Call Action, Confidence */}
+          <AiSummaryBar symbol={symbol} isProcessing={isAiProcessing} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── AI Summary Bar ──────────────────────────────────────────────────────────
+// Compact prediction / call / confidence strip shown directly below the chart
+
+function AiSummaryBar({ symbol, isProcessing }: { symbol: string; isProcessing?: boolean }) {
+  const { data: analysis, isLoading } = useGetAiAnalysis(symbol);
+  const { isPending } = useRefreshAiAnalysis(symbol);
+
+  if (isLoading || isPending || isProcessing) {
+    return (
+      <div className="bg-card/45 border border-indigo-500/20 p-4 rounded-xl space-y-3 shadow-sm animate-pulse flex flex-col justify-center items-center py-6">
+        <SparklesIcon className="h-5 w-5 text-indigo-400 animate-bounce" />
+        <div className="h-2.5 w-2/3 bg-indigo-500/20 rounded"></div>
+        <div className="h-2 w-1/2 bg-indigo-500/10 rounded"></div>
+      </div>
+    );
+  }
+
+  if (!analysis) return null;
+
+  const pred = (analysis.prediction || "").toUpperCase();
+  const rec = (analysis.recommendation || "").toUpperCase();
+  const conf = analysis.confidence ?? 0;
+
+  const preditionInfo = (() => {
+    if (pred === "UP" || pred === "BULLISH")
+      return { label: "UP", icon: <TrendingUpIcon className="h-3.5 w-3.5" />, cls: "text-emerald-400 bg-emerald-500/10 border-emerald-500/25" };
+    if (pred === "DOWN" || pred === "BEARISH") return { label: "DOWN", icon: <TrendingDownIcon className="h-3.5 w-3.5" />, cls: "text-red-400 bg-red-500/10 border-red-500/25" };
+    return { label: "SIDEWAYS", icon: <MoveRightIcon className="h-3.5 w-3.5" />, cls: "text-amber-400 bg-amber-500/10 border-amber-500/25" };
+  })();
+
+  const recInfo = (() => {
+    if (rec === "BUY") return { cls: "bg-emerald-600 text-white shadow-emerald-600/20" };
+    if (rec === "HOLD") return { cls: "bg-amber-600 text-white shadow-amber-600/20" };
+    return { cls: "bg-rose-600 text-white shadow-rose-600/20" };
+  })();
+
+  const confColor = conf >= 70 ? "from-emerald-500 to-emerald-600" : conf >= 45 ? "from-amber-500 to-amber-600" : "from-red-500 to-red-600";
+
+  return (
+    <div className="bg-card/45 border border-border p-4 rounded-xl space-y-3 shadow-sm">
+      {/* Card Header */}
+      <h3 className="text-xs font-bold text-muted-foreground flex items-center gap-1.5 uppercase tracking-wider">
+        <SparklesIcon className="h-3.5 w-3.5 text-indigo-400" />
+        AI Analysis Summary
+      </h3>
+
+      <div className="space-y-3 text-xs">
+        {/* Prediction */}
+        <div className="flex items-center justify-between">
+          <span className="text-muted-foreground">Trend Prediction</span>
+          <span className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border ${preditionInfo.cls}`}>
+            {preditionInfo.icon}
+            {preditionInfo.label}
+          </span>
+        </div>
+
+        {/* Call Action */}
+        <div className="flex items-center justify-between">
+          <span className="text-muted-foreground">AI Call Action</span>
+          <span className={`px-2.5 py-0.5 rounded-md text-[10px] font-bold shadow-sm ${recInfo.cls}`}>{rec}</span>
+        </div>
+
+        {/* Confidence */}
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between">
+            <span className="text-muted-foreground">Confidence</span>
+            <span className="font-mono font-bold text-indigo-400">{conf}%</span>
+          </div>
+          <div className="w-full h-1.5 bg-muted/60 rounded-full overflow-hidden border border-border/40">
+            <div className={`h-full bg-gradient-to-r ${confColor} rounded-full transition-all duration-500`} style={{ width: `${conf}%` }} />
           </div>
         </div>
       </div>

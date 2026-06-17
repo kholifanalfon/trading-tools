@@ -58,3 +58,13 @@ export async function getStockHistoricalDataApi(symbol: string, limit?: number, 
   });
   return response.data.data;
 }
+
+export async function getAiAnalysisApi(symbol: string): Promise<any> {
+  const response = await api.get<{ success: boolean; data: any }>(`/screener/ai-analysis/${symbol}`);
+  return response.data.data;
+}
+
+export async function refreshAiAnalysisApi(symbol: string): Promise<any> {
+  const response = await api.post<{ success: boolean; data: any }>(`/screener/ai-analysis/${symbol}`);
+  return response.data.data;
+}

@@ -13,6 +13,8 @@ router.get("/search", validateQuery(StockSearchQuerySchema), controller.searchSt
 router.get("/quote", validateQuery(StockQuoteQuerySchema), controller.getQuote);
 router.get("/data", validateQuery(StockDataQuerySchema), controller.getStockData);
 router.get("/data/:symbol", controller.getStockHistoricalData);
+router.get("/ai-analysis/:symbol", controller.getAiAnalysis);
+router.post("/ai-analysis/:symbol", controller.refreshAiAnalysis);
 router.post("/sync-history", validateBody(SyncHistoryBodySchema), controller.startHistoricalSync);
 router.get("/sync-history/status", controller.getHistoricalSyncStatus);
 router.get("/sync-history/logs", controller.getSyncLogs);

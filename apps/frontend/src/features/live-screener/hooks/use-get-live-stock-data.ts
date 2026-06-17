@@ -15,7 +15,8 @@ export function useGetInfiniteLiveStockData(params: StockDataQueryParams, option
       }
       return undefined;
     },
-    staleTime: 15000,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // Keep cache in memory for 10 minutes
     ...options,
   });
 }

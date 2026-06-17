@@ -6,14 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useWebSocket } from "@/shared/hooks/use-websocket";
 import { settingsKeys } from "@/features/settings/settings.keys";
 import { getScoringRulesApi, updateScoringRulesApi } from "@/features/settings/services/settings.api";
-import {
-  PlayIcon,
-  SlidersHorizontalIcon,
-  TrendingUpIcon,
-  SparklesIcon,
-  HistoryIcon,
-  GlobeIcon,
-} from "lucide-react";
+import { PlayIcon, SlidersHorizontalIcon, TrendingUpIcon, SparklesIcon, HistoryIcon, GlobeIcon } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Field, FieldLabel } from "@/shared/components/ui/field";
@@ -23,13 +16,7 @@ import { MarkdownPreview } from "@/shared/components/ui/markdown-preview";
 // Extracted Items
 import { BacktestFormSchema, BacktestFormInput } from "../backtest.schema";
 import { BacktestResult, OptimizationGridItem, OptimizationBaseline } from "../types/backtest.types";
-import {
-  useGetBacktestReports,
-  useRunBacktest,
-  useRunOptimization,
-  useRunMultiStockOptimization,
-  useGetAiAlternative,
-} from "../hooks/use-backtest";
+import { useGetBacktestReports, useRunBacktest, useRunOptimization, useRunMultiStockOptimization, useGetAiAlternative } from "../hooks/use-backtest";
 import { BacktestCharts } from "../components/backtest-charts";
 import { TradesTable } from "../components/trades-table";
 import { OptimizationModal } from "../components/optimization-modal";
@@ -74,7 +61,13 @@ export function BacktestPage() {
 
   const { data: watchlistedStocks } = useGetStocks({ page: 1, limit: 100, watchlist: true });
 
-  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<BacktestFormInput>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<BacktestFormInput>({
     resolver: zodResolver(BacktestFormSchema),
     defaultValues: {
       symbol: "BBRI.JK",
@@ -202,9 +195,7 @@ export function BacktestPage() {
           .filter((k) => k.startsWith("_weight:"))
           .forEach((k) => {
             const paramName = k.replace("_weight:", "");
-            beforeParams[k] = dbScoringRules.find(
-              (r) => r.strategy === strategy && r.parameterName === paramName
-            )?.weight ?? 0;
+            beforeParams[k] = dbScoringRules.find((r) => r.strategy === strategy && r.parameterName === paramName)?.weight ?? 0;
           });
 
         await getAiAlternativeMutation.mutateAsync({
@@ -345,9 +336,7 @@ export function BacktestPage() {
       {/* Page Header */}
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-foreground">AI Backtesting & Optimization</h1>
-        <p className="text-sm text-muted-foreground">
-          Simulate trading strategies on historical candles, discover optimized parameters, and read AI insights.
-        </p>
+        <p className="text-sm text-muted-foreground">Simulate trading strategies on historical candles, discover optimized parameters, and read AI insights.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
@@ -440,7 +429,7 @@ export function BacktestPage() {
               {runBacktestMutation.isPending ? "Running simulation..." : "Run Backtest Simulation"}
             </Button>
 
-            <div className="flex gap-2.5 pt-2 border-t border-border/50">
+            <div className="flex flex-col gap-2.5 pt-2 border-t border-border/50">
               <Button
                 type="button"
                 variant="outline"
@@ -496,10 +485,10 @@ export function BacktestPage() {
           )}
 
           {/* Sub-tabs header */}
-          <div className="flex bg-card/60 border border-border/85 rounded-lg p-0.5 max-w-sm">
+          <div className="flex overflow-x-auto w-full sm:w-auto bg-background/50 border border-border/60 p-1 rounded-lg scrollbar-thin custom-scrollbar whitespace-nowrap">
             <button
               onClick={() => setActiveSubTab("chart")}
-              className={`flex-1 py-1 rounded-md text-[10px] font-bold flex items-center justify-center gap-1.5 transition ${
+              className={`flex gap-1 px-3 pt-1.5 pb-1 rounded-md text-xs font-semibold transition whitespace-nowrap flex-shrink-0 ${
                 activeSubTab === "chart" ? "bg-indigo-600 text-white" : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -508,7 +497,7 @@ export function BacktestPage() {
             </button>
             <button
               onClick={() => setActiveSubTab("trades")}
-              className={`flex-1 py-1 rounded-md text-[10px] font-bold flex items-center justify-center gap-1.5 transition ${
+              className={`flex gap-1 px-3 pt-1.5 pb-1 rounded-md text-xs font-semibold transition whitespace-nowrap flex-shrink-0 ${
                 activeSubTab === "trades" ? "bg-indigo-600 text-white" : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -517,7 +506,7 @@ export function BacktestPage() {
             </button>
             <button
               onClick={() => setActiveSubTab("optimize")}
-              className={`flex-1 py-1 rounded-md text-[10px] font-bold flex items-center justify-center gap-1.5 transition ${
+              className={`flex gap-1 px-3 pt-1.5 pb-1 rounded-md text-xs font-semibold transition whitespace-nowrap flex-shrink-0 ${
                 activeSubTab === "optimize" ? "bg-indigo-600 text-white" : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -526,7 +515,7 @@ export function BacktestPage() {
             </button>
             <button
               onClick={() => setActiveSubTab("reports")}
-              className={`flex-1 py-1 rounded-md text-[10px] font-bold flex items-center justify-center gap-1.5 transition ${
+              className={`flex gap-1 px-3 pt-1.5 pb-1 rounded-md text-xs font-semibold transition whitespace-nowrap flex-shrink-0 ${
                 activeSubTab === "reports" ? "bg-indigo-600 text-white" : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -546,7 +535,9 @@ export function BacktestPage() {
                   <div className="bg-black/90 font-mono text-[9px] text-emerald-400 p-4 rounded-lg border border-emerald-500/30 shadow-inner h-60 overflow-y-auto space-y-1">
                     <div className="text-muted-foreground animate-pulse mb-2">⚡ Running live optimization search...</div>
                     {optimizeLogs.map((log, i) => (
-                      <div key={i} className="leading-relaxed">{log}</div>
+                      <div key={i} className="leading-relaxed">
+                        {log}
+                      </div>
                     ))}
                   </div>
                 ) : (
@@ -567,7 +558,7 @@ export function BacktestPage() {
                               openConfirmModal(best.parameters, best.metrics, false);
                             }}
                           >
-                            Apply Best Setup (Local)
+                            Apply Best (Local)
                           </Button>
                           <Button
                             size="sm"
@@ -577,7 +568,7 @@ export function BacktestPage() {
                               openConfirmModal(best.parameters, best.metrics, true);
                             }}
                           >
-                            Apply Best Setup Globally
+                            Apply Best Globally
                           </Button>
                         </div>
                         {optimizationBaseline && (
@@ -603,7 +594,7 @@ export function BacktestPage() {
                             </div>
                           </div>
                         )}
-                        <div className="max-h-48 overflow-y-auto pr-1">
+                        <div className="max-h-48 overflow-y-auto overflow-x-auto pr-1 w-full">
                           <table className="w-full text-[10px] text-left border-collapse">
                             <thead>
                               <tr className="border-b border-border/50 text-muted-foreground uppercase font-bold">
@@ -619,11 +610,7 @@ export function BacktestPage() {
                               {optimizationGrid.map((item, idx) => (
                                 <tr key={idx} className="border-b border-border/30 hover:bg-muted/10">
                                   <td className="py-2 font-mono">
-                                    {item.weightProfile && (
-                                      <span className="block text-[9px] text-indigo-400 font-semibold mb-1">
-                                        Profile: {item.weightProfile}
-                                      </span>
-                                    )}
+                                    {item.weightProfile && <span className="block text-[9px] text-indigo-400 font-semibold mb-1">Profile: {item.weightProfile}</span>}
                                     {Object.entries(item.parameters)
                                       .filter(([k]) => !k.startsWith("_weight:"))
                                       .map(([k, v]) => (
@@ -638,9 +625,11 @@ export function BacktestPage() {
                                       {item.metrics.totalReturnPercent.toFixed(1)}%
                                     </div>
                                     {optimizationBaseline && (
-                                      <span className={`block text-[8px] font-semibold mt-0.5 ${
-                                        item.metrics.totalReturnPercent - optimizationBaseline.totalReturnPercent >= 0 ? "text-emerald-400" : "text-destructive"
-                                      }`}>
+                                      <span
+                                        className={`block text-[8px] font-semibold mt-0.5 ${
+                                          item.metrics.totalReturnPercent - optimizationBaseline.totalReturnPercent >= 0 ? "text-emerald-400" : "text-destructive"
+                                        }`}
+                                      >
                                         {item.metrics.totalReturnPercent - optimizationBaseline.totalReturnPercent >= 0 ? "▲ +" : "▼ "}
                                         {(item.metrics.totalReturnPercent - optimizationBaseline.totalReturnPercent).toFixed(1)}%
                                       </span>
@@ -649,9 +638,11 @@ export function BacktestPage() {
                                   <td className="py-2 text-right font-mono font-bold text-foreground">
                                     <div>{item.metrics.winRatePercent.toFixed(1)}%</div>
                                     {optimizationBaseline && (
-                                      <span className={`block text-[8px] font-semibold mt-0.5 ${
-                                        item.metrics.winRatePercent - optimizationBaseline.winRatePercent >= 0 ? "text-emerald-400" : "text-destructive"
-                                      }`}>
+                                      <span
+                                        className={`block text-[8px] font-semibold mt-0.5 ${
+                                          item.metrics.winRatePercent - optimizationBaseline.winRatePercent >= 0 ? "text-emerald-400" : "text-destructive"
+                                        }`}
+                                      >
                                         {item.metrics.winRatePercent - optimizationBaseline.winRatePercent >= 0 ? "▲ +" : "▼ "}
                                         {(item.metrics.winRatePercent - optimizationBaseline.winRatePercent).toFixed(1)}%
                                       </span>
@@ -660,9 +651,11 @@ export function BacktestPage() {
                                   <td className="py-2 text-right text-destructive font-mono">
                                     <div>-{item.metrics.maxDrawdownPercent.toFixed(1)}%</div>
                                     {optimizationBaseline && (
-                                      <span className={`block text-[8px] font-semibold mt-0.5 ${
-                                        item.metrics.maxDrawdownPercent - optimizationBaseline.maxDrawdownPercent <= 0 ? "text-emerald-400" : "text-destructive"
-                                      }`}>
+                                      <span
+                                        className={`block text-[8px] font-semibold mt-0.5 ${
+                                          item.metrics.maxDrawdownPercent - optimizationBaseline.maxDrawdownPercent <= 0 ? "text-emerald-400" : "text-destructive"
+                                        }`}
+                                      >
                                         {item.metrics.maxDrawdownPercent - optimizationBaseline.maxDrawdownPercent <= 0 ? "▲ -" : "▼ +"}
                                         {Math.abs(item.metrics.maxDrawdownPercent - optimizationBaseline.maxDrawdownPercent).toFixed(1)}%
                                       </span>
@@ -677,7 +670,7 @@ export function BacktestPage() {
                                       </span>
                                     )}
                                   </td>
-                                  <td className="py-2 text-right space-x-1.5 whitespace-nowrap">
+                                  <td className="py-2  text-right space-x-1.5 whitespace-nowrap">
                                     {Object.entries(item.parameters).some(([k, v]) => watch(k as any) !== v) ? (
                                       <>
                                         <Button
@@ -721,7 +714,7 @@ export function BacktestPage() {
             )}
 
             {activeSubTab === "reports" && (
-              <div className="max-h-72 overflow-y-auto pr-1">
+              <div className="max-h-72 overflow-y-auto overflow-x-auto pr-1 w-full">
                 {savedReports.length > 0 ? (
                   <table className="w-full text-[10px] text-left border-collapse">
                     <thead>
@@ -812,7 +805,9 @@ export function BacktestPage() {
         aiAlternative={getAiAlternativeMutation.data || null}
         isLoadingAiAlternative={getAiAlternativeMutation.isPending}
         getParameterChangeDesc={getParameterChangeDesc}
-        beforeThresholdValue={(k) => (confirmModal.isGlobal ? dbScoringRules.find((r) => r.strategy === watch("strategy") && r.parameterName === k)?.value ?? "N/A" : watch(k as any))}
+        beforeThresholdValue={(k) =>
+          confirmModal.isGlobal ? (dbScoringRules.find((r) => r.strategy === watch("strategy") && r.parameterName === k)?.value ?? "N/A") : watch(k as any)
+        }
         beforeWeightValue={(paramName) => dbScoringRules.find((r) => r.strategy === watch("strategy") && r.parameterName === paramName)?.weight ?? "N/A"}
         onConfirmApply={handleConfirmApply}
         onApplyAiAlternative={handleApplyAiAlternative}

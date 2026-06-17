@@ -1,4 +1,5 @@
 import { ScreenerRepository } from "./screener.repository";
+import { AiAnalysisRepository } from "./ai-analysis.repository";
 import { SettingsRepository } from "@/modules/settings/settings.repository";
 import { decrypt } from "@/core/utils/crypto";
 import { AppError } from "@/core/errors/app-error";
@@ -437,5 +438,165 @@ export class ScreenerService {
       // Fallback to database
       return this.repository.getStockHistoricalData(symbol, limit);
     }
+  }
+
+  private aiAnalysisRepo = new AiAnalysisRepository();
+
+  async getAiAnalysis(symbol: string) {
+    return this.aiAnalysisRepo.getAnalysisBySymbol(symbol);
+  }
+
+  async refreshAiAnalysis(symbol: string) {
+    // 1. Fetch latest historical data to get current metrics/indicators
+    const historicalData = await this.getStockHistoricalData(symbol, 30);
+    const latest = historicalData[historicalData.length - 1];
+    if (!latest) {
+      throw new AppError(`No stock data available for symbol ${symbol} to perform analysis.`, 404);
+    }
+
+    // 2. Fetch Gemini settings
+    const list = await this.settingsRepo.getAllSettings();
+    const configObj: Record<string, string> = {};
+    for (const item of list) {
+      configObj[item.key] = item.value;
+    }
+
+    const encryptedKey = configObj.gemini_api_key;
+    const apiKey = encryptedKey ? decrypt(encryptedKey) : "";
+    const modelName = configObj.gemini_model || "gemini-1.5-flash";
+
+    if (!apiKey) {
+      throw new AppError("Gemini API key is missing. Please configure it in settings first.", 400);
+    }
+
+    // 3. Initialize Gemini
+    const { GeminiAdapter } = await import("@/core/adapters/gemini.adapter");
+    const gemini = new GeminiAdapter(apiKey, modelName);
+
+    // 4. Resolve strategy scores — use DB values if present, otherwise calculate on-the-fly
+    let dayScore = latest.dayScore;
+    let swingScore = latest.swingScore;
+    let positionScore = latest.positionScore;
+
+    if (dayScore === null || swingScore === null || positionScore === null) {
+      // Build ScoreMetrics from live indicator data already present in latest
+      const metrics: ScoreMetrics = {
+        close: latest.close,
+        open: latest.open,
+        prevClose: historicalData.length >= 2 ? historicalData[historicalData.length - 2].close : null,
+        volume: latest.volume,
+        avgVolume10: null, // not available from live data
+        avgVolume20: null, // not available from live data
+        atr14: null,       // not available from live data
+        rsi14: latest.rsi ?? null,
+        ema20: latest.ema21 ?? null, // ema21 is the closest proxy for ema20
+        ema50: latest.ema50 ?? null,
+        sma50: latest.ema50 ?? null,
+        sma200: latest.ema200 ?? null,
+        macdLine: latest.macd ?? null,
+        macdSignal: latest.macdSignal ?? null,
+        macdHist: latest.macdHist ?? null,
+        yearHigh: null,
+        priceReturn1Y: null,
+      };
+
+      // Load scoring rules config if available
+      const scoringRulesRepo = new ScoringRulesRepository();
+      const rules = await scoringRulesRepo.getAllRules();
+      const rulesConfig = rules.length > 0 ? mapRulesToConfig(rules) : undefined;
+
+      const computed = calculateAllScores(metrics, rulesConfig);
+      dayScore = computed.dayScore.total;
+      swingScore = computed.swingScore.total;
+      positionScore = computed.positionScore.total;
+    }
+
+    // 5. Construct prompt
+    const prompt = `You are an elite quantitative researcher and macro portfolio manager. Perform a rigorous, multi-factor analysis on the stock symbol "${symbol.toUpperCase()}" (Company: "${latest.name || symbol}").
+
+Here are the inputs for your analysis:
+- Latest Close Price: ${latest.close}
+- Daily Volume: ${latest.volume}
+- Technical Indicators:
+  * RSI (14): ${latest.rsi ? latest.rsi.toFixed(2) : "N/A"}
+  * EMA 9: ${latest.ema9 ? latest.ema9.toFixed(2) : "N/A"}
+  * EMA 21: ${latest.ema21 ? latest.ema21.toFixed(2) : "N/A"}
+  * EMA 50: ${latest.ema50 ? latest.ema50.toFixed(2) : "N/A"}
+  * EMA 200: ${latest.ema200 ? latest.ema200.toFixed(2) : "N/A"}
+  * MACD: ${latest.macd ? latest.macd.toFixed(2) : "N/A"}
+  * MACD Signal: ${latest.macdSignal ? latest.macdSignal.toFixed(2) : "N/A"}
+  * MACD Histogram: ${latest.macdHist ? latest.macdHist.toFixed(2) : "N/A"}
+- System Strategy Scores (0 to 100, calculated by our rule-based engine):
+  * System Day Trading Score: ${dayScore ?? "N/A"}
+  * System Swing Trading Score: ${swingScore ?? "N/A"}
+  * System Position Trading Score: ${positionScore ?? "N/A"}
+
+--- YOUR TASK ---
+
+STEP 1 – COMPUTE YOUR OWN AI SCORES (0 to 100 each):
+Using the rubric below, independently score this stock for each strategy. Do NOT copy the system scores.
+
+Day Trading Score rubric (max 100):
+- Momentum: RSI above 60 or below 30 → +25 pts; RSI 50–60 → +10 pts
+- MACD Histogram positive and growing → +25 pts; positive only → +15 pts
+- EMA 9 above EMA 21 (bullish crossover) → +20 pts
+- Volume spike (qualitative assessment) → +15 pts
+- Gap from previous session (qualitative) → +15 pts
+
+Swing Trading Score rubric (max 100):
+- EMA 21 above EMA 50 (uptrend alignment) → +30 pts
+- MACD line above signal line → +25 pts
+- RSI in 40–65 range (healthy swing zone) → +20 pts
+- Close above EMA 21 (price above mid-term trend) → +15 pts
+- EMA 50 slope upward (qualitative) → +10 pts
+
+Position Trading Score rubric (max 100):
+- EMA 50 above EMA 200 (golden cross zone) → +35 pts
+- Close above EMA 200 (long-term uptrend) → +25 pts
+- RSI above 50 (sustained momentum) → +20 pts
+- MACD histogram sustained positive → +20 pts
+
+STEP 2 – COMPARE AND GIVE A VERDICT:
+Compare your AI scores with the system scores for all 3 strategies.
+- "AGREE" if all 3 AI scores are within 15 points of their system counterparts
+- "PARTIAL" if 1 or 2 scores differ by more than 15 points
+- "DISAGREE" if all 3 differ by more than 15 points, or if the overall sentiment direction is opposite
+
+STEP 3 – WRITE YOUR ANALYSES IN INDONESIAN.
+
+Return a single JSON object with these exact keys:
+- "prediction": one of "UP", "DOWN", or "SIDEWAYS"
+- "recommendation": one of "BUY", "HOLD", or "AVOID"
+- "confidence": number 0-100
+- "aiDayScore": your computed day trading score (number 0-100)
+- "aiSwingScore": your computed swing trading score (number 0-100)
+- "aiPositionScore": your computed position trading score (number 0-100)
+- "scoreVerdict": one of "AGREE", "PARTIAL", or "DISAGREE"
+- "analysisDetail": technical analysis in Indonesian — cover RSI momentum, EMA crossover alignments, and MACD trend
+- "scoreComparison": in Indonesian — show your AI scores vs system scores for each strategy, explain why they agree or differ, and state your overall verdict
+- "macroEconomics": macroeconomic context in Indonesian — cover interest rates, sector trends, inflation, and company-relevant news`;
+
+    // 6. Call Gemini with JSON mode (guaranteed valid JSON output)
+    const result = await gemini.generateJsonAnalysis(prompt);
+
+    // 7. Upsert to DB by symbol (no stocks table lookup needed)
+    const saved = await this.aiAnalysisRepo.upsertAnalysis({
+      symbol: symbol.toUpperCase(),
+      prediction: (result.prediction as string) || "SIDEWAYS",
+      recommendation: (result.recommendation as string) || "HOLD",
+      confidence: Number(result.confidence) || 50,
+      aiDayScore: result.aiDayScore != null ? Number(result.aiDayScore) : null,
+      aiSwingScore: result.aiSwingScore != null ? Number(result.aiSwingScore) : null,
+      aiPositionScore: result.aiPositionScore != null ? Number(result.aiPositionScore) : null,
+      sysDayScore: dayScore != null ? Number(dayScore) : null,
+      sysSwingScore: swingScore != null ? Number(swingScore) : null,
+      sysPosScore: positionScore != null ? Number(positionScore) : null,
+      scoreVerdict: (result.scoreVerdict as string) || null,
+      analysisDetail: (result.analysisDetail as string) || "N/A",
+      scoreComparison: (result.scoreComparison as string) || "N/A",
+      macroEconomics: (result.macroEconomics as string) || "N/A",
+    });
+
+    return saved;
   }
 }

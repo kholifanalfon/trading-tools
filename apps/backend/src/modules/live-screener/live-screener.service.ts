@@ -27,7 +27,7 @@ export class LiveScreenerService {
   private settingsClient = new SettingsClientService();
   private stocksRepo = new StocksRepository();
   private cache = new Map<string, CacheEntry>();
-  private CACHE_TTL = 60 * 1000; // 60 seconds
+  private CACHE_TTL = 10 * 60 * 1000; // 10 minutes
   private scoringRulesRepo = new ScoringRulesRepository();
 
   private async getProviderConfig() {
