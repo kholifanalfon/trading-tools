@@ -8,13 +8,15 @@ const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
   getSecret: () => config.BE_JWT_SECRET,
   getSessionIdentifier: (req: Request) => {
     // Use the session JWT token cookie if present, otherwise empty string for anonymous users
-    return req.cookies?.token || "";
+    // Since the token cookie is signed, read from req.signedCookies
+    return req.signedCookies?.token || req.cookies?.token || "";
   },
   cookieName: "XSRF-TOKEN",
   cookieOptions: {
     httpOnly: false, // Must be readable by Axios
-    sameSite: "lax",
+    sameSite: config.BE_COOKIE_SAMESITE as any,
     secure: isProduction,
+    domain: config.BE_COOKIE_DOMAIN || undefined,
     path: "/",
   },
   getCsrfTokenFromRequest: (req: Request) => req.headers["x-xsrf-token"] as string | null | undefined,
