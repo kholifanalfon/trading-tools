@@ -387,13 +387,13 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
           </div>
         </div>
 
-        <div className="flex items-center gap-3 mt-4">
+        <div className="flex flex-col md:flex-row items-center gap-3 mt-4">
           <Button
             type="button"
             onClick={() => handleAddRule(strategy)}
             variant="outline"
             size="sm"
-            className="flex-1 h-8 flex items-center justify-center gap-1.5 border-dashed border-indigo-500/35 hover:border-indigo-500 text-indigo-400 hover:text-indigo-300 bg-indigo-500/5 hover:bg-indigo-500/10 transition"
+            className="w-full md:w-auto px-5 py-1.5 flex-1 flex items-center justify-center gap-1.5 border-dashed border-indigo-500/35 hover:border-indigo-500 text-indigo-400 hover:text-indigo-300 bg-indigo-500/5 hover:bg-indigo-500/10 transition"
           >
             <PlusIcon className="h-3.5 w-3.5" />
             Add Filter Rule
@@ -405,7 +405,7 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
             size="sm"
             onClick={handleGetRecommendations}
             disabled={isLoading || isGeneratingRecommendations}
-            className="flex-1 h-8 flex items-center justify-center gap-1.5 text-indigo-400 hover:text-indigo-300 hover:bg-indigo-500/10 border border-indigo-500/20 rounded-md transition"
+            className="w-full md:w-auto x-5 py-1.5 flex-1 flex items-center justify-center gap-1.5 text-indigo-400 hover:text-indigo-300 hover:bg-indigo-500/10 border border-indigo-500/20 rounded-md transition"
           >
             <SparklesIcon className="h-3.5 w-3.5 animate-pulse" />
             Optimize Rules

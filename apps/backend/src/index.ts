@@ -28,6 +28,9 @@ if (config.BE_SENTRY_DSN) {
 
 const app = express();
 
+// Set trust proxy to properly read reverse proxy headers (e.g. HTTPS status)
+app.set("trust proxy", config.BE_TRUST_PROXY);
+
 // Disable X-Powered-By header
 app.disable("x-powered-by");
 

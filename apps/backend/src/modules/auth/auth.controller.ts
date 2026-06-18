@@ -1,5 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import { AuthService } from "./auth.service";
+import { config } from "@/core/config";
+
+const isProduction = process.env.NODE_ENV === "production";
+
 
 export class AuthController {
   private authService = new AuthService();
@@ -20,8 +24,9 @@ export class AuthController {
       // Set cookie
       res.cookie("token", token, {
         httpOnly: true,
-        secure: false, // Set to false so it works on local development HTTP
-        sameSite: "lax",
+        secure: isProduction, // Secure in production HTTPS
+        sameSite: config.BE_COOKIE_SAMESITE as any,
+        domain: config.BE_COOKIE_DOMAIN || undefined,
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         signed: true,
       });
@@ -45,8 +50,9 @@ export class AuthController {
     try {
       res.clearCookie("token", {
         httpOnly: true,
-        secure: false,
-        sameSite: "lax",
+        secure: isProduction,
+        sameSite: config.BE_COOKIE_SAMESITE as any,
+        domain: config.BE_COOKIE_DOMAIN || undefined,
         signed: true,
       });
       res.status(200).json({ success: true });

@@ -408,7 +408,7 @@ export function StockChartCanvas({ historicalData, isLoading, timeframe, showEma
         </div>
       `;
 
-      const coordinateY = mainSeries.priceToCoordinate(chartType === "candlestick" ? highVal : closeVal);
+      const coordinateY = mainSeries.priceToCoordinate(closeVal);
       const coordinateX = param.point.x;
 
       const tooltipWidth = 160;
