@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       VitePWA({
-        registerType: "autoUpdate",
+        registerType: "prompt",
         injectRegister: "auto",
         includeAssets: ["favicon.svg"],
         manifest: {
@@ -42,6 +42,9 @@ export default defineConfig(({ mode }) => {
         }
       })
     ],
+    define: {
+      __APP_VERSION__: JSON.stringify(process.env.npm_package_version || "1.0.0"),
+    },
     base: baseUrl,
     envDir: resolve(__dirname, "../../"),
     envPrefix: ["VITE_", "FE_"], // Allows accessing FE_ variables inside React app

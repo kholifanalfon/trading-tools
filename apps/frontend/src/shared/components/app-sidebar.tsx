@@ -3,25 +3,10 @@
 import * as React from "react";
 
 import { NavMain } from "@/shared/components/nav-main";
-import { NavUser } from "@/shared/components/nav-user";
 import { TeamSwitcher } from "@/shared/components/team-switcher";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
-} from "@/shared/components/ui/sidebar";
-import {
-  GalleryVerticalEndIcon,
-  AudioLinesIcon,
-  TerminalIcon,
-  UserIcon,
-  TrendingUpIcon,
-  SettingsIcon,
-  HistoryIcon,
-  LineChartIcon,
-} from "lucide-react";
+import { usePwa } from "@/shared/providers/pwa-provider";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail, useSidebar } from "@/shared/components/ui/sidebar";
+import { GalleryVerticalEndIcon, AudioLinesIcon, TerminalIcon, UserIcon, TrendingUpIcon, SettingsIcon, HistoryIcon, LineChartIcon } from "lucide-react";
 
 import { useAuthStore } from "@/shared/stores/auth.store";
 
@@ -48,13 +33,6 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useAuthStore((state) => state.user);
-
-  const sidebarUser = {
-    name: user?.fullName || "Guest User",
-    email: user?.email || "guest@example.com",
-    avatar:
-      "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/avatar/avatar8.jpg",
-  };
 
   const navMain = [];
   if (user?.role === "admin") {
@@ -100,19 +78,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     });
   }
 
-
-
+  const { state } = useSidebar();
+  const { needRefresh, updateServiceWorker } = usePwa();
 
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
-      <SidebarContent>
-        {navMain.length > 0 && <NavMain items={navMain} />}
-      </SidebarContent>
+      <SidebarContent>{navMain.length > 0 && <NavMain items={navMain} />}</SidebarContent>
       <SidebarFooter>
-        <NavUser user={sidebarUser} />
+        {state === "expanded" &&
+          (needRefresh ? (
+            <button
+              onClick={() => updateServiceWorker(true)}
+              className="mx-3 my-2 text-[10px] bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-1.5 px-2 rounded-md transition duration-150 animate-pulse text-center"
+            >
+              Update to New Version
+            </button>
+          ) : (
+            <div className="px-3 py-2 text-[10px] text-muted-foreground/50 font-mono text-center select-none border-t border-sidebar-border/30 mt-1">v{__APP_VERSION__}</div>
+          ))}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
