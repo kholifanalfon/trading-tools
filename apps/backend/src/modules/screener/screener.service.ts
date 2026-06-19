@@ -584,6 +584,7 @@ export class ScreenerService {
           swingScore: dbScore?.swingScore ?? null,
           positionScore: dbScore?.positionScore ?? null,
           scorePayload: scorePayload ?? null,
+          changePercent: changePercent,
         };
       });
 
