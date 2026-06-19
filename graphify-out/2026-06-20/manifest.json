@@ -830,8 +830,8 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/components/app-sidebar.tsx": {
-    "mtime": 1781899465.628053,
-    "ast_hash": "fd8942496c57b3694b63c88bd39feea1",
+    "mtime": 1781899411.1512563,
+    "ast_hash": "dcdc54813f1ab18f0afb83300c31c987",
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/components/global-error-container.tsx": {
@@ -850,9 +850,9 @@
     "semantic_hash": "3a03ec34eb7a2cd60993c4f1a940c909"
   },
   "apps/frontend/src/shared/components/nav-user.tsx": {
-    "mtime": 1781899473.2886147,
-    "ast_hash": "9cbaf349f04a421380fa5d4aa65a27d0",
-    "semantic_hash": ""
+    "mtime": 1781731547.3832827,
+    "ast_hash": "8dd0bcf6f57e25f1c05aecfb1b8d5ff2",
+    "semantic_hash": "8dd0bcf6f57e25f1c05aecfb1b8d5ff2"
   },
   "apps/frontend/src/shared/components/team-switcher.tsx": {
     "mtime": 1781189530.6235821,
