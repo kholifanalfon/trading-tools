@@ -200,7 +200,7 @@ export class BacktestService {
     // Fetch screened stocks from live screener
     this.logAndBroadcast(`[Optimization] Fetching candidate stocks matching ${strategy} strategy (limit 100)...`);
     const screenedStocks = await this.stockAdapter.getScreenedStocks(strategy, regions, 100, 1);
-    
+
     if (screenedStocks.length === 0) {
       this.logAndBroadcast(`[Optimization] [ERROR] No stocks found for strategy ${strategy}`);
       throw new AppError("No stock symbols found in live screener to run multi-stock optimization", 404);
@@ -256,7 +256,7 @@ export class BacktestService {
           } catch (err) {
             console.error(`Failed to fetch/score ${stock.symbol} during multi-stock optimization:`, err);
           }
-        })
+        }),
       );
     }
 
@@ -267,10 +267,10 @@ export class BacktestService {
 
     // Sort by score descending and take top 8
     candidates.sort((a, b) => b.score - a.score);
-    const selectedCandidates = candidates.slice(0, 8);
+    const selectedCandidates = candidates.slice(0, 10);
     const symbols = selectedCandidates.map((c) => c.symbol);
 
-    this.logAndBroadcast(`[Optimization] Selected top 8 stocks based on ${strategy} score: ${selectedCandidates.map(c => `${c.symbol} (Score: ${c.score})`).join(", ")}`);
+    this.logAndBroadcast(`[Optimization] Selected top 8 stocks based on ${strategy} score: ${selectedCandidates.map((c) => `${c.symbol} (Score: ${c.score})`).join(", ")}`);
 
     const candlesMap: Record<string, any[]> = {};
     selectedCandidates.forEach((c) => {
