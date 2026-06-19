@@ -1,15 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  useLocation,
-  useNavigate,
-  Outlet,
-  Navigate,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, useNavigate, Outlet, Navigate, Link } from "react-router-dom";
 import { useAuthStore } from "@/shared/stores/auth.store";
 import { InfoLandingPage } from "./features/info/pages/info-landing.page";
 import { ProfilePage } from "./features/profile/pages/profile.page";
@@ -26,24 +17,12 @@ import { BacktestPage } from "./features/backtest/pages/backtest.page";
 import { ThemeProvider } from "./shared/components/theme-provider";
 import { HomeIcon, TrendingUpIcon, ActivityIcon, CpuIcon, SettingsIcon, Loader2, ArrowDown } from "lucide-react";
 
-
 import { ThemeToggle } from "./shared/components/ui/theme-toggle";
 import { TooltipProvider } from "./shared/components/ui/tooltip";
-import {
-  SidebarProvider,
-  SidebarInset,
-  SidebarTrigger,
-} from "./shared/components/ui/sidebar";
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "./shared/components/ui/sidebar";
 import { AppSidebar } from "./shared/components/app-sidebar";
 import { Separator } from "./shared/components/ui/separator";
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-  BreadcrumbPage,
-} from "./shared/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "./shared/components/ui/breadcrumb";
 
 import { GlobalErrorContainer } from "./shared/components/global-error-container";
 import { Toaster } from "@/shared/components/ui/sonner";
@@ -63,10 +42,7 @@ export function App() {
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <TooltipProvider>
           <QueryClientProvider client={queryClient}>
-            <BrowserRouter
-              basename={import.meta.env.FE_BASE_URL || "/"}
-              future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-            >
+            <BrowserRouter basename={import.meta.env.FE_BASE_URL || "/"} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
               <Routes>
                 {/* Auth Layout Wrapper */}
                 <Route element={<AuthLayout />}>
@@ -92,7 +68,6 @@ export function App() {
                   <Route path="/screener/:symbol" element={<StockDetailPage />} />
                   <Route path="/ingestion-logs" element={<IngestionLogsPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
-
                 </Route>
               </Routes>
             </BrowserRouter>
@@ -104,7 +79,6 @@ export function App() {
     </PwaProvider>
   );
 }
-
 
 function AuthLayout() {
   const { isAuthenticated, isLoading, checkAuth } = useAuthStore();
@@ -189,14 +163,11 @@ function PlatformLayout() {
     pageName = "Ingestion Logs";
   } else if (location.pathname === "/settings") {
     pageName = "Settings";
-
   } else if (location.pathname === "/dashboard") {
     pageName = "Dashboard";
   } else if (location.pathname === "/orders") {
     pageName = "Orders";
   }
-
-
 
   const mobileNavItems = [
     { label: "Home", path: "/", icon: <HomeIcon className="h-5 w-5" /> },
@@ -347,10 +318,7 @@ function PullToRefresh({ children, onRefresh }: PullToRefreshProps) {
   }, [isPulling, pullDistance, onRefresh]);
 
   return (
-    <main
-      ref={containerRef}
-      className="flex-1 bg-background p-6 pb-20 md:pb-6 overflow-y-auto custom-scrollbar relative"
-    >
+    <main ref={containerRef} className="flex-1 bg-background p-6 pb-20 md:pb-6 overflow-y-auto custom-scrollbar relative">
       <div
         className="absolute top-0 left-0 right-0 flex justify-center pointer-events-none transition-all duration-200 z-50"
         style={{
@@ -378,10 +346,7 @@ function PullToRefresh({ children, onRefresh }: PullToRefreshProps) {
         </div>
       </div>
 
-      <div
-        className="transition-transform duration-150 ease-out h-full"
-        style={{ transform: `translateY(${isRefreshing ? 50 : pullDistance * 0.5}px)` }}
-      >
+      <div className="transition-transform duration-150 ease-out min-h-full" style={{ transform: `translateY(${isRefreshing ? 50 : pullDistance * 0.5}px)` }}>
         {children}
       </div>
     </main>
