@@ -94,7 +94,7 @@ function MetricRow({ metricKey, label, score, maxScore, briefDesc, detailedDesc,
         {/* ── Mobile: plain trigger + Dialog ── */}
         {isMobile && trigger}
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 text-end">
           <span className="font-bold text-foreground">{scoreText ? scoreText : `${score} / ${maxScore}`}</span>
         </div>
       </div>
@@ -548,7 +548,7 @@ export function StrategyScoreCard({ scorePayload, date, activeScoreTab, setActiv
             <div className="flex gap-2 justify-between items-center font-mono">
               {row(
                 "risk_rr_validation",
-                `Risk Validation (${activeScoreTab.toUpperCase()} R:R)`,
+                `Risk Validation`,
                 rv.passed ? 1 : 0,
                 1,
                 "Validasi rasio potensi keuntungan dibanding risiko sebelum masuk posisi.",
@@ -564,11 +564,6 @@ export function StrategyScoreCard({ scorePayload, date, activeScoreTab, setActiv
                 undefined,
                 "",
               )}
-              <span
-                className={`px-2 py-0.5 rounded text-[10px] font-bold border shrink-0 font-mono ${rv.passed ? "text-green-500 bg-green-500/10 border-green-500/20" : "text-red-500 bg-red-500/10 border-red-500/20"}`}
-              >
-                {rv.passed ? "PASSED" : "FAILED"}
-              </span>
             </div>
             <div className="flex flex-col gap-2 text-[10px] font-mono">
               <div className="flex justify-between border-b border-border/30 pb-0.5">
@@ -582,6 +577,14 @@ export function StrategyScoreCard({ scorePayload, date, activeScoreTab, setActiv
               <div className="flex justify-between border-b border-border/30 pb-0.5">
                 <span className="text-muted-foreground">Reward-to-Risk Ratio:</span>
                 <span className={`font-bold ${rv.passed ? "text-indigo-400" : "text-red-500"}`}>{rv.rewardRiskRatio?.toFixed(2)} : 1</span>
+              </div>
+              <div className="flex justify-between border-b border-border/30 pb-0.5">
+                <span className="text-muted-foreground">Status:</span>
+                <span
+                  className={`px-2 py-0.5 rounded text-[10px] font-bold border shrink-0 font-mono ${rv.passed ? "text-green-500 bg-green-500/10 border-green-500/20" : "text-red-500 bg-red-500/10 border-red-500/20"}`}
+                >
+                  {rv.passed ? "PASSED" : "FAILED"}
+                </span>
               </div>
               {!rv.passed && (
                 <div className="bg-red-500/5 border border-red-500/20 rounded p-1.5 text-[9px] text-red-400 mt-1 leading-normal">

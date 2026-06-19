@@ -64,6 +64,7 @@ export function ScoringRulesForm({ rules, onSubmit, isLoading, error }: ScoringR
           return {
             ...field,
             value: recommended.value,
+            weight: recommended.weight !== undefined ? recommended.weight : field.weight,
           };
         }
         return field;

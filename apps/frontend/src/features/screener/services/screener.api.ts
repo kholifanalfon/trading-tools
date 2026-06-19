@@ -68,3 +68,8 @@ export async function refreshAiAnalysisApi(symbol: string): Promise<any> {
   const response = await api.post<{ success: boolean; data: any }>(`/screener/ai-analysis/${symbol}`);
   return response.data.data;
 }
+
+export async function getCorporateActionsApi(symbol: string): Promise<{ dividends: any[]; splits: any[] }> {
+  const response = await api.get<{ success: boolean; data: { dividends: any[]; splits: any[] } }>(`/screener/corp-actions/${symbol}`);
+  return response.data.data;
+}

@@ -353,9 +353,9 @@ You are an expert financial analyst. Recommend scoring rule parameters and risk 
 The target market/exchange region is: ${isIndonesia ? "Indonesia (IDX / Jakarta, currency in IDR)" : "United States (US, currency in USD)"}.
 
 Here are the specific parameters we need recommendations for:
-\${
+${
   strategy === "day"
-    ? \`- "rvol_high_threshold", "rvol_medium_threshold", "rvol_low_threshold" (Relative Volume thresholds)
+    ? `- "rvol_high_threshold", "rvol_medium_threshold", "rvol_low_threshold" (Relative Volume thresholds)
 - "atr_high_threshold", "atr_medium_threshold" (ATR thresholds in % of stock price)
 - "gap_high_threshold", "gap_medium_threshold" (Opening gap % thresholds)
 - "rsi_overbought", "rsi_oversold" (RSI boundaries)
@@ -367,9 +367,9 @@ Here are the specific parameters we need recommendations for:
 - "fallback_atr_percent" (Fallback ATR percentage, e.g. 0.01 for 1%)
 - "sl_multiplier" (Stop Loss ATR multiplier, e.g. 1.0)
 - "tp_multiplier" (Target Profit ATR multiplier, e.g. 2.0)
-- "min_reward_risk_ratio" (Minimum Reward to Risk Ratio, e.g. 1.5)\`
+- "min_reward_risk_ratio" (Minimum Reward to Risk Ratio, e.g. 1.5)`
     : strategy === "swing"
-    ? \`- "trend_close_above_ema20", "trend_ema20_above_ema50" (Trend flags, usually 0.0 or 1.0)
+    ? `- "trend_close_above_ema20", "trend_ema20_above_ema50" (Trend flags, usually 0.0 or 1.0)
 - "macd_hist_positive", "macd_line_above_signal", "macd_golden_cross" (MACD indicators, usually 0.0 or 1.0)
 - "rsi_neutral_low", "rsi_neutral_high", "rsi_neutral_exit" (RSI boundaries)
 - "volume_above_average" (Volume above average flag, usually 0.0 or 1.0)
@@ -379,8 +379,8 @@ Here are the specific parameters we need recommendations for:
 - "fallback_atr_percent" (Fallback ATR percentage, e.g. 0.02 for 2%)
 - "sl_multiplier" (Stop Loss ATR multiplier, e.g. 2.0)
 - "tp_multiplier" (Target Profit ATR multiplier, e.g. 6.0)
-- "min_reward_risk_ratio" (Minimum Reward to Risk Ratio, e.g. 2.0)\`
-    : \`- "trend_close_above_sma200", "trend_sma50_above_sma200" (Trend flags, usually 0.0 or 1.0)
+- "min_reward_risk_ratio" (Minimum Reward to Risk Ratio, e.g. 2.0)`
+    : `- "trend_close_above_sma200", "trend_sma50_above_sma200" (Trend flags, usually 0.0 or 1.0)
 - "strength_52w_high_diff" (52-week high difference as decimal fraction, e.g. 0.1)
 - "momentum_1y_high", "momentum_1y_medium" (1-year return % thresholds)
 - "volatility_atr_low", "volatility_atr_medium" (ATR thresholds in % of stock price)
@@ -389,19 +389,20 @@ Here are the specific parameters we need recommendations for:
 - "fallback_atr_percent" (Fallback ATR percentage, e.g. 0.05 for 5%)
 - "sl_multiplier" (Stop Loss ATR multiplier, e.g. 3.0)
 - "tp_multiplier" (Target Profit ATR multiplier, e.g. 15.0)
-- "min_reward_risk_ratio" (Minimum Reward to Risk Ratio, e.g. 5.0)\`
+- "min_reward_risk_ratio" (Minimum Reward to Risk Ratio, e.g. 5.0)`
 }
 
-Please recommend a list of optimized parameter values.
+Please recommend a list of optimized parameter values and scoring weights.
 For each parameter, you must provide:
 - "parameterName" (string): the exact name of the parameter listed above.
 - "value" (number): the recommended value.
-- "justification" (string): a brief explanation in Indonesian (max 15 words) of why this value is recommended.
+- "weight" (number): the recommended scoring weight (integer between 0 and 100). For risk management parameters ("fallback_atr_percent", "sl_multiplier", "tp_multiplier", "min_reward_risk_ratio"), keep weight at 0.
+- "justification" (string): a brief explanation in Indonesian (max 15 words) of why this value and weight are recommended.
 
 You must return your response in raw JSON format, containing exactly:
 {
   "recommendations": [
-    { "parameterName": "sl_multiplier", "value": 1.0, "justification": "Menghindari stop loss terlalu lebar untuk trading harian." },
+    { "parameterName": "sl_multiplier", "value": 1.0, "weight": 0, "justification": "Menghindari stop loss terlalu lebar untuk trading harian." },
     ...
   ]
 }
@@ -419,28 +420,64 @@ Return ONLY the raw JSON block. Do not include markdown code fence wrappers or b
       if (strategy === "day") {
         return {
           recommendations: [
-            { parameterName: "fallback_atr_percent", value: 0.01, justification: "Volatilitas standar 1% untuk day trading." },
-            { parameterName: "sl_multiplier", value: 1.0, justification: "Stop Loss ketat berbasis 1.0x ATR." },
-            { parameterName: "tp_multiplier", value: 2.0, justification: "Target Profit realistis 2.0x ATR." },
-            { parameterName: "min_reward_risk_ratio", value: 1.5, justification: "Rasio RR minimal 1.5x." }
+            { parameterName: "rvol_high_threshold", value: 2.0, weight: 35, justification: "Volume relatif tinggi mengindikasikan minat beli kuat." },
+            { parameterName: "rvol_medium_threshold", value: 1.5, weight: 25, justification: "Volume relatif moderat." },
+            { parameterName: "rvol_low_threshold", value: 1.0, weight: 15, justification: "Volume relatif rendah." },
+            { parameterName: "atr_high_threshold", value: 5.0, weight: 25, justification: "Volatilitas tinggi memberikan ruang gerak intraday." },
+            { parameterName: "atr_medium_threshold", value: 3.0, weight: 15, justification: "Volatilitas moderat." },
+            { parameterName: "gap_high_threshold", value: 2.0, weight: 15, justification: "Gap opening tinggi mengindikasikan momentum." },
+            { parameterName: "gap_medium_threshold", value: 1.0, weight: 10, justification: "Gap opening moderat." },
+            { parameterName: "rsi_overbought", value: 60.0, weight: 15, justification: "RSI overbought mendeteksi over-extension." },
+            { parameterName: "rsi_oversold", value: 30.0, weight: 15, justification: "RSI oversold mendeteksi pembalikan arah." },
+            { parameterName: "liquidity_high", value: 1000000.0, weight: 10, justification: "Likuiditas tinggi untuk eksekusi mudah." },
+            { parameterName: "liquidity_medium", value: 500000.0, weight: 5, justification: "Likuiditas moderat." },
+            { parameterName: "bb_lower_bounce", value: 0.0, weight: 15, justification: "Pantulan band bawah Bollinger." },
+            { parameterName: "price_above_vwap", value: 0.0, weight: 20, justification: "Harga di atas VWAP konfirmasi tren naik." },
+            { parameterName: "zscore_extreme_reversal", value: 2.5, weight: 20, justification: "Ekstrim pembalikan Z-Score." },
+            { parameterName: "ad_line_uptrend", value: 0.0, weight: 15, justification: "A/D line uptrend konfirmasi akumulasi." },
+            { parameterName: "fallback_atr_percent", value: 0.01, weight: 0, justification: "Volatilitas standar 1% untuk day trading." },
+            { parameterName: "sl_multiplier", value: 1.0, weight: 0, justification: "Stop Loss ketat berbasis 1.0x ATR." },
+            { parameterName: "tp_multiplier", value: 2.0, weight: 0, justification: "Target Profit realistis 2.0x ATR." },
+            { parameterName: "min_reward_risk_ratio", value: 1.5, weight: 0, justification: "Rasio RR minimal 1.5x." }
           ]
         };
       } else if (strategy === "swing") {
         return {
           recommendations: [
-            { parameterName: "fallback_atr_percent", value: 0.02, justification: "Volatilitas standar 2% untuk swing trading." },
-            { parameterName: "sl_multiplier", value: 2.0, justification: "Stop Loss moderat berbasis 2.0x ATR." },
-            { parameterName: "tp_multiplier", value: 6.0, justification: "Target Profit lebar 6.0x ATR." },
-            { parameterName: "min_reward_risk_ratio", value: 2.0, justification: "Rasio RR minimal 2.0x." }
+            { parameterName: "trend_close_above_ema20", value: 0.0, weight: 15, justification: "Harga di atas EMA20 pertanda tren naik." },
+            { parameterName: "trend_ema20_above_ema50", value: 0.0, weight: 20, justification: "EMA20 di atas EMA50 konfirmasi tren naik." },
+            { parameterName: "macd_hist_positive", value: 0.0, weight: 10, justification: "Histrogram MACD positif." },
+            { parameterName: "macd_line_above_signal", value: 0.0, weight: 15, justification: "Garis MACD di atas garis sinyal." },
+            { parameterName: "macd_golden_cross", value: 0.0, weight: 20, justification: "Golden cross MACD." },
+            { parameterName: "rsi_neutral_low", value: 40.0, weight: 20, justification: "RSI batas bawah netral." },
+            { parameterName: "rsi_neutral_high", value: 65.0, weight: 20, justification: "RSI batas atas netral." },
+            { parameterName: "rsi_neutral_exit", value: 70.0, weight: 10, justification: "RSI batas keluar." },
+            { parameterName: "volume_above_average", value: 0.0, weight: 10, justification: "Volume di atas rata-rata." },
+            { parameterName: "proximity_ema20_percent", value: 0.02, weight: 10, justification: "Kedekatan harga dengan EMA20." },
+            { parameterName: "adx_strong_trend", value: 25.0, weight: 15, justification: "ADX > 25 pertanda tren kuat." },
+            { parameterName: "vwap_deviation_exhaustion", value: 2.0, weight: 10, justification: "Deviasi VWAP untuk jenuh." },
+            { parameterName: "fallback_atr_percent", value: 0.02, weight: 0, justification: "Volatilitas standar 2% untuk swing trading." },
+            { parameterName: "sl_multiplier", value: 2.0, weight: 0, justification: "Stop Loss moderat berbasis 2.0x ATR." },
+            { parameterName: "tp_multiplier", value: 6.0, weight: 0, justification: "Target Profit lebar 6.0x ATR." },
+            { parameterName: "min_reward_risk_ratio", value: 2.0, weight: 0, justification: "Rasio RR minimal 2.0x." }
           ]
         };
       } else {
         return {
           recommendations: [
-            { parameterName: "fallback_atr_percent", value: 0.05, justification: "Volatilitas standar 5% untuk position trading." },
-            { parameterName: "sl_multiplier", value: 3.0, justification: "Stop Loss longgar berbasis 3.0x ATR." },
-            { parameterName: "tp_multiplier", value: 15.0, justification: "Target Profit investasi jangka panjang 15.0x ATR." },
-            { parameterName: "min_reward_risk_ratio", value: 5.0, justification: "Rasio RR minimal 5.0x." }
+            { parameterName: "trend_close_above_sma200", value: 0.0, weight: 15, justification: "Harga di atas SMA200 pertanda tren jangka panjang naik." },
+            { parameterName: "trend_sma50_above_sma200", value: 0.0, weight: 25, justification: "SMA50 di atas SMA200 konfirmasi tren kuat." },
+            { parameterName: "strength_52w_high_diff", value: 0.1, weight: 25, justification: "Dekat dengan harga tertinggi 52 minggu." },
+            { parameterName: "momentum_1y_high", value: 20.0, weight: 20, justification: "Return 1 tahun tinggi." },
+            { parameterName: "momentum_1y_medium", value: 10.0, weight: 10, justification: "Return 1 tahun moderat." },
+            { parameterName: "volatility_atr_low", value: 3.0, weight: 15, justification: "Volatilitas ATR rendah untuk investasi aman." },
+            { parameterName: "volatility_atr_medium", value: 5.0, weight: 5, justification: "Volatilitas ATR moderat." },
+            { parameterName: "poc_pullback_proximity", value: 0.05, weight: 20, justification: "Kedekatan pullback dengan Point of Control." },
+            { parameterName: "rvol_breakout_confirm", value: 1.5, weight: 15, justification: "Volume relatif tinggi konfirmasi breakout." },
+            { parameterName: "fallback_atr_percent", value: 0.05, weight: 0, justification: "Volatilitas standar 5% untuk position trading." },
+            { parameterName: "sl_multiplier", value: 3.0, weight: 0, justification: "Stop Loss longgar berbasis 3.0x ATR." },
+            { parameterName: "tp_multiplier", value: 15.0, weight: 0, justification: "Target Profit investasi jangka panjang 15.0x ATR." },
+            { parameterName: "min_reward_risk_ratio", value: 5.0, weight: 0, justification: "Rasio RR minimal 5.0x." }
           ]
         };
       }

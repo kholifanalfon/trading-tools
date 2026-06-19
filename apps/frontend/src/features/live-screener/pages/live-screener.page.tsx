@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useGetInfiniteLiveStockData } from "../hooks/use-get-live-stock-data";
-import { getLiveStockDataApi } from "../services/live-screener.api";
 import { useQueryClient } from "@tanstack/react-query";
 import { liveScreenerKeys } from "../live-screener.keys";
 import { toast } from "sonner";
@@ -25,6 +24,7 @@ export function LiveScreenerPage() {
   const toastIdRef = useRef<string | number | null>(null);
   const processedCountRef = useRef(0);
   const totalCountRef = useRef(0);
+  const isRefreshTriggeredRef = useRef(false);
 
   // Listen to live sync logs via WebSockets
   useWebSocket(["screener", "sync-log"], (data) => {
@@ -109,18 +109,19 @@ export function LiveScreenerPage() {
   const handleRefresh = async () => {
     setIsRefreshing(true);
     try {
-      // Trigger a cache clear on the backend for this query combination
-      await getLiveStockDataApi({
-        limit: 16,
-        search: backendSearch || undefined,
-        exchange: selectedExchange !== "ALL" ? selectedExchange : undefined,
-        strategy: activeStrategy,
-        refresh: true,
-      });
-
-      await queryClient.invalidateQueries({
-        queryKey: liveScreenerKeys.all,
-      });
+      isRefreshTriggeredRef.current = true;
+      const activeKey = [
+        ...liveScreenerKeys.all,
+        "data",
+        "infinite",
+        {
+          limit: 16,
+          search: backendSearch || undefined,
+          exchange: selectedExchange !== "ALL" ? selectedExchange : undefined,
+          strategy: activeStrategy,
+        },
+      ];
+      await queryClient.refetchQueries({ queryKey: activeKey });
       toast.success("Live stock data refreshed successfully!");
     } catch (err) {
       toast.error("Failed to refresh live data.");
@@ -145,6 +146,13 @@ export function LiveScreenerPage() {
       search: backendSearch || undefined,
       exchange: selectedExchange !== "ALL" ? selectedExchange : undefined,
       strategy: activeStrategy,
+      getExtraParams: () => {
+        if (isRefreshTriggeredRef.current) {
+          isRefreshTriggeredRef.current = false;
+          return { refresh: true };
+        }
+        return {};
+      },
     },
     {
       enabled: !!settings,

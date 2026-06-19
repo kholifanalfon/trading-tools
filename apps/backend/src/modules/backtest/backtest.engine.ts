@@ -8,6 +8,20 @@ export function runBacktestSimulation(symbol: string, candles: HistoricalDataPoi
   const initialCapital = params.initialCapital || 1_000_000_000_000; // 1 Trillion IDR
   const { strategy, rulesConfig, buyThreshold, sellThreshold, stopLossPercent, takeProfitPercent } = params;
 
+  // Resolve risk rules from rulesConfig (settings)
+  const getRule = (stratName: string, name: string, defaultVal: number) => {
+    const rule = rulesConfig?.[`${stratName}:${name}`];
+    return rule !== undefined ? rule.value : defaultVal;
+  };
+
+  const defaultSL = strategy === "day" ? 1.0 : strategy === "swing" ? 2.0 : 3.0;
+  const defaultTP = strategy === "day" ? 2.0 : strategy === "swing" ? 6.0 : 15.0;
+  const defaultFallback = strategy === "day" ? 0.01 : strategy === "swing" ? 0.02 : 0.05;
+
+  const fallbackAtrPercent = getRule(`risk_${strategy}`, "fallback_atr_percent", defaultFallback);
+  const slMultiplier = getRule(`risk_${strategy}`, "sl_multiplier", defaultSL);
+  const tpMultiplier = getRule(`risk_${strategy}`, "tp_multiplier", defaultTP);
+
   if (candles.length < 50) {
     return {
       initialCapital,
@@ -89,6 +103,8 @@ export function runBacktestSimulation(symbol: string, candles: HistoricalDataPoi
   let sharesCount = 0;
   let maxCapital = initialCapital;
   let maxDrawdown = 0;
+  let tradeStopLoss = 0;
+  let tradeTakeProfit = 0;
 
   const trades: TradeLog[] = [];
   const equityCurve: { date: Date; capital: number; benchmark: number }[] = [];
@@ -167,6 +183,30 @@ export function runBacktestSimulation(symbol: string, candles: HistoricalDataPoi
         entryDate = candle.date;
         sharesCount = capital / entryPrice;
         capital = 0;
+
+        // Calculate dynamic stop loss and take profit using settings' risk parameters
+        const currentAtr = metrics.atr14 || (entryPrice * fallbackAtrPercent);
+        tradeStopLoss = entryPrice - slMultiplier * currentAtr;
+        let targetProfit = entryPrice + tpMultiplier * currentAtr;
+
+        // Apply same optimal target profit logic as scoring.utils.ts
+        if (strategy === "day") {
+          if (metrics.bbUpper !== null && metrics.bbUpper > entryPrice) {
+            targetProfit = Math.min(targetProfit, metrics.bbUpper);
+          }
+        } else if (strategy === "swing") {
+          if (metrics.bbUpper !== null && metrics.bbUpper > entryPrice) {
+            targetProfit = (targetProfit + metrics.bbUpper) / 2;
+          }
+          if (metrics.yearHigh !== null && metrics.yearHigh > entryPrice) {
+            targetProfit = Math.min(targetProfit, metrics.yearHigh);
+          }
+        } else if (strategy === "position") {
+          if (metrics.yearHigh !== null && metrics.yearHigh > entryPrice) {
+            targetProfit = Math.min(targetProfit, metrics.yearHigh * 1.1);
+          }
+        }
+        tradeTakeProfit = targetProfit;
       }
     } else {
       // Sell Trigger check
@@ -174,13 +214,18 @@ export function runBacktestSimulation(symbol: string, candles: HistoricalDataPoi
       let shouldSell = false;
       let exitReason: TradeLog["exitReason"] = "score_crossover";
 
+      // If the user changed the SL/TP percent in the backtest form from default values, use the static percentage.
+      // Otherwise, use the settings' dynamic ATR-based values.
+      const isCustomSL = stopLossPercent !== -2.0 && stopLossPercent !== 0;
+      const isCustomTP = takeProfitPercent !== 6.0 && takeProfitPercent !== 0;
+
       if (score < sellThreshold) {
         shouldSell = true;
         exitReason = "score_crossover";
-      } else if (stopLossPercent !== 0 && profitPercent <= stopLossPercent) {
+      } else if (isCustomSL ? (profitPercent <= stopLossPercent) : (currentPrice <= tradeStopLoss)) {
         shouldSell = true;
         exitReason = "stop_loss";
-      } else if (takeProfitPercent !== 0 && profitPercent >= takeProfitPercent) {
+      } else if (isCustomTP ? (profitPercent >= takeProfitPercent) : (currentPrice >= tradeTakeProfit)) {
         shouldSell = true;
         exitReason = "take_profit";
       }

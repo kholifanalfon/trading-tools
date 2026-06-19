@@ -640,8 +640,8 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/pages/stock-detail.page.tsx": {
-    "mtime": 1781898046.5385258,
-    "ast_hash": "2f1df3f851bb3522d88a2a3693be47a2",
+    "mtime": 1781897844.101896,
+    "ast_hash": "378a59ba2f31b44441b677044fb76b74",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/screener.keys.ts": {
@@ -1685,8 +1685,8 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/components/position-sizing-calculator.tsx": {
-    "mtime": 1781898477.4087393,
-    "ast_hash": "edaf7489ff8e5f2f721a68226fa3e868",
+    "mtime": 1781897839.607278,
+    "ast_hash": "a0bf309d469aeec2b6e932b14a8a0105",
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/components/ui/slider.tsx": {

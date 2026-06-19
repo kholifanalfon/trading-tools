@@ -4,8 +4,7 @@ import { decrypt } from "@/core/utils/crypto";
 import { YahooFinanceAdapter } from "@/core/adapters/yahoo-finance.adapter";
 import { FinnhubAdapter } from "@/core/adapters/finnhub.adapter";
 import { ScreenerProviderAdapter, HistoricalDataPoint } from "@/core/types/api-stock-provider.types";
-import { calculateEMA, calculateRSI, calculateMACD, calculateSMA, calculateATR, calculateBollingerBands, calculateVWAP, calculateADX, calculateZScore, calculatePOC, calculateAccumulationDistribution } from "@/core/utils/indicators";
-import { calculateAllScores, mapRulesToConfig } from "@/core/utils/scoring.utils";
+import { calculateAllScores, mapRulesToConfig, calculateMetricsAndScores } from "@/core/utils/scoring.utils";
 import { ScoringRulesRepository } from "../screener/scoring-rules.repository";
 import { ScoreMetrics } from "@/core/types/scoring.types";
 import { LiveStockDataQuery } from "./live-screener.schema";
@@ -116,6 +115,11 @@ export class LiveScreenerService {
 
       const chunkResults = await Promise.all(
         chunk.map(async (stock) => {
+          if (stock.isCalculated) {
+            this.logAndBroadcast(`[Live Stock Data] [CACHE HIT] Using cached calculations for ${stock.symbol}`);
+            return stock;
+          }
+
           try {
             this.logAndBroadcast(`[Live Stock Data] Fetching history & calculating scores for ${stock.symbol}`);
 
@@ -166,7 +170,7 @@ export class LiveScreenerService {
                   console.error(`Failed to upsert stock_data fallback for watchlisted stock ${stock.symbol}:`, dbErr.removeNewline());
                 }
               }
-              return {
+              const result = {
                 id: stock.symbol,
                 stockId: resolvedStockId,
                 symbol: stock.symbol,
@@ -185,111 +189,38 @@ export class LiveScreenerService {
                 swingScore: null,
                 positionScore: null,
                 scorePayload: null,
+                isCalculated: true,
               };
-            }
 
-            // Sort ascending for technical indicator calculations
-            points.sort((a: HistoricalDataPoint, b: HistoricalDataPoint) => a.date.getTime() - b.date.getTime());
-
-            const closePrices = points.map((p: HistoricalDataPoint) => p.close);
-            const highPrices = points.map((p: HistoricalDataPoint) => p.high);
-            const lowPrices = points.map((p: HistoricalDataPoint) => p.low);
-            const volumeVals = points.map((p: HistoricalDataPoint) => p.volume);
-
-            const ema9Vals = calculateEMA(closePrices, 9);
-            const ema21Vals = calculateEMA(closePrices, 21);
-            const ema50Vals = calculateEMA(closePrices, 50);
-            const ema200Vals = calculateEMA(closePrices, 200);
-            const sma50Vals = calculateSMA(closePrices, 50);
-            const sma200Vals = calculateSMA(closePrices, 200);
-            const rsiVals = calculateRSI(closePrices, 14);
-            const atrVals = calculateATR(highPrices, lowPrices, closePrices, 14);
-            const avgVol10Vals = calculateSMA(volumeVals, 10);
-            const avgVol20Vals = calculateSMA(volumeVals, 20);
-
-            const { upper: bbUpperVals, lower: bbLowerVals } = calculateBollingerBands(closePrices);
-            const vwapVals = calculateVWAP(highPrices, lowPrices, closePrices, volumeVals);
-            const adxVals = calculateADX(highPrices, lowPrices, closePrices);
-            const zScoreVals = calculateZScore(closePrices);
-            const pocVals = calculatePOC(highPrices, lowPrices, closePrices, volumeVals);
-            const adLineVals = calculateAccumulationDistribution(highPrices, lowPrices, closePrices, volumeVals);
-
-            const { macd: macdVals, signal: macdSignalVals, histogram: macdHistVals } = calculateMACD(closePrices);
-
-            const macdGoldenCrossVals = new Array(points.length).fill(false);
-            const bbBounceVals = new Array(points.length).fill(false);
-            for (let k = 1; k < points.length; k++) {
-              const prevHist = macdHistVals[k - 1];
-              const currHist = macdHistVals[k];
-              if (prevHist !== null && currHist !== null && prevHist <= 0 && currHist > 0) {
-                macdGoldenCrossVals[k] = true;
-              }
-              const prevLower = bbLowerVals[k - 1];
-              const currLower = bbLowerVals[k];
-              if (currLower !== null && prevLower !== null) {
-                const touchedOrBelow = lowPrices[k] <= currLower || closePrices[k - 1] <= prevLower;
-                const closedAbove = closePrices[k] > currLower;
-                if (touchedOrBelow && closedAbove) {
-                  bbBounceVals[k] = true;
+              const cachedEntry = this.cache.get(cacheKey);
+              if (cachedEntry) {
+                const idx = cachedEntry.items.findIndex((item) => item.symbol === stock.symbol);
+                if (idx !== -1) {
+                  cachedEntry.items[idx] = result;
                 }
               }
+
+              return result;
             }
 
-            // 52-week lookback (252 bars)
-            const n = points.length;
-            const latestIdx = n - 1;
-
-            let yearHigh = null;
-            let priceReturn1Y = null;
-
-            if (n >= 252) {
-              let highest = -Infinity;
-              const startIdx = Math.max(0, latestIdx - 252);
-              for (let k = startIdx; k <= latestIdx; k++) {
-                if (highPrices[k] > highest) highest = highPrices[k];
-              }
-              yearHigh = highest;
-              const prevYearPrice = closePrices[startIdx];
-              priceReturn1Y = ((closePrices[latestIdx] - prevYearPrice) / prevYearPrice) * 100;
-            }
+            // Calculate indicators and metrics using centralized function
+            const calculated = calculateMetricsAndScores(points, rulesConfig);
+            const latestIdx = calculated.length - 1;
+            const latestCalculated = calculated[latestIdx];
 
             const latestPoint = points[latestIdx];
             const prevClose = latestIdx > 0 ? points[latestIdx - 1].close : latestPoint.open;
-            const change = latestPoint.close - prevClose;
-            const changePercent = prevClose !== 0 ? (change / prevClose) * 100 : 0;
 
-            const metrics: ScoreMetrics = {
-              close: latestPoint.close,
-              open: latestPoint.open,
-              high: latestPoint.high,
-              low: latestPoint.low,
-              prevClose,
-              volume: latestPoint.volume,
-              avgVolume10: avgVol10Vals[latestIdx],
-              avgVolume20: avgVol20Vals[latestIdx],
-              atr14: atrVals[latestIdx],
-              rsi14: rsiVals[latestIdx],
-              ema20: ema21Vals[latestIdx], // 21 as 20
-              ema50: ema50Vals[latestIdx],
-              sma50: sma50Vals[latestIdx],
-              sma200: sma200Vals[latestIdx],
-              macdLine: macdVals[latestIdx],
-              macdSignal: macdSignalVals[latestIdx],
-              macdHist: macdHistVals[latestIdx],
-              yearHigh,
-              priceReturn1Y,
-              bbLower: bbLowerVals[latestIdx],
-              bbUpper: bbUpperVals[latestIdx],
-              vwap: vwapVals[latestIdx],
-              adx: adxVals[latestIdx],
-              zScore: zScoreVals[latestIdx],
-              poc: pocVals[latestIdx],
-              adLine: adLineVals[latestIdx],
-              macdGoldenCross: macdGoldenCrossVals[latestIdx],
-              bbBounce: bbBounceVals[latestIdx],
-            };
+            // Prefer live/real-time values from the screener adapter (so it matches filtering)
+            const change = stock.change !== null && stock.change !== undefined ? stock.change : latestPoint.close - prevClose;
+            const changePercent = stock.changePercent !== null && stock.changePercent !== undefined ? stock.changePercent : prevClose !== 0 ? (change / prevClose) * 100 : 0;
+            const liveClose = stock.price !== null && stock.price !== undefined && stock.price > 0 ? stock.price : latestPoint.close;
 
-            const scores = calculateAllScores(metrics, rulesConfig);
+            // Merge live price data into the metrics for scoring
+            latestCalculated.metrics.close = liveClose;
+
+            // Re-calculate scores using live close price
+            const scores = calculateAllScores(latestCalculated.metrics, rulesConfig);
 
             this.logAndBroadcast(
               `[Live Stock Data] [SUCCESS] ${stock.symbol} calculated: Day ${scores.dayScore.total}, Swing ${scores.swingScore.total}, Position ${scores.positionScore.total}`,
@@ -306,16 +237,16 @@ export class LiveScreenerService {
                     open: latestPoint.open,
                     high: latestPoint.high,
                     low: latestPoint.low,
-                    close: latestPoint.close,
+                    close: liveClose,
                     volume: latestPoint.volume,
-                    ema9: ema9Vals[latestIdx],
-                    ema21: ema21Vals[latestIdx],
-                    ema50: ema50Vals[latestIdx],
-                    ema200: ema200Vals[latestIdx],
-                    rsi: rsiVals[latestIdx],
-                    macd: macdVals[latestIdx],
-                    macdSignal: macdSignalVals[latestIdx],
-                    macdHist: macdHistVals[latestIdx],
+                    ema9: latestCalculated.ema9,
+                    ema21: latestCalculated.ema21,
+                    ema50: latestCalculated.ema50,
+                    ema200: latestCalculated.ema200,
+                    rsi: latestCalculated.rsi,
+                    macd: latestCalculated.macd,
+                    macdSignal: latestCalculated.macdSignal,
+                    macdHist: latestCalculated.macdHist,
                     change,
                     changePercent,
                     dayScore: scores.dayScore.total,
@@ -368,7 +299,7 @@ export class LiveScreenerService {
             if (scores.positionScore.pocPullbackProximity !== undefined) positionMaxScore += 20;
             if (scores.positionScore.rvolBreakoutConfirm !== undefined) positionMaxScore += 15;
 
-            return {
+            const result = {
               id: stock.symbol,
               stockId: resolvedStockId,
               symbol: stock.symbol,
@@ -379,7 +310,7 @@ export class LiveScreenerService {
               open: latestPoint.open,
               high: latestPoint.high,
               low: latestPoint.low,
-              close: latestPoint.close,
+              close: liveClose,
               volume: latestPoint.volume,
               change,
               changePercent,
@@ -390,15 +321,26 @@ export class LiveScreenerService {
               swingMaxScore,
               positionMaxScore,
               scorePayload: scores,
-              ema9: ema9Vals[latestIdx],
-              ema21: ema21Vals[latestIdx],
-              ema50: ema50Vals[latestIdx],
-              ema200: ema200Vals[latestIdx],
-              rsi: rsiVals[latestIdx],
-              macd: macdVals[latestIdx],
-              macdSignal: macdSignalVals[latestIdx],
-              macdHist: macdHistVals[latestIdx],
+              ema9: latestCalculated.ema9,
+              ema21: latestCalculated.ema21,
+              ema50: latestCalculated.ema50,
+              ema200: latestCalculated.ema200,
+              rsi: latestCalculated.rsi,
+              macd: latestCalculated.macd,
+              macdSignal: latestCalculated.macdSignal,
+              macdHist: latestCalculated.macdHist,
+              isCalculated: true,
             };
+
+            const cachedEntry = this.cache.get(cacheKey);
+            if (cachedEntry) {
+              const idx = cachedEntry.items.findIndex((item) => item.symbol === stock.symbol);
+              if (idx !== -1) {
+                cachedEntry.items[idx] = result;
+              }
+            }
+
+            return result;
           } catch (err) {
             const errMsg = err instanceof Error ? err.message : String(err);
             this.logAndBroadcast(`[Live Stock Data] [FAILED] ${stock.symbol} calculation failed: ${errMsg}`);
