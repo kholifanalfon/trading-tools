@@ -43,21 +43,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Prepare .env file from .env.example
-        run: |
-          cp .env.example .env
-          # Append the dynamic release tag so docker-compose uses the correct images
-
-      - name: Copy Files (.env & docker-compose.server.yml) to Server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
-          source: "docker-compose.server.yml,.env"
-          target: ${{ secrets.TARGET_DIR || '~/' }}
-
       - name: Deploy and Start Services via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
