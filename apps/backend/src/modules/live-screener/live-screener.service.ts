@@ -70,6 +70,12 @@ export class LiveScreenerService {
 
     const adapter = await this.getAdapter();
     const cacheKey = JSON.stringify({ search, exchange, strategy });
+
+    if (query.refresh) {
+      this.cache.delete(cacheKey);
+      this.logAndBroadcast(`[Live Stock Data] Refresh requested. Cleared cache for key: ${cacheKey}`);
+    }
+
     const cached = this.cache.get(cacheKey);
     const now = Date.now();
 

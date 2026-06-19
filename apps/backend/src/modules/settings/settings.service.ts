@@ -160,32 +160,106 @@ export class SettingsService {
 
     const gemini = new GeminiAdapter(apiKey, model);
 
+    let isIndonesia = false;
+    try {
+      if (configObj.exchanges_config) {
+        const exchanges = JSON.parse(configObj.exchanges_config);
+        if (Array.isArray(exchanges)) {
+          isIndonesia = exchanges.some(
+            (ex: any) =>
+              ex.enabled &&
+              (ex.country?.toLowerCase() === "indonesia" ||
+                ex.id?.toLowerCase() === "idx" ||
+                ex.suffix?.toLowerCase() === ".jk")
+          );
+        }
+      }
+    } catch (e) {
+      console.error("Failed to parse exchanges_config:", e);
+    }
+
     const prompt = `
 You are an expert financial analyst. Recommend stock screening rules (pre-filters) for a "${strategy}" trading strategy.
+The target market/exchange region is: ${isIndonesia ? "Indonesia (IDX / Jakarta, currency in IDR)" : "United States (US, currency in USD)"}.
+
+IMPORTANT REGIONAL GUIDELINES:
+${
+  isIndonesia
+    ? `- The currency is Indonesian Rupiah (IDR).
+- For "eodprice", prices are in IDR. A threshold of Rp 100 - Rp 1,000 is common. Do NOT recommend USD-scale prices like 50 or 100 unless you mean IDR Rp 50 or Rp 100 (Rp 50 is the absolute minimum price on IDX).
+- For "intradaymarketcap", values are in IDR. Please note that 1 Billion USD is equivalent to ~15 Trillion IDR. A market cap of 1 Billion IDR (1 Miliar) is 1,000,000,000. Recommend values in the scale of Billions/Trillions IDR (e.g., 1,000,000,000 for 1 Miliar IDR, or 1,000,000,000,000 for 1 Trillion IDR).`
+    : `- The currency is US Dollar (USD).
+- E.g. price thresholds of $10 to $100 are common.
+- Market cap is in USD (e.g., 1,000,000,000 for 1 Billion USD).`
+}
+
 The screener will query Yahoo Finance. Here are the ONLY supported operand field keys:
 - "percentchange" (Daily Return %)
 - "dayvolume" (Daily Volume in shares)
-- "regularmarketprice" (Regular Price)
+- "eodprice" (Price EOD)
 - "intradaymarketcap" (Intraday Market Cap)
-- "forwardpe" (Forward P/E)
-- "returnonequity" (Return on Equity ROE %)
-- "averagevolume" (Average Volume)
-- "trailingpe" (Trailing P/E)
-- "pricetobook" (Price to Book P/B)
-- "dividendyield" (Dividend Yield %)
-- "operatingmargins" (Operating Margin %)
-- "epsforward" (Forward EPS)
-- "pegratio" (PEG Ratio)
-- "twohundreddaymovingaverage" (200-Day Moving Average)
-- "fiftydaymovingaverage" (50-Day Moving Average)
-- "fiftytwoweekhigh" (52-Week High)
-- "fiftytwoweeklow" (52-Week Low)
+- "lastclose52weekhigh.lasttwelvemonths" (52-Week High)
+- "lastclose52weeklow.lasttwelvemonths" (52-Week Low)
+- "avgdailyvol3m" (Average Volume 3M)
+- "beta" (Beta)
+- "peratio.lasttwelvemonths" (Trailing P/E)
+- "pricebookratio.quarterly" (Price to Book P/B)
+- "pegratio_5y" (PEG Ratio 5Y)
+- "bookvalueshare.lasttwelvemonths" (Book Value per Share)
+- "lastclosetevebit.lasttwelvemonths" (EV to EBIT)
+- "lastclosetevebitda.lasttwelvemonths" (EV to EBITDA)
+- "returnonequity.lasttwelvemonths" (Return on Equity ROE %)
+- "returnonassets.lasttwelvemonths" (Return on Assets ROA %)
+- "ebitdamargin.lasttwelvemonths" (EBITDA Margin %)
+- "grossprofitmargin.lasttwelvemonths" (Gross Profit Margin %)
+- "netincomemargin.lasttwelvemonths" (Net Income Margin %)
+- "epsgrowth.lasttwelvemonths" (EPS Growth %)
+- "quarterlyrevenuegrowth.quarterly" (Quarterly Revenue Growth %)
+- "totalrevenues1yrgrowth.lasttwelvemonths" (Revenue 1Y Growth %)
+- "forward_dividend_yield" (Forward Dividend Yield %)
+- "currentratio.lasttwelvemonths" (Current Ratio)
+- "quickratio.lasttwelvemonths" (Quick Ratio)
+- "totaldebtequity.lasttwelvemonths" (Debt to Equity Ratio)
+- "ltdebtequity.lasttwelvemonths" (Long-term Debt to Equity)
+- "ebitinterestexpense.lasttwelvemonths" (EBIT Interest Coverage)
+- "ebitdainterestexpense.lasttwelvemonths" (EBITDA Interest Coverage)
+- "netdebtebitda.lasttwelvemonths" (Net Debt to EBITDA)
+- "totaldebtebitda.lasttwelvemonths" (Total Debt to EBITDA)
+- "pctheldinsider" (Insider Ownership %)
+- "pctheldinst" (Institutional Ownership %)
+- "leveredfreecashflow.lasttwelvemonths" (Levered Free Cash Flow)
+- "unleveredfreecashflow.lasttwelvemonths" (Unlevered Free Cash Flow)
+- "capitalexpenditure.lasttwelvemonths" (Capital Expenditure)
+- "cashfromoperations.lasttwelvemonths" (Cash from Operations CFO)
+- "totalrevenues.lasttwelvemonths" (Total Revenue)
+- "netincomeis.lasttwelvemonths" (Net Income)
+- "ebitda.lasttwelvemonths" (EBITDA)
+- "operatingincome.lasttwelvemonths" (Operating Income)
+- "totalassets.lasttwelvemonths" (Total Assets)
+- "totaldebt.lasttwelvemonths" (Total Debt)
+- "totalequity.lasttwelvemonths" (Total Equity)
+- "totalcurrentassets.lasttwelvemonths" (Total Current Assets)
+- "totalcurrentliabilities.lasttwelvemonths" (Total Current Liabilities)
+- "totalcommonsharesoutstanding.lasttwelvemonths" (Shares Outstanding)
+- "short_percentage_of_shares_outstanding.value" (Short % of Shares Outstanding)
+- "short_interest.value" (Short Interest)
+- "short_percentage_of_float.value" (Short % of Float)
+- "days_to_cover_short.value" (Days to Cover Short)
+- "short_interest_percentage_change.value" (Short Interest % Change)
+- "esg_score" (ESG Score)
+- "environmental_score" (Environmental Score)
+- "social_score" (Social Score)
+- "governance_score" (Governance Score)
+- "highest_controversy" (Highest Controversy Level)
+- "altmanzscoreusingtheaveragestockinformationforaperiod.lasttwelvemonths" (Altman Z-Score)
 
 Supported operators:
 - "gt" (Greater Than)
 - "lt" (Less Than)
 - "eq" (Equal To)
 - "btwn" (Between / Range)
+- "gte" (Greater Than or Equal)
+- "lte" (Less Than or Equal)
 
 Please recommend a list of 3 to 6 optimized rules for "${strategy}" strategy.
 For each rule, you must provide:
@@ -217,7 +291,7 @@ Return ONLY the raw JSON block. Do not include markdown code fence wrappers or b
           rules: [
             { field: "percentchange", operator: "gt", value: 0, justification: "Mencari momentum return positif hari ini." },
             { field: "dayvolume", operator: "gt", value: 1000000, justification: "Menjamin likuiditas tinggi untuk intraday." },
-            { field: "regularmarketprice", operator: "gt", value: 100, justification: "Menghindari saham receh berisiko." }
+            { field: "eodprice", operator: "gt", value: 100, justification: "Menghindari saham receh berisiko." }
           ]
         };
       } else if (strategy === "swing") {
@@ -231,9 +305,9 @@ Return ONLY the raw JSON block. Do not include markdown code fence wrappers or b
       } else {
         return {
           rules: [
-            { field: "forwardpe", operator: "btwn", value: 5, valueMax: 25, justification: "Valuasi wajar untuk investasi jangka panjang." },
-            { field: "returnonequity", operator: "gt", value: 15, justification: "Efisiensi bisnis tinggi (ROE > 15%)." },
-            { field: "averagevolume", operator: "gt", value: 2000000, justification: "Volume rata-rata sangat likuid." }
+            { field: "peratio.lasttwelvemonths", operator: "btwn", value: 5, valueMax: 25, justification: "Valuasi wajar untuk investasi jangka panjang." },
+            { field: "returnonequity.lasttwelvemonths", operator: "gt", value: 15, justification: "Efisiensi bisnis tinggi (ROE > 15%)." },
+            { field: "avgdailyvol3m", operator: "gt", value: 2000000, justification: "Volume rata-rata sangat likuid." }
           ]
         };
       }
