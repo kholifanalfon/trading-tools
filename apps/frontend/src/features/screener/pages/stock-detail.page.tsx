@@ -166,7 +166,7 @@ export function StockDetailPage() {
       </div>
 
       {/* Main Grid content (split chart and statistics panels) */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
         {/* Left Side: Charts */}
         <div className="lg:col-span-3 space-y-4">
           {/* Chart Controls Bar */}
@@ -291,137 +291,212 @@ export function StockDetailPage() {
             chartType={chartType}
           />
           <AiAnalysisCard symbol={symbol} isProcessing={isAiProcessing} />
+
+          {/* Stastistics & Indicators Grid directly below AI Strategic Analysis */}
+          <div className="grid grid-cols-1 md:grid-cols-3 md:gap-x-4 gap-y-4 pt-2">
+            {/* Technical Indicators Summary */}
+            <div className="col-span-2 bg-card/45 border border-border p-4 rounded-xl space-y-3 shadow-sm h-full">
+              <h3 className="text-xs font-bold text-muted-foreground flex items-center gap-1.5 uppercase tracking-wider">
+                <ActivityIcon className="h-3.5 w-3.5" />
+                Technical Indicators
+              </h3>
+              {latestData ? (
+                <div className="space-y-3.5 text-xs pr-1">
+                  {/* RSI Indicator Summary */}
+                  <div className="space-y-1">
+                    <div className="flex justify-between font-mono">
+                      <span className="text-muted-foreground">RSI (14)</span>
+                      <span className="font-bold text-amber-500">{latestData.rsi ? latestData.rsi.toFixed(2) : "-"}</span>
+                    </div>
+                    {latestData.rsi && (
+                      <div className="text-[10px] text-muted-foreground italic">
+                        {latestData.rsi >= 70 ? (
+                          <span className="text-red-500 font-semibold">Overbought (Sell Signal)</span>
+                        ) : latestData.rsi <= 30 ? (
+                          <span className="text-green-500 font-semibold">Oversold (Buy Signal)</span>
+                        ) : (
+                          <span>Neutral Momentum</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* EMAs Alignment */}
+                  <div className="space-y-1.5">
+                    <span className="text-muted-foreground block">Moving Averages (EMA)</span>
+                    <div className="grid grid-cols-2 gap-2 font-mono text-[10px]">
+                      <div className="flex justify-between border-b border-border/30 pb-0.5">
+                        <span className="text-muted-foreground">EMA 9:</span>
+                        <span>{latestData.ema9 ? latestData.ema9.toFixed(2) : "-"}</span>
+                      </div>
+                      <div className="flex justify-between border-b border-border/30 pb-0.5">
+                        <span className="text-muted-foreground">EMA 21:</span>
+                        <span>{latestData.ema21 ? latestData.ema21.toFixed(2) : "-"}</span>
+                      </div>
+                      <div className="flex justify-between border-b border-border/30 pb-0.5">
+                        <span className="text-muted-foreground">EMA 50:</span>
+                        <span>{latestData.ema50 ? latestData.ema50.toFixed(2) : "-"}</span>
+                      </div>
+                      <div className="flex justify-between border-b border-border/30 pb-0.5">
+                        <span className="text-muted-foreground">EMA 200:</span>
+                        <span>{latestData.ema200 ? latestData.ema200.toFixed(2) : "-"}</span>
+                      </div>
+                    </div>
+                    {latestData.ema9 && latestData.ema21 && (
+                      <div className="text-[10px] text-muted-foreground italic pt-1">
+                        {latestData.ema9 > latestData.ema21 ? (
+                          <span className="text-green-500 font-semibold">Bullish Crossover (EMA 9 &gt; 21)</span>
+                        ) : (
+                          <span className="text-red-500 font-semibold">Bearish Crossover (EMA 9 &lt; 21)</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* MACD Analytics */}
+                  <div className="space-y-1">
+                    <div className="flex justify-between font-mono">
+                      <span className="text-muted-foreground">MACD</span>
+                      <span>{latestData.macd ? latestData.macd.toFixed(2) : "-"}</span>
+                    </div>
+                    <div className="flex justify-between font-mono text-[10px] text-muted-foreground">
+                      <span>Signal Line:</span>
+                      <span>{latestData.macdSignal ? latestData.macdSignal.toFixed(2) : "-"}</span>
+                    </div>
+                    <div className="flex justify-between font-mono text-[10px] text-muted-foreground border-b border-border/30 pb-1.5">
+                      <span>Histogram:</span>
+                      <span className={latestData.macdHist >= 0 ? "text-green-500" : "text-red-500"}>{latestData.macdHist ? latestData.macdHist.toFixed(2) : "-"}</span>
+                    </div>
+                    {latestData.macd && latestData.macdSignal && (
+                      <div className="text-[10px] text-muted-foreground italic border-b border-border/30 pb-2">
+                        {latestData.macd > latestData.macdSignal ? (
+                          <span className="text-green-500 font-semibold">Bullish MACD crossover</span>
+                        ) : (
+                          <span className="text-red-500 font-semibold">Bearish MACD crossover</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Bollinger Bands */}
+                  <div className="space-y-1">
+                    <span className="text-muted-foreground block font-semibold">Bollinger Bands (20, 2)</span>
+                    <div className="grid grid-cols-3 gap-2 font-mono text-[10px]">
+                      <div className="flex flex-col border-b border-border/30 pb-0.5">
+                        <span className="text-muted-foreground text-[8px] uppercase">Lower:</span>
+                        <span className="font-bold">{latestData.bbLower ? latestData.bbLower.toFixed(2) : "-"}</span>
+                      </div>
+                      <div className="flex flex-col border-b border-border/30 pb-0.5">
+                        <span className="text-muted-foreground text-[8px] uppercase">Middle:</span>
+                        <span className="font-bold">{latestData.ema21 ? latestData.ema21.toFixed(2) : "-"}</span>
+                      </div>
+                      <div className="flex flex-col border-b border-border/30 pb-0.5">
+                        <span className="text-muted-foreground text-[8px] uppercase">Upper:</span>
+                        <span className="font-bold">{latestData.bbUpper ? latestData.bbUpper.toFixed(2) : "-"}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* VWAP */}
+                  <div className="flex justify-between font-mono border-b border-border/30 pb-1.5">
+                    <span className="text-muted-foreground">VWAP:</span>
+                    <span className="font-bold text-foreground">{latestData.vwap ? latestData.vwap.toFixed(2) : "-"}</span>
+                  </div>
+
+                  {/* ADX */}
+                  <div className="space-y-1">
+                    <div className="flex justify-between font-mono">
+                      <span className="text-muted-foreground">ADX (14)</span>
+                      <span className="font-bold text-indigo-400">{latestData.adx ? latestData.adx.toFixed(2) : "-"}</span>
+                    </div>
+                    {latestData.adx && (
+                      <div className="text-[10px] text-muted-foreground italic border-b border-border/30 pb-1.5">
+                        {latestData.adx > 25 ? (
+                          <span className="text-green-500 font-semibold">Strong Trend ({latestData.adx.toFixed(1)})</span>
+                        ) : latestData.adx < 20 ? (
+                          <span className="text-amber-500 font-semibold">Weak/Sideways ({latestData.adx.toFixed(1)})</span>
+                        ) : (
+                          <span>Developing Trend</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Z-Score */}
+                  <div className="flex justify-between font-mono border-b border-border/30 pb-1.5">
+                    <span className="text-muted-foreground">Z-Score:</span>
+                    <span className={`font-bold ${latestData.zScore !== null && Math.abs(latestData.zScore) >= 2.5 ? "text-red-500" : "text-foreground"}`}>
+                      {latestData.zScore ? latestData.zScore.toFixed(2) : "-"}
+                    </span>
+                  </div>
+
+                  {/* POC */}
+                  <div className="flex justify-between font-mono border-b border-border/30 pb-1.5">
+                    <span className="text-muted-foreground">Volume Profile POC:</span>
+                    <span className="font-bold text-indigo-400">{latestData.poc ? latestData.poc.toFixed(2) : "-"}</span>
+                  </div>
+
+                  {/* Accumulation/Distribution */}
+                  <div className="flex justify-between font-mono">
+                    <span className="text-muted-foreground">A/D Line (CVD Proxy):</span>
+                    <span className="font-bold text-foreground">{latestData.adLine ? latestData.adLine.toLocaleString("en-US", { maximumFractionDigits: 0 }) : "-"}</span>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-xs text-muted-foreground">No indicator data available.</p>
+              )}
+            </div>
+            <div className="flex flex-col gap-5 w-full">
+              {/* Latest Stock Metrics */}
+              <div className="bg-card/45 border border-border p-4 rounded-xl space-y-3 shadow-sm flex flex-col">
+                <h3 className="text-xs font-bold text-muted-foreground flex items-center gap-1.5 uppercase tracking-wider">
+                  <DollarSignIcon className="h-3.5 w-3.5" />
+                  Latest Prices
+                </h3>
+                {quote ? (
+                  <div className="grid grid-cols-2 gap-1 text-xs font-mono">
+                    <div className="bg-muted/10 rounded-lg border border-border/20 p-2">
+                      <span className="block text-[9px] text-muted-foreground uppercase">Open</span>
+                      <span className="font-bold text-foreground">{quote.open?.toLocaleString()}</span>
+                    </div>
+                    <div className="bg-muted/10 rounded-lg border border-border/20 p-2">
+                      <span className="block text-[9px] text-muted-foreground uppercase">Close</span>
+                      <span className="font-bold text-foreground">{quote.currentPrice?.toLocaleString()}</span>
+                    </div>
+                    <div className="bg-muted/10 rounded-lg border border-border/20 p-2">
+                      <span className="block text-[9px] text-muted-foreground uppercase">High</span>
+                      <span className="font-bold text-foreground text-green-500">{quote.high?.toLocaleString()}</span>
+                    </div>
+                    <div className="bg-muted/10 rounded-lg border border-border/20 p-2">
+                      <span className="block text-[9px] text-muted-foreground uppercase">Low</span>
+                      <span className="font-bold text-foreground text-red-500">{quote.low?.toLocaleString()}</span>
+                    </div>
+                    <div className="col-span-2 bg-muted/10 rounded-lg border border-border/20 p-2 flex flex-col justify-center">
+                      <span className="block text-[9px] text-muted-foreground uppercase">Volume</span>
+                      <span className="font-bold text-foreground">{latestData?.volume?.toLocaleString() ?? "-"}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-xs text-muted-foreground">No latest quote available.</p>
+                )}
+              </div>
+              {/* AI Summary Bar */}
+              <div className="h-full">
+                <AiSummaryBar symbol={symbol} isProcessing={isAiProcessing} />
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Right Side: Detailed Stats & Indicator Interpretations */}
         <div className="space-y-4">
-          <StrategyScoreCard scorePayload={scorePayload} date={latestDataWithScore?.date || null} activeScoreTab={activeScoreTab} setActiveScoreTab={setActiveScoreTab} />
-
-          {/* Latest Stock Metrics */}
-          <div className="bg-card/45 border border-border p-4 rounded-xl space-y-3 shadow-sm">
-            <h3 className="text-xs font-bold text-muted-foreground flex items-center gap-1.5 uppercase tracking-wider">
-              <DollarSignIcon className="h-3.5 w-3.5" />
-              Latest Prices
-            </h3>
-            {quote ? (
-              <div className="grid grid-cols-2 gap-1 text-xs font-mono">
-                <div className="bg-muted/10 rounded-lg border border-border/20">
-                  <span className="block text-[9px] text-muted-foreground uppercase">Open</span>
-                  <span className="font-bold text-foreground">{quote.open?.toLocaleString()}</span>
-                </div>
-                <div className="bg-muted/10 rounded-lg border border-border/20">
-                  <span className="block text-[9px] text-muted-foreground uppercase">Close</span>
-                  <span className="font-bold text-foreground">{quote.currentPrice?.toLocaleString()}</span>
-                </div>
-                <div className="bg-muted/10 rounded-lg border border-border/20">
-                  <span className="block text-[9px] text-muted-foreground uppercase">High</span>
-                  <span className="font-bold text-foreground text-green-500">{quote.high?.toLocaleString()}</span>
-                </div>
-                <div className="bg-muted/10 rounded-lg border border-border/20">
-                  <span className="block text-[9px] text-muted-foreground uppercase">Low</span>
-                  <span className="font-bold text-foreground text-red-500">{quote.low?.toLocaleString()}</span>
-                </div>
-                <div className="col-span-2 bg-muted/10 rounded-lg border border-border/20">
-                  <span className="block text-[9px] text-muted-foreground uppercase">Volume</span>
-                  <span className="font-bold text-foreground">{latestData?.volume?.toLocaleString() ?? "-"}</span>
-                </div>
-              </div>
-            ) : (
-              <p className="text-xs text-muted-foreground">No latest quote available.</p>
-            )}
-          </div>
-
-          {/* Technical Indicators Summary */}
-          <div className="bg-card/45 border border-border p-4 rounded-xl space-y-3 shadow-sm">
-            <h3 className="text-xs font-bold text-muted-foreground flex items-center gap-1.5 uppercase tracking-wider">
-              <ActivityIcon className="h-3.5 w-3.5" />
-              Technical Indicators
-            </h3>
-            {latestData ? (
-              <div className="space-y-3.5 text-xs">
-                {/* RSI Indicator Summary */}
-                <div className="space-y-1">
-                  <div className="flex justify-between font-mono">
-                    <span className="text-muted-foreground">RSI (14)</span>
-                    <span className="font-bold text-amber-500">{latestData.rsi ? latestData.rsi.toFixed(2) : "-"}</span>
-                  </div>
-                  {latestData.rsi && (
-                    <div className="text-[10px] text-muted-foreground italic">
-                      {latestData.rsi >= 70 ? (
-                        <span className="text-red-500 font-semibold">Overbought (Sell Signal)</span>
-                      ) : latestData.rsi <= 30 ? (
-                        <span className="text-green-500 font-semibold">Oversold (Buy Signal)</span>
-                      ) : (
-                        <span>Neutral Momentum</span>
-                      )}
-                    </div>
-                  )}
-                </div>
-
-                {/* EMAs Alignment */}
-                <div className="space-y-1.5">
-                  <span className="text-muted-foreground block">Moving Averages (EMA)</span>
-                  <div className="grid grid-cols-2 gap-2 font-mono text-[10px]">
-                    <div className="flex justify-between border-b border-border/30 pb-0.5">
-                      <span className="text-muted-foreground">EMA 9:</span>
-                      <span>{latestData.ema9 ? latestData.ema9.toFixed(2) : "-"}</span>
-                    </div>
-                    <div className="flex justify-between border-b border-border/30 pb-0.5">
-                      <span className="text-muted-foreground">EMA 21:</span>
-                      <span>{latestData.ema21 ? latestData.ema21.toFixed(2) : "-"}</span>
-                    </div>
-                    <div className="flex justify-between border-b border-border/30 pb-0.5">
-                      <span className="text-muted-foreground">EMA 50:</span>
-                      <span>{latestData.ema50 ? latestData.ema50.toFixed(2) : "-"}</span>
-                    </div>
-                    <div className="flex justify-between border-b border-border/30 pb-0.5">
-                      <span className="text-muted-foreground">EMA 200:</span>
-                      <span>{latestData.ema200 ? latestData.ema200.toFixed(2) : "-"}</span>
-                    </div>
-                  </div>
-                  {latestData.ema9 && latestData.ema21 && (
-                    <div className="text-[10px] text-muted-foreground italic pt-1">
-                      {latestData.ema9 > latestData.ema21 ? (
-                        <span className="text-green-500 font-semibold">Bullish Crossover (EMA 9 &gt; 21)</span>
-                      ) : (
-                        <span className="text-red-500 font-semibold">Bearish Crossover (EMA 9 &lt; 21)</span>
-                      )}
-                    </div>
-                  )}
-                </div>
-
-                {/* MACD Analytics */}
-                <div className="space-y-1">
-                  <div className="flex justify-between font-mono">
-                    <span className="text-muted-foreground">MACD</span>
-                    <span>{latestData.macd ? latestData.macd.toFixed(2) : "-"}</span>
-                  </div>
-                  <div className="flex justify-between font-mono text-[10px] text-muted-foreground">
-                    <span>Signal Line:</span>
-                    <span>{latestData.macdSignal ? latestData.macdSignal.toFixed(2) : "-"}</span>
-                  </div>
-                  <div className="flex justify-between font-mono text-[10px] text-muted-foreground border-b border-border/30 pb-1.5">
-                    <span>Histogram:</span>
-                    <span className={latestData.macdHist >= 0 ? "text-green-500" : "text-red-500"}>{latestData.macdHist ? latestData.macdHist.toFixed(2) : "-"}</span>
-                  </div>
-                  {latestData.macd && latestData.macdSignal && (
-                    <div className="text-[10px] text-muted-foreground italic">
-                      {latestData.macd > latestData.macdSignal ? (
-                        <span className="text-green-500 font-semibold">Bullish MACD crossover</span>
-                      ) : (
-                        <span className="text-red-500 font-semibold">Bearish MACD crossover</span>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <p className="text-xs text-muted-foreground">No indicator data available.</p>
-            )}
-          </div>
-
-          {/* AI Quick Summary — Prediction, Call Action, Confidence */}
-          <AiSummaryBar symbol={symbol} isProcessing={isAiProcessing} />
+          <StrategyScoreCard
+            scorePayload={scorePayload}
+            date={latestDataWithScore?.date || null}
+            activeScoreTab={activeScoreTab}
+            setActiveScoreTab={setActiveScoreTab}
+            metrics={latestDataWithScore}
+          />
         </div>
       </div>
     </div>

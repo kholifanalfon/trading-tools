@@ -4,7 +4,7 @@ import { decrypt } from "@/core/utils/crypto";
 import { YahooFinanceAdapter } from "@/core/adapters/yahoo-finance.adapter";
 import { FinnhubAdapter } from "@/core/adapters/finnhub.adapter";
 import { ScreenerProviderAdapter, HistoricalDataPoint } from "@/core/types/api-stock-provider.types";
-import { calculateEMA, calculateRSI, calculateMACD, calculateSMA, calculateATR } from "@/core/utils/indicators";
+import { calculateEMA, calculateRSI, calculateMACD, calculateSMA, calculateATR, calculateBollingerBands, calculateVWAP, calculateADX, calculateZScore, calculatePOC, calculateAccumulationDistribution } from "@/core/utils/indicators";
 import { calculateAllScores, mapRulesToConfig } from "@/core/utils/scoring.utils";
 import { ScoringRulesRepository } from "../screener/scoring-rules.repository";
 import { ScoreMetrics } from "@/core/types/scoring.types";
@@ -207,6 +207,34 @@ export class LiveScreenerService {
             const avgVol10Vals = calculateSMA(volumeVals, 10);
             const avgVol20Vals = calculateSMA(volumeVals, 20);
 
+            const { upper: bbUpperVals, lower: bbLowerVals } = calculateBollingerBands(closePrices);
+            const vwapVals = calculateVWAP(highPrices, lowPrices, closePrices, volumeVals);
+            const adxVals = calculateADX(highPrices, lowPrices, closePrices);
+            const zScoreVals = calculateZScore(closePrices);
+            const pocVals = calculatePOC(highPrices, lowPrices, closePrices, volumeVals);
+            const adLineVals = calculateAccumulationDistribution(highPrices, lowPrices, closePrices, volumeVals);
+
+            const { macd: macdVals, signal: macdSignalVals, histogram: macdHistVals } = calculateMACD(closePrices);
+
+            const macdGoldenCrossVals = new Array(points.length).fill(false);
+            const bbBounceVals = new Array(points.length).fill(false);
+            for (let k = 1; k < points.length; k++) {
+              const prevHist = macdHistVals[k - 1];
+              const currHist = macdHistVals[k];
+              if (prevHist !== null && currHist !== null && prevHist <= 0 && currHist > 0) {
+                macdGoldenCrossVals[k] = true;
+              }
+              const prevLower = bbLowerVals[k - 1];
+              const currLower = bbLowerVals[k];
+              if (currLower !== null && prevLower !== null) {
+                const touchedOrBelow = lowPrices[k] <= currLower || closePrices[k - 1] <= prevLower;
+                const closedAbove = closePrices[k] > currLower;
+                if (touchedOrBelow && closedAbove) {
+                  bbBounceVals[k] = true;
+                }
+              }
+            }
+
             // 52-week lookback (252 bars)
             const n = points.length;
             const latestIdx = n - 1;
@@ -225,8 +253,6 @@ export class LiveScreenerService {
               priceReturn1Y = ((closePrices[latestIdx] - prevYearPrice) / prevYearPrice) * 100;
             }
 
-            const { macd: macdVals, signal: macdSignalVals, histogram: macdHistVals } = calculateMACD(closePrices);
-
             const latestPoint = points[latestIdx];
             const prevClose = latestIdx > 0 ? points[latestIdx - 1].close : latestPoint.open;
             const change = latestPoint.close - prevClose;
@@ -235,6 +261,8 @@ export class LiveScreenerService {
             const metrics: ScoreMetrics = {
               close: latestPoint.close,
               open: latestPoint.open,
+              high: latestPoint.high,
+              low: latestPoint.low,
               prevClose,
               volume: latestPoint.volume,
               avgVolume10: avgVol10Vals[latestIdx],
@@ -250,6 +278,15 @@ export class LiveScreenerService {
               macdHist: macdHistVals[latestIdx],
               yearHigh,
               priceReturn1Y,
+              bbLower: bbLowerVals[latestIdx],
+              bbUpper: bbUpperVals[latestIdx],
+              vwap: vwapVals[latestIdx],
+              adx: adxVals[latestIdx],
+              zScore: zScoreVals[latestIdx],
+              poc: pocVals[latestIdx],
+              adLine: adLineVals[latestIdx],
+              macdGoldenCross: macdGoldenCrossVals[latestIdx],
+              bbBounce: bbBounceVals[latestIdx],
             };
 
             const scores = calculateAllScores(metrics, rulesConfig);
@@ -315,6 +352,22 @@ export class LiveScreenerService {
               }
             }
 
+            // Calculate max score dynamically based on active rules
+            let dayMaxScore = 35 + 25 + 15 + 15 + 10; // base parameters
+            if (scores.dayScore.bbBounce !== undefined) dayMaxScore += 15;
+            if (scores.dayScore.priceAboveVwap !== undefined) dayMaxScore += 20;
+            if (scores.dayScore.zscoreExtreme !== undefined) dayMaxScore += 20;
+            if (scores.dayScore.adLineUptrend !== undefined) dayMaxScore += 15;
+
+            let swingMaxScore = 35 + 25 + 20 + 10 + 10; // base parameters
+            if (scores.swingScore.macdGoldenCross !== undefined) swingMaxScore += 20;
+            if (scores.swingScore.adxStrongTrend !== undefined) swingMaxScore += 15;
+            if (scores.swingScore.vwapDeviationExhaustion !== undefined) swingMaxScore += 10;
+
+            let positionMaxScore = 40 + 25 + 20 + 15; // base parameters
+            if (scores.positionScore.pocPullbackProximity !== undefined) positionMaxScore += 20;
+            if (scores.positionScore.rvolBreakoutConfirm !== undefined) positionMaxScore += 15;
+
             return {
               id: stock.symbol,
               stockId: resolvedStockId,
@@ -333,6 +386,9 @@ export class LiveScreenerService {
               dayScore: scores.dayScore.total,
               swingScore: scores.swingScore.total,
               positionScore: scores.positionScore.total,
+              dayMaxScore,
+              swingMaxScore,
+              positionMaxScore,
               scorePayload: scores,
               ema9: ema9Vals[latestIdx],
               ema21: ema21Vals[latestIdx],

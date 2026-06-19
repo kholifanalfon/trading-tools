@@ -57,5 +57,14 @@ export class SettingsController {
       next(error);
     }
   };
+
+  getAiScoringRulesRecommendation = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const result = await this.service.getAiScoringRulesRecommendation(req.body.strategy);
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 

@@ -313,5 +313,138 @@ Return ONLY the raw JSON block. Do not include markdown code fence wrappers or b
       }
     }
   }
+
+  async getAiScoringRulesRecommendation(strategy: "day" | "swing" | "position") {
+    const list = await this.repository.getAllSettings();
+    const configObj: Record<string, string> = {};
+    for (const item of list) {
+      configObj[item.key] = item.value;
+    }
+
+    const { decrypt } = await import("@/core/utils/crypto");
+    const { GeminiAdapter } = await import("@/core/adapters/gemini.adapter");
+
+    const encryptedKey = configObj.gemini_api_key;
+    const apiKey = encryptedKey ? decrypt(encryptedKey) : "";
+    const model = configObj.gemini_model || "gemini-1.5-flash";
+
+    const gemini = new GeminiAdapter(apiKey, model);
+
+    let isIndonesia = false;
+    try {
+      if (configObj.exchanges_config) {
+        const exchanges = JSON.parse(configObj.exchanges_config);
+        if (Array.isArray(exchanges)) {
+          isIndonesia = exchanges.some(
+            (ex: any) =>
+              ex.enabled &&
+              (ex.country?.toLowerCase() === "indonesia" ||
+                ex.id?.toLowerCase() === "idx" ||
+                ex.suffix?.toLowerCase() === ".jk")
+          );
+        }
+      }
+    } catch (e) {
+      console.error("Failed to parse exchanges_config:", e);
+    }
+
+    const prompt = `
+You are an expert financial analyst. Recommend scoring rule parameters and risk management thresholds for a "${strategy}" trading strategy.
+The target market/exchange region is: ${isIndonesia ? "Indonesia (IDX / Jakarta, currency in IDR)" : "United States (US, currency in USD)"}.
+
+Here are the specific parameters we need recommendations for:
+\${
+  strategy === "day"
+    ? \`- "rvol_high_threshold", "rvol_medium_threshold", "rvol_low_threshold" (Relative Volume thresholds)
+- "atr_high_threshold", "atr_medium_threshold" (ATR thresholds in % of stock price)
+- "gap_high_threshold", "gap_medium_threshold" (Opening gap % thresholds)
+- "rsi_overbought", "rsi_oversold" (RSI boundaries)
+- "liquidity_high", "liquidity_medium" (Daily volume in shares)
+- "bb_lower_bounce" (Bollinger band bounce flag, usually 0.0 or 1.0)
+- "price_above_vwap" (Price above VWAP flag, usually 0.0 or 1.0)
+- "zscore_extreme_reversal" (Z-Score threshold)
+- "ad_line_uptrend" (A/D line flag, usually 0.0 or 1.0)
+- "fallback_atr_percent" (Fallback ATR percentage, e.g. 0.01 for 1%)
+- "sl_multiplier" (Stop Loss ATR multiplier, e.g. 1.0)
+- "tp_multiplier" (Target Profit ATR multiplier, e.g. 2.0)
+- "min_reward_risk_ratio" (Minimum Reward to Risk Ratio, e.g. 1.5)\`
+    : strategy === "swing"
+    ? \`- "trend_close_above_ema20", "trend_ema20_above_ema50" (Trend flags, usually 0.0 or 1.0)
+- "macd_hist_positive", "macd_line_above_signal", "macd_golden_cross" (MACD indicators, usually 0.0 or 1.0)
+- "rsi_neutral_low", "rsi_neutral_high", "rsi_neutral_exit" (RSI boundaries)
+- "volume_above_average" (Volume above average flag, usually 0.0 or 1.0)
+- "proximity_ema20_percent" (Proximity to EMA20 as decimal fraction, e.g. 0.02)
+- "adx_strong_trend" (ADX threshold, e.g. 25.0)
+- "vwap_deviation_exhaustion" (VWAP standard deviation threshold, e.g. 2.0)
+- "fallback_atr_percent" (Fallback ATR percentage, e.g. 0.02 for 2%)
+- "sl_multiplier" (Stop Loss ATR multiplier, e.g. 2.0)
+- "tp_multiplier" (Target Profit ATR multiplier, e.g. 6.0)
+- "min_reward_risk_ratio" (Minimum Reward to Risk Ratio, e.g. 2.0)\`
+    : \`- "trend_close_above_sma200", "trend_sma50_above_sma200" (Trend flags, usually 0.0 or 1.0)
+- "strength_52w_high_diff" (52-week high difference as decimal fraction, e.g. 0.1)
+- "momentum_1y_high", "momentum_1y_medium" (1-year return % thresholds)
+- "volatility_atr_low", "volatility_atr_medium" (ATR thresholds in % of stock price)
+- "poc_pullback_proximity" (Proximity to Point of Control, e.g. 0.05)
+- "rvol_breakout_confirm" (Relative Volume breakout threshold, e.g. 1.5)
+- "fallback_atr_percent" (Fallback ATR percentage, e.g. 0.05 for 5%)
+- "sl_multiplier" (Stop Loss ATR multiplier, e.g. 3.0)
+- "tp_multiplier" (Target Profit ATR multiplier, e.g. 15.0)
+- "min_reward_risk_ratio" (Minimum Reward to Risk Ratio, e.g. 5.0)\`
+}
+
+Please recommend a list of optimized parameter values.
+For each parameter, you must provide:
+- "parameterName" (string): the exact name of the parameter listed above.
+- "value" (number): the recommended value.
+- "justification" (string): a brief explanation in Indonesian (max 15 words) of why this value is recommended.
+
+You must return your response in raw JSON format, containing exactly:
+{
+  "recommendations": [
+    { "parameterName": "sl_multiplier", "value": 1.0, "justification": "Menghindari stop loss terlalu lebar untuk trading harian." },
+    ...
+  ]
+}
+
+Return ONLY the raw JSON block. Do not include markdown code fence wrappers or backticks.
+`;
+
+    let responseText = await gemini.generateAnalysis(prompt);
+    responseText = responseText.replace(/^```json\s*/i, "").replace(/```$/, "").trim();
+    try {
+      return JSON.parse(responseText);
+    } catch (err) {
+      console.error("Failed to parse Gemini scoring rules recommendation:", responseText, err);
+      // Return defaults based on strategy
+      if (strategy === "day") {
+        return {
+          recommendations: [
+            { parameterName: "fallback_atr_percent", value: 0.01, justification: "Volatilitas standar 1% untuk day trading." },
+            { parameterName: "sl_multiplier", value: 1.0, justification: "Stop Loss ketat berbasis 1.0x ATR." },
+            { parameterName: "tp_multiplier", value: 2.0, justification: "Target Profit realistis 2.0x ATR." },
+            { parameterName: "min_reward_risk_ratio", value: 1.5, justification: "Rasio RR minimal 1.5x." }
+          ]
+        };
+      } else if (strategy === "swing") {
+        return {
+          recommendations: [
+            { parameterName: "fallback_atr_percent", value: 0.02, justification: "Volatilitas standar 2% untuk swing trading." },
+            { parameterName: "sl_multiplier", value: 2.0, justification: "Stop Loss moderat berbasis 2.0x ATR." },
+            { parameterName: "tp_multiplier", value: 6.0, justification: "Target Profit lebar 6.0x ATR." },
+            { parameterName: "min_reward_risk_ratio", value: 2.0, justification: "Rasio RR minimal 2.0x." }
+          ]
+        };
+      } else {
+        return {
+          recommendations: [
+            { parameterName: "fallback_atr_percent", value: 0.05, justification: "Volatilitas standar 5% untuk position trading." },
+            { parameterName: "sl_multiplier", value: 3.0, justification: "Stop Loss longgar berbasis 3.0x ATR." },
+            { parameterName: "tp_multiplier", value: 15.0, justification: "Target Profit investasi jangka panjang 15.0x ATR." },
+            { parameterName: "min_reward_risk_ratio", value: 5.0, justification: "Rasio RR minimal 5.0x." }
+          ]
+        };
+      }
+    }
+  }
 }
 

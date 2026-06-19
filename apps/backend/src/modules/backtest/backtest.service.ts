@@ -79,7 +79,7 @@ export class BacktestService {
     try {
       const gemini = await this.getGeminiAdapter();
       const prompt = `
-        You are an expert trading advisor. Analyze the following backtesting performance metrics for stock ticker "${symbol}" using strategy "${strategy}":
+        You are an expert trading advisor. Analyze the following backtesting performance metrics for stock ticker "${symbol}" using strategy "${strategy}". Note that the scoring system has been upgraded to include Bollinger Bands lower bounce, VWAP alignment, Z-Score mean reversion, ADX trend validation, POC (Point of Control) pullback, and A/D Line accumulation indicators:
         - Initial Capital: IDR ${result.initialCapital.toLocaleString()}
         - Final Capital: IDR ${result.finalCapital.toLocaleString()}
         - Total Return: ${result.totalReturnPercent.toFixed(2)}%
@@ -92,7 +92,7 @@ export class BacktestService {
 
         Provide a concise, professional analysis (max 3 short paragraphs) in Indonesian:
         1. Evaluate the overall profitability and risk (drawdown, Sharpe ratio).
-        2. Suggest whether the strategy parameter settings (Buy Threshold: ${buyThreshold}, Sell Threshold: ${sellThreshold}, Stop Loss: ${stopLossPercent}%, Take Profit: ${takeProfitPercent}%) are optimal or should be adjusted.
+        2. Suggest whether the strategy parameter settings (Buy Threshold: ${buyThreshold}, Sell Threshold: ${sellThreshold}, Stop Loss: ${stopLossPercent}%, Take Profit: ${takeProfitPercent}%) are optimal or should be adjusted, taking into account new factors like Bollinger Bands, ADX trend validation, VWAP alignment, and Z-Score mean reversion.
         3. Give 1 actionable recommendation for trading this specific ticker.
       `;
       aiInsights = await gemini.generateAnalysis(prompt);
@@ -321,8 +321,8 @@ You must return your response in raw JSON format, containing exactly:
   - "totalTrades" (number): expected number of total trades.
 
 For example, the keys in "alternativeParams" must only be the parameter keys from "Before" or "After", such as:
-- Threshold keys: "buyThreshold", "sellThreshold", "stopLossPercent", "takeProfitPercent", "rvol_high_threshold", "rsi_oversold", "rsi_neutral_low", "proximity_ema20_percent", "strength_52w_high_diff", "volatility_atr_low".
-- Weight overrides: "_weight:<parameter_name>". E.g., "_weight:trend_close_above_ema20", "_weight:rsi_neutral_low", etc.
+- Threshold keys: "buyThreshold", "sellThreshold", "stopLossPercent", "takeProfitPercent", "rvol_high_threshold", "rsi_oversold", "rsi_neutral_low", "proximity_ema20_percent", "strength_52w_high_diff", "volatility_atr_low", "bb_lower_bounce", "price_above_vwap", "zscore_extreme_reversal", "ad_line_uptrend", "macd_golden_cross", "adx_strong_trend", "vwap_deviation_exhaustion", "poc_pullback_proximity", "rvol_breakout_confirm".
+- Weight overrides: "_weight:<parameter_name>". E.g., "_weight:trend_close_above_ema20", "_weight:rsi_neutral_low", "_weight:bb_lower_bounce", "_weight:price_above_vwap", "_weight:zscore_extreme_reversal", "_weight:ad_line_uptrend", "_weight:macd_golden_cross", "_weight:adx_strong_trend", "_weight:vwap_deviation_exhaustion", "_weight:poc_pullback_proximity", "_weight:rvol_breakout_confirm", etc.
 
 Return ONLY the raw JSON block. Do not include markdown code fence wrappers or backticks.
 `;
