@@ -349,7 +349,7 @@ function PullToRefresh({ children, onRefresh }: PullToRefreshProps) {
   return (
     <main
       ref={containerRef}
-      className="flex-1 bg-background p-6 pb-20 md:pb-6 overflow-y-auto custom-scrollbar relative"
+      className="flex-1 bg-background p-6 pb-28 md:pb-6 overflow-y-auto custom-scrollbar relative"
     >
       <div
         className="absolute top-0 left-0 right-0 flex justify-center pointer-events-none transition-all duration-200 z-50"
