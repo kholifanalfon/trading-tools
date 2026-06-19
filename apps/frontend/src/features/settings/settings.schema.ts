@@ -13,3 +13,18 @@ export const UpdateSettingsFormSchema = z.object({
 });
 
 export type UpdateSettingsFormInput = z.infer<typeof UpdateSettingsFormSchema>;
+
+export const AiRecommendationRuleSchema = z.object({
+  field: z.string(),
+  operator: z.string(),
+  value: z.number(),
+  valueMax: z.number().optional(),
+  justification: z.string(),
+});
+
+export const AiRecommendationResponseSchema = z.object({
+  rules: z.array(AiRecommendationRuleSchema),
+});
+
+export type AiRecommendationRule = z.infer<typeof AiRecommendationRuleSchema>;
+export type AiRecommendationResponse = z.infer<typeof AiRecommendationResponseSchema>;

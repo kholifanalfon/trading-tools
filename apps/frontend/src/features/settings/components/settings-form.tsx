@@ -9,8 +9,8 @@ import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Field, FieldGroup, FieldLabel } from "@/shared/components/ui/field";
 import { ErrorDisplay } from "@/shared/components/ui/error-display";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/shared/components/ui/dialog";
-import { getAiScreenerRecommendationApi } from "../services/settings.api";
+import { useGetAiScreenerRecommendation } from "../hooks/use-get-ai-screener-recommendation";
+import { AiRecommendationDialog } from "./ai-recommendation-dialog";
 
 export interface SettingsFormProps {
   settings: GeminiSettings | undefined;
@@ -22,7 +22,7 @@ export interface SettingsFormProps {
 const DEFAULT_DAY_RULES = [
   { field: "percentchange", operator: "gt", value: 0 },
   { field: "dayvolume", operator: "gt", value: 1000000 },
-  { field: "regularmarketprice", operator: "gt", value: 100 },
+  { field: "eodprice", operator: "gt", value: 100 },
 ];
 
 const DEFAULT_SWING_RULES = [
@@ -32,9 +32,9 @@ const DEFAULT_SWING_RULES = [
 ];
 
 const DEFAULT_POSITION_RULES = [
-  { field: "forwardpe", operator: "btwn", value: 5, valueMax: 25 },
-  { field: "returnonequity", operator: "gt", value: 15 },
-  { field: "averagevolume", operator: "gt", value: 2000000 },
+  { field: "peratio.lasttwelvemonths", operator: "btwn", value: 5, valueMax: 25 },
+  { field: "returnonequity.lasttwelvemonths", operator: "gt", value: 15 },
+  { field: "avgdailyvol3m", operator: "gt", value: 2000000 },
 ];
 
 export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsFormProps) {
@@ -97,31 +97,27 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
   // Active Strategy Tab state
   const [activeStrategyTab, setActiveStrategyTab] = useState<"day" | "swing" | "position">("day");
 
-  // AI recommendation states
+  // AI recommendation query/mutation
   const [isRecommendationOpen, setIsRecommendationOpen] = useState(false);
-  const [isGeneratingRecommendations, setIsGeneratingRecommendations] = useState(false);
-  const [recommendedRules, setRecommendedRules] = useState<any[]>([]);
-  const [recommendationError, setRecommendationError] = useState<string | null>(null);
+  const { getRecommendations, isGeneratingRecommendations, recommendationError, recommendationData, resetRecommendations } = useGetAiScreenerRecommendation();
 
-  const handleGetRecommendations = async () => {
-    setIsGeneratingRecommendations(true);
-    setRecommendationError(null);
+  const handleGetRecommendations = () => {
     setIsRecommendationOpen(true);
-    try {
-      const response = await getAiScreenerRecommendationApi(activeStrategyTab);
-      setRecommendedRules(response.rules || []);
-    } catch (err) {
-      console.error("Failed to fetch AI recommendations:", err);
-      setRecommendationError("Gagal mengambil rekomendasi AI. Pastikan API Key Gemini sudah dikonfigurasi.");
-      setRecommendedRules([]);
-    } finally {
-      setIsGeneratingRecommendations(false);
-    }
+    getRecommendations(activeStrategyTab);
   };
 
   const handleApplyRecommendations = () => {
-    updateStrategyRules(activeStrategyTab, recommendedRules);
+    if (recommendationData?.rules) {
+      updateStrategyRules(activeStrategyTab, recommendationData.rules);
+    }
     setIsRecommendationOpen(false);
+  };
+
+  const handleRecommendationOpenChange = (open: boolean) => {
+    setIsRecommendationOpen(open);
+    if (!open) {
+      resetRecommendations();
+    }
   };
 
   // Dynamic rule list state
@@ -191,63 +187,108 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
     });
     updateStrategyRules(strategy, updated);
   };
-
-  const AVAILABLE_FIELDS = [
-    { value: "percentchange", label: "Daily Return (%)" },
-    { value: "dayvolume", label: "Daily Volume (shares)" },
-    { value: "regularmarketprice", label: "Regular Price" },
-    { value: "intradaymarketcap", label: "Intraday Market Cap" },
-    { value: "forwardpe", label: "Forward P/E" },
-    { value: "returnonequity", label: "Return on Equity (ROE %)" },
-    { value: "averagevolume", label: "Average Volume" },
-    { value: "trailingpe", label: "Trailing P/E" },
-    { value: "pricetobook", label: "Price to Book (P/B)" },
-    { value: "dividendyield", label: "Dividend Yield (%)" },
-    { value: "operatingmargins", label: "Operating Margin (%)" },
-    { value: "epsforward", label: "Forward EPS" },
-    { value: "pegratio", label: "PEG Ratio" },
-    { value: "twohundreddaymovingaverage", label: "200-Day Moving Average" },
-    { value: "fiftydaymovingaverage", label: "50-Day Moving Average" },
-    { value: "fiftytwoweekhigh", label: "52-Week High" },
-    { value: "fiftytwoweeklow", label: "52-Week Low" },
-  ];
-
   const OPERAND_GROUPS = [
     {
       label: "Market & Price (Harga & Pasar)",
       fields: [
-        { value: "regularmarketprice", label: "Regular Price" },
+        { value: "eodprice", label: "Price (EOD)" },
         { value: "percentchange", label: "Daily Return (%)" },
         { value: "intradaymarketcap", label: "Intraday Market Cap" },
-        { value: "fiftytwoweekhigh", label: "52-Week High" },
-        { value: "fiftytwoweeklow", label: "52-Week Low" },
-        { value: "fiftydaymovingaverage", label: "50-Day Moving Average" },
-        { value: "twohundreddaymovingaverage", label: "200-Day Moving Average" },
+        { value: "lastclose52weekhigh.lasttwelvemonths", label: "52-Week High" },
+        { value: "lastclose52weeklow.lasttwelvemonths", label: "52-Week Low" },
       ],
     },
     {
       label: "Volume & Liquidity (Volume & Likuiditas)",
       fields: [
         { value: "dayvolume", label: "Daily Volume (shares)" },
-        { value: "averagevolume", label: "Average Volume" },
+        { value: "avgdailyvol3m", label: "Average Volume (3M)" },
+        { value: "beta", label: "Beta" },
       ],
     },
     {
       label: "Valuation (Valuasi)",
       fields: [
-        { value: "forwardpe", label: "Forward P/E" },
-        { value: "trailingpe", label: "Trailing P/E" },
-        { value: "pricetobook", label: "Price to Book (P/B)" },
-        { value: "pegratio", label: "PEG Ratio" },
+        { value: "peratio.lasttwelvemonths", label: "Trailing P/E" },
+        { value: "pricebookratio.quarterly", label: "Price to Book (P/B)" },
+        { value: "pegratio_5y", label: "PEG Ratio (5Y)" },
+        { value: "bookvalueshare.lasttwelvemonths", label: "Book Value per Share" },
+        { value: "lastclosetevebit.lasttwelvemonths", label: "EV to EBIT" },
+        { value: "lastclosetevebitda.lasttwelvemonths", label: "EV to EBITDA" },
       ],
     },
     {
-      label: "Financial Performance (Kinerja Keuangan)",
+      label: "Financial Performance & Growth (Kinerja & Pertumbuhan)",
       fields: [
-        { value: "returnonequity", label: "Return on Equity (ROE %)" },
-        { value: "operatingmargins", label: "Operating Margin (%)" },
-        { value: "epsforward", label: "Forward EPS" },
-        { value: "dividendyield", label: "Dividend Yield (%)" },
+        { value: "returnonequity.lasttwelvemonths", label: "Return on Equity (ROE %)" },
+        { value: "returnonassets.lasttwelvemonths", label: "Return on Assets (ROA %)" },
+        { value: "ebitdamargin.lasttwelvemonths", label: "EBITDA Margin (%)" },
+        { value: "grossprofitmargin.lasttwelvemonths", label: "Gross Profit Margin (%)" },
+        { value: "netincomemargin.lasttwelvemonths", label: "Net Income Margin (%)" },
+        { value: "epsgrowth.lasttwelvemonths", label: "EPS Growth (%)" },
+        { value: "quarterlyrevenuegrowth.quarterly", label: "Quarterly Revenue Growth (%)" },
+        { value: "totalrevenues1yrgrowth.lasttwelvemonths", label: "Revenue 1Y Growth (%)" },
+        { value: "forward_dividend_yield", label: "Forward Dividend Yield (%)" },
+      ],
+    },
+    {
+      label: "Liquidity & Leverage (Likuiditas & Utang)",
+      fields: [
+        { value: "currentratio.lasttwelvemonths", label: "Current Ratio" },
+        { value: "quickratio.lasttwelvemonths", label: "Quick Ratio" },
+        { value: "totaldebtequity.lasttwelvemonths", label: "Debt to Equity Ratio" },
+        { value: "ltdebtequity.lasttwelvemonths", label: "Long-term Debt to Equity" },
+        { value: "ebitinterestexpense.lasttwelvemonths", label: "EBIT Interest Coverage" },
+        { value: "ebitdainterestexpense.lasttwelvemonths", label: "EBITDA Interest Coverage" },
+        { value: "netdebtebitda.lasttwelvemonths", label: "Net Debt to EBITDA" },
+        { value: "totaldebtebitda.lasttwelvemonths", label: "Total Debt to EBITDA" },
+      ],
+    },
+    {
+      label: "Ownership & Cash Flow (Kepemilikan & Arus Kas)",
+      fields: [
+        { value: "pctheldinsider", label: "Insider Ownership (%)" },
+        { value: "pctheldinst", label: "Institutional Ownership (%)" },
+        { value: "leveredfreecashflow.lasttwelvemonths", label: "Levered Free Cash Flow" },
+        { value: "unleveredfreecashflow.lasttwelvemonths", label: "Unlevered Free Cash Flow" },
+        { value: "capitalexpenditure.lasttwelvemonths", label: "Capital Expenditure" },
+        { value: "cashfromoperations.lasttwelvemonths", label: "Cash from Operations (CFO)" },
+      ],
+    },
+    {
+      label: "Raw Financials (Laporan Keuangan Mentah)",
+      fields: [
+        { value: "totalrevenues.lasttwelvemonths", label: "Total Revenue" },
+        { value: "netincomeis.lasttwelvemonths", label: "Net Income" },
+        { value: "ebitda.lasttwelvemonths", label: "EBITDA" },
+        { value: "operatingincome.lasttwelvemonths", label: "Operating Income" },
+        { value: "totalassets.lasttwelvemonths", label: "Total Assets" },
+        { value: "totaldebt.lasttwelvemonths", label: "Total Debt" },
+        { value: "totalequity.lasttwelvemonths", label: "Total Equity" },
+        { value: "totalcurrentassets.lasttwelvemonths", label: "Total Current Assets" },
+        { value: "totalcurrentliabilities.lasttwelvemonths", label: "Total Current Liabilities" },
+        { value: "totalcommonsharesoutstanding.lasttwelvemonths", label: "Shares Outstanding" },
+      ],
+    },
+    {
+      label: "Short Interest (Minat Jual Kosong)",
+      fields: [
+        { value: "short_percentage_of_shares_outstanding.value", label: "Short % of Shares Outstanding" },
+        { value: "short_interest.value", label: "Short Interest" },
+        { value: "short_percentage_of_float.value", label: "Short % of Float" },
+        { value: "days_to_cover_short.value", label: "Days to Cover Short" },
+        { value: "short_interest_percentage_change.value", label: "Short Interest % Change" },
+      ],
+    },
+    {
+      label: "ESG & Statistics (ESG & Statistik)",
+      fields: [
+        { value: "esg_score", label: "ESG Score" },
+        { value: "environmental_score", label: "Environmental Score" },
+        { value: "social_score", label: "Social Score" },
+        { value: "governance_score", label: "Governance Score" },
+        { value: "highest_controversy", label: "Highest Controversy Level" },
+        { value: "altmanzscoreusingtheaveragestockinformationforaperiod.lasttwelvemonths", label: "Altman Z-Score" },
       ],
     },
   ];
@@ -257,6 +298,8 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
     { value: "lt", label: "Less Than" },
     { value: "eq", label: "Equal To" },
     { value: "btwn", label: "Between (Range)" },
+    { value: "gte", label: "Greater Than or Equal" },
+    { value: "lte", label: "Less Than or Equal" },
   ];
 
   const handleExchangeToggle = (id: string) => {
@@ -387,13 +430,13 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
           </div>
         </div>
 
-        <div className="flex items-center gap-3 mt-4">
+        <div className="flex flex-col md:flex-row items-center gap-3 mt-4">
           <Button
             type="button"
             onClick={() => handleAddRule(strategy)}
             variant="outline"
             size="sm"
-            className="flex-1 h-8 flex items-center justify-center gap-1.5 border-dashed border-indigo-500/35 hover:border-indigo-500 text-indigo-400 hover:text-indigo-300 bg-indigo-500/5 hover:bg-indigo-500/10 transition"
+            className="w-full md:w-auto px-5 py-1.5 flex-1 flex items-center justify-center gap-1.5 border-dashed border-indigo-500/35 hover:border-indigo-500 text-indigo-400 hover:text-indigo-300 bg-indigo-500/5 hover:bg-indigo-500/10 transition"
           >
             <PlusIcon className="h-3.5 w-3.5" />
             Add Filter Rule
@@ -405,7 +448,7 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
             size="sm"
             onClick={handleGetRecommendations}
             disabled={isLoading || isGeneratingRecommendations}
-            className="flex-1 h-8 flex items-center justify-center gap-1.5 text-indigo-400 hover:text-indigo-300 hover:bg-indigo-500/10 border border-indigo-500/20 rounded-md transition"
+            className="w-full md:w-auto x-5 py-1.5 flex-1 flex items-center justify-center gap-1.5 text-indigo-400 hover:text-indigo-300 hover:bg-indigo-500/10 border border-indigo-500/20 rounded-md transition"
           >
             <SparklesIcon className="h-3.5 w-3.5 animate-pulse" />
             Optimize Rules
@@ -698,79 +741,16 @@ export function SettingsForm({ settings, onSubmit, isLoading, error }: SettingsF
           {isLoading ? "Saving Settings..." : "Save Configuration"}
         </Button>
       </div>
-
       {/* AI Recommendation Modal */}
-      <Dialog open={isRecommendationOpen} onOpenChange={setIsRecommendationOpen}>
-        <DialogContent className="w-[92vw] max-w-2xl md:max-w-4xl p-4 sm:p-6 bg-card border border-border/80 backdrop-blur-lg overflow-x-hidden">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-indigo-400">
-              <SparklesIcon className="h-5 w-5 animate-pulse" />
-              Rekomendasi AI Filter Screener
-            </DialogTitle>
-            <DialogDescription>
-              Gemini merekomendasikan parameter filter pre-screen untuk strategi <strong className="text-foreground uppercase">{activeStrategyTab}</strong> berdasarkan kondisi
-              pasar saat ini.
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="py-4 min-w-0 w-full">
-            {isGeneratingRecommendations ? (
-              <div className="p-8 rounded-lg bg-indigo-500/5 border border-indigo-500/10 space-y-3 animate-pulse flex flex-col justify-center items-center h-48">
-                <SparklesIcon className="h-6 w-6 text-indigo-400 animate-bounce" />
-                <div className="h-3 w-1/3 bg-indigo-500/20 rounded"></div>
-                <div className="h-3 w-1/2 bg-indigo-500/10 rounded"></div>
-              </div>
-            ) : recommendationError ? (
-              <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-xs text-center">{recommendationError}</div>
-            ) : (
-              <div className="space-y-4 min-w-0 w-full">
-                <div className="rounded-lg border border-border/60 overflow-x-auto w-full bg-background/30 animate-fade-in">
-                  <table className="w-full min-w-[600px] border-collapse text-left text-xs">
-                    <thead>
-                      <tr className="border-b border-border/60 bg-muted/40 text-muted-foreground font-semibold">
-                        <th className="p-3">Operand</th>
-                        <th className="p-3">Operator</th>
-                        <th className="p-3">Rekomendasi Nilai</th>
-                        <th className="p-3">Justifikasi AI</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-border/40">
-                      {recommendedRules.map((rule, index) => {
-                        const operandLabel = AVAILABLE_FIELDS.find((f) => f.value === rule.field)?.label || rule.field;
-                        const operatorLabel = AVAILABLE_OPERATORS.find((o) => o.value === rule.operator)?.label || rule.operator;
-                        const displayVal = rule.operator === "btwn" ? `${rule.value} s/d ${rule.valueMax}` : rule.value;
-                        return (
-                          <tr key={index} className="hover:bg-muted/10 transition-colors">
-                            <td className="p-3 font-semibold text-foreground">{operandLabel}</td>
-                            <td className="p-3 text-muted-foreground">{operatorLabel}</td>
-                            <td className="p-3 font-mono text-indigo-400 font-bold">{displayVal}</td>
-                            <td className="p-3 text-muted-foreground leading-normal max-w-xs">{rule.justification}</td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-2 pt-3 border-t border-border/50">
-                  <Button type="button" variant="outline" size="sm" onClick={() => setIsRecommendationOpen(false)} className="h-9 px-4 text-xs font-semibold w-full sm:w-auto">
-                    Batal
-                  </Button>
-                  <Button
-                    type="button"
-                    size="sm"
-                    onClick={handleApplyRecommendations}
-                    className="h-9 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold flex items-center justify-center gap-1.5 w-full sm:w-auto"
-                  >
-                    <SparklesIcon className="h-3.5 w-3.5" />
-                    Terapkan Rekomendasi
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
+      <AiRecommendationDialog
+        open={isRecommendationOpen}
+        onOpenChange={handleRecommendationOpenChange}
+        activeStrategyTab={activeStrategyTab}
+        isGeneratingRecommendations={isGeneratingRecommendations}
+        recommendationError={recommendationError ? recommendationError.message || "Gagal mengambil rekomendasi AI. Pastikan API Key Gemini sudah dikonfigurasi." : null}
+        recommendedRules={recommendationData?.rules || []}
+        onApplyRecommendations={handleApplyRecommendations}
+      />
     </form>
   );
 }

@@ -26,3 +26,9 @@ export const UpdateScoringRulesBatchSchema = z.object({
 
 export type UpdateScoringRulesBatchInput = z.infer<typeof UpdateScoringRulesBatchSchema>;
 
+export const GetAiRecommendationSchema = z.object({
+  strategy: z.enum(["day", "swing", "position"]),
+});
+
+export type GetAiRecommendationInput = z.infer<typeof GetAiRecommendationSchema>;
+

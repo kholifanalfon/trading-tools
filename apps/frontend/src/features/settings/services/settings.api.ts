@@ -1,5 +1,6 @@
 import { api } from "@/shared/config/api";
 import { GeminiSettings, UpdateGeminiSettingsPayload, ScoringRule, UpdateScoringRulesBatchPayload } from "../types/settings.types";
+import { AiRecommendationResponse } from "../settings.schema";
 
 export async function getSettingsApi(): Promise<GeminiSettings> {
   const response = await api.get<GeminiSettings>("/settings");
@@ -26,8 +27,8 @@ export async function updateScoringRulesApi(data: UpdateScoringRulesBatchPayload
   return response.data;
 }
 
-export async function getAiScreenerRecommendationApi(strategy: "day" | "swing" | "position"): Promise<{ rules: { field: string; operator: string; value: number; valueMax?: number; justification: string }[] }> {
-  const response = await api.post<{ rules: { field: string; operator: string; value: number; valueMax?: number; justification: string }[] }>("/settings/ai-recommendation", { strategy });
+export async function getAiScreenerRecommendationApi(strategy: "day" | "swing" | "position"): Promise<AiRecommendationResponse> {
+  const response = await api.post<AiRecommendationResponse>("/settings/ai-recommendation", { strategy });
   return response.data;
 }
 

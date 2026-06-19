@@ -25,4 +25,5 @@ export interface StockDataQueryParams {
   watchlist?: boolean;
   exchange?: string;
   strategy?: string;
+  refresh?: boolean;
 }
