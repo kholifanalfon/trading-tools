@@ -10,32 +10,27 @@
     "semantic_hash": "1726c2a954a6e12cf4e084a70389ef91"
   },
   "apps/backend/src/core/adapters/finnhub.adapter.ts": {
-    "mtime": 1781731547.3423007,
+    "mtime": 1781543854.698557,
     "ast_hash": "066d956a2900bc5adc932f55b889b12e",
     "semantic_hash": ""
   },
   "apps/backend/src/core/adapters/yahoo-finance.adapter.ts": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2014453,
-    "ast_hash": "862fa7374746ff050c9352b4b30107b0",
-=======
-    "mtime": 1781891783.7790475,
-    "ast_hash": "356a493d0f38539251e321c62e99e916",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781575642.6606247,
+    "ast_hash": "188380e69b65042f4aa29d125746ab9a",
     "semantic_hash": ""
   },
   "apps/backend/src/core/config.ts": {
-    "mtime": 1781886310.5247805,
-    "ast_hash": "0c084e67b46e820bb345a789087222d1",
-    "semantic_hash": ""
+    "mtime": 1781444594.2526658,
+    "ast_hash": "2850871c151ecc3cdffdce8679e980ab",
+    "semantic_hash": "2850871c151ecc3cdffdce8679e980ab"
   },
   "apps/backend/src/core/error-handler.ts": {
-    "mtime": 1781731547.3427894,
+    "mtime": 1781444599.2523844,
     "ast_hash": "f90672b2e1fe223a9c0054dbcd7aa276",
     "semantic_hash": "f90672b2e1fe223a9c0054dbcd7aa276"
   },
   "apps/backend/src/core/errors/app-error.ts": {
-    "mtime": 1781731547.343068,
+    "mtime": 1781444539.7110524,
     "ast_hash": "ef65cdce1282f22672f1e18941e403cc",
     "semantic_hash": "ef65cdce1282f22672f1e18941e403cc"
   },
@@ -75,42 +70,42 @@
     "semantic_hash": "9e39a018b4dc8d2bcc2283b6cc6753be"
   },
   "apps/backend/src/core/middlewares/admin.middleware.ts": {
-    "mtime": 1781731547.3432221,
+    "mtime": 1781444548.0569067,
     "ast_hash": "da9bf5103c54242a127b7c3a02125b79",
     "semantic_hash": "da9bf5103c54242a127b7c3a02125b79"
   },
   "apps/backend/src/core/middlewares/auth.middleware.ts": {
-    "mtime": 1781731547.3433387,
-    "ast_hash": "84e74168575a10311c91a0df934e47a0",
+    "mtime": 1781639224.2713275,
+    "ast_hash": "35c5dcbcf9c570336c6ff682ee690e06",
     "semantic_hash": ""
   },
   "apps/backend/src/core/middlewares/cors.middleware.ts": {
-    "mtime": 1781731547.3434553,
+    "mtime": 1781444550.693575,
     "ast_hash": "e99cf858f17429e647e1d56163ea7e47",
     "semantic_hash": "e99cf858f17429e647e1d56163ea7e47"
   },
   "apps/backend/src/core/middlewares/csrf.middleware.ts": {
-    "mtime": 1781886310.5250845,
-    "ast_hash": "62130a3bad9d06f341fbeade1f3dfefe",
+    "mtime": 1781639224.271565,
+    "ast_hash": "b369f6b8efdb7360d7f1ec0560807e4b",
     "semantic_hash": ""
   },
   "apps/backend/src/core/middlewares/navigation-blocker.middleware.ts": {
-    "mtime": 1781731547.3436954,
+    "mtime": 1781444555.463092,
     "ast_hash": "428050bf164c6e849f3181c0aa31e55d",
     "semantic_hash": "428050bf164c6e849f3181c0aa31e55d"
   },
   "apps/backend/src/core/middlewares/rate-limiter.middleware.ts": {
-    "mtime": 1781731547.3438053,
+    "mtime": 1781444557.1620893,
     "ast_hash": "242a289c993dc15c40e89bd17aa2b95f",
     "semantic_hash": "242a289c993dc15c40e89bd17aa2b95f"
   },
   "apps/backend/src/core/middlewares/request-id.middleware.ts": {
-    "mtime": 1781731547.3439248,
+    "mtime": 1781444559.2188692,
     "ast_hash": "8834d393c00672ae32576f44e55b5d22",
     "semantic_hash": "8834d393c00672ae32576f44e55b5d22"
   },
   "apps/backend/src/core/middlewares/request-logger.middleware.ts": {
-    "mtime": 1781731547.3440425,
+    "mtime": 1781446020.9972396,
     "ast_hash": "c2ae7d4fd5bda1f4acfbb96c092cfdc0",
     "semantic_hash": "c2ae7d4fd5bda1f4acfbb96c092cfdc0"
   },
@@ -125,9 +120,9 @@
     "semantic_hash": "7277bb7acbd6d8b9113ec8e1e3726044"
   },
   "apps/backend/src/core/types/scoring.types.ts": {
-    "mtime": 1781886310.5254946,
-    "ast_hash": "0d3da8e3366f9c080cdf976dbed12634",
-    "semantic_hash": ""
+    "mtime": 1781444570.2467804,
+    "ast_hash": "a31604cdafa4e2a8e446b64e5ced9508",
+    "semantic_hash": "a31604cdafa4e2a8e446b64e5ced9508"
   },
   "apps/backend/src/core/utils/crypto.ts": {
     "mtime": 1781444572.1594534,
@@ -135,18 +130,13 @@
     "semantic_hash": "8fef7f05694831dbf7d66ad363476afe"
   },
   "apps/backend/src/core/utils/indicators.ts": {
-    "mtime": 1781886310.5258424,
-    "ast_hash": "bc86e8a186a0db798a916e8591fcc2d8",
-    "semantic_hash": ""
+    "mtime": 1781444574.3572526,
+    "ast_hash": "efee8f0a29ee6989ca7b54ff2e80b023",
+    "semantic_hash": "efee8f0a29ee6989ca7b54ff2e80b023"
   },
   "apps/backend/src/core/utils/scoring.utils.ts": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2028964,
-    "ast_hash": "cdca7f144e26cf63537b3d45086484aa",
-=======
-    "mtime": 1781897811.3826025,
-    "ast_hash": "d1e2c855246557847a15cfd8348ede55",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781549827.78082,
+    "ast_hash": "97fd5fb7784d3afb3a896dd607310bd7",
     "semantic_hash": ""
   },
   "apps/backend/src/core/utils/string-extensions.ts": {
@@ -155,7 +145,7 @@
     "semantic_hash": "c66f44bb554efbe7a8c7b95d92efa69c"
   },
   "apps/backend/src/core/websocket.ts": {
-    "mtime": 1781731547.3465805,
+    "mtime": 1781444609.2790027,
     "ast_hash": "26071ce88b727f1ecf2389f9e5ed76db",
     "semantic_hash": "26071ce88b727f1ecf2389f9e5ed76db"
   },
@@ -230,17 +220,12 @@
     "semantic_hash": "9db7f326a4c1e14459a13f1289006d54"
   },
   "apps/backend/src/db/migrations/meta/_journal.json": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2032616,
-    "ast_hash": "4572f4a2ce58897fdeb9d47c8cd92ea8",
-=======
-    "mtime": 1781892349.0675373,
-    "ast_hash": "5df01f0b8aef6ec5fd45da07333c496d",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781729735.7100813,
+    "ast_hash": "0ce17a4dd27c702c91c55fe2569e1234",
     "semantic_hash": ""
   },
   "apps/backend/src/db/schema.ts": {
-    "mtime": 1781886310.5273457,
+    "mtime": 1781728201.7636456,
     "ast_hash": "cf9b8bba2a3eeed5f2cd118e8cfca98e",
     "semantic_hash": ""
   },
@@ -250,15 +235,9 @@
     "semantic_hash": "c1e59f0991bc9891b0f847298fc7b36c"
   },
   "apps/backend/src/db/schemas/stock-data.schema.ts": {
-<<<<<<< HEAD
-    "mtime": 1781899182.203808,
+    "mtime": 1781421808.224856,
     "ast_hash": "f616588520bc0d2d8f810430933fa3cf",
     "semantic_hash": "f616588520bc0d2d8f810430933fa3cf"
-=======
-    "mtime": 1781894823.8092318,
-    "ast_hash": "4488e6a62a61b7796b5f687c29928ae3",
-    "semantic_hash": ""
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
   },
   "apps/backend/src/db/schemas/stock-logs.schema.ts": {
     "mtime": 1781415211.2531066,
@@ -281,22 +260,22 @@
     "semantic_hash": "62de8887b229786350b2aabe90a87251"
   },
   "apps/backend/src/db/seeders/002-settings.seeder.ts": {
-    "mtime": 1781731547.34776,
+    "mtime": 1781572699.9153178,
     "ast_hash": "142bbc860195e4ad3d86b65b3e2216bc",
     "semantic_hash": ""
   },
   "apps/backend/src/index.ts": {
-    "mtime": 1781886310.527891,
-    "ast_hash": "fa0759da969166c1be0c9aa77727158f",
+    "mtime": 1781639224.2719336,
+    "ast_hash": "50282ab1c8eda6d31a8c0cbf2ca7e0f6",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/auth/auth.controller.ts": {
-    "mtime": 1781886310.528152,
-    "ast_hash": "66f24f4ca8de19428c3278d2b72507ff",
+    "mtime": 1781639224.2721422,
+    "ast_hash": "dd1dfd356084da5d98e7af6f09f373e0",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/auth/auth.repository.ts": {
-    "mtime": 1781731547.348102,
+    "mtime": 1781444432.176617,
     "ast_hash": "3dcf15b24d8f7318536bfc41baff00cd",
     "semantic_hash": "3dcf15b24d8f7318536bfc41baff00cd"
   },
@@ -311,102 +290,82 @@
     "semantic_hash": "1153f800c62193b68078f362ebdeca03"
   },
   "apps/backend/src/modules/auth/auth.service.ts": {
-    "mtime": 1781731547.3482165,
+    "mtime": 1781444438.7437265,
     "ast_hash": "d716ba431ef7b20cfa8cc3ef431a40ed",
     "semantic_hash": "d716ba431ef7b20cfa8cc3ef431a40ed"
   },
   "apps/backend/src/modules/screener/screener.controller.ts": {
-<<<<<<< HEAD
-    "mtime": 1781899182.206239,
+    "mtime": 1781728237.1734636,
     "ast_hash": "74474f52674d1a5660096292a6248a28",
-=======
-    "mtime": 1781888602.628255,
-    "ast_hash": "dbbddbad58a8c1e3a408dfcb296924ed",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
     "semantic_hash": ""
   },
   "apps/backend/src/modules/screener/screener.repository.ts": {
-    "mtime": 1781731547.3506017,
+    "mtime": 1781444418.184903,
     "ast_hash": "3ff5e08540d5d7ee5761961363b70a7f",
     "semantic_hash": "3ff5e08540d5d7ee5761961363b70a7f"
   },
   "apps/backend/src/modules/screener/screener.routes.ts": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2064354,
+    "mtime": 1781728241.1109424,
     "ast_hash": "a69bcf70f539326b27fdbfc67e8795e7",
-=======
-    "mtime": 1781888606.997192,
-    "ast_hash": "71a7e8425519e2a633607859bd119816",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
     "semantic_hash": ""
   },
   "apps/backend/src/modules/screener/screener.schema.ts": {
-    "mtime": 1781731547.350841,
+    "mtime": 1781554925.1860821,
     "ast_hash": "c61e979c59840397eb9a40e457b375fa",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/screener/screener.service.ts": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2069366,
-    "ast_hash": "ff494c708b7d22246ad94d9af21a7100",
-=======
-    "mtime": 1781891283.4504323,
-    "ast_hash": "cb891b8ee2f23e28d67fb0bb78e9ad56",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781729706.1135325,
+    "ast_hash": "4a9a68d1bd7cc61d9aff5582632e0d87",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/settings/settings.controller.ts": {
-    "mtime": 1781886310.530521,
-    "ast_hash": "5b04e0d9013c6b20db866a46b887994f",
+    "mtime": 1781572573.4673002,
+    "ast_hash": "3d13f246e51dada2aecad87d324ef918",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/settings/settings.repository.ts": {
-    "mtime": 1781731547.3515742,
+    "mtime": 1781444448.7094314,
     "ast_hash": "0723cffe601db7908b15585b4319ff1f",
     "semantic_hash": "0723cffe601db7908b15585b4319ff1f"
   },
   "apps/backend/src/modules/settings/settings.routes.ts": {
-    "mtime": 1781886310.5308583,
-    "ast_hash": "4b7c15d45c4eadc12db485afb0f19d0c",
+    "mtime": 1781572717.466676,
+    "ast_hash": "0b00475385bd4d831fcfaae6ef5bc54d",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/settings/settings.schema.ts": {
-    "mtime": 1781886310.531039,
-    "ast_hash": "807df2ccf0496339e73307082658b2d8",
+    "mtime": 1781572712.3826578,
+    "ast_hash": "e21b1510431ef72a0981b46f433cafee",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/settings/settings.service.ts": {
-<<<<<<< HEAD
-    "mtime": 1781899182.207711,
-    "ast_hash": "780ecd967f339322af080d1d56fbd031",
-=======
-    "mtime": 1781889921.926767,
-    "ast_hash": "8a57dc06fe0a79acb2dea3309714e992",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781572728.2750456,
+    "ast_hash": "84e2232da55167ef59c4f75ec3a56406",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/stocks/stocks.controller.ts": {
-    "mtime": 1781731547.3521817,
+    "mtime": 1781543897.6238537,
     "ast_hash": "83b66c521d912c5bc64367c04b743b5b",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/stocks/stocks.repository.ts": {
-    "mtime": 1781731547.352294,
+    "mtime": 1781444484.6185958,
     "ast_hash": "09693531121ae6d14d248f16dee1362b",
     "semantic_hash": "09693531121ae6d14d248f16dee1362b"
   },
   "apps/backend/src/modules/stocks/stocks.routes.ts": {
-    "mtime": 1781731547.3528156,
+    "mtime": 1781444462.0539737,
     "ast_hash": "c17b57e04f180f96a5276f6e21ce0520",
     "semantic_hash": "c17b57e04f180f96a5276f6e21ce0520"
   },
   "apps/backend/src/modules/stocks/stocks.schema.ts": {
-    "mtime": 1781731547.3529592,
+    "mtime": 1781444473.1730933,
     "ast_hash": "4b4f0ac84c2a5badbb05d265c6111027",
     "semantic_hash": "4b4f0ac84c2a5badbb05d265c6111027"
   },
   "apps/backend/src/modules/stocks/stocks.service.ts": {
-    "mtime": 1781731547.3531795,
+    "mtime": 1781543893.8511202,
     "ast_hash": "e9027a6be85601851814b8b406246a50",
     "semantic_hash": ""
   },
@@ -416,7 +375,7 @@
     "semantic_hash": "f54a87244c32b8fb149be9af4b4daacc"
   },
   "apps/backend/src/modules/user-management/user-management.repository.ts": {
-    "mtime": 1781731547.3533118,
+    "mtime": 1781444497.5780714,
     "ast_hash": "432c4fd5d1c2b65f261729a740245089",
     "semantic_hash": "432c4fd5d1c2b65f261729a740245089"
   },
@@ -431,17 +390,17 @@
     "semantic_hash": "327e04f09eaa20e928347867cfee6526"
   },
   "apps/backend/src/modules/user-management/user-management.service.ts": {
-    "mtime": 1781731547.3534288,
+    "mtime": 1781444502.9151123,
     "ast_hash": "9a03febb04a43d4559a26fc4927bc92f",
     "semantic_hash": "9a03febb04a43d4559a26fc4927bc92f"
   },
   "apps/backend/src/routes/v1.router.ts": {
-    "mtime": 1781731547.3535492,
-    "ast_hash": "1519e0ff08c4fd13a6046461f219d54d",
+    "mtime": 1781639224.2723167,
+    "ast_hash": "4f76c618550e2b99781527a45c76da64",
     "semantic_hash": ""
   },
   "apps/backend/src/types/declarations.d.ts": {
-    "mtime": 1781731547.3536997,
+    "mtime": 1781444522.284042,
     "ast_hash": "782ca483be97354eb3e820911fb8aeb9",
     "semantic_hash": "782ca483be97354eb3e820911fb8aeb9"
   },
@@ -506,8 +465,8 @@
     "semantic_hash": "0355276bc79439afe3c53e3a2470ca1e"
   },
   "apps/frontend/package.json": {
-    "mtime": 1781886310.5315952,
-    "ast_hash": "056b0994e716f9bb309812a084640498",
+    "mtime": 1781726690.4177365,
+    "ast_hash": "aab29c5ef37ed666e123264b8f1b1c22",
     "semantic_hash": ""
   },
   "apps/frontend/postcss.config.js": {
@@ -516,27 +475,22 @@
     "semantic_hash": "ef3ba2a81ba19f8ea5ddf625521e96f0"
   },
   "apps/frontend/src/App.tsx": {
-<<<<<<< HEAD
-    "mtime": 1781899333.3163052,
-    "ast_hash": "8646ed6143d1451c5d2764636046befc",
-=======
-    "mtime": 1781895966.597949,
-    "ast_hash": "550fa1d89218ab6632969ba08502a323",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781727372.5255287,
+    "ast_hash": "22cb6d5c9982a088c4779e37bcc0afec",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/auth/auth.schema.ts": {
-    "mtime": 1781731547.3548207,
-    "ast_hash": "45cc4e946a3235d9236a21488ae89820",
-    "semantic_hash": ""
+    "mtime": 1781444650.2690973,
+    "ast_hash": "8a7bd35b8efa16445da52a0f2098cc40",
+    "semantic_hash": "8a7bd35b8efa16445da52a0f2098cc40"
   },
   "apps/frontend/src/features/auth/components/login-form.tsx": {
-    "mtime": 1781731547.355042,
+    "mtime": 1781444627.625946,
     "ast_hash": "82910c5cf57f23843a6a553757ff64f2",
     "semantic_hash": "82910c5cf57f23843a6a553757ff64f2"
   },
   "apps/frontend/src/features/auth/components/register-form.tsx": {
-    "mtime": 1781731547.3552217,
+    "mtime": 1781444631.4511905,
     "ast_hash": "8b6b8024c9555a75916210cd2af66faf",
     "semantic_hash": "8b6b8024c9555a75916210cd2af66faf"
   },
@@ -551,18 +505,18 @@
     "semantic_hash": "ae14402ce9e3bbd1a07d231300c7ddd2"
   },
   "apps/frontend/src/features/auth/pages/auth-login.page.tsx": {
-    "mtime": 1781731547.35539,
+    "mtime": 1781444638.4591885,
     "ast_hash": "998a6a7d7104054b6a3891f2725d2f9a",
     "semantic_hash": "998a6a7d7104054b6a3891f2725d2f9a"
   },
   "apps/frontend/src/features/auth/pages/auth-register.page.tsx": {
-    "mtime": 1781731547.3555553,
-    "ast_hash": "590d49ba9b12c070b10963cfa1023f51",
-    "semantic_hash": ""
+    "mtime": 1781444641.4195778,
+    "ast_hash": "262c7181121b6bb1619570abdf684181",
+    "semantic_hash": "262c7181121b6bb1619570abdf684181"
   },
   "apps/frontend/src/features/auth/services/auth.api.ts": {
-    "mtime": 1781731547.3557277,
-    "ast_hash": "1739a1c5d880c4ef74434550074faf8e",
+    "mtime": 1781639224.2724974,
+    "ast_hash": "85a5e2d36c197b7977c49712f81c5955",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/auth/types/auth.types.ts": {
@@ -571,7 +525,7 @@
     "semantic_hash": "835c8814ea7c8d5ad29bb9654c438ecb"
   },
   "apps/frontend/src/features/info/components/info-presenter.tsx": {
-    "mtime": 1781731547.3676705,
+    "mtime": 1781444655.180568,
     "ast_hash": "42c48f646af34849db3f53e0ad145160",
     "semantic_hash": "42c48f646af34849db3f53e0ad145160"
   },
@@ -601,14 +555,14 @@
     "semantic_hash": "c5d202ca4ebbddb5e9419af232e6e7d4"
   },
   "apps/frontend/src/features/profile/components/settings-profile.tsx": {
-    "mtime": 1781731547.3704312,
-    "ast_hash": "c1d5a26d6f2165414fb231ce94cb4b13",
-    "semantic_hash": ""
+    "mtime": 1781444671.3112907,
+    "ast_hash": "f6689fbb06fb0ace6bb5958da6bfa86f",
+    "semantic_hash": "f6689fbb06fb0ace6bb5958da6bfa86f"
   },
   "apps/frontend/src/features/profile/pages/profile.page.tsx": {
-    "mtime": 1781731547.370744,
-    "ast_hash": "d8ed63ad6fd546d26fee39638013c9ec",
-    "semantic_hash": ""
+    "mtime": 1781444673.7213748,
+    "ast_hash": "cd13f408f4c2a24540ab3531a9d6e6fc",
+    "semantic_hash": "cd13f408f4c2a24540ab3531a9d6e6fc"
   },
   "apps/frontend/src/features/profile/profile.schema.ts": {
     "mtime": 1781444677.7765982,
@@ -621,34 +575,29 @@
     "semantic_hash": "738990d7d2e1c790a857f93a3f84518b"
   },
   "apps/frontend/src/features/screener/components/quote-details.tsx": {
-    "mtime": 1781731547.3710532,
+    "mtime": 1781444680.890795,
     "ast_hash": "0204fe12548347bf7c90a0c09fef78e2",
     "semantic_hash": "0204fe12548347bf7c90a0c09fef78e2"
   },
   "apps/frontend/src/features/screener/components/screener-results.tsx": {
-    "mtime": 1781731547.372873,
+    "mtime": 1781444684.55926,
     "ast_hash": "e61a45003de5f85e426e2c2fd34625bf",
     "semantic_hash": "e61a45003de5f85e426e2c2fd34625bf"
   },
   "apps/frontend/src/features/screener/components/screener-search.tsx": {
-    "mtime": 1781731547.3730955,
+    "mtime": 1781444686.6596375,
     "ast_hash": "ba2576b993ffa9388c3da94bd68e3f52",
     "semantic_hash": "ba2576b993ffa9388c3da94bd68e3f52"
   },
   "apps/frontend/src/features/screener/components/stock-chart-canvas.tsx": {
-    "mtime": 1781886310.5468829,
-    "ast_hash": "a1855276b546a45f0ff9c5e7cdf3b8be",
+    "mtime": 1781723454.4752328,
+    "ast_hash": "7a6f5a2b2c4dc571138cf25d7c22afd4",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/components/strategy-score-card.tsx": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2109647,
-    "ast_hash": "e0eef1ac44ff11ac0c4280ecd7347af3",
-=======
-    "mtime": 1781897603.8878515,
-    "ast_hash": "565d0255d849c17739cc42f8c0c1502c",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
-    "semantic_hash": ""
+    "mtime": 1781444693.7637522,
+    "ast_hash": "e21e7d3dea1f8e64bebf0c1f00b0f466",
+    "semantic_hash": "e21e7d3dea1f8e64bebf0c1f00b0f466"
   },
   "apps/frontend/src/features/screener/hooks/use-get-quote.ts": {
     "mtime": 1781444696.2809439,
@@ -656,7 +605,7 @@
     "semantic_hash": "991f251faaaa0223900b778ab7edc6c4"
   },
   "apps/frontend/src/features/screener/hooks/use-get-stock-data.ts": {
-    "mtime": 1781731547.3745158,
+    "mtime": 1781444697.479095,
     "ast_hash": "91d7108c872d2cc9fd0626eba5e2a799",
     "semantic_hash": "91d7108c872d2cc9fd0626eba5e2a799"
   },
@@ -676,53 +625,43 @@
     "semantic_hash": "8eb4d2534573074a362470a06e3e3a30"
   },
   "apps/frontend/src/features/screener/hooks/use-sync-historical.ts": {
-    "mtime": 1781731547.3747072,
+    "mtime": 1781444704.8876708,
     "ast_hash": "145b9caec67269ba26023d121242a174",
     "semantic_hash": "145b9caec67269ba26023d121242a174"
   },
   "apps/frontend/src/features/screener/pages/ingestion-logs.page.tsx": {
-    "mtime": 1781731547.3749957,
+    "mtime": 1781444708.20842,
     "ast_hash": "b7cfd71d35571ce4ca0ddd8428d5741c",
     "semantic_hash": "b7cfd71d35571ce4ca0ddd8428d5741c"
   },
   "apps/frontend/src/features/screener/pages/screener.page.tsx": {
-    "mtime": 1781731547.3752635,
+    "mtime": 1781554414.8962338,
     "ast_hash": "ae203926253e576bc30aea272213bec0",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/pages/stock-detail.page.tsx": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2114024,
-    "ast_hash": "b304b64587e4228e968041163eed3e2c",
-=======
-    "mtime": 1781898046.5385258,
-    "ast_hash": "2f1df3f851bb3522d88a2a3693be47a2",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781730931.407132,
+    "ast_hash": "eaf7089141aa7ff2a93d0e0823aab34f",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/screener.keys.ts": {
-    "mtime": 1781886310.5730348,
+    "mtime": 1781728254.3430288,
     "ast_hash": "6259b6d8675697dae13667c83c986edc",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/services/screener.api.ts": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2116659,
+    "mtime": 1781728248.612161,
     "ast_hash": "7ba6fcfdac7968259520f8f91171b635",
-=======
-    "mtime": 1781888614.0046687,
-    "ast_hash": "25dfd86a08402294d8dde480a5dfa3b9",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/types/screener.types.ts": {
-    "mtime": 1781886310.5735786,
-    "ast_hash": "43d833de6025cff69c06f357e696cf61",
+    "mtime": 1781554938.0864077,
+    "ast_hash": "d529b753f4a2b07ca1e273024c457b14",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/components/settings-form.tsx": {
-    "mtime": 1781886310.5846355,
-    "ast_hash": "c21cab807d2e42f230a1eedfc15a2f0f",
+    "mtime": 1781726523.2035477,
+    "ast_hash": "aa48d69b4dbba8988e677b28e8056515",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/hooks/use-get-settings.ts": {
@@ -741,47 +680,37 @@
     "semantic_hash": "c271834a3a950a9b307519dcd7ddba84"
   },
   "apps/frontend/src/features/settings/pages/settings.page.tsx": {
-<<<<<<< HEAD
-    "mtime": 1781899345.9849412,
-    "ast_hash": "7a687d7893efc87a087a682963de8fbd",
+    "mtime": 1781549937.8910215,
+    "ast_hash": "a5f3cb648627043b2e5e9599ed1bbe4e",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/services/settings.api.ts": {
-    "mtime": 1781899182.2131345,
-    "ast_hash": "95cd5165e2c1385399dd56a046ce42ad",
-=======
-    "mtime": 1781886310.5851672,
-    "ast_hash": "29a5a1e6ef7da4327660787ec50be192",
-    "semantic_hash": ""
-  },
-  "apps/frontend/src/features/settings/services/settings.api.ts": {
-    "mtime": 1781889927.8841887,
-    "ast_hash": "c66f61cffa914164a60fb30fffbcde59",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781572745.8083186,
+    "ast_hash": "1f1d307e800cac61fa3f2d9f9ae7d524",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/settings.keys.ts": {
-    "mtime": 1781731547.379403,
+    "mtime": 1781549914.825376,
     "ast_hash": "8642d4f5062fcfce32fff18c716ec7bd",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/settings.schema.ts": {
-    "mtime": 1781886310.5865376,
-    "ast_hash": "8f9be35540ac4a231822bd325f007bef",
+    "mtime": 1781572740.015493,
+    "ast_hash": "c52e5eff62fe5806d8bb0d37b1689922",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/types/settings.types.ts": {
-    "mtime": 1781731547.3807678,
+    "mtime": 1781572734.407753,
     "ast_hash": "a72604f744986b4f474793d832ae929e",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/stocks/components/stock-form-dialog.tsx": {
-    "mtime": 1781731547.3811495,
+    "mtime": 1781536288.6701632,
     "ast_hash": "e128bcc67899100d228a72605399e5d2",
     "semantic_hash": "e128bcc67899100d228a72605399e5d2"
   },
   "apps/frontend/src/features/stocks/components/stock-table.tsx": {
-    "mtime": 1781731547.3813539,
+    "mtime": 1781444756.313386,
     "ast_hash": "8e0f73aa467b6870c99a843ea991c98b",
     "semantic_hash": "8e0f73aa467b6870c99a843ea991c98b"
   },
@@ -801,7 +730,7 @@
     "semantic_hash": "5be26c289f6fe0f5c3eff688cbdff20a"
   },
   "apps/frontend/src/features/stocks/hooks/use-sync-stock.ts": {
-    "mtime": 1781731547.3816147,
+    "mtime": 1781444765.3142855,
     "ast_hash": "c1f7afeaa0048bb778aae2c74af20063",
     "semantic_hash": "c1f7afeaa0048bb778aae2c74af20063"
   },
@@ -811,12 +740,12 @@
     "semantic_hash": "6ff829d8d9824f722a006a516a6acb8b"
   },
   "apps/frontend/src/features/stocks/pages/stock-list.page.tsx": {
-    "mtime": 1781731547.3819034,
+    "mtime": 1781536288.6706104,
     "ast_hash": "6d67154aaeeab6a0e4429db62f310c60",
     "semantic_hash": "6d67154aaeeab6a0e4429db62f310c60"
   },
   "apps/frontend/src/features/stocks/services/stocks.api.ts": {
-    "mtime": 1781731547.3820777,
+    "mtime": 1781543918.2805085,
     "ast_hash": "7d34169a1cc1440aba70eb4aafd418ad",
     "semantic_hash": ""
   },
@@ -826,7 +755,7 @@
     "semantic_hash": "3bf1dbad6e7d7ad4574ab2e3d8f9da87"
   },
   "apps/frontend/src/features/stocks/stocks.schema.ts": {
-    "mtime": 1781731547.3822255,
+    "mtime": 1781444777.42888,
     "ast_hash": "a331799bdb2bf0c68647b0280aea03cf",
     "semantic_hash": "a331799bdb2bf0c68647b0280aea03cf"
   },
@@ -836,7 +765,7 @@
     "semantic_hash": "a7742c81af20a726ce88cdc500f9e762"
   },
   "apps/frontend/src/features/user-management/components/user-form-dialog.tsx": {
-    "mtime": 1781731547.3825295,
+    "mtime": 1781444783.054198,
     "ast_hash": "afcf5714bf1c3bb973a6741c14287489",
     "semantic_hash": "afcf5714bf1c3bb973a6741c14287489"
   },
@@ -866,7 +795,7 @@
     "semantic_hash": "a7cae6e04df4624962a1743830ea3eb8"
   },
   "apps/frontend/src/features/user-management/pages/user-management-list.page.tsx": {
-    "mtime": 1781731547.3827794,
+    "mtime": 1781444794.2162008,
     "ast_hash": "c4e3448b4bbd8f5f45509d0cee5f6971",
     "semantic_hash": "c4e3448b4bbd8f5f45509d0cee5f6971"
   },
@@ -896,18 +825,13 @@
     "semantic_hash": "5a6fd53fdcf2be529e9cc0b718fde352"
   },
   "apps/frontend/src/main.tsx": {
-    "mtime": 1781731542.8464253,
-    "ast_hash": "1ae0997031dd022167831372fdd87428",
+    "mtime": 1781639218.780147,
+    "ast_hash": "0a84039e9cb2c9f3452b9b7ab0d1538d",
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/components/app-sidebar.tsx": {
-<<<<<<< HEAD
-    "mtime": 1781899465.628053,
-    "ast_hash": "fd8942496c57b3694b63c88bd39feea1",
-=======
-    "mtime": 1781731547.3831398,
+    "mtime": 1781550414.0000448,
     "ast_hash": "be72e1fe2059e383f30a0b04f5b83959",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/components/global-error-container.tsx": {
@@ -926,15 +850,9 @@
     "semantic_hash": "3a03ec34eb7a2cd60993c4f1a940c909"
   },
   "apps/frontend/src/shared/components/nav-user.tsx": {
-<<<<<<< HEAD
-    "mtime": 1781899473.2886147,
-    "ast_hash": "9cbaf349f04a421380fa5d4aa65a27d0",
-    "semantic_hash": ""
-=======
-    "mtime": 1781731547.3832827,
+    "mtime": 1781444386.258705,
     "ast_hash": "8dd0bcf6f57e25f1c05aecfb1b8d5ff2",
     "semantic_hash": "8dd0bcf6f57e25f1c05aecfb1b8d5ff2"
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
   },
   "apps/frontend/src/shared/components/team-switcher.tsx": {
     "mtime": 1781189530.6235821,
@@ -987,7 +905,7 @@
     "semantic_hash": "fe42f9f11488ba65b1599ab272d263eb"
   },
   "apps/frontend/src/shared/components/ui/dialog.tsx": {
-    "mtime": 1781886310.5959008,
+    "mtime": 1781725347.8065248,
     "ast_hash": "889e907e4bc69c7b3cc75b50aa6d695a",
     "semantic_hash": ""
   },
@@ -1072,8 +990,8 @@
     "semantic_hash": "604a2be81284c920fdde18474bf85453"
   },
   "apps/frontend/src/shared/config/api.ts": {
-    "mtime": 1781731547.3842747,
-    "ast_hash": "9a65f59eaba07850a82c23177130bf0f",
+    "mtime": 1781639340.2470253,
+    "ast_hash": "baf74ac1e1202b888067f683a8c6340b",
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/errors/websocket-error.ts": {
@@ -1087,9 +1005,9 @@
     "semantic_hash": "e0c14dd4d2cc4bbe88a42a74a40efa3b"
   },
   "apps/frontend/src/shared/hooks/use-isomorphic-layout-effect.ts": {
-    "mtime": 1781731547.3845916,
-    "ast_hash": "b4bac71bd16c37309a1e96aad1594946",
-    "semantic_hash": ""
+    "mtime": 1781444813.2177422,
+    "ast_hash": "3ec6b15f65dea0c452e12507634bb470",
+    "semantic_hash": "3ec6b15f65dea0c452e12507634bb470"
   },
   "apps/frontend/src/shared/hooks/use-lazy-ref.ts": {
     "mtime": 1781444814.3188233,
@@ -1097,23 +1015,23 @@
     "semantic_hash": "fef475aa4729ed033b76443af54e6d5a"
   },
   "apps/frontend/src/shared/hooks/use-mobile.ts": {
-    "mtime": 1781731547.3850117,
-    "ast_hash": "1bb3ebac7752b497a78d34e341975bbd",
-    "semantic_hash": ""
+    "mtime": 1781444815.7994633,
+    "ast_hash": "c0a0bdd4638c391a1dd06ac82074e60b",
+    "semantic_hash": "c0a0bdd4638c391a1dd06ac82074e60b"
   },
   "apps/frontend/src/shared/hooks/use-websocket.ts": {
-    "mtime": 1781731547.3856058,
+    "mtime": 1781444816.697385,
     "ast_hash": "c44734746aa3986d638b6fbaf4f8bb5c",
     "semantic_hash": "c44734746aa3986d638b6fbaf4f8bb5c"
   },
   "apps/frontend/src/shared/providers/websocket-provider.tsx": {
-    "mtime": 1781731547.3860748,
-    "ast_hash": "4665d761f30641af20b3ee5fd46432be",
-    "semantic_hash": ""
+    "mtime": 1781444819.6808941,
+    "ast_hash": "308cef35c67f2f104b981f88f5d55840",
+    "semantic_hash": "308cef35c67f2f104b981f88f5d55840"
   },
   "apps/frontend/src/shared/stores/auth.store.ts": {
-    "mtime": 1781731542.8580213,
-    "ast_hash": "177e68e0d7eedeb7f12cbf8604056e19",
+    "mtime": 1781639224.273155,
+    "ast_hash": "cdba1ae92455579995a10700032ce564",
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/stores/error.store.ts": {
@@ -1137,14 +1055,9 @@
     "semantic_hash": "f11712cf304e8db13029bf6a4aec14d5"
   },
   "apps/frontend/src/vite-env.d.ts": {
-<<<<<<< HEAD
-    "mtime": 1781899400.6653082,
-    "ast_hash": "0a4f3b7dd428eddb0ecb9f048a2bfecc",
-=======
-    "mtime": 1781731547.3867035,
-    "ast_hash": "0a523bc418c9e44982f26b5b7d87d72f",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
-    "semantic_hash": ""
+    "mtime": 1781320493.7464063,
+    "ast_hash": "dbb7f5907fa9c838964426054adfba3d",
+    "semantic_hash": "dbb7f5907fa9c838964426054adfba3d"
   },
   "apps/frontend/tailwind.config.js": {
     "mtime": 1781190024.444026,
@@ -1167,13 +1080,8 @@
     "semantic_hash": "70bdd0a673bcfc0e828080b306e7c680"
   },
   "apps/frontend/vite.config.ts": {
-<<<<<<< HEAD
-    "mtime": 1781899395.738962,
-    "ast_hash": "2f0163cfab49337e6983e9a4e1f88c01",
-=======
-    "mtime": 1781886310.6110728,
+    "mtime": 1781726697.5914078,
     "ast_hash": "318a1e5d12dd197ad75d540efce5353e",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
     "semantic_hash": ""
   },
   "commands/db-generate.ts": {
@@ -1212,9 +1120,9 @@
     "semantic_hash": "3e95f2c1bc1826257e0ecf4ad24ef185"
   },
   "deploy.sh": {
-    "mtime": 1781731547.3896425,
-    "ast_hash": "7a74551f703a64c3b56d5352efc61f36",
-    "semantic_hash": ""
+    "mtime": 1781423073.832813,
+    "ast_hash": "26d49b7a6263268eb3e57bebf1c8bbe2",
+    "semantic_hash": "26d49b7a6263268eb3e57bebf1c8bbe2"
   },
   "docker/backend/entrypoint.sh": {
     "mtime": 1781187206.2580285,
@@ -1242,9 +1150,9 @@
     "semantic_hash": "ea7a98c570b1d165b0514d5891fa23d8"
   },
   ".agents/rules/graphify.md": {
-    "mtime": 1781731547.340333,
-    "ast_hash": "a0e4d192b9e2e17256124dbfc8e24e6a",
-    "semantic_hash": ""
+    "mtime": 1781492039.1400092,
+    "ast_hash": "f1e53ecc9194573d3c28fc116c743a2e",
+    "semantic_hash": "f1e53ecc9194573d3c28fc116c743a2e"
   },
   ".agents/workflows/code-generation.md": {
     "mtime": 1781188257.1805098,
@@ -1252,9 +1160,9 @@
     "semantic_hash": "1851aa714b2d618565ba4a514b190b3e"
   },
   ".agents/workflows/graphify.md": {
-    "mtime": 1781731547.3407245,
-    "ast_hash": "637776aa6f7496d069afe7520c845c8a",
-    "semantic_hash": ""
+    "mtime": 1781492039.1401336,
+    "ast_hash": "0bc020d491fca99550c1ea3de0a5f862",
+    "semantic_hash": "0bc020d491fca99550c1ea3de0a5f862"
   },
   ".github/workflows/_reusable-build-test.yml": {
     "mtime": 1781265801.6919599,
@@ -1297,9 +1205,9 @@
     "semantic_hash": "c0da772dbec3ba91adc1dd3551043d02"
   },
   ".github/workflows/on-release.yml": {
-    "mtime": 1781731547.3419363,
-    "ast_hash": "a7f8218833959b7dcc0e7cffca3c35b6",
-    "semantic_hash": ""
+    "mtime": 1781265801.6929996,
+    "ast_hash": "5981e9baeff30ed6ab9780b00e2cd617",
+    "semantic_hash": "5981e9baeff30ed6ab9780b00e2cd617"
   },
   "apps/docs/README.md": {
     "mtime": 1781187202.0496726,
@@ -1387,8 +1295,8 @@
     "semantic_hash": "f6e3faf55d738cf2affe1b44195f27cf"
   },
   "apps/frontend/index.html": {
-    "mtime": 1781886310.5314667,
-    "ast_hash": "732aef81fc53ec735d7e3a495fd3c980",
+    "mtime": 1781727705.2387204,
+    "ast_hash": "fcfbcc56e69ca9586544a39636539c11",
     "semantic_hash": ""
   },
   "backend-guidelines.md": {
@@ -1397,7 +1305,7 @@
     "semantic_hash": "44e20591fcf7823f2edd0b3550180594"
   },
   "docker-compose.yml": {
-    "mtime": 1781731547.3904772,
+    "mtime": 1781513459.3053925,
     "ast_hash": "4a5cbe6660cd2a0fbd12997024fb048a",
     "semantic_hash": ""
   },
@@ -1472,379 +1380,278 @@
     "semantic_hash": "9960a24288958394ac50e57ff638b036"
   },
   "apps/backend/src/modules/live-screener/live-screener.controller.ts": {
-    "mtime": 1781886310.5289736,
-    "ast_hash": "5165fb4d0509679136c6762ea084f8a3",
+    "mtime": 1781536776.0531702,
+    "ast_hash": "aabd021b56388f2ef8931ffe76b1f4a8",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/live-screener/live-screener.repository.ts": {
-    "mtime": 1781731547.3496041,
-    "ast_hash": "e083f39870bd68e571fbf8655add5863",
+    "mtime": 1781536757.7802076,
+    "ast_hash": "561c04ec8af378fcea0b616f86837ad7",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/live-screener/live-screener.routes.ts": {
-    "mtime": 1781731547.3497138,
-    "ast_hash": "8e527684d8a550e76b6e3f918cd545e3",
+    "mtime": 1781536781.9661431,
+    "ast_hash": "17a094ec9151579c349311ee213ee344",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/live-screener/live-screener.schema.ts": {
-    "mtime": 1781886310.5290992,
-    "ast_hash": "58bdc672d5e32527661bd4c3f0b137a4",
+    "mtime": 1781536752.4295857,
+    "ast_hash": "2ce4704972f4cf42b0240249c4b773f2",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/live-screener/live-screener.service.ts": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2057512,
-    "ast_hash": "9e8f622693f5a602ac4200ef5d144628",
+    "mtime": 1781723574.327182,
+    "ast_hash": "8234fcbdb27d893b2dc8875585c18d4c",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/live-screener/hooks/use-get-live-stock-data.ts": {
-    "mtime": 1781899182.2097454,
-    "ast_hash": "c04934c89cdffcc44f338bdeadfef03b",
-=======
-    "mtime": 1781897701.1283677,
-    "ast_hash": "86c33b171e9767dbffb1035690591b87",
-    "semantic_hash": ""
-  },
-  "apps/frontend/src/features/live-screener/hooks/use-get-live-stock-data.ts": {
-    "mtime": 1781893400.5637589,
-    "ast_hash": "9c6b8bacc961b4c232edc900adb8bbcb",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781723577.862919,
+    "ast_hash": "ede707b1a7ad96212511e6a0f3130ee0",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/live-screener/live-screener.keys.ts": {
-    "mtime": 1781731547.3683925,
-    "ast_hash": "57e6074204a128303b6b1991dabf1853",
+    "mtime": 1781536815.7879941,
+    "ast_hash": "5c5175afe95391e1f5c5feac255a4133",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/live-screener/pages/live-screener.page.tsx": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2101262,
-    "ast_hash": "4bcd3fed841a2b11c2e4928703f77a94",
-=======
-    "mtime": 1781893400.597967,
-    "ast_hash": "2df6f8d00dcd6157d2148d2a042f5f85",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781575617.0513165,
+    "ast_hash": "8e1d397da57fc2bba1c8ef960b38fb8a",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/live-screener/services/live-screener.api.ts": {
-    "mtime": 1781731547.3699496,
-    "ast_hash": "cb0a271c7683b0ea2ab52b4586302a23",
+    "mtime": 1781536797.2074583,
+    "ast_hash": "57c08617745421da45dcbb5029dce514",
     "semantic_hash": ""
   },
   "apps/backend/src/core/types/api-stock-provider.types.ts": {
-<<<<<<< HEAD
-    "mtime": 1781899182.202379,
+    "mtime": 1781543850.7609346,
     "ast_hash": "11c30567349cb68064ef559a7a87d3ef",
-=======
-    "mtime": 1781888585.8909528,
-    "ast_hash": "05038dca134dd1b9827c1811b9b1b5eb",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
     "semantic_hash": ""
   },
   "apps/backend/src/core/adapters/gemini.adapter.ts": {
-    "mtime": 1781886310.5239213,
-    "ast_hash": "9909445d417b8cc0dcec3a3744d714ec",
+    "mtime": 1781728650.5692778,
+    "ast_hash": "8b9dc8c17db88851f0daef4682926c95",
     "semantic_hash": ""
   },
   "apps/backend/src/core/startup.ts": {
-    "mtime": 1781886310.5252228,
-    "ast_hash": "cd4fa705b18ac524d63a2e4fc00c3663",
+    "mtime": 1781549807.1493452,
+    "ast_hash": "349b48b4ac014f75b4d28ea9cf5ac532",
     "semantic_hash": ""
   },
   "apps/backend/src/db/schemas/backtest-reports.schema.ts": {
-    "mtime": 1781731547.3472662,
-    "ast_hash": "ec1713c9c7f1e79c00320a5d89f4ba33",
+    "mtime": 1781550909.4568377,
+    "ast_hash": "2b5ca9eb5f8544394e254e98ed9ca955",
     "semantic_hash": ""
   },
   "apps/backend/src/db/schemas/scoring-rules.schema.ts": {
-    "mtime": 1781731547.3473768,
-    "ast_hash": "178d3ae8836753e709b39dcd2494bec5",
+    "mtime": 1781549769.983747,
+    "ast_hash": "1c1afe50e5c3e160cdb7ba2b59807f88",
     "semantic_hash": ""
   },
   "apps/backend/src/db/seeders/003-scoring-rules.seeder.ts": {
-    "mtime": 1781886310.5277255,
-    "ast_hash": "a2190b297a455bb1dfd7bbd9d0e688a7",
+    "mtime": 1781549799.6313996,
+    "ast_hash": "cca51f1d7d371818bd3079295585f947",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.controller.ts": {
-    "mtime": 1781731547.348375,
-    "ast_hash": "11219f4d007e5f7f46bde16511e1b9f1",
+    "mtime": 1781553229.3079891,
+    "ast_hash": "0aa8d8d68e3f602fe3dc8a76034550dc",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.engine.ts": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2044184,
-    "ast_hash": "9d826958266b34d0ac9fb6cb9886b596",
+    "mtime": 1781575687.5399115,
+    "ast_hash": "313e8df1382ba5a6940afcff5d0edde2",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.optimizer.ts": {
-    "mtime": 1781899182.204711,
-    "ast_hash": "d1263c365e22cddfd4877f4936106c76",
-=======
-    "mtime": 1781889651.802042,
-    "ast_hash": "07e417093c7d9ba6fb991dcff3a412bc",
-    "semantic_hash": ""
-  },
-  "apps/backend/src/modules/backtest/backtest.optimizer.ts": {
-    "mtime": 1781890066.275708,
-    "ast_hash": "7229233ae6fe554245b994189842d7b9",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781573898.5982013,
+    "ast_hash": "b99aaa7a4eb15971254f5fd6f246c267",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.routes.ts": {
-    "mtime": 1781731547.3488803,
-    "ast_hash": "30c16992fc96c5e674fe09d5389be4c8",
+    "mtime": 1781573714.9234145,
+    "ast_hash": "7fcfb9dd4a9810ea19a7f179add5c5f3",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.service.ts": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2052534,
-    "ast_hash": "cfbfa66d429940ad3afd9cfeca18289d",
-=======
-    "mtime": 1781891624.4195473,
-    "ast_hash": "f6947f2b1345604d2eee3958a530187b",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781575932.8843637,
+    "ast_hash": "8bd94a0fb14f0b52f00cf3fd4da3d694",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/screener/scoring-rules.repository.ts": {
-    "mtime": 1781731547.3502865,
-    "ast_hash": "21c47b332e9b42c2c7c96f2b6b2e5c45",
+    "mtime": 1781549818.9942582,
+    "ast_hash": "fa1ab6cd5086ad9e909207185fa8c751",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/pages/backtest.page.tsx": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2092428,
-    "ast_hash": "482234e0e7a15c37c81924336e76c26a",
-=======
-    "mtime": 1781890392.0725815,
-    "ast_hash": "919ae1c26debde1b3da1a606e5f50010",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781724215.6381178,
+    "ast_hash": "9b23972ef892f80dbc37bbd2ce0f6ee6",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/services/backtest.api.ts": {
-    "mtime": 1781731547.3671896,
-    "ast_hash": "b509971aab00619e844fa44fe2780b10",
+    "mtime": 1781574047.0206656,
+    "ast_hash": "103f1b58c29bcc81961be8f07cef7a1e",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/components/scoring-rules-form.tsx": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2125654,
-    "ast_hash": "ab13fd8a9da46dac8b490d7189c69a57",
-=======
-    "mtime": 1781889941.0467267,
-    "ast_hash": "84b8ce42d42858dc114db3fb0bbc06e2",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781726603.067228,
+    "ast_hash": "c2ddae1996d82aeb442f258c6c0f9636",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/hooks/use-get-scoring-rules.ts": {
-    "mtime": 1781731547.3786027,
-    "ast_hash": "caff57524f8b46e19f6a2f69ff793515",
+    "mtime": 1781549922.627986,
+    "ast_hash": "e36314dd71c154900f6f24c1e365bd0b",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/hooks/use-update-scoring-rules.ts": {
-    "mtime": 1781731547.3787072,
-    "ast_hash": "3214810583bd76aab8b54a4bacaf6c31",
+    "mtime": 1781549926.4710329,
+    "ast_hash": "156cc24aacf2aafe1cf60732c66510f6",
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/components/ui/markdown-preview.tsx": {
-    "mtime": 1781731547.383804,
-    "ast_hash": "699d9fb14b8e8b3503e41b2bf361c511",
+    "mtime": 1781550856.7622936,
+    "ast_hash": "147c49a5f495e01b1dc58aca90ad4639",
     "semantic_hash": ""
   },
   "apps/backend/src/db/migrations/0006_silent_smasher.sql": {
-    "mtime": 1781731547.3467119,
-    "ast_hash": "2f66a56d0bd2a9ebf2bd7ed3864a8f3a",
+    "mtime": 1781551063.156771,
+    "ast_hash": "2b64ebddb4a4435bf5731ad08a6ad429",
     "semantic_hash": ""
   },
   "apps/backend/src/db/migrations/meta/0006_snapshot.json": {
-    "mtime": 1781731547.3468797,
-    "ast_hash": "2582e27c0f9fe2c442e125fe02d24dd8",
+    "mtime": 1781551063.155697,
+    "ast_hash": "e6746dff0d8d68c11f1afad9e0e32c6f",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.schema.ts": {
-    "mtime": 1781731547.3490164,
-    "ast_hash": "7fb40364aea474def924adecc550df37",
+    "mtime": 1781573705.6791909,
+    "ast_hash": "beb302f32ca6478371d9d10d75e9479b",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.types.ts": {
-    "mtime": 1781731547.3493452,
-    "ast_hash": "9b2935b385e25091d3f4fe17aea75cb8",
+    "mtime": 1781573879.730088,
+    "ast_hash": "7b73cddc926225ef2350dfd4858fed3c",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/settings/settings-client.service.ts": {
-    "mtime": 1781731547.3512144,
-    "ast_hash": "f363aac6554ac27740f3cbb99828ecd8",
+    "mtime": 1781573539.9084895,
+    "ast_hash": "7e1320eee0b70e117533240f7f39cb8d",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/settings/settings-client.type.ts": {
-    "mtime": 1781731547.3512986,
-    "ast_hash": "5ccfdb0d47d500d1996abc521a39320f",
+    "mtime": 1781537668.011098,
+    "ast_hash": "a51d4d953e9fce732945fd802c9d177d",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/backtest.schema.ts": {
-    "mtime": 1781731547.3562944,
-    "ast_hash": "dab7af8acb6c9e60bb4a3249669fff34",
+    "mtime": 1781574055.0082111,
+    "ast_hash": "dc89f440c62e690d31f3fdd72d6afeba",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/types/backtest.types.ts": {
-    "mtime": 1781731547.3674254,
-    "ast_hash": "ed6d3ade501a1b175a7a8602d0bbac31",
+    "mtime": 1781574043.0332713,
+    "ast_hash": "f702f89c42d3b3c09db6d9747352be81",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/backtest.keys.ts": {
-    "mtime": 1781731547.355926,
-    "ast_hash": "beaf5cd4f795ca7430c7c299b43a4d28",
+    "mtime": 1781574131.117811,
+    "ast_hash": "29373d14c7df86ffe885f9af284b0c2b",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/components/backtest-charts.tsx": {
-    "mtime": 1781731547.357473,
-    "ast_hash": "eddf63a0f46bf17a52361edf4a094dfd",
+    "mtime": 1781574147.805719,
+    "ast_hash": "c9f982b482c23614c5d1d693f98aaa90",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/components/optimization-modal.tsx": {
-    "mtime": 1781886310.5355241,
-    "ast_hash": "46e03c918d3dcae67bf16c64b5b6b367",
+    "mtime": 1781725509.9484184,
+    "ast_hash": "05a2fddec15b38700d7dfde1b9fe2aa4",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/components/trades-table.tsx": {
-    "mtime": 1781886310.5369892,
-    "ast_hash": "6c1fd800ddf051eaa59a1a545058284f",
+    "mtime": 1781723876.8278983,
+    "ast_hash": "9b5d8f3b6447d0a34d4149b0c75d04fc",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/hooks/use-backtest.ts": {
-    "mtime": 1781731547.359182,
-    "ast_hash": "76978c73f6cd0ffd69e15f6f4206f86d",
+    "mtime": 1781574135.7857778,
+    "ast_hash": "172385fa0d9715ef8bdb93c05e346dfe",
     "semantic_hash": ""
   },
   "docker-compose.server.yml": {
-    "mtime": 1781731547.390271,
-    "ast_hash": "d4c2232d031c7a18d6041eff350ce060",
+    "mtime": 1781579552.1787124,
+    "ast_hash": "42162fc9c7ad893fa205760ef52d9c5d",
+    "semantic_hash": ""
+  },
+  "entrypoint.sh": {
+    "mtime": 1781632182.4138563,
+    "ast_hash": "be0e90b45951a1f18068e25ff27fb436",
+    "semantic_hash": ""
+  },
+  "apps/frontend/vercel.json": {
+    "mtime": 1781639218.783238,
+    "ast_hash": "0db7ccb3aff36e97aa469126e9e17f99",
     "semantic_hash": ""
   },
   "apps/backend/src/db/migrations/0007_bright_ogun.sql": {
-    "mtime": 1781886310.526295,
-    "ast_hash": "eddf035cbb0d8ed130f5acab2f19a692",
+    "mtime": 1781728206.4781084,
+    "ast_hash": "24f31aa82f0cb2de98b23ceedd21a01d",
     "semantic_hash": ""
   },
   "apps/backend/src/db/migrations/meta/0007_snapshot.json": {
-    "mtime": 1781886310.5266764,
-    "ast_hash": "2348bb6ccc8743c10cea2e5b9c69d286",
+    "mtime": 1781728206.4777377,
+    "ast_hash": "cd32abbb1cdf55a3d3a2df07a41965f4",
     "semantic_hash": ""
   },
   "apps/backend/src/db/schemas/ai-analyses.schema.ts": {
-    "mtime": 1781886310.5274405,
-    "ast_hash": "cc5d903c5140ea97ae4914829a848c7a",
+    "mtime": 1781729681.081383,
+    "ast_hash": "aed029f6aadfeef14503bbf51d9b399f",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/screener/ai-analysis.repository.ts": {
-    "mtime": 1781886310.5296052,
-    "ast_hash": "56827471a6cc4d81e3d2b58872c7cc52",
+    "mtime": 1781729690.1685166,
+    "ast_hash": "e11ca4710a690af5c2e110ffcab62ce7",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/components/ai-analysis-card.tsx": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2104805,
-    "ast_hash": "c307171cc56c8e77224ca3992f3553aa",
-=======
-    "mtime": 1781888306.1077795,
-    "ast_hash": "6d2653565c3cbf001251b0a4d57dd157",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781730872.1769354,
+    "ast_hash": "71451403617cdddfd1268bb972d65f98",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/hooks/use-ai-analysis.ts": {
-    "mtime": 1781886310.571277,
-    "ast_hash": "786f1a012ba7446c494a4aca021c193d",
+    "mtime": 1781728258.7751644,
+    "ast_hash": "cb213f5247776c6078565b8af205761d",
     "semantic_hash": ""
   },
   "apps/backend/src/db/migrations/0008_ambiguous_butterfly.sql": {
-    "mtime": 1781886310.526369,
-    "ast_hash": "a1ca4b5b5d69c49617448e5b26fd8350",
+    "mtime": 1781728916.951895,
+    "ast_hash": "7bf76fe821c14dec3d93538cd4fe8707",
     "semantic_hash": ""
   },
   "apps/backend/src/db/migrations/0009_motionless_archangel.sql": {
-    "mtime": 1781886310.5264463,
-    "ast_hash": "f9e93a55636a2b26711a35cae98401fa",
+    "mtime": 1781729478.4524775,
+    "ast_hash": "2475c5f420472e631853f64ee534d0ab",
     "semantic_hash": ""
   },
   "apps/backend/src/db/migrations/0010_daily_chimera.sql": {
-    "mtime": 1781886310.5265222,
-    "ast_hash": "76f5aa5b8ba211eef99314b48076c4d8",
+    "mtime": 1781729735.710186,
+    "ast_hash": "a7a48d4c9cfdf6aa405381022cc670c0",
     "semantic_hash": ""
   },
   "apps/backend/src/db/migrations/meta/0008_snapshot.json": {
-    "mtime": 1781886310.5268493,
-    "ast_hash": "da436cc1b26d6b3de18f6a2d4330ab5c",
+    "mtime": 1781728916.9510956,
+    "ast_hash": "0b9e45e97809d85f0a5aa83548db22a7",
     "semantic_hash": ""
   },
   "apps/backend/src/db/migrations/meta/0009_snapshot.json": {
-    "mtime": 1781886310.5269809,
-    "ast_hash": "2c3a431aa10849248a95ec6439b6d46f",
+    "mtime": 1781729478.4522526,
+    "ast_hash": "32510c96daf8143d034ccc05806181b8",
     "semantic_hash": ""
   },
   "apps/backend/src/db/migrations/meta/0010_snapshot.json": {
-    "mtime": 1781886310.5271099,
-    "ast_hash": "cae22fb38cb814292ec4a390c9c82578",
-    "semantic_hash": ""
-  },
-  "apps/frontend/src/features/settings/components/ai-recommendation-dialog.tsx": {
-    "mtime": 1781886310.5767386,
-    "ast_hash": "4c938c25d9009ab415b978297782a40c",
-    "semantic_hash": ""
-  },
-  "apps/frontend/src/features/settings/components/ai-scoring-recommendation-dialog.tsx": {
-<<<<<<< HEAD
-    "mtime": 1781899182.2122276,
-    "ast_hash": "c228747db1ae82a7fa4e3182fe33af90",
-=======
-    "mtime": 1781889932.4863985,
-    "ast_hash": "91ca20c7f06baa90039acf3a09fc4524",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
-    "semantic_hash": ""
-  },
-  "apps/frontend/src/features/settings/hooks/use-get-ai-scoring-rules-recommendation.ts": {
-    "mtime": 1781886310.584797,
-    "ast_hash": "f9c51e0c553ec3851458d39b6bc253e6",
-    "semantic_hash": ""
-  },
-  "apps/frontend/src/features/settings/hooks/use-get-ai-screener-recommendation.ts": {
-    "mtime": 1781886310.584892,
-    "ast_hash": "f9a3f25a234a8cc500c70b6d8b9fdf14",
-    "semantic_hash": ""
-  },
-  "apps/frontend/src/shared/components/ui/hover-card.tsx": {
-    "mtime": 1781886310.6021483,
-    "ast_hash": "d89f30bc022bd5e4adc55c121dbd5c5c",
-    "semantic_hash": ""
-  },
-<<<<<<< HEAD
-  "apps/frontend/src/shared/providers/pwa-provider.tsx": {
-    "mtime": 1781899359.7732182,
-    "ast_hash": "e202d26a7bad27cf12a636441e575637",
-=======
-  "apps/frontend/src/features/screener/hooks/use-get-corporate-actions.ts": {
-    "mtime": 1781888617.3732862,
-    "ast_hash": "358c1b57ffe43f81f087747bf9b0511f",
-    "semantic_hash": ""
-  },
-  "apps/backend/src/db/migrations/0011_eminent_charles_xavier.sql": {
-    "mtime": 1781892349.067701,
-    "ast_hash": "336efb364cebe60149597fcc0d1807b6",
-    "semantic_hash": ""
-  },
-  "apps/backend/src/db/migrations/meta/0011_snapshot.json": {
-    "mtime": 1781892349.0670006,
-    "ast_hash": "f3c47442a520cd291b1f46be1f4e38e0",
-    "semantic_hash": ""
-  },
-  "apps/frontend/src/features/screener/components/position-sizing-calculator.tsx": {
-    "mtime": 1781898477.4087393,
-    "ast_hash": "edaf7489ff8e5f2f721a68226fa3e868",
-    "semantic_hash": ""
-  },
-  "apps/frontend/src/shared/components/ui/slider.tsx": {
-    "mtime": 1781896732.8222764,
-    "ast_hash": "97f137bb831841e5f931151cf22d84fd",
->>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+    "mtime": 1781729735.7099714,
+    "ast_hash": "9f3e64a974355f56ac0625b7a672c3f9",
     "semantic_hash": ""
   }
 }

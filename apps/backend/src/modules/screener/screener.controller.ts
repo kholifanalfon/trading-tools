@@ -136,4 +136,17 @@ export class ScreenerController {
       next(error);
     }
   };
+
+  getCorporateActions = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const symbol = req.params.symbol as string;
+      const result = await this.service.getCorporateActions(symbol);
+      res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }

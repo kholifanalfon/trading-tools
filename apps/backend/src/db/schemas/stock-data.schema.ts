@@ -1,13 +1,4 @@
-import {
-  pgTable,
-  serial,
-  timestamp,
-  varchar,
-  integer,
-  doublePrecision,
-  uniqueIndex,
-  jsonb,
-} from "drizzle-orm/pg-core";
+import { pgTable, serial, timestamp, varchar, integer, doublePrecision, uniqueIndex, jsonb } from "drizzle-orm/pg-core";
 import { stocks } from "./stocks.schema";
 
 export const stockData = pgTable(

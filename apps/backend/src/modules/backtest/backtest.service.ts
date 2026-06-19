@@ -6,7 +6,7 @@ import { webSocketService } from "@/core/websocket";
 import { runStrategyOptimization, runMultiStockOptimization } from "./backtest.optimizer";
 import { BacktestParams } from "./backtest.types";
 import { SettingsClientService } from "../settings/settings-client.service";
-import { mapRulesToConfig } from "@/core/utils/scoring.utils";
+import { mapRulesToConfig, calculateMetricsAndScores } from "@/core/utils/scoring.utils";
 import { SettingsRepository } from "../settings/settings.repository";
 import { GeminiAdapter } from "@/core/adapters/gemini.adapter";
 import { decrypt } from "@/core/utils/crypto";
@@ -198,41 +198,87 @@ export class BacktestService {
     const regions = exchanges.map((e) => e.countryId);
 
     // Fetch screened stocks from live screener
-    this.logAndBroadcast(`[Optimization] Fetching top 8 stocks matching ${strategy} strategy...`);
-    const screenedStocks = await this.stockAdapter.getScreenedStocks(strategy, regions, 8, 1);
-    const symbols = screenedStocks.map((s) => s.symbol);
-
-    if (symbols.length === 0) {
+    this.logAndBroadcast(`[Optimization] Fetching candidate stocks matching ${strategy} strategy (limit 100)...`);
+    const screenedStocks = await this.stockAdapter.getScreenedStocks(strategy, regions, 100, 1);
+    
+    if (screenedStocks.length === 0) {
       this.logAndBroadcast(`[Optimization] [ERROR] No stocks found for strategy ${strategy}`);
       throw new AppError("No stock symbols found in live screener to run multi-stock optimization", 404);
     }
 
-    this.logAndBroadcast(`[Optimization] Found: ${symbols.join(", ")}. Loading 1-year history for all symbols`);
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 365); // 1 year history
-
-    const candlesMap: Record<string, any[]> = {};
-
-    // Fetch candles for each symbol
-    await Promise.all(
-      symbols.map(async (symbol) => {
-        let ticker = symbol.toUpperCase();
-        this.logAndBroadcast(`[Optimization] Fetching history for ${ticker}...`);
-        let points = await this.stockAdapter.getHistoricalData(ticker, startDate, new Date());
-        if (points.length === 0 && ticker.length === 4) {
-          ticker = `${ticker}.JK`;
-          points = await this.stockAdapter.getHistoricalData(ticker, startDate, new Date());
-        }
-        candlesMap[symbol] = points;
-      }),
-    );
-
-    this.logAndBroadcast(`[Optimization] Historical data loaded. Retrieving active scoring rules`);
+    this.logAndBroadcast(`[Optimization] Found ${screenedStocks.length} candidates. Loading scoring rules`);
     const dbRules = await db.select().from(scoringRules);
     const rulesConfig = mapRulesToConfig(dbRules);
 
-    // Calculate baseline metrics before optimization across all stocks
-    this.logAndBroadcast(`[Optimization] Simulating baseline strategy performance across all stocks...`);
+    this.logAndBroadcast(`[Optimization] Loading history and scoring all candidate stocks...`);
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 365); // 1 year history
+
+    interface CandidateInfo {
+      symbol: string;
+      score: number;
+      candles: any[];
+    }
+    const candidates: CandidateInfo[] = [];
+
+    // Concurrently fetch in chunks of 10 to avoid rate limiting
+    const chunkSize = 10;
+    for (let i = 0; i < screenedStocks.length; i += chunkSize) {
+      const chunk = screenedStocks.slice(i, i + chunkSize);
+      this.logAndBroadcast(`[Optimization] Scoring batch ${Math.floor(i / chunkSize) + 1}/${Math.ceil(screenedStocks.length / chunkSize)}...`);
+
+      await Promise.all(
+        chunk.map(async (stock) => {
+          try {
+            let symbolToQuery = stock.symbol.toUpperCase();
+            let points = await this.stockAdapter.getHistoricalData(symbolToQuery, startDate, new Date());
+            if (points.length === 0 && symbolToQuery.length === 4) {
+              symbolToQuery = `${symbolToQuery}.JK`;
+              points = await this.stockAdapter.getHistoricalData(symbolToQuery, startDate, new Date());
+            }
+
+            if (points && points.length > 0) {
+              const calculated = calculateMetricsAndScores(points, rulesConfig);
+              if (calculated.length > 0) {
+                const latest = calculated[calculated.length - 1];
+                let score = 0;
+                if (strategy === "day") {
+                  score = latest.scorePayload.dayScore.total;
+                } else if (strategy === "swing") {
+                  score = latest.scorePayload.swingScore.total;
+                } else {
+                  score = latest.scorePayload.positionScore.total;
+                }
+                candidates.push({ symbol: stock.symbol, score, candles: points });
+                this.logAndBroadcast(`[Optimization] Stock ${stock.symbol} scored: ${score}`);
+              }
+            }
+          } catch (err) {
+            console.error(`Failed to fetch/score ${stock.symbol} during multi-stock optimization:`, err);
+          }
+        })
+      );
+    }
+
+    if (candidates.length === 0) {
+      this.logAndBroadcast(`[Optimization] [ERROR] No valid historical data could be retrieved for candidates`);
+      throw new AppError("Failed to fetch historical data for any candidate stock symbols", 404);
+    }
+
+    // Sort by score descending and take top 8
+    candidates.sort((a, b) => b.score - a.score);
+    const selectedCandidates = candidates.slice(0, 8);
+    const symbols = selectedCandidates.map((c) => c.symbol);
+
+    this.logAndBroadcast(`[Optimization] Selected top 8 stocks based on ${strategy} score: ${selectedCandidates.map(c => `${c.symbol} (Score: ${c.score})`).join(", ")}`);
+
+    const candlesMap: Record<string, any[]> = {};
+    selectedCandidates.forEach((c) => {
+      candlesMap[c.symbol] = c.candles;
+    });
+
+    // Calculate baseline metrics before optimization across selected stocks
+    this.logAndBroadcast(`[Optimization] Simulating baseline strategy performance across selected top 8 stocks...`);
     let totalReturnSum = 0;
     let winRateSum = 0;
     let maxDrawdownSum = 0;
@@ -321,7 +367,7 @@ You must return your response in raw JSON format, containing exactly:
   - "totalTrades" (number): expected number of total trades.
 
 For example, the keys in "alternativeParams" must only be the parameter keys from "Before" or "After", such as:
-- Threshold keys: "buyThreshold", "sellThreshold", "stopLossPercent", "takeProfitPercent", "rvol_high_threshold", "rsi_oversold", "rsi_neutral_low", "proximity_ema20_percent", "strength_52w_high_diff", "volatility_atr_low", "bb_lower_bounce", "price_above_vwap", "zscore_extreme_reversal", "ad_line_uptrend", "macd_golden_cross", "adx_strong_trend", "vwap_deviation_exhaustion", "poc_pullback_proximity", "rvol_breakout_confirm".
+- Threshold keys: "buyThreshold", "sellThreshold", "stopLossPercent", "takeProfitPercent", "rvol_high_threshold", "rsi_oversold", "rsi_neutral_low", "proximity_ema20_percent", "strength_52w_high_diff", "volatility_atr_low", "bb_lower_bounce", "price_above_vwap", "zscore_extreme_reversal", "ad_line_uptrend", "macd_golden_cross", "adx_strong_trend", "vwap_deviation_exhaustion", "poc_pullback_proximity", "rvol_breakout_confirm", "fallback_atr_percent", "sl_multiplier", "tp_multiplier", "min_reward_risk_ratio".
 - Weight overrides: "_weight:<parameter_name>". E.g., "_weight:trend_close_above_ema20", "_weight:rsi_neutral_low", "_weight:bb_lower_bounce", "_weight:price_above_vwap", "_weight:zscore_extreme_reversal", "_weight:ad_line_uptrend", "_weight:macd_golden_cross", "_weight:adx_strong_trend", "_weight:vwap_deviation_exhaustion", "_weight:poc_pullback_proximity", "_weight:rvol_breakout_confirm", etc.
 
 Return ONLY the raw JSON block. Do not include markdown code fence wrappers or backticks.

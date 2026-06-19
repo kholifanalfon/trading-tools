@@ -4,10 +4,14 @@ import { StockDataQueryParams } from "@/features/screener/types/screener.types";
 import { liveScreenerKeys } from "../live-screener.keys";
 import { ApiError } from "@/shared/config/api";
 
-export function useGetInfiniteLiveStockData(params: StockDataQueryParams, options?: { enabled?: boolean }) {
+export function useGetInfiniteLiveStockData(params: StockDataQueryParams & { getExtraParams?: () => any }, options?: { enabled?: boolean }) {
+  const { getExtraParams, ...queryParams } = params;
   return useInfiniteQuery<any, ApiError>({
-    queryKey: [...liveScreenerKeys.all, "data", "infinite", params],
-    queryFn: ({ pageParam = 1 }) => getLiveStockDataApi({ ...params, page: pageParam as number }),
+    queryKey: [...liveScreenerKeys.all, "data", "infinite", queryParams],
+    queryFn: ({ pageParam = 1 }) => {
+      const extra = getExtraParams ? getExtraParams() : {};
+      return getLiveStockDataApi({ ...queryParams, ...extra, page: pageParam as number });
+    },
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       if (lastPage.page < lastPage.totalPages) {
@@ -15,8 +19,8 @@ export function useGetInfiniteLiveStockData(params: StockDataQueryParams, option
       }
       return undefined;
     },
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // Keep cache in memory for 10 minutes
+    staleTime: 30 * 60 * 1000, // 30 minutes
+    gcTime: 60 * 60 * 1000, // Keep cache in memory for 60 minutes
     ...options,
   });
 }
