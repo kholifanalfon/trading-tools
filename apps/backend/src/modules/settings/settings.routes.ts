@@ -17,5 +17,6 @@ router.post("/exchanges/sync", controller.syncExchanges);
 router.get("/scoring-rules", controller.getScoringRules);
 router.put("/scoring-rules", validateBody(UpdateScoringRulesBatchSchema), controller.updateScoringRules);
 router.post("/ai-recommendation", validateBody(GetAiRecommendationSchema), controller.getAiScreenerRecommendation);
+router.post("/scoring-rules/recommend", validateBody(GetAiRecommendationSchema), controller.getAiScoringRulesRecommendation);
 
 export const settingsRoutes = router;

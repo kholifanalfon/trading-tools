@@ -32,3 +32,16 @@ export async function getAiScreenerRecommendationApi(strategy: "day" | "swing" |
   return response.data;
 }
 
+export interface ScoringRulesRecommendationResponse {
+  recommendations: {
+    parameterName: string;
+    value: number;
+    justification: string;
+  }[];
+}
+
+export async function getAiScoringRulesRecommendationApi(strategy: "day" | "swing" | "position"): Promise<ScoringRulesRecommendationResponse> {
+  const response = await api.post<ScoringRulesRecommendationResponse>("/settings/scoring-rules/recommend", { strategy });
+  return response.data;
+}
+

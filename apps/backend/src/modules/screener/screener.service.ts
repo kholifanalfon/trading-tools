@@ -9,7 +9,19 @@ import { StockSearchResult, StockQuote, SyncHistoricalState } from "./screener.s
 import { ScreenerProviderAdapter } from "@/core/types/api-stock-provider.types";
 import { YahooFinanceAdapter } from "@/core/adapters/yahoo-finance.adapter";
 import { FinnhubAdapter } from "@/core/adapters/finnhub.adapter";
-import { calculateEMA, calculateRSI, calculateMACD, calculateSMA, calculateATR } from "@/core/utils/indicators";
+import {
+  calculateEMA,
+  calculateRSI,
+  calculateMACD,
+  calculateSMA,
+  calculateATR,
+  calculateBollingerBands,
+  calculateVWAP,
+  calculateADX,
+  calculateZScore,
+  calculatePOC,
+  calculateAccumulationDistribution,
+} from "@/core/utils/indicators";
 import { calculateAllScores, mapRulesToConfig } from "@/core/utils/scoring.utils";
 import { ScoringRulesRepository } from "./scoring-rules.repository";
 import { ScoreMetrics } from "@/core/types/scoring.types";
@@ -202,6 +214,32 @@ export class ScreenerService {
 
                 const { macd: macdVals, signal: macdSignalVals, histogram: macdHistVals } = calculateMACD(closePrices);
 
+                const { upper: bbUpperVals, lower: bbLowerVals } = calculateBollingerBands(closePrices);
+                const vwapVals = calculateVWAP(highPrices, lowPrices, closePrices, volumeVals);
+                const adxVals = calculateADX(highPrices, lowPrices, closePrices);
+                const zScoreVals = calculateZScore(closePrices);
+                const pocVals = calculatePOC(highPrices, lowPrices, closePrices, volumeVals);
+                const adLineVals = calculateAccumulationDistribution(highPrices, lowPrices, closePrices, volumeVals);
+
+                const macdGoldenCrossVals = new Array(points.length).fill(false);
+                const bbBounceVals = new Array(points.length).fill(false);
+                for (let k = 1; k < points.length; k++) {
+                  const prevHist = macdHistVals[k - 1];
+                  const currHist = macdHistVals[k];
+                  if (prevHist !== null && currHist !== null && prevHist <= 0 && currHist > 0) {
+                    macdGoldenCrossVals[k] = true;
+                  }
+                  const prevLower = bbLowerVals[k - 1];
+                  const currLower = bbLowerVals[k];
+                  if (currLower !== null && prevLower !== null) {
+                    const touchedOrBelow = points[k].low <= currLower || points[k - 1].close <= prevLower;
+                    const closedAbove = points[k].close > currLower;
+                    if (touchedOrBelow && closedAbove) {
+                      bbBounceVals[k] = true;
+                    }
+                  }
+                }
+
                 const insertItems: NewStockData[] = [];
 
                 for (let j = 0; j < points.length; j++) {
@@ -218,6 +256,8 @@ export class ScreenerService {
                   const metrics: ScoreMetrics = {
                     close: p.close,
                     open: p.open,
+                    high: p.high,
+                    low: p.low,
                     prevClose,
                     volume: p.volume,
                     avgVolume10: avgVol10Vals[j],
@@ -233,6 +273,15 @@ export class ScreenerService {
                     macdHist: macdHistVals[j],
                     yearHigh: yearHighVals[j],
                     priceReturn1Y: priceReturn1YVals[j],
+                    bbLower: bbLowerVals[j],
+                    bbUpper: bbUpperVals[j],
+                    vwap: vwapVals[j],
+                    adx: adxVals[j],
+                    zScore: zScoreVals[j],
+                    poc: pocVals[j],
+                    adLine: adLineVals[j],
+                    macdGoldenCross: macdGoldenCrossVals[j],
+                    bbBounce: bbBounceVals[j],
                   };
 
                   const scores = calculateAllScores(metrics, rulesConfig);
@@ -350,6 +399,9 @@ export class ScreenerService {
         interval = "1d";
       }
 
+      const rules = await this.scoringRulesRepo.getAllRules();
+      const rulesConfig = mapRulesToConfig(rules);
+
       let points = await adapter.getHistoricalData(symbolToQuery, startDate, new Date(), interval);
 
       // Auto-append .JK suffix if 4-letter Indonesian stock fails
@@ -367,12 +419,69 @@ export class ScreenerService {
       points.sort((a, b) => a.date.getTime() - b.date.getTime());
 
       const closePrices = points.map((p) => p.close);
+      const highPrices = points.map((p) => p.high);
+      const lowPrices = points.map((p) => p.low);
+      const volumeVals = points.map((p) => p.volume);
+
       const ema9Vals = calculateEMA(closePrices, 9);
       const ema21Vals = calculateEMA(closePrices, 21);
       const ema50Vals = calculateEMA(closePrices, 50);
       const ema200Vals = calculateEMA(closePrices, 200);
+      const sma50Vals = calculateSMA(closePrices, 50);
+      const sma200Vals = calculateSMA(closePrices, 200);
       const rsiVals = calculateRSI(closePrices, 14);
+      const atrVals = calculateATR(highPrices, lowPrices, closePrices, 14);
+      const avgVol10Vals = calculateSMA(volumeVals, 10);
+      const avgVol20Vals = calculateSMA(volumeVals, 20);
+
       const { macd: macdVals, signal: macdSignalVals, histogram: macdHistVals } = calculateMACD(closePrices);
+
+      const { upper: bbUpperVals, lower: bbLowerVals } = calculateBollingerBands(closePrices);
+      const vwapVals = calculateVWAP(highPrices, lowPrices, closePrices, volumeVals);
+      const adxVals = calculateADX(highPrices, lowPrices, closePrices);
+      const zScoreVals = calculateZScore(closePrices);
+      const pocVals = calculatePOC(highPrices, lowPrices, closePrices, volumeVals);
+      const adLineVals = calculateAccumulationDistribution(highPrices, lowPrices, closePrices, volumeVals);
+
+      const macdGoldenCrossVals = new Array(points.length).fill(false);
+      const bbBounceVals = new Array(points.length).fill(false);
+      for (let k = 1; k < points.length; k++) {
+        const prevHist = macdHistVals[k - 1];
+        const currHist = macdHistVals[k];
+        if (prevHist !== null && currHist !== null && prevHist <= 0 && currHist > 0) {
+          macdGoldenCrossVals[k] = true;
+        }
+        const prevLower = bbLowerVals[k - 1];
+        const currLower = bbLowerVals[k];
+        if (currLower !== null && prevLower !== null) {
+          const touchedOrBelow = points[k].low <= currLower || points[k - 1].close <= prevLower;
+          const closedAbove = points[k].close > currLower;
+          if (touchedOrBelow && closedAbove) {
+            bbBounceVals[k] = true;
+          }
+        }
+      }
+
+      // Compute 1Y highs/lows for position score (lookback 252 days)
+      const yearHighVals: (number | null)[] = new Array(points.length).fill(null);
+      const yearLowVals: (number | null)[] = new Array(points.length).fill(null);
+      const priceReturn1YVals: (number | null)[] = new Array(points.length).fill(null);
+
+      for (let i = 0; i < points.length; i++) {
+        let startIdx = Math.max(0, i - 252);
+        if (i >= 252) {
+          let highest = -Infinity;
+          let lowest = Infinity;
+          for (let k = startIdx; k <= i; k++) {
+            if (highPrices[k] > highest) highest = highPrices[k];
+            if (lowPrices[k] < lowest) lowest = lowPrices[k];
+          }
+          yearHighVals[i] = highest;
+          yearLowVals[i] = lowest;
+          const prevYearPrice = closePrices[startIdx];
+          priceReturn1YVals[i] = ((closePrices[i] - prevYearPrice) / prevYearPrice) * 100;
+        }
+      }
 
       // Fetch stock metadata (company name) from database if possible
       const stockRecord = await this.repository.getAllStocks().then((list) => list.find((s) => s.symbol.toUpperCase() === symbol.toUpperCase()));
@@ -399,9 +508,50 @@ export class ScreenerService {
         });
       }
 
+      let scorePayload;
       const formattedPoints = points.map((p, index) => {
         const dateStr = p.date instanceof Date ? p.date.toISOString().split("T")[0] : new Date(p.date).toISOString().split("T")[0];
         const dbScore = dbScoresMap.get(dateStr);
+        scorePayload = dbScore?.scorePayload;
+
+        const prevClose = index > 0 ? points[index - 1].close : p.open;
+        const change = p.close - prevClose;
+        const changePercent = prevClose !== 0 ? (change / prevClose) * 100 : 0;
+
+        if (dbScore == null) {
+          const metrics: ScoreMetrics = {
+            close: p.close,
+            open: p.open,
+            high: p.high,
+            low: p.low,
+            prevClose,
+            volume: p.volume,
+            avgVolume10: avgVol10Vals[index],
+            avgVolume20: avgVol20Vals[index],
+            atr14: atrVals[index],
+            rsi14: rsiVals[index],
+            ema20: ema21Vals[index], // using 21 as 20
+            ema50: ema50Vals[index],
+            sma50: sma50Vals[index],
+            sma200: sma200Vals[index],
+            macdLine: macdVals[index],
+            macdSignal: macdSignalVals[index],
+            macdHist: macdHistVals[index],
+            yearHigh: yearHighVals[index],
+            priceReturn1Y: priceReturn1YVals[index],
+            bbLower: bbLowerVals[index],
+            bbUpper: bbUpperVals[index],
+            vwap: vwapVals[index],
+            adx: adxVals[index],
+            zScore: zScoreVals[index],
+            poc: pocVals[index],
+            adLine: adLineVals[index],
+            macdGoldenCross: macdGoldenCrossVals[index],
+            bbBounce: bbBounceVals[index],
+          };
+
+          scorePayload = calculateAllScores(metrics, rulesConfig);
+        }
 
         return {
           id: index,
@@ -421,10 +571,19 @@ export class ScreenerService {
           macd: macdVals[index],
           macdSignal: macdSignalVals[index],
           macdHist: macdHistVals[index],
+          bbLower: bbLowerVals[index],
+          bbUpper: bbUpperVals[index],
+          vwap: vwapVals[index],
+          adx: adxVals[index],
+          zScore: zScoreVals[index],
+          poc: pocVals[index],
+          adLine: adLineVals[index],
+          macdGoldenCross: macdGoldenCrossVals[index],
+          bbBounce: bbBounceVals[index],
           dayScore: dbScore?.dayScore ?? null,
           swingScore: dbScore?.swingScore ?? null,
           positionScore: dbScore?.positionScore ?? null,
-          scorePayload: dbScore?.scorePayload ?? null,
+          scorePayload: scorePayload ?? null,
         };
       });
 
@@ -483,11 +642,13 @@ export class ScreenerService {
       const metrics: ScoreMetrics = {
         close: latest.close,
         open: latest.open,
+        high: latest.high,
+        low: latest.low,
         prevClose: historicalData.length >= 2 ? historicalData[historicalData.length - 2].close : null,
         volume: latest.volume,
         avgVolume10: null, // not available from live data
         avgVolume20: null, // not available from live data
-        atr14: null,       // not available from live data
+        atr14: null, // not available from live data
         rsi14: latest.rsi ?? null,
         ema20: latest.ema21 ?? null, // ema21 is the closest proxy for ema20
         ema50: latest.ema50 ?? null,
@@ -498,6 +659,15 @@ export class ScreenerService {
         macdHist: latest.macdHist ?? null,
         yearHigh: null,
         priceReturn1Y: null,
+        bbLower: (latest as any).bbLower ?? null,
+        bbUpper: (latest as any).bbUpper ?? null,
+        vwap: (latest as any).vwap ?? null,
+        adx: (latest as any).adx ?? null,
+        zScore: (latest as any).zScore ?? null,
+        poc: (latest as any).poc ?? null,
+        adLine: (latest as any).adLine ?? null,
+        macdGoldenCross: (latest as any).macdGoldenCross ?? null,
+        bbBounce: (latest as any).bbBounce ?? null,
       };
 
       // Load scoring rules config if available
@@ -526,6 +696,12 @@ Here are the inputs for your analysis:
   * MACD: ${latest.macd ? latest.macd.toFixed(2) : "N/A"}
   * MACD Signal: ${latest.macdSignal ? latest.macdSignal.toFixed(2) : "N/A"}
   * MACD Histogram: ${latest.macdHist ? latest.macdHist.toFixed(2) : "N/A"}
+  * Bollinger Bands Lower/Upper: ${(latest as any).bbLower ? (latest as any).bbLower.toFixed(2) : "N/A"} / ${(latest as any).bbUpper ? (latest as any).bbUpper.toFixed(2) : "N/A"}
+  * VWAP: ${(latest as any).vwap ? (latest as any).vwap.toFixed(2) : "N/A"}
+  * ADX (14): ${(latest as any).adx ? (latest as any).adx.toFixed(2) : "N/A"}
+  * Z-Score: ${(latest as any).zScore ? (latest as any).zScore.toFixed(2) : "N/A"}
+  * Volume Profile POC: ${(latest as any).poc ? (latest as any).poc.toFixed(2) : "N/A"}
+  * A/D Line (CVD Proxy): ${(latest as any).adLine ? (latest as any).adLine.toFixed(0) : "N/A"}
 - System Strategy Scores (0 to 100, calculated by our rule-based engine):
   * System Day Trading Score: ${dayScore ?? "N/A"}
   * System Swing Trading Score: ${swingScore ?? "N/A"}
@@ -537,24 +713,27 @@ STEP 1 – COMPUTE YOUR OWN AI SCORES (0 to 100 each):
 Using the rubric below, independently score this stock for each strategy. Do NOT copy the system scores.
 
 Day Trading Score rubric (max 100):
-- Momentum: RSI above 60 or below 30 → +25 pts; RSI 50–60 → +10 pts
+- Momentum & Trend: RSI above 60 or below 30 → +25 pts; RSI 50–60 → +10 pts
 - MACD Histogram positive and growing → +25 pts; positive only → +15 pts
-- EMA 9 above EMA 21 (bullish crossover) → +20 pts
-- Volume spike (qualitative assessment) → +15 pts
-- Gap from previous session (qualitative) → +15 pts
+- EMA 9 above EMA 21 (bullish crossover) → +10 pts
+- Volume & Liquidity: Volume spike (RVOL > 1.5) or A/D Line rising → +15 pts
+- Price relation to VWAP (Price > VWAP) or BB Lower Band Bounce → +15 pts
+- Z-Score extreme deviation for mean reversion (Z < -2.5 or Z > 2.5) → +10 pts
 
 Swing Trading Score rubric (max 100):
-- EMA 21 above EMA 50 (uptrend alignment) → +30 pts
-- MACD line above signal line → +25 pts
-- RSI in 40–65 range (healthy swing zone) → +20 pts
-- Close above EMA 21 (price above mid-term trend) → +15 pts
-- EMA 50 slope upward (qualitative) → +10 pts
+- EMA 21 above EMA 50 (uptrend alignment) → +25 pts
+- MACD line above signal line or MACD Golden Cross → +25 pts
+- RSI in 40–65 range (healthy swing zone) → +15 pts
+- Close above EMA 21 (price above mid-term trend) → +10 pts
+- ADX trend strength > 25 → +15 pts
+- VWAP Deviation exhaustion (rebound from dev band) → +10 pts
 
 Position Trading Score rubric (max 100):
-- EMA 50 above EMA 200 (golden cross zone) → +35 pts
-- Close above EMA 200 (long-term uptrend) → +25 pts
-- RSI above 50 (sustained momentum) → +20 pts
-- MACD histogram sustained positive → +20 pts
+- EMA 50 above EMA 200 (golden cross zone) → +30 pts
+- Close above EMA 200 (long-term uptrend) → +20 pts
+- RSI above 50 (sustained momentum) → +15 pts
+- POC proximity (price near high-volume node) → +20 pts
+- RVOL breakout confirmation (> 1.5x) → +15 pts
 
 STEP 2 – COMPARE AND GIVE A VERDICT:
 Compare your AI scores with the system scores for all 3 strategies.
@@ -572,7 +751,7 @@ Return a single JSON object with these exact keys:
 - "aiSwingScore": your computed swing trading score (number 0-100)
 - "aiPositionScore": your computed position trading score (number 0-100)
 - "scoreVerdict": one of "AGREE", "PARTIAL", or "DISAGREE"
-- "analysisDetail": technical analysis in Indonesian — cover RSI momentum, EMA crossover alignments, and MACD trend
+- "analysisDetail": technical analysis in Indonesian — cover RSI momentum, EMA crossover alignments, MACD trend, BB bounce, ADX strength, and VWAP location
 - "scoreComparison": in Indonesian — show your AI scores vs system scores for each strategy, explain why they agree or differ, and state your overall verdict
 - "macroEconomics": macroeconomic context in Indonesian — cover interest rates, sector trends, inflation, and company-relevant news`;
 

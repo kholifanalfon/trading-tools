@@ -1,5 +1,5 @@
 import { HistoricalDataPoint } from "@/core/types/api-stock-provider.types";
-import { calculateEMA, calculateRSI, calculateMACD, calculateSMA, calculateATR } from "@/core/utils/indicators";
+import { calculateEMA, calculateRSI, calculateMACD, calculateSMA, calculateATR, calculateBollingerBands, calculateVWAP, calculateADX, calculateZScore, calculatePOC, calculateAccumulationDistribution } from "@/core/utils/indicators";
 import { calculateDayScore, calculateSwingScore, calculatePositionScore } from "@/core/utils/scoring.utils";
 import { ScoreMetrics } from "@/core/types/scoring.types";
 import { BacktestParams, BacktestResult, TradeLog } from "./backtest.types";
@@ -55,6 +55,32 @@ export function runBacktestSimulation(symbol: string, candles: HistoricalDataPoi
 
   const { macd: macdVals, signal: macdSignalVals, histogram: macdHistVals } = calculateMACD(closePrices);
 
+  const { upper: bbUpperVals, lower: bbLowerVals } = calculateBollingerBands(closePrices);
+  const vwapVals = calculateVWAP(highPrices, lowPrices, closePrices, volumeVals);
+  const adxVals = calculateADX(highPrices, lowPrices, closePrices);
+  const zScoreVals = calculateZScore(closePrices);
+  const pocVals = calculatePOC(highPrices, lowPrices, closePrices, volumeVals);
+  const adLineVals = calculateAccumulationDistribution(highPrices, lowPrices, closePrices, volumeVals);
+
+  const macdGoldenCrossVals = new Array(candles.length).fill(false);
+  const bbBounceVals = new Array(candles.length).fill(false);
+  for (let k = 1; k < candles.length; k++) {
+    const prevHist = macdHistVals[k - 1];
+    const currHist = macdHistVals[k];
+    if (prevHist !== null && currHist !== null && prevHist <= 0 && currHist > 0) {
+      macdGoldenCrossVals[k] = true;
+    }
+    const prevLower = bbLowerVals[k - 1];
+    const currLower = bbLowerVals[k];
+    if (currLower !== null && prevLower !== null) {
+      const touchedOrBelow = lowPrices[k] <= currLower || closePrices[k - 1] <= prevLower;
+      const closedAbove = closePrices[k] > currLower;
+      if (touchedOrBelow && closedAbove) {
+        bbBounceVals[k] = true;
+      }
+    }
+  }
+
   // Initialize simulation states
   let capital = initialCapital;
   let holding = false;
@@ -76,6 +102,8 @@ export function runBacktestSimulation(symbol: string, candles: HistoricalDataPoi
     const metrics: ScoreMetrics = {
       close: candle.close,
       open: candle.open,
+      high: candle.high,
+      low: candle.low,
       prevClose,
       volume: candle.volume,
       avgVolume10: avgVol10Vals[i],
@@ -91,6 +119,15 @@ export function runBacktestSimulation(symbol: string, candles: HistoricalDataPoi
       macdHist: macdHistVals[i],
       yearHigh: yearHighVals[i],
       priceReturn1Y: priceReturn1YVals[i],
+      bbLower: bbLowerVals[i],
+      bbUpper: bbUpperVals[i],
+      vwap: vwapVals[i],
+      adx: adxVals[i],
+      zScore: zScoreVals[i],
+      poc: pocVals[i],
+      adLine: adLineVals[i],
+      macdGoldenCross: macdGoldenCrossVals[i],
+      bbBounce: bbBounceVals[i],
     };
 
     let score = 0;

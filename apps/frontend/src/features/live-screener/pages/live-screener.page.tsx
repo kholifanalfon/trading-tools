@@ -399,36 +399,40 @@ export function LiveScreenerPage() {
                         {activeStrategy === "day" && item.dayScore !== null && (
                           <span
                             className={`text-[9px] font-bold py-[2px] px-[8px] rounded-full ${
-                              item.dayScore >= 70 ? "text-emerald-500 bg-emerald-500/20" : item.dayScore >= 40 ? "text-amber-500 bg-amber-500/20" : "text-rose-500 bg-rose-500/20"
+                              (item.dayScore / item.dayMaxScore) * 100 >= 70
+                                ? "text-emerald-500 bg-emerald-500/20"
+                                : (item.dayScore / item.dayMaxScore) * 100 >= 40
+                                  ? "text-amber-500 bg-amber-500/20"
+                                  : "text-rose-500 bg-rose-500/20"
                             }`}
                           >
-                            {item.dayScore} / 100
+                            {item.dayScore} / {item.dayMaxScore}
                           </span>
                         )}
                         {activeStrategy === "swing" && item.swingScore !== null && (
                           <span
                             className={`text-[9px] font-bold py-[2px] px-[8px] rounded-full ${
-                              item.swingScore >= 70
+                              (item.swingScore / item.swingMaxScore) * 100 >= 70
                                 ? "text-emerald-500 bg-emerald-500/20"
-                                : item.swingScore >= 40
+                                : (item.swingScore / item.swingMaxScore) * 100 >= 40
                                   ? "text-amber-500 bg-amber-500/20"
                                   : "text-rose-500 bg-rose-500/20"
                             }`}
                           >
-                            {item.swingScore} / 100
+                            {item.swingScore} / {item.swingMaxScore}
                           </span>
                         )}
                         {activeStrategy === "position" && item.positionScore !== null && (
                           <span
                             className={`text-[9px] font-bold py-[2px] px-[8px] rounded-full ${
-                              item.positionScore >= 70
+                              (item.positionScore / item.positionMaxScore) * 100 >= 70
                                 ? "text-emerald-500 bg-emerald-500/20"
-                                : item.positionScore >= 40
+                                : (item.positionScore / item.positionMaxScore) * 100 >= 40
                                   ? "text-amber-500 bg-amber-500/20"
                                   : "text-rose-500 bg-rose-500/20"
                             }`}
                           >
-                            {item.positionScore} / 100
+                            {item.positionScore} / {item.positionMaxScore}
                           </span>
                         )}
                       </div>
