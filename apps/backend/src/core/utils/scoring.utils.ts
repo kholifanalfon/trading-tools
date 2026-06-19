@@ -82,9 +82,48 @@ export function calculateDayScore(metrics: ScoreMetrics, config?: ScoringRulesCo
   if (avgVol > liqHigh.value) liquidityScore = liqHigh.weight;
   else if (avgVol > liqMed.value) liquidityScore = liqMed.weight;
 
-  score = rvolScore + atrScore + gapScore + rsiScore + liquidityScore;
+  // New parameters (Bonus/Supplementary)
+  const bbBounceRule = getRule(config, "day", "bb_lower_bounce", 0.0, 15);
+  let bbBounceScore = 0;
+  if (metrics.bbBounce) {
+    bbBounceScore = bbBounceRule.weight;
+  }
 
-  return { total: score, rvol: rvolScore, atr: atrScore, gap: gapScore, rsi: rsiScore, liquidity: liquidityScore };
+  const priceAboveVwapRule = getRule(config, "day", "price_above_vwap", 0.0, 20);
+  let priceAboveVwapScore = 0;
+  if (metrics.vwap !== null && metrics.close > metrics.vwap) {
+    priceAboveVwapScore = priceAboveVwapRule.weight;
+  }
+
+  const zscoreExtremeRule = getRule(config, "day", "zscore_extreme_reversal", 2.5, 20);
+  let zscoreExtremeScore = 0;
+  if (metrics.zScore !== null && Math.abs(metrics.zScore) >= zscoreExtremeRule.value) {
+    zscoreExtremeScore = zscoreExtremeRule.weight;
+  }
+
+  const adLineUptrendRule = getRule(config, "day", "ad_line_uptrend", 0.0, 15);
+  let adLineUptrendScore = 0;
+  if (metrics.high > metrics.low) {
+    const moneyFlowMultiplier = (metrics.close - metrics.low - (metrics.high - metrics.close)) / (metrics.high - metrics.low);
+    if (moneyFlowMultiplier > 0) {
+      adLineUptrendScore = adLineUptrendRule.weight;
+    }
+  }
+
+  score = rvolScore + atrScore + gapScore + rsiScore + liquidityScore + bbBounceScore + priceAboveVwapScore + zscoreExtremeScore + adLineUptrendScore;
+
+  return {
+    total: score,
+    rvol: rvolScore,
+    atr: atrScore,
+    gap: gapScore,
+    rsi: rsiScore,
+    liquidity: liquidityScore,
+    bbBounce: bbBounceScore,
+    priceAboveVwap: priceAboveVwapScore,
+    zscoreExtreme: zscoreExtremeScore,
+    adLineUptrend: adLineUptrendScore,
+  };
 }
 
 export function calculateSwingScore(metrics: ScoreMetrics, config?: ScoringRulesConfig) {
@@ -134,9 +173,38 @@ export function calculateSwingScore(metrics: ScoreMetrics, config?: ScoringRules
     if (diff < proximityEma.value) proximityScore = proximityEma.weight;
   }
 
-  score = trendScore + macdScore + rsiScore + volumeScore + proximityScore;
+  // New parameters (Bonus/Supplementary)
+  const macdGoldenCrossRule = getRule(config, "swing", "macd_golden_cross", 0.0, 20);
+  let macdGoldenCrossScore = 0;
+  if (metrics.macdGoldenCross) {
+    macdGoldenCrossScore = macdGoldenCrossRule.weight;
+  }
 
-  return { total: score, trend: trendScore, macd: macdScore, rsi: rsiScore, volume: volumeScore, proximity: proximityScore };
+  const adxStrongTrendRule = getRule(config, "swing", "adx_strong_trend", 25.0, 15);
+  let adxStrongTrendScore = 0;
+  if (metrics.adx !== null && metrics.adx > adxStrongTrendRule.value) {
+    adxStrongTrendScore = adxStrongTrendRule.weight;
+  }
+
+  const vwapDeviationExhaustionRule = getRule(config, "swing", "vwap_deviation_exhaustion", 2.0, 10);
+  let vwapDeviationExhaustionScore = 0;
+  if (metrics.zScore !== null && Math.abs(metrics.zScore) >= vwapDeviationExhaustionRule.value) {
+    vwapDeviationExhaustionScore = vwapDeviationExhaustionRule.weight;
+  }
+
+  score = trendScore + macdScore + rsiScore + volumeScore + proximityScore + macdGoldenCrossScore + adxStrongTrendScore + vwapDeviationExhaustionScore;
+
+  return {
+    total: score,
+    trend: trendScore,
+    macd: macdScore,
+    rsi: rsiScore,
+    volume: volumeScore,
+    proximity: proximityScore,
+    macdGoldenCross: macdGoldenCrossScore,
+    adxStrongTrend: adxStrongTrendScore,
+    vwapDeviationExhaustion: vwapDeviationExhaustionScore,
+  };
 }
 
 export function calculatePositionScore(metrics: ScoreMetrics, config?: ScoringRulesConfig) {
@@ -180,15 +248,123 @@ export function calculatePositionScore(metrics: ScoreMetrics, config?: ScoringRu
     else if (atrPercent < volMed.value) volatilityScore = volMed.weight;
   }
 
-  score = trendScore + priceStrengthScore + momentumScore + volatilityScore;
+  // New parameters (Bonus/Supplementary)
+  const pocPullbackRule = getRule(config, "position", "poc_pullback_proximity", 0.05, 20);
+  let pocPullbackScore = 0;
+  if (metrics.poc !== null && metrics.close > 0) {
+    const diffPercent = Math.abs(metrics.close - metrics.poc) / metrics.poc;
+    if (diffPercent <= pocPullbackRule.value) {
+      pocPullbackScore = pocPullbackRule.weight;
+    }
+  }
 
-  return { total: score, trend: trendScore, priceStrength: priceStrengthScore, momentum: momentumScore, volatility: volatilityScore };
+  const rvolConfirmRule = getRule(config, "position", "rvol_breakout_confirm", 1.5, 15);
+  let rvolConfirmScore = 0;
+  const avgVolPos = metrics.avgVolume20 || metrics.avgVolume10 || 0;
+  if (avgVolPos > 0) {
+    const rvol = metrics.volume / avgVolPos;
+    if (rvol > rvolConfirmRule.value) {
+      rvolConfirmScore = rvolConfirmRule.weight;
+    }
+  }
+
+  score = trendScore + priceStrengthScore + momentumScore + volatilityScore + pocPullbackScore + rvolConfirmScore;
+
+  return {
+    total: score,
+    trend: trendScore,
+    priceStrength: priceStrengthScore,
+    momentum: momentumScore,
+    volatility: volatilityScore,
+    pocPullbackProximity: pocPullbackScore,
+    rvolBreakoutConfirm: rvolConfirmScore,
+  };
 }
 
 export function calculateAllScores(metrics: ScoreMetrics, config?: ScoringRulesConfig): ScorePayload {
+  const day = calculateDayScore(metrics, config);
+  const swing = calculateSwingScore(metrics, config);
+  const position = calculatePositionScore(metrics, config);
+
+  // Helper function to calculate validation per strategy
+  const getValidationForStrategy = (strategy: "day" | "swing" | "position") => {
+    let defaultFallback = 0.01;
+    let defaultSL = 1.0;
+    let defaultTP = 2.0;
+    let defaultMinRR = 1.5;
+
+    if (strategy === "swing") {
+      defaultFallback = 0.02;
+      defaultSL = 2.0;
+      defaultTP = 6.0;
+      defaultMinRR = 2.0;
+    } else if (strategy === "position") {
+      defaultFallback = 0.05;
+      defaultSL = 3.0;
+      defaultTP = 15.0;
+      defaultMinRR = 5.0;
+    }
+
+    const fallbackAtrPercent = getRule(config, `risk_${strategy}`, "fallback_atr_percent", defaultFallback, 0).value;
+    const slMultiplier = getRule(config, `risk_${strategy}`, "sl_multiplier", defaultSL, 0).value;
+    const tpMultiplier = getRule(config, `risk_${strategy}`, "tp_multiplier", defaultTP, 0).value;
+    const minRewardRiskRatio = getRule(config, `risk_${strategy}`, "min_reward_risk_ratio", defaultMinRR, 0).value;
+
+    console.log("strategy", strategy);
+    console.log("metrics.avgVolume10", metrics.avgVolume10);
+    console.log("metrics.avgVolume20", metrics.avgVolume20);
+    console.log("metrics.atr14", metrics.atr14);
+    console.log("metrics.close", metrics.close);
+    console.log("slMultiplier", slMultiplier);
+    console.log("tpMultiplier", tpMultiplier);
+    console.log("minRewardRiskRatio", minRewardRiskRatio);
+
+    // PROTECTION GUARD: If real ATR is 0/null (dormant stock like POOL) or average volume is extremely low, immediately FAIL
+    const avgVol = metrics.avgVolume10 || metrics.avgVolume20 || 0;
+    console.log(!metrics.atr14, metrics.atr14 === 0, avgVol < 5000);
+    if (!metrics.atr14 || metrics.atr14 === 0 || avgVol < 5000) {
+      return {
+        stopLoss: metrics.close,
+        targetProfit: metrics.close,
+        rewardRiskRatio: 0,
+        passed: false,
+      };
+    }
+
+    const fallbackAtrValue = metrics.close * fallbackAtrPercent;
+    const atr = metrics.atr14 || fallbackAtrValue;
+
+    const stopLoss = metrics.close - slMultiplier * atr;
+    const targetProfit = metrics.close + tpMultiplier * atr;
+
+    const riskAmount = metrics.close - stopLoss;
+    const rewardAmount = targetProfit - metrics.close;
+
+    const rewardRiskRatio = riskAmount > 0 ? rewardAmount / riskAmount : 0;
+    const passed = rewardRiskRatio >= minRewardRiskRatio;
+
+    console.log("riskAmount", riskAmount);
+    console.log("rewardAmount", rewardAmount);
+    console.log("rewardRiskRatio", rewardRiskRatio);
+    console.log("passed", passed);
+    console.log("");
+
+    return {
+      stopLoss,
+      targetProfit,
+      rewardRiskRatio,
+      passed,
+    };
+  };
+
   return {
-    dayScore: calculateDayScore(metrics, config),
-    swingScore: calculateSwingScore(metrics, config),
-    positionScore: calculatePositionScore(metrics, config),
+    dayScore: day,
+    swingScore: swing,
+    positionScore: position,
+    riskValidation: {
+      day: getValidationForStrategy("day"),
+      swing: getValidationForStrategy("swing"),
+      position: getValidationForStrategy("position"),
+    } as any,
   };
 }
