@@ -15,8 +15,23 @@
     "semantic_hash": ""
   },
   "apps/backend/src/core/adapters/yahoo-finance.adapter.ts": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2014453,
+    "ast_hash": "862fa7374746ff050c9352b4b30107b0",
+=======
     "mtime": 1781891783.7790475,
     "ast_hash": "356a493d0f38539251e321c62e99e916",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2014453,
+    "ast_hash": "862fa7374746ff050c9352b4b30107b0",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781891783.7790475,
+    "ast_hash": "356a493d0f38539251e321c62e99e916",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/backend/src/core/config.ts": {
@@ -135,8 +150,23 @@
     "semantic_hash": ""
   },
   "apps/backend/src/core/utils/scoring.utils.ts": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2028964,
+    "ast_hash": "cdca7f144e26cf63537b3d45086484aa",
+=======
     "mtime": 1781897811.3826025,
     "ast_hash": "d1e2c855246557847a15cfd8348ede55",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2028964,
+    "ast_hash": "cdca7f144e26cf63537b3d45086484aa",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781897811.3826025,
+    "ast_hash": "d1e2c855246557847a15cfd8348ede55",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/backend/src/core/utils/string-extensions.ts": {
@@ -220,8 +250,23 @@
     "semantic_hash": "9db7f326a4c1e14459a13f1289006d54"
   },
   "apps/backend/src/db/migrations/meta/_journal.json": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2032616,
+    "ast_hash": "4572f4a2ce58897fdeb9d47c8cd92ea8",
+=======
     "mtime": 1781892349.0675373,
     "ast_hash": "5df01f0b8aef6ec5fd45da07333c496d",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2032616,
+    "ast_hash": "4572f4a2ce58897fdeb9d47c8cd92ea8",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781892349.0675373,
+    "ast_hash": "5df01f0b8aef6ec5fd45da07333c496d",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/backend/src/db/schema.ts": {
@@ -235,9 +280,27 @@
     "semantic_hash": "c1e59f0991bc9891b0f847298fc7b36c"
   },
   "apps/backend/src/db/schemas/stock-data.schema.ts": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.203808,
+    "ast_hash": "f616588520bc0d2d8f810430933fa3cf",
+    "semantic_hash": "f616588520bc0d2d8f810430933fa3cf"
+=======
     "mtime": 1781894823.8092318,
     "ast_hash": "4488e6a62a61b7796b5f687c29928ae3",
     "semantic_hash": ""
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.203808,
+    "ast_hash": "f616588520bc0d2d8f810430933fa3cf",
+    "semantic_hash": "f616588520bc0d2d8f810430933fa3cf"
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781894823.8092318,
+    "ast_hash": "4488e6a62a61b7796b5f687c29928ae3",
+    "semantic_hash": ""
+>>>>>>> origin/development
   },
   "apps/backend/src/db/schemas/stock-logs.schema.ts": {
     "mtime": 1781415211.2531066,
@@ -295,8 +358,23 @@
     "semantic_hash": "d716ba431ef7b20cfa8cc3ef431a40ed"
   },
   "apps/backend/src/modules/screener/screener.controller.ts": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.206239,
+    "ast_hash": "74474f52674d1a5660096292a6248a28",
+=======
     "mtime": 1781888602.628255,
     "ast_hash": "dbbddbad58a8c1e3a408dfcb296924ed",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.206239,
+    "ast_hash": "74474f52674d1a5660096292a6248a28",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781888602.628255,
+    "ast_hash": "dbbddbad58a8c1e3a408dfcb296924ed",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/backend/src/modules/screener/screener.repository.ts": {
@@ -305,8 +383,23 @@
     "semantic_hash": "3ff5e08540d5d7ee5761961363b70a7f"
   },
   "apps/backend/src/modules/screener/screener.routes.ts": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2064354,
+    "ast_hash": "a69bcf70f539326b27fdbfc67e8795e7",
+=======
     "mtime": 1781888606.997192,
     "ast_hash": "71a7e8425519e2a633607859bd119816",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2064354,
+    "ast_hash": "a69bcf70f539326b27fdbfc67e8795e7",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781888606.997192,
+    "ast_hash": "71a7e8425519e2a633607859bd119816",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/backend/src/modules/screener/screener.schema.ts": {
@@ -315,8 +408,23 @@
     "semantic_hash": ""
   },
   "apps/backend/src/modules/screener/screener.service.ts": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2069366,
+    "ast_hash": "ff494c708b7d22246ad94d9af21a7100",
+=======
     "mtime": 1781891283.4504323,
     "ast_hash": "cb891b8ee2f23e28d67fb0bb78e9ad56",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2069366,
+    "ast_hash": "ff494c708b7d22246ad94d9af21a7100",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781891283.4504323,
+    "ast_hash": "cb891b8ee2f23e28d67fb0bb78e9ad56",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/backend/src/modules/settings/settings.controller.ts": {
@@ -340,8 +448,23 @@
     "semantic_hash": ""
   },
   "apps/backend/src/modules/settings/settings.service.ts": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.207711,
+    "ast_hash": "780ecd967f339322af080d1d56fbd031",
+=======
     "mtime": 1781889921.926767,
     "ast_hash": "8a57dc06fe0a79acb2dea3309714e992",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.207711,
+    "ast_hash": "780ecd967f339322af080d1d56fbd031",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781889921.926767,
+    "ast_hash": "8a57dc06fe0a79acb2dea3309714e992",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/backend/src/modules/stocks/stocks.controller.ts": {
@@ -475,8 +598,23 @@
     "semantic_hash": "ef3ba2a81ba19f8ea5ddf625521e96f0"
   },
   "apps/frontend/src/App.tsx": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899333.3163052,
+    "ast_hash": "8646ed6143d1451c5d2764636046befc",
+=======
     "mtime": 1781895966.597949,
     "ast_hash": "550fa1d89218ab6632969ba08502a323",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899333.3163052,
+    "ast_hash": "8646ed6143d1451c5d2764636046befc",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781895966.597949,
+    "ast_hash": "550fa1d89218ab6632969ba08502a323",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/frontend/src/features/auth/auth.schema.ts": {
@@ -595,8 +733,23 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/components/strategy-score-card.tsx": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2109647,
+    "ast_hash": "e0eef1ac44ff11ac0c4280ecd7347af3",
+=======
     "mtime": 1781897603.8878515,
     "ast_hash": "565d0255d849c17739cc42f8c0c1502c",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2109647,
+    "ast_hash": "e0eef1ac44ff11ac0c4280ecd7347af3",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781897603.8878515,
+    "ast_hash": "565d0255d849c17739cc42f8c0c1502c",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/hooks/use-get-quote.ts": {
@@ -640,8 +793,23 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/pages/stock-detail.page.tsx": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2114024,
+    "ast_hash": "b304b64587e4228e968041163eed3e2c",
+=======
     "mtime": 1781898046.5385258,
     "ast_hash": "2f1df3f851bb3522d88a2a3693be47a2",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2114024,
+    "ast_hash": "b304b64587e4228e968041163eed3e2c",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781898046.5385258,
+    "ast_hash": "2f1df3f851bb3522d88a2a3693be47a2",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/screener.keys.ts": {
@@ -650,8 +818,23 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/services/screener.api.ts": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2116659,
+    "ast_hash": "7ba6fcfdac7968259520f8f91171b635",
+=======
     "mtime": 1781888614.0046687,
     "ast_hash": "25dfd86a08402294d8dde480a5dfa3b9",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2116659,
+    "ast_hash": "7ba6fcfdac7968259520f8f91171b635",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781888614.0046687,
+    "ast_hash": "25dfd86a08402294d8dde480a5dfa3b9",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/types/screener.types.ts": {
@@ -680,6 +863,17 @@
     "semantic_hash": "c271834a3a950a9b307519dcd7ddba84"
   },
   "apps/frontend/src/features/settings/pages/settings.page.tsx": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899345.9849412,
+    "ast_hash": "7a687d7893efc87a087a682963de8fbd",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/settings/services/settings.api.ts": {
+    "mtime": 1781899182.2131345,
+    "ast_hash": "95cd5165e2c1385399dd56a046ce42ad",
+=======
     "mtime": 1781886310.5851672,
     "ast_hash": "29a5a1e6ef7da4327660787ec50be192",
     "semantic_hash": ""
@@ -687,6 +881,25 @@
   "apps/frontend/src/features/settings/services/settings.api.ts": {
     "mtime": 1781889927.8841887,
     "ast_hash": "c66f61cffa914164a60fb30fffbcde59",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899345.9849412,
+    "ast_hash": "7a687d7893efc87a087a682963de8fbd",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/settings/services/settings.api.ts": {
+    "mtime": 1781899182.2131345,
+    "ast_hash": "95cd5165e2c1385399dd56a046ce42ad",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781886310.5851672,
+    "ast_hash": "29a5a1e6ef7da4327660787ec50be192",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/settings/services/settings.api.ts": {
+    "mtime": 1781889927.8841887,
+    "ast_hash": "c66f61cffa914164a60fb30fffbcde59",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/settings.keys.ts": {
@@ -830,8 +1043,21 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/components/app-sidebar.tsx": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899465.628053,
+    "ast_hash": "fd8942496c57b3694b63c88bd39feea1",
+=======
+=======
+>>>>>>> origin/development
     "mtime": 1781731547.3831398,
     "ast_hash": "be72e1fe2059e383f30a0b04f5b83959",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899465.628053,
+    "ast_hash": "fd8942496c57b3694b63c88bd39feea1",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/components/global-error-container.tsx": {
@@ -850,9 +1076,24 @@
     "semantic_hash": "3a03ec34eb7a2cd60993c4f1a940c909"
   },
   "apps/frontend/src/shared/components/nav-user.tsx": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899473.2886147,
+    "ast_hash": "9cbaf349f04a421380fa5d4aa65a27d0",
+    "semantic_hash": ""
+=======
+=======
+>>>>>>> origin/development
     "mtime": 1781731547.3832827,
     "ast_hash": "8dd0bcf6f57e25f1c05aecfb1b8d5ff2",
     "semantic_hash": "8dd0bcf6f57e25f1c05aecfb1b8d5ff2"
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899473.2886147,
+    "ast_hash": "9cbaf349f04a421380fa5d4aa65a27d0",
+    "semantic_hash": ""
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
   },
   "apps/frontend/src/shared/components/team-switcher.tsx": {
     "mtime": 1781189530.6235821,
@@ -1055,8 +1296,23 @@
     "semantic_hash": "f11712cf304e8db13029bf6a4aec14d5"
   },
   "apps/frontend/src/vite-env.d.ts": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899400.6653082,
+    "ast_hash": "0a4f3b7dd428eddb0ecb9f048a2bfecc",
+=======
     "mtime": 1781731547.3867035,
     "ast_hash": "0a523bc418c9e44982f26b5b7d87d72f",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899400.6653082,
+    "ast_hash": "0a4f3b7dd428eddb0ecb9f048a2bfecc",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781731547.3867035,
+    "ast_hash": "0a523bc418c9e44982f26b5b7d87d72f",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/frontend/tailwind.config.js": {
@@ -1080,8 +1336,21 @@
     "semantic_hash": "70bdd0a673bcfc0e828080b306e7c680"
   },
   "apps/frontend/vite.config.ts": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899395.738962,
+    "ast_hash": "2f0163cfab49337e6983e9a4e1f88c01",
+=======
+=======
+>>>>>>> origin/development
     "mtime": 1781886310.6110728,
     "ast_hash": "318a1e5d12dd197ad75d540efce5353e",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899395.738962,
+    "ast_hash": "2f0163cfab49337e6983e9a4e1f88c01",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
     "semantic_hash": ""
   },
   "commands/db-generate.ts": {
@@ -1400,6 +1669,17 @@
     "semantic_hash": ""
   },
   "apps/backend/src/modules/live-screener/live-screener.service.ts": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2057512,
+    "ast_hash": "9e8f622693f5a602ac4200ef5d144628",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/live-screener/hooks/use-get-live-stock-data.ts": {
+    "mtime": 1781899182.2097454,
+    "ast_hash": "c04934c89cdffcc44f338bdeadfef03b",
+=======
     "mtime": 1781897701.1283677,
     "ast_hash": "86c33b171e9767dbffb1035690591b87",
     "semantic_hash": ""
@@ -1407,6 +1687,25 @@
   "apps/frontend/src/features/live-screener/hooks/use-get-live-stock-data.ts": {
     "mtime": 1781893400.5637589,
     "ast_hash": "9c6b8bacc961b4c232edc900adb8bbcb",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2057512,
+    "ast_hash": "9e8f622693f5a602ac4200ef5d144628",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/live-screener/hooks/use-get-live-stock-data.ts": {
+    "mtime": 1781899182.2097454,
+    "ast_hash": "c04934c89cdffcc44f338bdeadfef03b",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781897701.1283677,
+    "ast_hash": "86c33b171e9767dbffb1035690591b87",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/live-screener/hooks/use-get-live-stock-data.ts": {
+    "mtime": 1781893400.5637589,
+    "ast_hash": "9c6b8bacc961b4c232edc900adb8bbcb",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/frontend/src/features/live-screener/live-screener.keys.ts": {
@@ -1415,8 +1714,23 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/live-screener/pages/live-screener.page.tsx": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2101262,
+    "ast_hash": "4bcd3fed841a2b11c2e4928703f77a94",
+=======
     "mtime": 1781893400.597967,
     "ast_hash": "2df6f8d00dcd6157d2148d2a042f5f85",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2101262,
+    "ast_hash": "4bcd3fed841a2b11c2e4928703f77a94",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781893400.597967,
+    "ast_hash": "2df6f8d00dcd6157d2148d2a042f5f85",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/frontend/src/features/live-screener/services/live-screener.api.ts": {
@@ -1425,8 +1739,23 @@
     "semantic_hash": ""
   },
   "apps/backend/src/core/types/api-stock-provider.types.ts": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.202379,
+    "ast_hash": "11c30567349cb68064ef559a7a87d3ef",
+=======
     "mtime": 1781888585.8909528,
     "ast_hash": "05038dca134dd1b9827c1811b9b1b5eb",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.202379,
+    "ast_hash": "11c30567349cb68064ef559a7a87d3ef",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781888585.8909528,
+    "ast_hash": "05038dca134dd1b9827c1811b9b1b5eb",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/backend/src/core/adapters/gemini.adapter.ts": {
@@ -1460,6 +1789,17 @@
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.engine.ts": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2044184,
+    "ast_hash": "9d826958266b34d0ac9fb6cb9886b596",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/backtest/backtest.optimizer.ts": {
+    "mtime": 1781899182.204711,
+    "ast_hash": "d1263c365e22cddfd4877f4936106c76",
+=======
     "mtime": 1781889651.802042,
     "ast_hash": "07e417093c7d9ba6fb991dcff3a412bc",
     "semantic_hash": ""
@@ -1467,6 +1807,25 @@
   "apps/backend/src/modules/backtest/backtest.optimizer.ts": {
     "mtime": 1781890066.275708,
     "ast_hash": "7229233ae6fe554245b994189842d7b9",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2044184,
+    "ast_hash": "9d826958266b34d0ac9fb6cb9886b596",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/backtest/backtest.optimizer.ts": {
+    "mtime": 1781899182.204711,
+    "ast_hash": "d1263c365e22cddfd4877f4936106c76",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781889651.802042,
+    "ast_hash": "07e417093c7d9ba6fb991dcff3a412bc",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/backtest/backtest.optimizer.ts": {
+    "mtime": 1781890066.275708,
+    "ast_hash": "7229233ae6fe554245b994189842d7b9",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.routes.ts": {
@@ -1475,8 +1834,23 @@
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.service.ts": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2052534,
+    "ast_hash": "cfbfa66d429940ad3afd9cfeca18289d",
+=======
     "mtime": 1781891624.4195473,
     "ast_hash": "f6947f2b1345604d2eee3958a530187b",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2052534,
+    "ast_hash": "cfbfa66d429940ad3afd9cfeca18289d",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781891624.4195473,
+    "ast_hash": "f6947f2b1345604d2eee3958a530187b",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/backend/src/modules/screener/scoring-rules.repository.ts": {
@@ -1485,8 +1859,23 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/pages/backtest.page.tsx": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2092428,
+    "ast_hash": "482234e0e7a15c37c81924336e76c26a",
+=======
     "mtime": 1781890392.0725815,
     "ast_hash": "919ae1c26debde1b3da1a606e5f50010",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2092428,
+    "ast_hash": "482234e0e7a15c37c81924336e76c26a",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781890392.0725815,
+    "ast_hash": "919ae1c26debde1b3da1a606e5f50010",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/frontend/src/features/backtest/services/backtest.api.ts": {
@@ -1495,8 +1884,23 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/components/scoring-rules-form.tsx": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2125654,
+    "ast_hash": "ab13fd8a9da46dac8b490d7189c69a57",
+=======
     "mtime": 1781889941.0467267,
     "ast_hash": "84b8ce42d42858dc114db3fb0bbc06e2",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2125654,
+    "ast_hash": "ab13fd8a9da46dac8b490d7189c69a57",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781889941.0467267,
+    "ast_hash": "84b8ce42d42858dc114db3fb0bbc06e2",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/hooks/use-get-scoring-rules.ts": {
@@ -1605,8 +2009,23 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/components/ai-analysis-card.tsx": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2104805,
+    "ast_hash": "c307171cc56c8e77224ca3992f3553aa",
+=======
     "mtime": 1781888306.1077795,
     "ast_hash": "6d2653565c3cbf001251b0a4d57dd157",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2104805,
+    "ast_hash": "c307171cc56c8e77224ca3992f3553aa",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781888306.1077795,
+    "ast_hash": "6d2653565c3cbf001251b0a4d57dd157",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/hooks/use-ai-analysis.ts": {
@@ -1650,8 +2069,23 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/components/ai-scoring-recommendation-dialog.tsx": {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mtime": 1781899182.2122276,
+    "ast_hash": "c228747db1ae82a7fa4e3182fe33af90",
+=======
     "mtime": 1781889932.4863985,
     "ast_hash": "91ca20c7f06baa90039acf3a09fc4524",
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+    "mtime": 1781899182.2122276,
+    "ast_hash": "c228747db1ae82a7fa4e3182fe33af90",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+    "mtime": 1781889932.4863985,
+    "ast_hash": "91ca20c7f06baa90039acf3a09fc4524",
+>>>>>>> origin/development
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/hooks/use-get-ai-scoring-rules-recommendation.ts": {
@@ -1669,6 +2103,15 @@
     "ast_hash": "d89f30bc022bd5e4adc55c121dbd5c5c",
     "semantic_hash": ""
   },
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+  "apps/frontend/src/shared/providers/pwa-provider.tsx": {
+    "mtime": 1781899359.7732182,
+    "ast_hash": "e202d26a7bad27cf12a636441e575637",
+=======
+=======
+>>>>>>> origin/development
   "apps/frontend/src/features/screener/hooks/use-get-corporate-actions.ts": {
     "mtime": 1781888617.3732862,
     "ast_hash": "358c1b57ffe43f81f087747bf9b0511f",
@@ -1692,6 +2135,15 @@
   "apps/frontend/src/shared/components/ui/slider.tsx": {
     "mtime": 1781896732.8222764,
     "ast_hash": "97f137bb831841e5f931151cf22d84fd",
+<<<<<<< HEAD
+>>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+  "apps/frontend/src/shared/providers/pwa-provider.tsx": {
+    "mtime": 1781899359.7732182,
+    "ast_hash": "e202d26a7bad27cf12a636441e575637",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
+=======
+>>>>>>> origin/development
     "semantic_hash": ""
   }
 }

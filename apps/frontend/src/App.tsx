@@ -53,51 +53,55 @@ import { stocksKeys } from "./features/stocks/stocks.keys";
 import { toast } from "sonner";
 import { WebSocketProvider } from "@/shared/providers/websocket-provider";
 
+import { PwaProvider } from "@/shared/providers/pwa-provider";
+
 const queryClient = new QueryClient();
 
 export function App() {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <TooltipProvider>
-        <QueryClientProvider client={queryClient}>
-          <BrowserRouter
-            basename={import.meta.env.FE_BASE_URL || "/"}
-            future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-          >
-            <Routes>
-              {/* Auth Layout Wrapper */}
-              <Route element={<AuthLayout />}>
-                <Route path="/login" element={<AuthLoginPage />} />
-                <Route path="/register" element={<AuthRegisterPage />} />
-              </Route>
+    <PwaProvider>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <TooltipProvider>
+          <QueryClientProvider client={queryClient}>
+            <BrowserRouter
+              basename={import.meta.env.FE_BASE_URL || "/"}
+              future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+            >
+              <Routes>
+                {/* Auth Layout Wrapper */}
+                <Route element={<AuthLayout />}>
+                  <Route path="/login" element={<AuthLoginPage />} />
+                  <Route path="/register" element={<AuthRegisterPage />} />
+                </Route>
 
-              {/* Platform Sidebar Layout Wrapper */}
-              <Route
-                element={
-                  <WebSocketProvider>
-                    <PlatformLayout />
-                  </WebSocketProvider>
-                }
-              >
-                <Route path="/" element={<InfoLandingPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/user-management" element={<UserManagementListPage />} />
-                <Route path="/stocks" element={<StockListPage />} />
-                <Route path="/screener" element={<ScreenerPage />} />
-                <Route path="/live-screener" element={<LiveScreenerPage />} />
-                <Route path="/backtest" element={<BacktestPage />} />
-                <Route path="/screener/:symbol" element={<StockDetailPage />} />
-                <Route path="/ingestion-logs" element={<IngestionLogsPage />} />
-                <Route path="/settings" element={<SettingsPage />} />
+                {/* Platform Sidebar Layout Wrapper */}
+                <Route
+                  element={
+                    <WebSocketProvider>
+                      <PlatformLayout />
+                    </WebSocketProvider>
+                  }
+                >
+                  <Route path="/" element={<InfoLandingPage />} />
+                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/user-management" element={<UserManagementListPage />} />
+                  <Route path="/stocks" element={<StockListPage />} />
+                  <Route path="/screener" element={<ScreenerPage />} />
+                  <Route path="/live-screener" element={<LiveScreenerPage />} />
+                  <Route path="/backtest" element={<BacktestPage />} />
+                  <Route path="/screener/:symbol" element={<StockDetailPage />} />
+                  <Route path="/ingestion-logs" element={<IngestionLogsPage />} />
+                  <Route path="/settings" element={<SettingsPage />} />
 
-              </Route>
-            </Routes>
-          </BrowserRouter>
-          <GlobalErrorContainer />
-          <Toaster />
-        </QueryClientProvider>
-      </TooltipProvider>
-    </ThemeProvider>
+                </Route>
+              </Routes>
+            </BrowserRouter>
+            <GlobalErrorContainer />
+            <Toaster />
+          </QueryClientProvider>
+        </TooltipProvider>
+      </ThemeProvider>
+    </PwaProvider>
   );
 }
 

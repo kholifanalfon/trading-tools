@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+/// <reference types="vite-plugin-pwa/client" />
 
 interface ImportMetaEnv {
   readonly FE_VITE_API_URL: string;
@@ -15,3 +16,5 @@ interface Window {
     FE_VITE_SENTRY_DSN?: string;
   };
 }
+
+declare const __APP_VERSION__: string;
