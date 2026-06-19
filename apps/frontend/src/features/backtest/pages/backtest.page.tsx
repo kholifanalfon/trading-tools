@@ -59,7 +59,7 @@ export function BacktestPage() {
     }
   });
 
-  const { data: watchlistedStocks } = useGetStocks({ page: 1, limit: 100, watchlist: true });
+  const { data: stocksData } = useGetStocks({ page: 1, limit: 100 });
 
   const {
     register,
@@ -93,10 +93,10 @@ export function BacktestPage() {
   }, []);
 
   useEffect(() => {
-    if (watchlistedStocks?.items && watchlistedStocks.items.length > 0) {
-      setValue("symbol", watchlistedStocks.items[0].symbol);
+    if (stocksData?.items && stocksData.items.length > 0) {
+      setValue("symbol", stocksData.items[0].symbol);
     }
-  }, [watchlistedStocks, setValue]);
+  }, [stocksData, setValue]);
 
   const onRunSimulation = async (data: BacktestFormInput) => {
     setBacktestResult(null);
@@ -350,11 +350,16 @@ export function BacktestPage() {
           <form onSubmit={handleSubmit(onRunSimulation)} className="space-y-3">
             <Field>
               <FieldLabel className="text-[10px] text-muted-foreground uppercase font-bold">Ticker Symbol</FieldLabel>
-              <Input
-                placeholder="e.g. BBCA.JK"
-                className={`bg-background/50 border-border/70 text-xs h-9 font-semibold uppercase ${errors.symbol ? "border-destructive/60" : ""}`}
+              <select
+                className="flex h-9 w-full rounded-md border border-border/70 bg-background/50 px-3 py-1 text-xs shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-foreground font-semibold"
                 {...register("symbol")}
-              />
+              >
+                {stocksData?.items?.map((stock) => (
+                  <option key={stock.id} value={stock.symbol}>
+                    {stock.symbol} - {stock.name}
+                  </option>
+                ))}
+              </select>
               {errors.symbol && <span className="text-[9px] text-destructive font-medium">{errors.symbol.message}</span>}
             </Field>
 

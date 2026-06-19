@@ -8,7 +8,7 @@ export interface AiScoringRecommendationDialogProps {
   activeStrategyTab: "day" | "swing" | "position";
   isGeneratingRecommendations: boolean;
   recommendationError: string | null;
-  recommendedRules: { parameterName: string; value: number; justification: string }[];
+  recommendedRules: { parameterName: string; value: number; weight: number; justification: string }[];
   onApplyRecommendations: () => void;
 }
 
@@ -67,6 +67,7 @@ export function AiScoringRecommendationDialog({
                     <tr className="border-b border-border/60 bg-muted/40 text-muted-foreground font-semibold">
                       <th className="p-3">Nama Parameter</th>
                       <th className="p-3">Rekomendasi Nilai</th>
+                      <th className="p-3">Rekomendasi Bobot</th>
                       <th className="p-3">Justifikasi AI</th>
                     </tr>
                   </thead>
@@ -76,6 +77,7 @@ export function AiScoringRecommendationDialog({
                         <tr key={index} className="hover:bg-muted/10 transition-colors">
                           <td className="p-3 font-semibold text-foreground">{formatParamName(rule.parameterName)}</td>
                           <td className="p-3 font-mono text-indigo-400 font-bold">{rule.value}</td>
+                          <td className="p-3 font-mono text-emerald-400 font-bold">{rule.weight !== undefined ? `${rule.weight} pts` : "-"}</td>
                           <td className="p-3 text-muted-foreground leading-normal max-w-xs">{rule.justification}</td>
                         </tr>
                       );

@@ -1,5 +1,19 @@
 import { ScoreMetrics, ScorePayload } from "@/core/types/scoring.types";
 import { ScoringRule } from "@/db/schema";
+import { HistoricalDataPoint } from "@/core/types/api-stock-provider.types";
+import {
+  calculateEMA,
+  calculateRSI,
+  calculateMACD,
+  calculateSMA,
+  calculateATR,
+  calculateBollingerBands,
+  calculateVWAP,
+  calculateADX,
+  calculateZScore,
+  calculatePOC,
+  calculateAccumulationDistribution,
+} from "./indicators";
 
 export interface ScoringRulesConfig {
   [key: string]: { value: number; weight: number };
@@ -310,18 +324,8 @@ export function calculateAllScores(metrics: ScoreMetrics, config?: ScoringRulesC
     const tpMultiplier = getRule(config, `risk_${strategy}`, "tp_multiplier", defaultTP, 0).value;
     const minRewardRiskRatio = getRule(config, `risk_${strategy}`, "min_reward_risk_ratio", defaultMinRR, 0).value;
 
-    console.log("strategy", strategy);
-    console.log("metrics.avgVolume10", metrics.avgVolume10);
-    console.log("metrics.avgVolume20", metrics.avgVolume20);
-    console.log("metrics.atr14", metrics.atr14);
-    console.log("metrics.close", metrics.close);
-    console.log("slMultiplier", slMultiplier);
-    console.log("tpMultiplier", tpMultiplier);
-    console.log("minRewardRiskRatio", minRewardRiskRatio);
-
     // PROTECTION GUARD: If real ATR is 0/null (dormant stock like POOL) or average volume is extremely low, immediately FAIL
     const avgVol = metrics.avgVolume10 || metrics.avgVolume20 || 0;
-    console.log(!metrics.atr14, metrics.atr14 === 0, avgVol < 5000);
     if (!metrics.atr14 || metrics.atr14 === 0 || avgVol < 5000) {
       return {
         stopLoss: metrics.close,
@@ -335,19 +339,34 @@ export function calculateAllScores(metrics: ScoreMetrics, config?: ScoringRulesC
     const atr = metrics.atr14 || fallbackAtrValue;
 
     const stopLoss = metrics.close - slMultiplier * atr;
-    const targetProfit = metrics.close + tpMultiplier * atr;
+    let targetProfit = metrics.close + tpMultiplier * atr;
+
+    // Optimize targetProfit dynamically based on technical resistance levels
+    if (strategy === "day") {
+      // Day Strategy: Bollinger Band Upper acts as a strong dynamic resistance/target
+      if (metrics.bbUpper !== null && metrics.bbUpper > metrics.close) {
+        targetProfit = Math.min(targetProfit, metrics.bbUpper);
+      }
+    } else if (strategy === "swing") {
+      // Swing Strategy: Blend the ATR-based target with BB Upper, and cap at Year High
+      if (metrics.bbUpper !== null && metrics.bbUpper > metrics.close) {
+        targetProfit = (targetProfit + metrics.bbUpper) / 2;
+      }
+      if (metrics.yearHigh !== null && metrics.yearHigh > metrics.close) {
+        targetProfit = Math.min(targetProfit, metrics.yearHigh);
+      }
+    } else if (strategy === "position") {
+      // Position Strategy: 52-week High is the primary long-term target, allowing for a 10% breakout buffer
+      if (metrics.yearHigh !== null && metrics.yearHigh > metrics.close) {
+        targetProfit = Math.min(targetProfit, metrics.yearHigh * 1.1);
+      }
+    }
 
     const riskAmount = metrics.close - stopLoss;
     const rewardAmount = targetProfit - metrics.close;
 
     const rewardRiskRatio = riskAmount > 0 ? rewardAmount / riskAmount : 0;
     const passed = rewardRiskRatio >= minRewardRiskRatio;
-
-    console.log("riskAmount", riskAmount);
-    console.log("rewardAmount", rewardAmount);
-    console.log("rewardRiskRatio", rewardRiskRatio);
-    console.log("passed", passed);
-    console.log("");
 
     return {
       stopLoss,
@@ -367,4 +386,150 @@ export function calculateAllScores(metrics: ScoreMetrics, config?: ScoringRulesC
       position: getValidationForStrategy("position"),
     } as any,
   };
+}
+
+export interface CalculatedPoint {
+  date: Date;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+  changePercent: number;
+  metrics: ScoreMetrics;
+  scorePayload: ScorePayload;
+  ema9: number | null;
+  ema21: number | null;
+  ema50: number | null;
+  ema200: number | null;
+  rsi: number | null;
+  macd: number | null;
+  macdSignal: number | null;
+  macdHist: number | null;
+}
+
+export function calculateMetricsAndScores(points: HistoricalDataPoint[], rulesConfig: ScoringRulesConfig): CalculatedPoint[] {
+  const sortedPoints = [...points].sort((a, b) => a.date.getTime() - b.date.getTime());
+
+  const closePrices = sortedPoints.map((p) => p.close);
+  const highPrices = sortedPoints.map((p) => p.high);
+  const lowPrices = sortedPoints.map((p) => p.low);
+  const volumeVals = sortedPoints.map((p) => p.volume);
+
+  const ema9Vals = calculateEMA(closePrices, 9);
+  const ema21Vals = calculateEMA(closePrices, 21);
+  const ema50Vals = calculateEMA(closePrices, 50);
+  const ema200Vals = calculateEMA(closePrices, 200);
+  const sma50Vals = calculateSMA(closePrices, 50);
+  const sma200Vals = calculateSMA(closePrices, 200);
+  const rsiVals = calculateRSI(closePrices, 14);
+  const atrVals = calculateATR(highPrices, lowPrices, closePrices, 14);
+  const avgVol10Vals = calculateSMA(volumeVals, 10);
+  const avgVol20Vals = calculateSMA(volumeVals, 20);
+
+  const { macd: macdVals, signal: macdSignalVals, histogram: macdHistVals } = calculateMACD(closePrices);
+
+  const { upper: bbUpperVals, lower: bbLowerVals } = calculateBollingerBands(closePrices);
+  const vwapVals = calculateVWAP(highPrices, lowPrices, closePrices, volumeVals);
+  const adxVals = calculateADX(highPrices, lowPrices, closePrices);
+  const zScoreVals = calculateZScore(closePrices);
+  const pocVals = calculatePOC(highPrices, lowPrices, closePrices, volumeVals);
+  const adLineVals = calculateAccumulationDistribution(highPrices, lowPrices, closePrices, volumeVals);
+
+  const macdGoldenCrossVals = new Array(sortedPoints.length).fill(false);
+  const bbBounceVals = new Array(sortedPoints.length).fill(false);
+  for (let k = 1; k < sortedPoints.length; k++) {
+    const prevHist = macdHistVals[k - 1];
+    const currHist = macdHistVals[k];
+    if (prevHist !== null && currHist !== null && prevHist <= 0 && currHist > 0) {
+      macdGoldenCrossVals[k] = true;
+    }
+    const prevLower = bbLowerVals[k - 1];
+    const currLower = bbLowerVals[k];
+    if (currLower !== null && prevLower !== null) {
+      const touchedOrBelow = sortedPoints[k].low <= currLower || sortedPoints[k - 1].close <= prevLower;
+      const closedAbove = sortedPoints[k].close > currLower;
+      if (touchedOrBelow && closedAbove) {
+        bbBounceVals[k] = true;
+      }
+    }
+  }
+
+  const yearHighVals: (number | null)[] = new Array(sortedPoints.length).fill(null);
+  const yearLowVals: (number | null)[] = new Array(sortedPoints.length).fill(null);
+  const priceReturn1YVals: (number | null)[] = new Array(sortedPoints.length).fill(null);
+
+  for (let i = 0; i < sortedPoints.length; i++) {
+    let startIdx = Math.max(0, i - 252);
+    if (i >= 252) {
+      let highest = -Infinity;
+      let lowest = Infinity;
+      for (let k = startIdx; k <= i; k++) {
+        if (highPrices[k] > highest) highest = highPrices[k];
+        if (lowPrices[k] < lowest) lowest = lowPrices[k];
+      }
+      yearHighVals[i] = highest;
+      yearLowVals[i] = lowest;
+      const prevYearPrice = closePrices[startIdx];
+      priceReturn1YVals[i] = ((closePrices[i] - prevYearPrice) / prevYearPrice) * 100;
+    }
+  }
+
+  return sortedPoints.map((p, index) => {
+    const prevClose = index > 0 ? sortedPoints[index - 1].close : p.open;
+    const changePercent = prevClose !== 0 ? ((p.close - prevClose) / prevClose) * 100 : 0;
+
+    const metrics: ScoreMetrics = {
+      close: p.close,
+      open: p.open,
+      high: p.high,
+      low: p.low,
+      prevClose,
+      volume: p.volume,
+      avgVolume10: avgVol10Vals[index],
+      avgVolume20: avgVol20Vals[index],
+      atr14: atrVals[index],
+      rsi14: rsiVals[index],
+      ema20: ema21Vals[index], // 21 as 20
+      ema50: ema50Vals[index],
+      sma50: sma50Vals[index],
+      sma200: sma200Vals[index],
+      macdLine: macdVals[index],
+      macdSignal: macdSignalVals[index],
+      macdHist: macdHistVals[index],
+      yearHigh: yearHighVals[index],
+      priceReturn1Y: priceReturn1YVals[index],
+      bbLower: bbLowerVals[index],
+      bbUpper: bbUpperVals[index],
+      vwap: vwapVals[index],
+      adx: adxVals[index],
+      zScore: zScoreVals[index],
+      poc: pocVals[index],
+      adLine: adLineVals[index],
+      macdGoldenCross: macdGoldenCrossVals[index],
+      bbBounce: bbBounceVals[index],
+    };
+
+    const scorePayload = calculateAllScores(metrics, rulesConfig);
+
+    return {
+      date: p.date,
+      open: p.open,
+      high: p.high,
+      low: p.low,
+      close: p.close,
+      volume: p.volume,
+      changePercent,
+      metrics,
+      scorePayload,
+      ema9: ema9Vals[index],
+      ema21: ema21Vals[index],
+      ema50: ema50Vals[index],
+      ema200: ema200Vals[index],
+      rsi: rsiVals[index],
+      macd: macdVals[index],
+      macdSignal: macdSignalVals[index],
+      macdHist: macdHistVals[index],
+    };
+  });
 }

@@ -36,6 +36,7 @@ export interface ScoringRulesRecommendationResponse {
   recommendations: {
     parameterName: string;
     value: number;
+    weight: number;
     justification: string;
   }[];
 }

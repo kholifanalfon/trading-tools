@@ -26,4 +26,5 @@ export interface ScreenerProviderAdapter {
   getQuote(symbol: string): Promise<StockQuote>;
   getHistoricalData(symbol: string, fromDate: Date, toDate: Date, interval?: string): Promise<HistoricalDataPoint[]>;
   getScreenedStocks(strategy: string | any, regions: string[], limit?: number, offset?: number, search?: string): Promise<StockProviderSchema[]>;
+  getCorporateActions?(symbol: string, fromDate: Date, toDate: Date): Promise<{ dividends: any[]; splits: any[] }>;
 }
