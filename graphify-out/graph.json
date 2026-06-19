@@ -531,10 +531,14 @@
       "_origin": "ast",
       "id": "adapters_gemini_adapter",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 91,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 91,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "gemini.adapter.ts"
     },
     {
@@ -545,10 +549,14 @@
       "_origin": "ast",
       "id": "adapters_gemini_adapter_geminiadapter",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 11,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 11,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "geminiadapter"
     },
     {
@@ -559,10 +567,14 @@
       "_origin": "ast",
       "id": "adapters_gemini_adapter_geminiadapter_constructor",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 11,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 11,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".constructor()"
     },
     {
@@ -573,10 +585,14 @@
       "_origin": "ast",
       "id": "adapters_gemini_adapter_geminiadapter_generateanalysis",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 11,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 11,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".generateanalysis()"
     },
     {
@@ -587,10 +603,14 @@
       "_origin": "ast",
       "id": "adapters_gemini_adapter_geminiadapter_generatejsonanalysis",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 11,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 11,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".generatejsonanalysis()"
     },
     {
@@ -601,10 +621,14 @@
       "_origin": "ast",
       "id": "adapters_gemini_adapter_geminiadapter_sanitizeandparsejson",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 11,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 11,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".sanitizeandparsejson()"
     },
     {
@@ -985,10 +1009,14 @@
       "_origin": "ast",
       "id": "middlewares_auth_middleware",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 103,
 =======
       "community": 45,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 103,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "auth.middleware.ts"
     },
     {
@@ -999,10 +1027,14 @@
       "_origin": "ast",
       "id": "middlewares_auth_middleware_secret",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 103,
 =======
       "community": 45,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 103,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "secret"
     },
     {
@@ -1013,10 +1045,14 @@
       "_origin": "ast",
       "id": "middlewares_auth_middleware_authrepository",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 103,
 =======
       "community": 45,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 103,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "authrepository"
     },
     {
@@ -1027,10 +1063,14 @@
       "_origin": "ast",
       "id": "middlewares_auth_middleware_requireauth",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 103,
 =======
       "community": 45,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 103,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "requireauth()"
     },
     {
@@ -1261,10 +1301,14 @@
       "_origin": "ast",
       "id": "core_startup",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "startup.ts"
     },
     {
@@ -1325,10 +1369,14 @@
       "_origin": "ast",
       "id": "types_scoring_types",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 5,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 5,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "scoring.types.ts"
     },
     {
@@ -1339,10 +1387,14 @@
       "_origin": "ast",
       "id": "types_scoring_types_scoremetrics",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 5,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 5,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "scoremetrics"
     },
     {
@@ -1353,10 +1405,14 @@
       "_origin": "ast",
       "id": "types_scoring_types_scorepayload",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 95,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 95,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "scorepayload"
     },
     {
@@ -1367,10 +1423,14 @@
       "_origin": "ast",
       "id": "utils_crypto",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 91,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 91,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "crypto.ts"
     },
     {
@@ -1381,10 +1441,14 @@
       "_origin": "ast",
       "id": "utils_crypto_secret_key",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 91,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 91,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "secret_key"
     },
     {
@@ -1405,10 +1469,14 @@
       "_origin": "ast",
       "id": "utils_crypto_decrypt",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 91,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 91,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "decrypt()"
     },
     {
@@ -1479,10 +1547,14 @@
       "_origin": "ast",
       "id": "utils_indicators_calculatebollingerbands",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 5,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 5,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "calculatebollingerbands()"
     },
     {
@@ -1493,10 +1565,14 @@
       "_origin": "ast",
       "id": "utils_indicators_calculatevwap",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 5,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 5,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "calculatevwap()"
     },
     {
@@ -1507,10 +1583,14 @@
       "_origin": "ast",
       "id": "utils_indicators_calculateadx",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 5,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 5,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "calculateadx()"
     },
     {
@@ -1521,10 +1601,14 @@
       "_origin": "ast",
       "id": "utils_indicators_calculatezscore",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 5,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 5,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "calculatezscore()"
     },
     {
@@ -1535,10 +1619,14 @@
       "_origin": "ast",
       "id": "utils_indicators_calculatepoc",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 5,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 5,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "calculatepoc()"
     },
     {
@@ -1549,10 +1637,14 @@
       "_origin": "ast",
       "id": "utils_indicators_calculateaccumulationdistribution",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 5,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 5,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "calculateaccumulationdistribution()"
     },
     {
@@ -1563,10 +1655,14 @@
       "_origin": "ast",
       "id": "utils_scoring_utils",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 95,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 95,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "scoring.utils.ts"
     },
     {
@@ -1577,10 +1673,14 @@
       "_origin": "ast",
       "id": "utils_scoring_utils_scoringrulesconfig",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 38,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 38,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "scoringrulesconfig"
     },
     {
@@ -1591,10 +1691,14 @@
       "_origin": "ast",
       "id": "utils_scoring_utils_maprulestoconfig",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 11,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 11,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "maprulestoconfig()"
     },
     {
@@ -1605,10 +1709,14 @@
       "_origin": "ast",
       "id": "utils_scoring_utils_getrule",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 95,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 95,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "getrule()"
     },
     {
@@ -1619,16 +1727,21 @@
       "_origin": "ast",
       "id": "utils_scoring_utils_calculatedayscore",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 95,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 95,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "calculatedayscore()"
     },
     {
       "label": "calculateSwingScore()",
       "file_type": "code",
       "source_file": "apps/backend/src/core/utils/scoring.utils.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L129",
       "_origin": "ast",
@@ -1640,12 +1753,19 @@
       "id": "utils_scoring_utils_calculateswingscore",
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L129",
+      "_origin": "ast",
+      "id": "utils_scoring_utils_calculateswingscore",
+      "community": 95,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "calculateswingscore()"
     },
     {
       "label": "calculatePositionScore()",
       "file_type": "code",
       "source_file": "apps/backend/src/core/utils/scoring.utils.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L210",
       "_origin": "ast",
@@ -1657,12 +1777,19 @@
       "id": "utils_scoring_utils_calculatepositionscore",
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L210",
+      "_origin": "ast",
+      "id": "utils_scoring_utils_calculatepositionscore",
+      "community": 95,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "calculatepositionscore()"
     },
     {
       "label": "calculateAllScores()",
       "file_type": "code",
       "source_file": "apps/backend/src/core/utils/scoring.utils.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L284",
       "_origin": "ast",
@@ -1674,6 +1801,12 @@
       "id": "utils_scoring_utils_calculateallscores",
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L284",
+      "_origin": "ast",
+      "id": "utils_scoring_utils_calculateallscores",
+      "community": 95,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "calculateallscores()"
     },
     {
@@ -1754,10 +1887,14 @@
       "_origin": "ast",
       "id": "core_websocket_websocketservice",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 14,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 14,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "websocketservice"
     },
     {
@@ -1768,10 +1905,14 @@
       "_origin": "ast",
       "id": "core_websocket_websocketservice_initialize",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 14,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 14,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".initialize()"
     },
     {
@@ -1782,10 +1923,14 @@
       "_origin": "ast",
       "id": "core_websocket_websocketservice_broadcast",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 14,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 14,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".broadcast()"
     },
     {
@@ -1856,10 +2001,14 @@
       "_origin": "ast",
       "id": "schemas_ai_analyses_schema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "ai-analyses.schema.ts"
     },
     {
@@ -1870,10 +2019,14 @@
       "_origin": "ast",
       "id": "schemas_ai_analyses_schema_aianalyses",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "aianalyses"
     },
     {
@@ -1884,10 +2037,14 @@
       "_origin": "ast",
       "id": "schemas_ai_analyses_schema_aianalysis",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "aianalysis"
     },
     {
@@ -1898,10 +2055,14 @@
       "_origin": "ast",
       "id": "schemas_ai_analyses_schema_newaianalysis",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "newaianalysis"
     },
     {
@@ -1912,10 +2073,14 @@
       "_origin": "ast",
       "id": "schemas_backtest_reports_schema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "backtest-reports.schema.ts"
     },
     {
@@ -1926,10 +2091,14 @@
       "_origin": "ast",
       "id": "schemas_backtest_reports_schema_backtestreports",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "backtestreports"
     },
     {
@@ -1940,10 +2109,14 @@
       "_origin": "ast",
       "id": "schemas_backtest_reports_schema_backtestreport",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "backtestreport"
     },
     {
@@ -1954,10 +2127,14 @@
       "_origin": "ast",
       "id": "schemas_backtest_reports_schema_newbacktestreport",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "newbacktestreport"
     },
     {
@@ -1968,10 +2145,14 @@
       "_origin": "ast",
       "id": "schemas_scoring_rules_schema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "scoring-rules.schema.ts"
     },
     {
@@ -1982,10 +2163,14 @@
       "_origin": "ast",
       "id": "schemas_scoring_rules_schema_scoringrules",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "scoringrules"
     },
     {
@@ -1996,10 +2181,14 @@
       "_origin": "ast",
       "id": "schemas_scoring_rules_schema_scoringrule",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "scoringrule"
     },
     {
@@ -2010,10 +2199,14 @@
       "_origin": "ast",
       "id": "schemas_scoring_rules_schema_newscoringrule",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "newscoringrule"
     },
     {
@@ -2024,10 +2217,14 @@
       "_origin": "ast",
       "id": "schemas_settings_schema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "settings.schema.ts"
     },
     {
@@ -2048,10 +2245,14 @@
       "_origin": "ast",
       "id": "schemas_settings_schema_setting",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "setting"
     },
     {
@@ -2062,10 +2263,14 @@
       "_origin": "ast",
       "id": "schemas_settings_schema_newsetting",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "newsetting"
     },
     {
@@ -2186,10 +2391,14 @@
       "_origin": "ast",
       "id": "schemas_users_schema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "users.schema.ts"
     },
     {
@@ -2210,10 +2419,14 @@
       "_origin": "ast",
       "id": "schemas_users_schema_user",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "user"
     },
     {
@@ -2224,10 +2437,14 @@
       "_origin": "ast",
       "id": "schemas_users_schema_newuser",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "newuser"
     },
     {
@@ -2278,10 +2495,14 @@
       "_origin": "ast",
       "id": "seeders_003_scoring_rules_seeder",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "003-scoring-rules.seeder.ts"
     },
     {
@@ -2292,10 +2513,14 @@
       "_origin": "ast",
       "id": "seeders_003_scoring_rules_seeder_seed",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "seed()"
     },
     {
@@ -2366,10 +2591,14 @@
       "_origin": "ast",
       "id": "auth_auth_repository_authrepository",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 103,
 =======
       "community": 110,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 103,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "authrepository"
     },
     {
@@ -2380,10 +2609,14 @@
       "_origin": "ast",
       "id": "auth_auth_repository_authrepository_getuserbyemail",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 103,
 =======
       "community": 110,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 103,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getuserbyemail()"
     },
     {
@@ -2394,10 +2627,14 @@
       "_origin": "ast",
       "id": "auth_auth_repository_authrepository_createuser",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 103,
 =======
       "community": 110,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 103,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".createuser()"
     },
     {
@@ -2558,10 +2795,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_engine",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 5,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 5,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "backtest.engine.ts"
     },
     {
@@ -2572,10 +2813,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_engine_runbacktestsimulation",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 5,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 5,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "runbacktestsimulation()"
     },
     {
@@ -2586,10 +2831,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_optimizer",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 38,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 38,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "backtest.optimizer.ts"
     },
     {
@@ -2600,10 +2849,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_optimizer_strategy_weight_profiles",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 38,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 38,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "strategy_weight_profiles"
     },
     {
@@ -2614,10 +2867,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_optimizer_runstrategyoptimization",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 38,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 38,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "runstrategyoptimization()"
     },
     {
@@ -2628,10 +2885,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_optimizer_runmultistockoptimization",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 38,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 38,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "runmultistockoptimization()"
     },
     {
@@ -2712,10 +2973,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_service",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 38,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 38,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "backtest.service.ts"
     },
     {
@@ -2726,10 +2991,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_service_runbacktestdto",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 38,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 38,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "runbacktestdto"
     },
     {
@@ -2740,10 +3009,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_service_backtestservice",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 11,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 11,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "backtestservice"
     },
     {
@@ -2754,10 +3027,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_service_backtestservice_getgeminiadapter",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 11,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 11,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getgeminiadapter()"
     },
     {
@@ -2768,10 +3045,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_service_backtestservice_runbacktest",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 11,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 11,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".runbacktest()"
     },
     {
@@ -2782,10 +3063,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_service_backtestservice_logandbroadcast",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 11,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 11,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".logandbroadcast()"
     },
     {
@@ -2796,10 +3081,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_service_backtestservice_runoptimization",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 11,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 11,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".runoptimization()"
     },
     {
@@ -2810,10 +3099,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_service_backtestservice_runmultistockoptimization",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 11,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 11,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".runmultistockoptimization()"
     },
     {
@@ -2824,10 +3117,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_service_backtestservice_getreports",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 11,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 11,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getreports()"
     },
     {
@@ -2838,10 +3135,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_service_backtestservice_getaialternative",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 11,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 11,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getaialternative()"
     },
     {
@@ -2852,10 +3153,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_types",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 38,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 38,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "backtest.types.ts"
     },
     {
@@ -2866,10 +3171,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_types_backtestparams",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 38,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 38,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "backtestparams"
     },
     {
@@ -2880,10 +3189,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_types_tradelog",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 38,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 38,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "tradelog"
     },
     {
@@ -2894,10 +3207,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_types_backtestresult",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 38,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 38,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "backtestresult"
     },
     {
@@ -2908,10 +3225,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_types_optimizationgriditem",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 38,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 38,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "optimizationgriditem"
     },
     {
@@ -2922,10 +3243,14 @@
       "_origin": "ast",
       "id": "backtest_backtest_types_weightprofile",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 38,
 =======
       "community": 48,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 38,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "weightprofile"
     },
     {
@@ -3016,10 +3341,14 @@
       "_origin": "ast",
       "id": "live_screener_live_screener_schema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 48,
 =======
       "community": 99,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 48,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "live-screener.schema.ts"
     },
     {
@@ -3030,10 +3359,14 @@
       "_origin": "ast",
       "id": "live_screener_live_screener_schema_livestockdataqueryschema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 48,
 =======
       "community": 99,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 48,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "livestockdataqueryschema"
     },
     {
@@ -3044,10 +3377,14 @@
       "_origin": "ast",
       "id": "live_screener_live_screener_schema_livestockdataquery",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 48,
 =======
       "community": 99,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 48,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "livestockdataquery"
     },
     {
@@ -3058,10 +3395,14 @@
       "_origin": "ast",
       "id": "live_screener_live_screener_service",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 5,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 5,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "live-screener.service.ts"
     },
     {
@@ -3072,10 +3413,14 @@
       "_origin": "ast",
       "id": "live_screener_live_screener_service_cacheentry",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 5,
 =======
       "community": 102,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 5,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "cacheentry"
     },
     {
@@ -3086,10 +3431,14 @@
       "_origin": "ast",
       "id": "live_screener_live_screener_service_livescreenerservice",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 48,
 =======
       "community": 99,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 48,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "livescreenerservice"
     },
     {
@@ -3100,10 +3449,14 @@
       "_origin": "ast",
       "id": "live_screener_live_screener_service_livescreenerservice_getproviderconfig",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 48,
 =======
       "community": 99,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 48,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getproviderconfig()"
     },
     {
@@ -3114,10 +3467,14 @@
       "_origin": "ast",
       "id": "live_screener_live_screener_service_livescreenerservice_logandbroadcast",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 48,
 =======
       "community": 99,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 48,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".logandbroadcast()"
     },
     {
@@ -3128,10 +3485,14 @@
       "_origin": "ast",
       "id": "live_screener_live_screener_service_livescreenerservice_getadapter",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 48,
 =======
       "community": 99,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 48,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getadapter()"
     },
     {
@@ -3142,10 +3503,14 @@
       "_origin": "ast",
       "id": "live_screener_live_screener_service_livescreenerservice_getlivestockdata",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 48,
 =======
       "community": 99,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 48,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getlivestockdata()"
     },
     {
@@ -3156,10 +3521,14 @@
       "_origin": "ast",
       "id": "screener_ai_analysis_repository",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "ai-analysis.repository.ts"
     },
     {
@@ -3170,10 +3539,14 @@
       "_origin": "ast",
       "id": "screener_ai_analysis_repository_aianalysisrepository",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "aianalysisrepository"
     },
     {
@@ -3184,10 +3557,14 @@
       "_origin": "ast",
       "id": "screener_ai_analysis_repository_aianalysisrepository_getanalysisbysymbol",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getanalysisbysymbol()"
     },
     {
@@ -3198,10 +3575,14 @@
       "_origin": "ast",
       "id": "screener_ai_analysis_repository_aianalysisrepository_upsertanalysis",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".upsertanalysis()"
     },
     {
@@ -3212,10 +3593,14 @@
       "_origin": "ast",
       "id": "screener_scoring_rules_repository",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 11,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "scoring-rules.repository.ts"
     },
     {
@@ -3546,10 +3931,14 @@
       "_origin": "ast",
       "id": "screener_screener_schema_synchistoricalstate",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 42,
 =======
       "community": 32,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 42,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "synchistoricalstate"
     },
     {
@@ -3567,10 +3956,14 @@
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L29",
 =======
       "source_location": "L16",
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L29",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "_origin": "ast",
       "id": "screener_screener_service_historicalsyncstate",
       "community": 5,
@@ -3580,6 +3973,7 @@
       "label": "ScreenerService",
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L35",
       "_origin": "ast",
@@ -3591,12 +3985,19 @@
       "id": "screener_screener_service_screenerservice",
       "community": 32,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "screener_screener_service_screenerservice",
+      "community": 42,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "screenerservice"
     },
     {
       "label": ".getHistoricalSyncState()",
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L40",
       "_origin": "ast",
@@ -3608,12 +4009,19 @@
       "id": "screener_screener_service_screenerservice_gethistoricalsyncstate",
       "community": 32,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "screener_screener_service_screenerservice_gethistoricalsyncstate",
+      "community": 42,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".gethistoricalsyncstate()"
     },
     {
       "label": ".getLatestLogs()",
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L44",
       "_origin": "ast",
@@ -3625,12 +4033,19 @@
       "id": "screener_screener_service_screenerservice_getlatestlogs",
       "community": 32,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L44",
+      "_origin": "ast",
+      "id": "screener_screener_service_screenerservice_getlatestlogs",
+      "community": 42,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getlatestlogs()"
     },
     {
       "label": ".logAndBroadcast()",
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L48",
       "_origin": "ast",
@@ -3642,12 +4057,19 @@
       "id": "screener_screener_service_screenerservice_logandbroadcast",
       "community": 32,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "screener_screener_service_screenerservice_logandbroadcast",
+      "community": 42,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".logandbroadcast()"
     },
     {
       "label": ".getProviderConfig()",
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L55",
       "_origin": "ast",
@@ -3659,12 +4081,19 @@
       "id": "screener_screener_service_screenerservice_getproviderconfig",
       "community": 32,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L55",
+      "_origin": "ast",
+      "id": "screener_screener_service_screenerservice_getproviderconfig",
+      "community": 42,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getproviderconfig()"
     },
     {
       "label": ".getAdapter()",
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L69",
       "_origin": "ast",
@@ -3676,12 +4105,19 @@
       "id": "screener_screener_service_screenerservice_getadapter",
       "community": 32,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L69",
+      "_origin": "ast",
+      "id": "screener_screener_service_screenerservice_getadapter",
+      "community": 42,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getadapter()"
     },
     {
       "label": ".searchStocks()",
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L77",
       "_origin": "ast",
@@ -3693,12 +4129,19 @@
       "id": "screener_screener_service_screenerservice_searchstocks",
       "community": 8,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L77",
+      "_origin": "ast",
+      "id": "screener_screener_service_screenerservice_searchstocks",
+      "community": 2,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".searchstocks()"
     },
     {
       "label": ".getQuote()",
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L82",
       "_origin": "ast",
@@ -3710,12 +4153,19 @@
       "id": "screener_screener_service_screenerservice_getquote",
       "community": 8,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L82",
+      "_origin": "ast",
+      "id": "screener_screener_service_screenerservice_getquote",
+      "community": 42,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getquote()"
     },
     {
       "label": ".startHistoricalSync()",
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L87",
       "_origin": "ast",
@@ -3727,12 +4177,19 @@
       "id": "screener_screener_service_screenerservice_starthistoricalsync",
       "community": 32,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L87",
+      "_origin": "ast",
+      "id": "screener_screener_service_screenerservice_starthistoricalsync",
+      "community": 42,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".starthistoricalsync()"
     },
     {
       "label": ".pullHistoricalDataBackground()",
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L114",
       "_origin": "ast",
@@ -3744,12 +4201,19 @@
       "id": "screener_screener_service_screenerservice_pullhistoricaldatabackground",
       "community": 32,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L114",
+      "_origin": "ast",
+      "id": "screener_screener_service_screenerservice_pullhistoricaldatabackground",
+      "community": 42,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".pullhistoricaldatabackground()"
     },
     {
       "label": ".getStockData()",
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L375",
       "_origin": "ast",
@@ -3761,6 +4225,12 @@
       "id": "screener_screener_service_screenerservice_getstockdata",
       "community": 32,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L375",
+      "_origin": "ast",
+      "id": "screener_screener_service_screenerservice_getstockdata",
+      "community": 42,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getstockdata()"
     },
     {
@@ -3768,10 +4238,14 @@
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L379",
 =======
       "source_location": "L265",
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L379",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "_origin": "ast",
       "id": "screener_screener_service_screenerservice_getstockhistoricaldata",
       "community": 5,
@@ -3781,6 +4255,7 @@
       "label": ".getAiAnalysis()",
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L605",
       "_origin": "ast",
@@ -3792,12 +4267,19 @@
       "id": "screener_screener_service_screenerservice_getaianalysis",
       "community": 32,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L605",
+      "_origin": "ast",
+      "id": "screener_screener_service_screenerservice_getaianalysis",
+      "community": 42,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getaianalysis()"
     },
     {
       "label": ".refreshAiAnalysis()",
       "file_type": "code",
       "source_file": "apps/backend/src/modules/screener/screener.service.ts",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L609",
       "_origin": "ast",
@@ -3809,6 +4291,12 @@
       "id": "screener_screener_service_screenerservice_refreshaianalysis",
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L609",
+      "_origin": "ast",
+      "id": "screener_screener_service_screenerservice_refreshaianalysis",
+      "community": 91,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".refreshaianalysis()"
     },
     {
@@ -3829,10 +4317,14 @@
       "_origin": "ast",
       "id": "settings_settings_client_service",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 45,
 =======
       "community": 2,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 45,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "settings-client.service.ts"
     },
     {
@@ -3843,10 +4335,14 @@
       "_origin": "ast",
       "id": "settings_settings_client_service_settingsclientservice",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 45,
 =======
       "community": 2,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 45,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "settingsclientservice"
     },
     {
@@ -3857,10 +4353,14 @@
       "_origin": "ast",
       "id": "settings_settings_client_service_settingsclientservice_getexchanges",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 45,
 =======
       "community": 2,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 45,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getexchanges()"
     },
     {
@@ -3871,10 +4371,14 @@
       "_origin": "ast",
       "id": "settings_settings_client_type",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 45,
 =======
       "community": 2,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 45,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "settings-client.type.ts"
     },
     {
@@ -3885,10 +4389,14 @@
       "_origin": "ast",
       "id": "settings_settings_client_type_settingsclientexchageschema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 45,
 =======
       "community": 2,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 45,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "settingsclientexchageschema"
     },
     {
@@ -3899,10 +4407,14 @@
       "_origin": "ast",
       "id": "settings_settings_client_type_settingsclientserviceschema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 45,
 =======
       "community": 2,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 45,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "settingsclientserviceschema"
     },
     {
@@ -3913,10 +4425,14 @@
       "_origin": "ast",
       "id": "settings_settings_controller",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 92,
 =======
       "community": 91,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 92,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "settings.controller.ts"
     },
     {
@@ -3927,10 +4443,14 @@
       "_origin": "ast",
       "id": "settings_settings_controller_settingscontroller",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 92,
 =======
       "community": 91,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 92,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "settingscontroller"
     },
     {
@@ -3941,10 +4461,14 @@
       "_origin": "ast",
       "id": "settings_settings_repository",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 17,
 =======
       "community": 2,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 17,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "settings.repository.ts"
     },
     {
@@ -3955,10 +4479,14 @@
       "_origin": "ast",
       "id": "settings_settings_repository_settingsrepository",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 45,
 =======
       "community": 2,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 45,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "settingsrepository"
     },
     {
@@ -3969,10 +4497,14 @@
       "_origin": "ast",
       "id": "settings_settings_repository_settingsrepository_getallsettings",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 45,
 =======
       "community": 2,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 45,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getallsettings()"
     },
     {
@@ -3983,10 +4515,14 @@
       "_origin": "ast",
       "id": "settings_settings_repository_settingsrepository_getsettingbykey",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 45,
 =======
       "community": 2,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 45,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getsettingbykey()"
     },
     {
@@ -3997,10 +4533,14 @@
       "_origin": "ast",
       "id": "settings_settings_repository_settingsrepository_upsertsetting",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 45,
 =======
       "community": 2,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 45,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".upsertsetting()"
     },
     {
@@ -4101,10 +4641,14 @@
       "_origin": "ast",
       "id": "settings_settings_schema_getairecommendationschema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 92,
 =======
       "community": 91,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 92,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "getairecommendationschema"
     },
     {
@@ -4115,10 +4659,14 @@
       "_origin": "ast",
       "id": "settings_settings_schema_getairecommendationinput",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 92,
 =======
       "community": 91,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 92,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "getairecommendationinput"
     },
     {
@@ -4209,10 +4757,14 @@
       "_origin": "ast",
       "id": "settings_settings_service_settingsservice_getaiscreenerrecommendation",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 91,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 91,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getaiscreenerrecommendation()"
     },
     {
@@ -4223,10 +4775,14 @@
       "_origin": "ast",
       "id": "settings_settings_service_settingsservice_getaiscoringrulesrecommendation",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 91,
 =======
       "community": 19,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 91,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": ".getaiscoringrulesrecommendation()"
     },
     {
@@ -4237,10 +4793,14 @@
       "_origin": "ast",
       "id": "stocks_stocks_controller",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 99,
 =======
       "community": 97,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 99,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "stocks.controller.ts"
     },
     {
@@ -4251,10 +4811,14 @@
       "_origin": "ast",
       "id": "stocks_stocks_controller_stockscontroller",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 99,
 =======
       "community": 97,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 99,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "stockscontroller"
     },
     {
@@ -4355,10 +4919,14 @@
       "_origin": "ast",
       "id": "stocks_stocks_routes",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 99,
 =======
       "community": 97,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 99,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "stocks.routes.ts"
     },
     {
@@ -4369,10 +4937,14 @@
       "_origin": "ast",
       "id": "stocks_stocks_routes_router",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 99,
 =======
       "community": 97,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 99,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "router"
     },
     {
@@ -4383,10 +4955,14 @@
       "_origin": "ast",
       "id": "stocks_stocks_routes_controller",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 99,
 =======
       "community": 97,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 99,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "controller"
     },
     {
@@ -6427,10 +7003,14 @@
       "_origin": "ast",
       "id": "apps_frontend_src_features_auth_auth_schema_ts_auth_auth_schema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 97,
 =======
       "community": 103,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 97,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "auth.schema.ts"
     },
     {
@@ -6441,10 +7021,14 @@
       "_origin": "ast",
       "id": "auth_auth_schema_loginschema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 97,
 =======
       "community": 103,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 97,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "loginschema"
     },
     {
@@ -6455,10 +7039,14 @@
       "_origin": "ast",
       "id": "apps_frontend_src_features_auth_auth_schema_ts_auth_auth_schema_logininput",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 97,
 =======
       "community": 103,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 97,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "logininput"
     },
     {
@@ -6469,10 +7057,14 @@
       "_origin": "ast",
       "id": "auth_auth_schema_registerschema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 97,
 =======
       "community": 103,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 97,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "registerschema"
     },
     {
@@ -6483,10 +7075,14 @@
       "_origin": "ast",
       "id": "apps_frontend_src_features_auth_auth_schema_ts_auth_auth_schema_registerinput",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 97,
 =======
       "community": 103,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 97,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "registerinput"
     },
     {
@@ -7437,10 +8033,14 @@
       "_origin": "ast",
       "id": "components_ai_analysis_card",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 32,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 32,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "ai-analysis-card.tsx"
     },
     {
@@ -7451,10 +8051,14 @@
       "_origin": "ast",
       "id": "components_ai_analysis_card_aianalysiscardprops",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 32,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 32,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "aianalysiscardprops"
     },
     {
@@ -7465,10 +8069,14 @@
       "_origin": "ast",
       "id": "components_ai_analysis_card_aianalysiscard",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 32,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 32,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "aianalysiscard()"
     },
     {
@@ -7479,10 +8087,14 @@
       "_origin": "ast",
       "id": "components_ai_analysis_card_scorerowprops",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 32,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 32,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "scorerowprops"
     },
     {
@@ -7493,10 +8105,14 @@
       "_origin": "ast",
       "id": "components_ai_analysis_card_scorerow",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 32,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 32,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "scorerow()"
     },
     {
@@ -7597,10 +8213,14 @@
       "_origin": "ast",
       "id": "components_screener_search",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 111,
 =======
       "community": 33,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 111,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "screener-search.tsx"
     },
     {
@@ -7611,10 +8231,14 @@
       "_origin": "ast",
       "id": "components_screener_search_screenersearchprops",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 111,
 =======
       "community": 33,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 111,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "screenersearchprops"
     },
     {
@@ -7625,10 +8249,14 @@
       "_origin": "ast",
       "id": "components_screener_search_screenersearch",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 111,
 =======
       "community": 33,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 111,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "screenersearch()"
     },
     {
@@ -7679,10 +8307,14 @@
       "_origin": "ast",
       "id": "components_strategy_score_card_useismobile",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 22,
 =======
       "community": 24,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 22,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "useismobile()"
     },
     {
@@ -7693,10 +8325,14 @@
       "_origin": "ast",
       "id": "components_strategy_score_card_metriccardbodyprops",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 22,
 =======
       "community": 24,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 22,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "metriccardbodyprops"
     },
     {
@@ -7707,10 +8343,14 @@
       "_origin": "ast",
       "id": "components_strategy_score_card_metriccardbody",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 22,
 =======
       "community": 24,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 22,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "metriccardbody()"
     },
     {
@@ -7721,10 +8361,14 @@
       "_origin": "ast",
       "id": "components_strategy_score_card_metricrowprops",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 22,
 =======
       "community": 24,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 22,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "metricrowprops"
     },
     {
@@ -7735,10 +8379,14 @@
       "_origin": "ast",
       "id": "components_strategy_score_card_metricrow",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 22,
 =======
       "community": 24,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 22,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "metricrow()"
     },
     {
@@ -7769,10 +8417,14 @@
       "_origin": "ast",
       "id": "hooks_use_ai_analysis",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 32,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 32,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "use-ai-analysis.ts"
     },
     {
@@ -7783,10 +8435,14 @@
       "_origin": "ast",
       "id": "hooks_use_ai_analysis_usegetaianalysis",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 32,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 32,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "usegetaianalysis()"
     },
     {
@@ -7797,10 +8453,14 @@
       "_origin": "ast",
       "id": "hooks_use_ai_analysis_userefreshaianalysis",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 32,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 32,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "userefreshaianalysis()"
     },
     {
@@ -7841,10 +8501,14 @@
       "_origin": "ast",
       "id": "hooks_use_get_quote_usegetquote",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 32,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 32,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "usegetquote()"
     },
     {
@@ -7895,10 +8559,14 @@
       "_origin": "ast",
       "id": "hooks_use_get_stock_detail_usegetstockhistoricaldata",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 32,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 32,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "usegetstockhistoricaldata()"
     },
     {
@@ -7919,10 +8587,14 @@
       "_origin": "ast",
       "id": "hooks_use_get_sync_logs_usegetsynclogs",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 107,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 107,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "usegetsynclogs()"
     },
     {
@@ -7973,10 +8645,14 @@
       "_origin": "ast",
       "id": "pages_ingestion_logs_page",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 107,
 =======
       "community": 1,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 107,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "ingestion-logs.page.tsx"
     },
     {
@@ -7987,10 +8663,14 @@
       "_origin": "ast",
       "id": "pages_ingestion_logs_page_ingestionlogspage",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 107,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 107,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "ingestionlogspage()"
     },
     {
@@ -8021,10 +8701,14 @@
       "_origin": "ast",
       "id": "pages_stock_detail_page",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 32,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 32,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "stock-detail.page.tsx"
     },
     {
@@ -8035,16 +8719,21 @@
       "_origin": "ast",
       "id": "pages_stock_detail_page_stockdetailpage",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 32,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 32,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "stockdetailpage()"
     },
     {
       "label": "AiSummaryBar()",
       "file_type": "code",
       "source_file": "apps/frontend/src/features/screener/pages/stock-detail.page.tsx",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "source_location": "L509",
       "_origin": "ast",
@@ -8056,6 +8745,12 @@
       "id": "pages_stock_detail_page_aisummarybar",
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L509",
+      "_origin": "ast",
+      "id": "pages_stock_detail_page_aisummarybar",
+      "community": 32,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "aisummarybar()"
     },
     {
@@ -8316,10 +9011,14 @@
       "_origin": "ast",
       "id": "components_ai_scoring_recommendation_dialog_aiscoringrecommendationdialog",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 111,
 =======
       "community": 33,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 111,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "aiscoringrecommendationdialog()"
     },
     {
@@ -8330,10 +9029,14 @@
       "_origin": "ast",
       "id": "components_scoring_rules_form",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 111,
 =======
       "community": 33,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 111,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "scoring-rules-form.tsx"
     },
     {
@@ -8354,10 +9057,14 @@
       "_origin": "ast",
       "id": "components_scoring_rules_form_forminput",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 111,
 =======
       "community": 33,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 111,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "forminput"
     },
     {
@@ -8368,10 +9075,14 @@
       "_origin": "ast",
       "id": "components_scoring_rules_form_formatparamname",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 111,
 =======
       "community": 33,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 111,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "formatparamname()"
     },
     {
@@ -8442,10 +9153,14 @@
       "_origin": "ast",
       "id": "components_settings_form_settingsform",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 28,
 =======
       "community": 30,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 28,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "settingsform()"
     },
     {
@@ -8476,10 +9191,14 @@
       "_origin": "ast",
       "id": "hooks_use_get_ai_screener_recommendation",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 0,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 0,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "use-get-ai-screener-recommendation.ts"
     },
     {
@@ -8490,10 +9209,14 @@
       "_origin": "ast",
       "id": "hooks_use_get_ai_screener_recommendation_usegetaiscreenerrecommendation",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 28,
 =======
       "community": 30,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 28,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "usegetaiscreenerrecommendation()"
     },
     {
@@ -8554,10 +9277,14 @@
       "_origin": "ast",
       "id": "hooks_use_sync_exchanges_usesyncexchanges",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 28,
 =======
       "community": 30,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 28,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "usesyncexchanges()"
     },
     {
@@ -8705,10 +9432,14 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/features/settings/services/settings.api.ts",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L43",
 =======
       "source_location": "L44",
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L43",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "_origin": "ast",
       "id": "services_settings_api_getaiscoringrulesrecommendationapi",
       "community": 35,
@@ -8772,10 +9503,14 @@
       "_origin": "ast",
       "id": "settings_settings_schema_airecommendationruleschema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 28,
 =======
       "community": 30,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 28,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "airecommendationruleschema"
     },
     {
@@ -8786,10 +9521,14 @@
       "_origin": "ast",
       "id": "settings_settings_schema_airecommendationresponseschema",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 28,
 =======
       "community": 30,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 28,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "airecommendationresponseschema"
     },
     {
@@ -8810,10 +9549,14 @@
       "_origin": "ast",
       "id": "settings_settings_schema_airecommendationresponse",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 28,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 28,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "airecommendationresponse"
     },
     {
@@ -9104,10 +9847,14 @@
       "_origin": "ast",
       "id": "services_stocks_api_updatestockapi",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 107,
 =======
       "community": 0,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 107,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "updatestockapi()"
     },
     {
@@ -9708,10 +10455,14 @@
       "_origin": "ast",
       "id": "components_app_sidebar_appsidebar",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 36,
 =======
       "community": 42,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 36,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "appsidebar()"
     },
     {
@@ -9722,10 +10473,14 @@
       "_origin": "ast",
       "id": "components_global_error_container",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 44,
 =======
       "community": 20,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 44,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "global-error-container.tsx"
     },
     {
@@ -9746,10 +10501,14 @@
       "_origin": "ast",
       "id": "components_nav_main",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 36,
 =======
       "community": 22,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 36,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "nav-main.tsx"
     },
     {
@@ -9780,10 +10539,14 @@
       "_origin": "ast",
       "id": "components_nav_projects_navprojects",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 8,
 =======
       "community": 22,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 8,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "navprojects()"
     },
     {
@@ -9984,10 +10747,14 @@
       "_origin": "ast",
       "id": "ui_badge",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 93,
 =======
       "community": 1,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 93,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "badge.tsx"
     },
     {
@@ -9998,10 +10765,14 @@
       "_origin": "ast",
       "id": "ui_badge_badgeprops",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 93,
 =======
       "community": 1,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 93,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "badgeprops"
     },
     {
@@ -10012,10 +10783,14 @@
       "_origin": "ast",
       "id": "ui_badge_badge",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 93,
 =======
       "community": 1,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 93,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "badge()"
     },
     {
@@ -10236,10 +11011,14 @@
       "_origin": "ast",
       "id": "ui_collapsible",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 36,
 =======
       "community": 22,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 36,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "collapsible.tsx"
     },
     {
@@ -10250,10 +11029,14 @@
       "_origin": "ast",
       "id": "ui_collapsible_collapsible",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 36,
 =======
       "community": 22,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 36,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "collapsible()"
     },
     {
@@ -10264,10 +11047,14 @@
       "_origin": "ast",
       "id": "ui_collapsible_collapsibletrigger",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 36,
 =======
       "community": 22,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 36,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "collapsibletrigger()"
     },
     {
@@ -10278,10 +11065,14 @@
       "_origin": "ast",
       "id": "ui_collapsible_collapsiblecontent",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 36,
 =======
       "community": 22,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 36,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "collapsiblecontent()"
     },
     {
@@ -10462,10 +11253,14 @@
       "_origin": "ast",
       "id": "ui_dropdown_menu_dropdownmenucheckboxitem",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 8,
 =======
       "community": 93,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 8,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "dropdownmenucheckboxitem()"
     },
     {
@@ -10486,10 +11281,14 @@
       "_origin": "ast",
       "id": "ui_dropdown_menu_dropdownmenuradioitem",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 8,
 =======
       "community": 93,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 8,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "dropdownmenuradioitem()"
     },
     {
@@ -10540,10 +11339,14 @@
       "_origin": "ast",
       "id": "ui_dropdown_menu_dropdownmenusubtrigger",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 8,
 =======
       "community": 93,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 8,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "dropdownmenusubtrigger()"
     },
     {
@@ -10554,10 +11357,14 @@
       "_origin": "ast",
       "id": "ui_dropdown_menu_dropdownmenusubcontent",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 8,
 =======
       "community": 93,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 8,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "dropdownmenusubcontent()"
     },
     {
@@ -10598,10 +11405,14 @@
       "_origin": "ast",
       "id": "ui_field",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 93,
 =======
       "community": 28,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 93,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "field.tsx"
     },
     {
@@ -10642,10 +11453,14 @@
       "_origin": "ast",
       "id": "ui_field_fieldvariants",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 93,
 =======
       "community": 28,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 93,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "fieldvariants"
     },
     {
@@ -11096,10 +11911,14 @@
       "_origin": "ast",
       "id": "ui_hover_card",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 22,
 =======
       "community": 24,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 22,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "hover-card.tsx"
     },
     {
@@ -11110,10 +11929,14 @@
       "_origin": "ast",
       "id": "ui_hover_card_hovercard",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 22,
 =======
       "community": 24,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 22,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "hovercard()"
     },
     {
@@ -11124,10 +11947,14 @@
       "_origin": "ast",
       "id": "ui_hover_card_hovercardtrigger",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 22,
 =======
       "community": 24,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 22,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "hovercardtrigger()"
     },
     {
@@ -11138,10 +11965,14 @@
       "_origin": "ast",
       "id": "ui_hover_card_hovercardcontent",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 22,
 =======
       "community": 24,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 22,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "hovercardcontent()"
     },
     {
@@ -11152,10 +11983,14 @@
       "_origin": "ast",
       "id": "ui_input",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 111,
 =======
       "community": 33,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 111,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "input.tsx"
     },
     {
@@ -11166,10 +12001,14 @@
       "_origin": "ast",
       "id": "ui_input_inputprops",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 111,
 =======
       "community": 33,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 111,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "inputprops"
     },
     {
@@ -11180,10 +12019,14 @@
       "_origin": "ast",
       "id": "ui_input_input",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 111,
 =======
       "community": 33,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 111,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "input"
     },
     {
@@ -11194,10 +12037,14 @@
       "_origin": "ast",
       "id": "ui_label",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 93,
 =======
       "community": 95,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 93,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "label.tsx"
     },
     {
@@ -11208,10 +12055,14 @@
       "_origin": "ast",
       "id": "ui_label_labelprops",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 93,
 =======
       "community": 95,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 93,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "labelprops"
     },
     {
@@ -11222,10 +12073,14 @@
       "_origin": "ast",
       "id": "ui_label_label",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 93,
 =======
       "community": 95,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 93,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "label"
     },
     {
@@ -11346,10 +12201,14 @@
       "_origin": "ast",
       "id": "ui_separator",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 93,
 =======
       "community": 42,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 93,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "separator.tsx"
     },
     {
@@ -11360,10 +12219,14 @@
       "_origin": "ast",
       "id": "ui_separator_separator",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 93,
 =======
       "community": 42,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 93,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "separator()"
     },
     {
@@ -11584,10 +12447,14 @@
       "_origin": "ast",
       "id": "ui_sidebar_sidebarheader",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 9,
 =======
       "community": 22,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 9,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "sidebarheader()"
     },
     {
@@ -11628,10 +12495,14 @@
       "_origin": "ast",
       "id": "ui_sidebar_sidebargroup",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 8,
 =======
       "community": 22,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 8,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "sidebargroup()"
     },
     {
@@ -11642,10 +12513,14 @@
       "_origin": "ast",
       "id": "ui_sidebar_sidebargrouplabel",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 36,
 =======
       "community": 22,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 36,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "sidebargrouplabel()"
     },
     {
@@ -11686,10 +12561,14 @@
       "_origin": "ast",
       "id": "ui_sidebar_sidebarmenuitem",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 8,
 =======
       "community": 17,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 8,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "sidebarmenuitem()"
     },
     {
@@ -11750,10 +12629,14 @@
       "_origin": "ast",
       "id": "ui_sidebar_sidebarmenusub",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 36,
 =======
       "community": 22,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 36,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "sidebarmenusub()"
     },
     {
@@ -11764,10 +12647,14 @@
       "_origin": "ast",
       "id": "ui_sidebar_sidebarmenusubitem",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 36,
 =======
       "community": 22,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 36,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "sidebarmenusubitem()"
     },
     {
@@ -11778,10 +12665,14 @@
       "_origin": "ast",
       "id": "ui_sidebar_sidebarmenusubbutton",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 36,
 =======
       "community": 22,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 36,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "sidebarmenusubbutton"
     },
     {
@@ -11792,10 +12683,14 @@
       "_origin": "ast",
       "id": "ui_skeleton",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 9,
 =======
       "community": 93,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 9,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "skeleton.tsx"
     },
     {
@@ -11806,10 +12701,14 @@
       "_origin": "ast",
       "id": "ui_skeleton_skeleton",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 9,
 =======
       "community": 93,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 9,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "skeleton()"
     },
     {
@@ -11970,10 +12869,14 @@
       "_origin": "ast",
       "id": "ui_textarea",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 93,
 =======
       "community": 95,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 93,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "textarea.tsx"
     },
     {
@@ -11984,10 +12887,14 @@
       "_origin": "ast",
       "id": "ui_textarea_textarea",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 93,
 =======
       "community": 95,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 93,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "textarea()"
     },
     {
@@ -12068,10 +12975,14 @@
       "_origin": "ast",
       "id": "config_api",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 0,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 0,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "api.ts"
     },
     {
@@ -12082,10 +12993,14 @@
       "_origin": "ast",
       "id": "config_api_getcookie",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 0,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 0,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "getcookie()"
     },
     {
@@ -12116,10 +13031,14 @@
       "_origin": "ast",
       "id": "config_api_geterrormessage",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 0,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 0,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "geterrormessage()"
     },
     {
@@ -12270,10 +13189,14 @@
       "_origin": "ast",
       "id": "hooks_use_websocket_usewebsocket",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 107,
 =======
       "community": 35,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 107,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "usewebsocket()"
     },
     {
@@ -12484,10 +13407,14 @@
       "_origin": "ast",
       "id": "utils_cn",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "community": 93,
 =======
       "community": 95,
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "community": 93,
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "norm_label": "cn.ts"
     },
     {
@@ -12545,10 +13472,14 @@
       "file_type": "code",
       "source_file": "apps/frontend/src/vite-env.d.ts",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L13",
 =======
       "source_location": "L12",
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L13",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "_origin": "ast",
       "id": "src_vite_env_d_window",
       "community": 62,
@@ -19367,6 +20298,7 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       "relation": "imports_from",
       "context": "import",
@@ -19380,6 +20312,8 @@
     },
     {
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -19550,6 +20484,7 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+<<<<<<< HEAD
       "source_file": "apps/backend/src/core/utils/scoring.utils.ts",
       "source_location": "L4",
       "weight": 1.0,
@@ -19573,6 +20508,8 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+=======
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "source_file": "apps/backend/src/modules/backtest/backtest.engine.ts",
       "source_location": "L2",
       "weight": 1.0,
@@ -19630,6 +20567,7 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+<<<<<<< HEAD
       "source_file": "apps/backend/src/core/utils/scoring.utils.ts",
       "source_location": "L4",
       "weight": 1.0,
@@ -19653,6 +20591,8 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+=======
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "source_file": "apps/backend/src/modules/backtest/backtest.engine.ts",
       "source_location": "L2",
       "weight": 1.0,
@@ -19786,6 +20726,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       "source_file": "apps/backend/src/core/utils/scoring.utils.ts",
       "source_location": "L4",
@@ -19810,6 +20751,8 @@
       "context": "import",
       "confidence": "EXTRACTED",
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "source_file": "apps/backend/src/modules/backtest/backtest.engine.ts",
       "source_location": "L2",
       "weight": 1.0,
@@ -19866,6 +20809,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       "source_file": "apps/backend/src/core/utils/scoring.utils.ts",
       "source_location": "L4",
@@ -19890,6 +20834,8 @@
       "context": "import",
       "confidence": "EXTRACTED",
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "source_file": "apps/backend/src/modules/backtest/backtest.engine.ts",
       "source_location": "L2",
       "weight": 1.0,
@@ -19946,6 +20892,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       "source_file": "apps/backend/src/core/utils/scoring.utils.ts",
       "source_location": "L4",
@@ -19970,6 +20917,8 @@
       "context": "import",
       "confidence": "EXTRACTED",
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "source_file": "apps/backend/src/modules/backtest/backtest.engine.ts",
       "source_location": "L2",
       "weight": 1.0,
@@ -20026,6 +20975,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       "source_file": "apps/backend/src/core/utils/scoring.utils.ts",
       "source_location": "L4",
@@ -20050,6 +21000,8 @@
       "context": "import",
       "confidence": "EXTRACTED",
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "source_file": "apps/backend/src/modules/backtest/backtest.engine.ts",
       "source_location": "L2",
       "weight": 1.0,
@@ -20106,6 +21058,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       "source_file": "apps/backend/src/core/utils/scoring.utils.ts",
       "source_location": "L4",
@@ -20130,6 +21083,8 @@
       "context": "import",
       "confidence": "EXTRACTED",
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "source_file": "apps/backend/src/modules/backtest/backtest.engine.ts",
       "source_location": "L2",
       "weight": 1.0,
@@ -20186,6 +21141,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       "source_file": "apps/backend/src/core/utils/scoring.utils.ts",
       "source_location": "L4",
@@ -20210,6 +21166,8 @@
       "context": "import",
       "confidence": "EXTRACTED",
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "source_file": "apps/backend/src/modules/backtest/backtest.engine.ts",
       "source_location": "L2",
       "weight": 1.0,
@@ -20263,6 +21221,7 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       "relation": "imports",
       "context": "import",
@@ -20287,6 +21246,8 @@
     },
     {
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -44904,10 +45865,14 @@
       "confidence": "EXTRACTED",
       "source_file": "apps/frontend/src/vite-env.d.ts",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "source_location": "L13",
 =======
       "source_location": "L12",
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+      "source_location": "L13",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_vite_env_d",

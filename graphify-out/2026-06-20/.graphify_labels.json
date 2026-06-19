@@ -36,12 +36,18 @@
   "34": "Community 34",
   "35": "Community 35",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "36": "Community 36",
   "37": "Homepagefeatures Module",
   "38": "Community 38",
 =======
   "37": "Homepagefeatures Module",
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+  "36": "Community 36",
+  "37": "Homepagefeatures Module",
+  "38": "Community 38",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
   "39": "Community 39",
   "40": "Controller Module",
   "41": "Community 41",
@@ -94,6 +100,7 @@
   "88": "Community 88",
   "89": "Community 89",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "90": "Community 90",
   "91": "Community 91",
   "92": "Community 92",
@@ -115,15 +122,31 @@
   "113": "Community 113",
   "115": "Community 115"
 =======
+=======
+  "90": "Community 90",
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
   "91": "Community 91",
+  "92": "Community 92",
   "93": "Community 93",
   "94": "Community 94",
   "95": "Community 95",
-  "97": "Community 97",
+  "96": "Community 96",
   "99": "Community 99",
   "100": "Community 100",
-  "102": "Community 102",
+  "101": "Community 101",
   "103": "Community 103",
+<<<<<<< HEAD
   "110": "Community 110"
 >>>>>>> c4c4e9b (feat: add position sizing calculator and integrate with stock analysis workflows)
+=======
+  "105": "Community 105",
+  "106": "Community 106",
+  "107": "Community 107",
+  "108": "Community 108",
+  "110": "Community 110",
+  "111": "Community 111",
+  "112": "Community 112",
+  "113": "Community 113",
+  "115": "Community 115"
+>>>>>>> e76ac4b (feat: implement PWA provider, update Vite config with app version, and refresh graph analysis reports)
 }
