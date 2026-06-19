@@ -13,6 +13,8 @@ export class LiveScreenerController {
       const watchlist = watchlistVal === true || watchlistVal === "true" ? true : watchlistVal === false || watchlistVal === "false" ? false : undefined;
       const exchange = req.query.exchange as string | undefined;
       const strategy = req.query.strategy as string | undefined;
+      const refreshVal = req.query.refresh as any;
+      const refresh = refreshVal === true || refreshVal === "true";
 
       const result = await this.service.getLiveStockData({
         page,
@@ -21,6 +23,7 @@ export class LiveScreenerController {
         watchlist,
         exchange,
         strategy,
+        refresh,
       });
 
       res.status(200).json({

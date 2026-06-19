@@ -115,14 +115,21 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
           if (!rule.field || !rule.operator) continue;
 
           if (rule.operator === "btwn") {
-            const valMin = rule.value !== undefined ? Number(rule.value) : 0;
-            const valMax = rule.valueMax !== undefined ? Number(rule.valueMax) : 0;
+            let valMin = rule.value !== undefined ? Number(rule.value) : 0;
+            let valMax = rule.valueMax !== undefined ? Number(rule.valueMax) : 0;
+            if (rule.field === "totaldebtequity.lasttwelvemonths" || rule.field === "ltdebtequity.lasttwelvemonths") {
+              if (valMin <= 10) valMin = valMin * 100;
+              if (valMax <= 10) valMax = valMax * 100;
+            }
             operands.push({
               operator: "btwn",
               operands: [rule.field, valMin, valMax],
             });
           } else {
-            const val = rule.value !== undefined ? Number(rule.value) : 0;
+            let val = rule.value !== undefined ? Number(rule.value) : 0;
+            if (rule.field === "totaldebtequity.lasttwelvemonths" || rule.field === "ltdebtequity.lasttwelvemonths") {
+              if (val <= 10) val = val * 100;
+            }
             operands.push({
               operator: rule.operator,
               operands: [rule.field, val],
@@ -139,7 +146,7 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
         operands.push(
           { operator: "gt", operands: ["percentchange", 0] },
           { operator: "gt", operands: ["dayvolume", 1000000] },
-          { operator: "gt", operands: ["regularmarketprice", 100] },
+          { operator: "gt", operands: ["eodprice", 100] },
         );
       } else if (strategy === "swing") {
         operands.push(
@@ -149,9 +156,9 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
         );
       } else if (strategy === "position") {
         operands.push(
-          { operator: "btwn", operands: ["forwardpe", 5, 25] },
-          { operator: "gt", operands: ["returnonequity", 15] },
-          { operator: "gt", operands: ["averagevolume", 2000000] },
+          { operator: "btwn", operands: ["peratio.lasttwelvemonths", 5, 25] },
+          { operator: "gt", operands: ["returnonequity.lasttwelvemonths", 15] },
+          { operator: "gt", operands: ["avgdailyvol3m", 2000000] },
         );
       }
     }

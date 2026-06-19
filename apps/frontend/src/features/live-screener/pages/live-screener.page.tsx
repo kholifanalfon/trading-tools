@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useGetInfiniteLiveStockData } from "../hooks/use-get-live-stock-data";
+import { getLiveStockDataApi } from "../services/live-screener.api";
 import { useQueryClient } from "@tanstack/react-query";
 import { liveScreenerKeys } from "../live-screener.keys";
 import { toast } from "sonner";
@@ -108,6 +109,15 @@ export function LiveScreenerPage() {
   const handleRefresh = async () => {
     setIsRefreshing(true);
     try {
+      // Trigger a cache clear on the backend for this query combination
+      await getLiveStockDataApi({
+        limit: 16,
+        search: backendSearch || undefined,
+        exchange: selectedExchange !== "ALL" ? selectedExchange : undefined,
+        strategy: activeStrategy,
+        refresh: true,
+      });
+
       await queryClient.invalidateQueries({
         queryKey: liveScreenerKeys.all,
       });
