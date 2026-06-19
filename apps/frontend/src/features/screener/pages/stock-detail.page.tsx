@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useParams, useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { useGetStockHistoricalData } from "../hooks/use-get-stock-detail";
 import { useGetQuote } from "../hooks/use-get-quote";
 import { useGetSettings } from "@/features/settings/hooks/use-get-settings";
-import { ChevronLeftIcon, ActivityIcon, DollarSignIcon, TrendingUpIcon, TrendingDownIcon, MoveRightIcon, SparklesIcon } from "lucide-react";
+import { ChevronLeftIcon, ActivityIcon, DollarSignIcon, TrendingUpIcon, TrendingDownIcon, MoveRightIcon, SparklesIcon, CalculatorIcon } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { StrategyScoreCard } from "../components/strategy-score-card";
 import { StockChartCanvas } from "../components/stock-chart-canvas";
 import { AiAnalysisCard } from "../components/ai-analysis-card";
 import { useGetAiAnalysis, useRefreshAiAnalysis } from "../hooks/use-ai-analysis";
+import { useGetCorporateActions } from "../hooks/use-get-corporate-actions";
+import { PositionSizingCalculator } from "../components/position-sizing-calculator";
 
 export function StockDetailPage() {
   const { symbol = "" } = useParams<{ symbol: string }>();
@@ -17,12 +20,15 @@ export function StockDetailPage() {
   const [searchParams] = useSearchParams();
   const urlStrategy = searchParams.get("strategy");
   const { data: settings } = useGetSettings();
+  
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
 
   // Google Stock style timeframes
   // 1D: 1 day, 5D: 5 days, 1M: ~22 trading days, 6M: ~130 trading days,
   // YTD: from Jan 1st of current year, 1Y: ~252 trading days, 5Y: ~1260 trading days, MAX: 5000 days
   const [timeframe, setTimeframe] = useState<"1D" | "5D" | "1M" | "6M" | "YTD" | "1Y" | "5Y" | "MAX">("1M");
   const [activeScoreTab, setActiveScoreTab] = useState<"day" | "swing" | "position">("day");
+  const [activeMainTab, setActiveMainTab] = useState<"technical" | "corporate">("technical");
 
   useEffect(() => {
     if (urlStrategy === "day" || urlStrategy === "swing" || urlStrategy === "position") {
@@ -76,6 +82,7 @@ export function StockDetailPage() {
   const { data: historicalData = [], isLoading } = useGetStockHistoricalData(symbol, currentLimit, timeframe, activeScoreTab);
 
   const { data: quote } = useGetQuote(symbol);
+  const { data: corpActions, isLoading: isCorpLoading } = useGetCorporateActions(symbol);
 
   // AI Analysis — auto-load if no cached data on first visit
   const { data: aiAnalysis, isLoading: isAiLoading } = useGetAiAnalysis(symbol);
@@ -165,8 +172,33 @@ export function StockDetailPage() {
         )}
       </div>
 
+      {/* Main Tabs Switcher */}
+      <div className="flex border-b border-border/40 gap-6 mb-4">
+        <button
+          onClick={() => setActiveMainTab("technical")}
+          className={`pb-2.5 text-xs font-bold border-b-2 transition-all duration-200 ${
+            activeMainTab === "technical"
+              ? "border-indigo-500 text-indigo-400 font-semibold"
+              : "border-transparent text-muted-foreground hover:text-foreground font-medium"
+          }`}
+        >
+          Analisis Teknikal
+        </button>
+        <button
+          onClick={() => setActiveMainTab("corporate")}
+          className={`pb-2.5 text-xs font-bold border-b-2 transition-all duration-200 ${
+            activeMainTab === "corporate"
+              ? "border-indigo-500 text-indigo-400 font-semibold"
+              : "border-transparent text-muted-foreground hover:text-foreground font-medium"
+          }`}
+        >
+          Aksi Korporasi (Corporate Actions)
+        </button>
+      </div>
+
       {/* Main Grid content (split chart and statistics panels) */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
+      {activeMainTab === "technical" && (
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
         {/* Left Side: Charts */}
         <div className="lg:col-span-3 space-y-4">
           {/* Chart Controls Bar */}
@@ -499,6 +531,134 @@ export function StockDetailPage() {
           />
         </div>
       </div>
+      )}
+
+      {/* Corporate Actions Tab Content */}
+      {activeMainTab === "corporate" && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Dividends Card */}
+          <div className="bg-card/45 border border-border p-5 rounded-xl space-y-4 shadow-sm">
+            <h3 className="text-sm font-bold text-muted-foreground flex items-center gap-1.5 uppercase tracking-wider">
+              <DollarSignIcon className="h-4 w-4 text-indigo-400" />
+              Riwayat Dividen (Dividend History)
+            </h3>
+            {isCorpLoading ? (
+              <div className="space-y-2 py-4">
+                <div className="h-4 bg-muted/40 rounded animate-pulse w-full"></div>
+                <div className="h-4 bg-muted/40 rounded animate-pulse w-5/6"></div>
+                <div className="h-4 bg-muted/40 rounded animate-pulse w-4/5"></div>
+              </div>
+            ) : corpActions?.dividends && corpActions.dividends.length > 0 ? (
+              <div className="border border-border/40 rounded-lg overflow-hidden">
+                <table className="w-full text-left text-xs font-mono">
+                  <thead className="bg-muted/30 border-b border-border/30 text-muted-foreground">
+                    <tr>
+                      <th className="p-3 font-semibold">Tanggal Ex-Dividen</th>
+                      <th className="p-3 font-semibold text-right">Jumlah (Amount)</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border/20">
+                    {corpActions.dividends.map((div: any, idx: number) => (
+                      <tr key={idx} className="hover:bg-muted/10 transition-colors">
+                        <td className="p-3 text-foreground font-medium">
+                          {new Date(div.date).toLocaleDateString("id-ID", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                        </td>
+                        <td className="p-3 text-right text-green-500 font-bold">
+                          {div.amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 4 })}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="text-center py-10 text-muted-foreground italic text-xs">
+                Tidak ada data riwayat dividen yang ditemukan.
+              </div>
+            )}
+          </div>
+
+          {/* Stock Splits Card */}
+          <div className="bg-card/45 border border-border p-5 rounded-xl space-y-4 shadow-sm">
+            <h3 className="text-sm font-bold text-muted-foreground flex items-center gap-1.5 uppercase tracking-wider">
+              <ActivityIcon className="h-4 w-4 text-indigo-400" />
+              Pecahan Saham (Stock Splits)
+            </h3>
+            {isCorpLoading ? (
+              <div className="space-y-2 py-4">
+                <div className="h-4 bg-muted/40 rounded animate-pulse w-full"></div>
+                <div className="h-4 bg-muted/40 rounded animate-pulse w-5/6"></div>
+              </div>
+            ) : corpActions?.splits && corpActions.splits.length > 0 ? (
+              <div className="border border-border/40 rounded-lg overflow-hidden">
+                <table className="w-full text-left text-xs font-mono">
+                  <thead className="bg-muted/30 border-b border-border/30 text-muted-foreground">
+                    <tr>
+                      <th className="p-3 font-semibold">Tanggal Split</th>
+                      <th className="p-3 font-semibold text-right">Rasio Split</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border/20">
+                    {corpActions.splits.map((split: any, idx: number) => (
+                      <tr key={idx} className="hover:bg-muted/10 transition-colors">
+                        <td className="p-3 text-foreground font-medium">
+                          {new Date(split.date).toLocaleDateString("id-ID", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                        </td>
+                        <td className="p-3 text-right text-indigo-400 font-bold">
+                          {split.splitRatio || `${split.numerator}:${split.denominator}`}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="text-center py-10 text-muted-foreground italic text-xs">
+                Tidak ada data pecahan saham (stock split) yang ditemukan.
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+      {/* Floating Calculator Button */}
+      {createPortal(
+        <div className="fixed bottom-24 right-6 md:bottom-6 md:right-6 z-50">
+          <Button
+            onClick={() => setIsCalculatorOpen(true)}
+            className="h-12 w-12 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 border border-indigo-400/25 p-0"
+            title="Open Position Sizing Calculator"
+          >
+            <CalculatorIcon className="h-5 w-5" />
+          </Button>
+        </div>,
+        document.body
+      )}
+
+      {/* Position Sizing Calculator Modal */}
+      <PositionSizingCalculator
+        symbol={symbol}
+        currentPrice={quote?.currentPrice || latestData?.close || 0}
+        defaultStopLoss={
+          scorePayload?.riskValidation
+            ? scorePayload.riskValidation[activeScoreTab]?.stopLoss || scorePayload.riskValidation.stopLoss
+            : undefined
+        }
+        defaultTargetProfit={
+          scorePayload?.riskValidation
+            ? scorePayload.riskValidation[activeScoreTab]?.targetProfit || scorePayload.riskValidation.targetProfit
+            : undefined
+        }
+        isOpen={isCalculatorOpen}
+        onClose={() => setIsCalculatorOpen(false)}
+      />
     </div>
   );
 }

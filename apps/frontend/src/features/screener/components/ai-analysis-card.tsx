@@ -120,7 +120,7 @@ export function AiAnalysisCard({ symbol, isProcessing }: AiAnalysisCardProps) {
           onClick={() => refreshAnalysis()}
           className="h-8 px-3 w-full md:w-auto text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-semibold flex items-center gap-1.5 transition"
         >
-          <RefreshCwIcon className={`h-3 w-3 animate-spin`} />
+          <RefreshCwIcon className={`h-3 w-3 `} />
           {hasAnalysis ? "Perbarui Analisis" : "Mulai Analisis"}
         </Button>
       </div>

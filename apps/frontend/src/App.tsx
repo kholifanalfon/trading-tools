@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   BrowserRouter,
@@ -24,7 +24,7 @@ import { IngestionLogsPage } from "./features/screener/pages/ingestion-logs.page
 import { StockDetailPage } from "./features/screener/pages/stock-detail.page";
 import { BacktestPage } from "./features/backtest/pages/backtest.page";
 import { ThemeProvider } from "./shared/components/theme-provider";
-import { HomeIcon, TrendingUpIcon, ActivityIcon, CpuIcon, SettingsIcon } from "lucide-react";
+import { HomeIcon, TrendingUpIcon, ActivityIcon, CpuIcon, SettingsIcon, Loader2, ArrowDown } from "lucide-react";
 
 
 import { ThemeToggle } from "./shared/components/ui/theme-toggle";
@@ -135,6 +135,9 @@ function PlatformLayout() {
   const navigate = useNavigate();
   const { isAuthenticated, isLoading, user, checkAuth, logout } = useAuthStore();
   const queryClient = useQueryClient();
+  const handleRefresh = async () => {
+    await queryClient.refetchQueries();
+  };
 
   // Listen to sync status updates in real-time via WebSockets globally
   useWebSocket(["stocks", "sync-status"], (data) => {
@@ -242,9 +245,9 @@ function PlatformLayout() {
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 bg-background p-6 pb-20 md:pb-6 overflow-y-auto custom-scrollbar">
+        <PullToRefresh onRefresh={handleRefresh}>
           <Outlet />
-        </main>
+        </PullToRefresh>
 
         {/* Mobile Bottom Navigation Tabs */}
         <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-card/90 backdrop-blur-lg border-t border-border/60 py-2 px-2 flex items-center justify-around shadow-lg pb-safe">
@@ -268,4 +271,117 @@ function PlatformLayout() {
     </SidebarProvider>
   );
 }
+
+interface PullToRefreshProps {
+  children: React.ReactNode;
+  onRefresh: () => Promise<void> | void;
+}
+
+function PullToRefresh({ children, onRefresh }: PullToRefreshProps) {
+  const [pullDistance, setPullDistance] = useState(0);
+  const [isPulling, setIsPulling] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const containerRef = useRef<HTMLElement>(null);
+  const startYRef = useRef(0);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (container.scrollTop === 0) {
+        startYRef.current = e.touches[0].clientY;
+        setIsPulling(true);
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!isPulling) return;
+
+      const currentY = e.touches[0].clientY;
+      const deltaY = currentY - startYRef.current;
+
+      if (deltaY > 0 && container.scrollTop === 0) {
+        const resistance = 0.4;
+        const distance = deltaY * resistance;
+        setPullDistance(Math.min(distance, 80));
+
+        if (e.cancelable) {
+          e.preventDefault();
+        }
+      } else {
+        setIsPulling(false);
+        setPullDistance(0);
+      }
+    };
+
+    const handleTouchEnd = async () => {
+      setIsPulling(false);
+      if (pullDistance > 60) {
+        setIsRefreshing(true);
+        setPullDistance(50);
+        try {
+          await onRefresh();
+        } finally {
+          setIsRefreshing(false);
+          setPullDistance(0);
+        }
+      } else {
+        setPullDistance(0);
+      }
+    };
+
+    container.addEventListener("touchstart", handleTouchStart, { passive: true });
+    container.addEventListener("touchmove", handleTouchMove, { passive: false });
+    container.addEventListener("touchend", handleTouchEnd);
+
+    return () => {
+      container.removeEventListener("touchstart", handleTouchStart);
+      container.removeEventListener("touchmove", handleTouchMove);
+      container.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, [isPulling, pullDistance, onRefresh]);
+
+  return (
+    <main
+      ref={containerRef}
+      className="flex-1 bg-background p-6 pb-20 md:pb-6 overflow-y-auto custom-scrollbar relative"
+    >
+      <div
+        className="absolute top-0 left-0 right-0 flex justify-center pointer-events-none transition-all duration-200 z-50"
+        style={{
+          transform: `translateY(${pullDistance - 40}px)`,
+          opacity: pullDistance > 10 ? 1 : 0,
+        }}
+      >
+        <div className="bg-card/85 backdrop-blur-md border border-border shadow-md px-4 py-2 rounded-full flex items-center gap-2 text-xs font-semibold text-foreground">
+          {isRefreshing ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin text-indigo-400" />
+              <span>Refreshing...</span>
+            </>
+          ) : pullDistance > 60 ? (
+            <>
+              <ArrowDown className="h-4 w-4 rotate-180 transition-transform duration-200 text-indigo-400" />
+              <span>Release to refresh</span>
+            </>
+          ) : (
+            <>
+              <ArrowDown className="h-4 w-4 transition-transform duration-200" />
+              <span>Pull to refresh</span>
+            </>
+          )}
+        </div>
+      </div>
+
+      <div
+        className="transition-transform duration-150 ease-out h-full"
+        style={{ transform: `translateY(${isRefreshing ? 50 : pullDistance * 0.5}px)` }}
+      >
+        {children}
+      </div>
+    </main>
+  );
+}
+
 export default App;

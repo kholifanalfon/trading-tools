@@ -86,12 +86,15 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
     // Custom POST screener for Indonesia (IDX) region since predefined screeners don't support ID
     let sortField = "percentchange";
     let sortType = "DESC";
-    const operands: any[] = [
-      {
+    const operands: any[] = [];
+    regions.map((region) =>
+      operands.push({
         operator: "eq",
-        operands: ["region", "id"],
-      },
-    ];
+        operands: ["region", region.toLowerCase()],
+      }),
+    );
+
+    console.log(operands);
 
     if (search) {
       operands.push({
@@ -143,11 +146,7 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
       console.warn("Failed to fetch custom settings for Yahoo Finance adapter, falling back to static defaults:", dbErr.removeNewline());
       // Fallback defaults if database queries fail
       if (strategy === "day") {
-        operands.push(
-          { operator: "gt", operands: ["percentchange", 0] },
-          { operator: "gt", operands: ["dayvolume", 1000000] },
-          { operator: "gt", operands: ["eodprice", 100] },
-        );
+        operands.push({ operator: "gt", operands: ["percentchange", 0] }, { operator: "gt", operands: ["dayvolume", 1000000] }, { operator: "gt", operands: ["eodprice", 100] });
       } else if (strategy === "swing") {
         operands.push(
           { operator: "gt", operands: ["dayvolume", 500000] },
@@ -218,6 +217,41 @@ export class YahooFinanceAdapter implements ScreenerProviderAdapter {
       }));
     } catch (err) {
       throw new AppError(`Yahoo Finance custom ID screener failed: ${err instanceof Error ? err.message : String(err)}`, 500);
+    }
+  }
+
+  async getCorporateActions(symbol: string, fromDate: Date, toDate: Date): Promise<{ dividends: any[]; splits: any[] }> {
+    try {
+      const result = await yahooFinance.chart(symbol, {
+        period1: fromDate as any,
+        period2: toDate as any,
+        events: "div,split",
+      });
+
+      const dividends = result?.events?.dividends
+        ? Object.values(result.events.dividends)
+            .map((d: any) => ({
+              date: d.date,
+              amount: d.amount,
+            }))
+            .sort((a: any, b: any) => b.date.getTime() - a.date.getTime())
+        : [];
+
+      const splits = result?.events?.splits
+        ? Object.values(result.events.splits)
+            .map((s: any) => ({
+              date: s.date,
+              numerator: s.numerator,
+              denominator: s.denominator,
+              splitRatio: s.splitRatio,
+            }))
+            .sort((a: any, b: any) => b.date.getTime() - a.date.getTime())
+        : [];
+
+      return { dividends, splits };
+    } catch (err) {
+      console.warn("Yahoo Finance corporate actions failed for symbol:", symbol.removeNewline(), err);
+      return { dividends: [], splits: [] };
     }
   }
 }

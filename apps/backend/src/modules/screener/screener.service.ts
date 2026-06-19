@@ -9,20 +9,7 @@ import { StockSearchResult, StockQuote, SyncHistoricalState } from "./screener.s
 import { ScreenerProviderAdapter } from "@/core/types/api-stock-provider.types";
 import { YahooFinanceAdapter } from "@/core/adapters/yahoo-finance.adapter";
 import { FinnhubAdapter } from "@/core/adapters/finnhub.adapter";
-import {
-  calculateEMA,
-  calculateRSI,
-  calculateMACD,
-  calculateSMA,
-  calculateATR,
-  calculateBollingerBands,
-  calculateVWAP,
-  calculateADX,
-  calculateZScore,
-  calculatePOC,
-  calculateAccumulationDistribution,
-} from "@/core/utils/indicators";
-import { calculateAllScores, mapRulesToConfig } from "@/core/utils/scoring.utils";
+import { calculateAllScores, mapRulesToConfig, calculateMetricsAndScores } from "@/core/utils/scoring.utils";
 import { ScoringRulesRepository } from "./scoring-rules.repository";
 import { ScoreMetrics } from "@/core/types/scoring.types";
 
@@ -171,144 +158,43 @@ export class ScreenerService {
               }
 
               if (points && points.length > 0) {
-                // Ensure points are sorted by date ascending for correct technical indicator calculation
-                points.sort((a, b) => a.date.getTime() - b.date.getTime());
-
-                const closePrices = points.map((p) => p.close);
-                const openPrices = points.map((p) => p.open);
-                const highPrices = points.map((p) => p.high);
-                const lowPrices = points.map((p) => p.low);
-                const volumeVals = points.map((p) => p.volume);
-
-                const ema9Vals = calculateEMA(closePrices, 9);
-                const ema21Vals = calculateEMA(closePrices, 21);
-                const ema50Vals = calculateEMA(closePrices, 50);
-                const ema200Vals = calculateEMA(closePrices, 200);
-                const sma50Vals = calculateSMA(closePrices, 50);
-                const sma200Vals = calculateSMA(closePrices, 200);
-                const rsiVals = calculateRSI(closePrices, 14);
-                const atrVals = calculateATR(highPrices, lowPrices, closePrices, 14);
-                const avgVol10Vals = calculateSMA(volumeVals, 10);
-                const avgVol20Vals = calculateSMA(volumeVals, 20);
-
-                // Compute 1Y highs/lows for position score (lookback 252 days)
-                const yearHighVals: (number | null)[] = new Array(points.length).fill(null);
-                const yearLowVals: (number | null)[] = new Array(points.length).fill(null);
-                const priceReturn1YVals: (number | null)[] = new Array(points.length).fill(null);
-
-                for (let i = 0; i < points.length; i++) {
-                  let startIdx = Math.max(0, i - 252);
-                  if (i >= 252) {
-                    let highest = -Infinity;
-                    let lowest = Infinity;
-                    for (let k = startIdx; k <= i; k++) {
-                      if (highPrices[k] > highest) highest = highPrices[k];
-                      if (lowPrices[k] < lowest) lowest = lowPrices[k];
-                    }
-                    yearHighVals[i] = highest;
-                    yearLowVals[i] = lowest;
-                    const prevYearPrice = closePrices[startIdx];
-                    priceReturn1YVals[i] = ((closePrices[i] - prevYearPrice) / prevYearPrice) * 100;
-                  }
-                }
-
-                const { macd: macdVals, signal: macdSignalVals, histogram: macdHistVals } = calculateMACD(closePrices);
-
-                const { upper: bbUpperVals, lower: bbLowerVals } = calculateBollingerBands(closePrices);
-                const vwapVals = calculateVWAP(highPrices, lowPrices, closePrices, volumeVals);
-                const adxVals = calculateADX(highPrices, lowPrices, closePrices);
-                const zScoreVals = calculateZScore(closePrices);
-                const pocVals = calculatePOC(highPrices, lowPrices, closePrices, volumeVals);
-                const adLineVals = calculateAccumulationDistribution(highPrices, lowPrices, closePrices, volumeVals);
-
-                const macdGoldenCrossVals = new Array(points.length).fill(false);
-                const bbBounceVals = new Array(points.length).fill(false);
-                for (let k = 1; k < points.length; k++) {
-                  const prevHist = macdHistVals[k - 1];
-                  const currHist = macdHistVals[k];
-                  if (prevHist !== null && currHist !== null && prevHist <= 0 && currHist > 0) {
-                    macdGoldenCrossVals[k] = true;
-                  }
-                  const prevLower = bbLowerVals[k - 1];
-                  const currLower = bbLowerVals[k];
-                  if (currLower !== null && prevLower !== null) {
-                    const touchedOrBelow = points[k].low <= currLower || points[k - 1].close <= prevLower;
-                    const closedAbove = points[k].close > currLower;
-                    if (touchedOrBelow && closedAbove) {
-                      bbBounceVals[k] = true;
-                    }
-                  }
-                }
-
+                const calculated = calculateMetricsAndScores(points, rulesConfig);
                 const insertItems: NewStockData[] = [];
 
-                for (let j = 0; j < points.length; j++) {
-                  const p = points[j];
-                  const dataPointDateStr = getLocalDateString(p.date);
+                for (let j = 0; j < calculated.length; j++) {
+                  const item = calculated[j];
+                  const dataPointDateStr = getLocalDateString(item.date);
 
                   // Filter by target date
                   if (dataPointDateStr !== targetDateStr) continue;
 
-                  const prevClose = j > 0 ? points[j - 1].close : p.open;
-                  const change = p.close - prevClose;
+                  const prevClose = j > 0 ? calculated[j - 1].close : item.open;
+                  const change = item.close - prevClose;
                   const changePercent = prevClose !== 0 ? (change / prevClose) * 100 : 0;
-
-                  const metrics: ScoreMetrics = {
-                    close: p.close,
-                    open: p.open,
-                    high: p.high,
-                    low: p.low,
-                    prevClose,
-                    volume: p.volume,
-                    avgVolume10: avgVol10Vals[j],
-                    avgVolume20: avgVol20Vals[j],
-                    atr14: atrVals[j],
-                    rsi14: rsiVals[j],
-                    ema20: ema21Vals[j], // using 21 as 20
-                    ema50: ema50Vals[j],
-                    sma50: sma50Vals[j],
-                    sma200: sma200Vals[j],
-                    macdLine: macdVals[j],
-                    macdSignal: macdSignalVals[j],
-                    macdHist: macdHistVals[j],
-                    yearHigh: yearHighVals[j],
-                    priceReturn1Y: priceReturn1YVals[j],
-                    bbLower: bbLowerVals[j],
-                    bbUpper: bbUpperVals[j],
-                    vwap: vwapVals[j],
-                    adx: adxVals[j],
-                    zScore: zScoreVals[j],
-                    poc: pocVals[j],
-                    adLine: adLineVals[j],
-                    macdGoldenCross: macdGoldenCrossVals[j],
-                    bbBounce: bbBounceVals[j],
-                  };
-
-                  const scores = calculateAllScores(metrics, rulesConfig);
 
                   insertItems.push({
                     stockId: stock.id,
                     symbol: stock.symbol.toUpperCase(),
-                    date: p.date,
-                    open: p.open,
-                    high: p.high,
-                    low: p.low,
-                    close: p.close,
-                    volume: p.volume,
+                    date: item.date,
+                    open: item.open,
+                    high: item.high,
+                    low: item.low,
+                    close: item.close,
+                    volume: item.volume,
                     change,
                     changePercent,
-                    dayScore: scores.dayScore.total,
-                    swingScore: scores.swingScore.total,
-                    positionScore: scores.positionScore.total,
-                    scorePayload: scores,
-                    ema9: ema9Vals[j],
-                    ema21: ema21Vals[j],
-                    ema50: ema50Vals[j],
-                    ema200: ema200Vals[j],
-                    rsi: rsiVals[j],
-                    macd: macdVals[j],
-                    macdSignal: macdSignalVals[j],
-                    macdHist: macdHistVals[j],
+                    dayScore: item.scorePayload.dayScore.total,
+                    swingScore: item.scorePayload.swingScore.total,
+                    positionScore: item.scorePayload.positionScore.total,
+                    scorePayload: item.scorePayload,
+                    ema9: item.ema9,
+                    ema21: item.ema21,
+                    ema50: item.ema50,
+                    ema200: item.ema200,
+                    rsi: item.rsi,
+                    macd: item.macd,
+                    macdSignal: item.macdSignal,
+                    macdHist: item.macdHist,
                   });
                 }
 
@@ -415,74 +301,6 @@ export class ScreenerService {
         return this.repository.getStockHistoricalData(symbol, limit);
       }
 
-      // Sort ascending for calculations
-      points.sort((a, b) => a.date.getTime() - b.date.getTime());
-
-      const closePrices = points.map((p) => p.close);
-      const highPrices = points.map((p) => p.high);
-      const lowPrices = points.map((p) => p.low);
-      const volumeVals = points.map((p) => p.volume);
-
-      const ema9Vals = calculateEMA(closePrices, 9);
-      const ema21Vals = calculateEMA(closePrices, 21);
-      const ema50Vals = calculateEMA(closePrices, 50);
-      const ema200Vals = calculateEMA(closePrices, 200);
-      const sma50Vals = calculateSMA(closePrices, 50);
-      const sma200Vals = calculateSMA(closePrices, 200);
-      const rsiVals = calculateRSI(closePrices, 14);
-      const atrVals = calculateATR(highPrices, lowPrices, closePrices, 14);
-      const avgVol10Vals = calculateSMA(volumeVals, 10);
-      const avgVol20Vals = calculateSMA(volumeVals, 20);
-
-      const { macd: macdVals, signal: macdSignalVals, histogram: macdHistVals } = calculateMACD(closePrices);
-
-      const { upper: bbUpperVals, lower: bbLowerVals } = calculateBollingerBands(closePrices);
-      const vwapVals = calculateVWAP(highPrices, lowPrices, closePrices, volumeVals);
-      const adxVals = calculateADX(highPrices, lowPrices, closePrices);
-      const zScoreVals = calculateZScore(closePrices);
-      const pocVals = calculatePOC(highPrices, lowPrices, closePrices, volumeVals);
-      const adLineVals = calculateAccumulationDistribution(highPrices, lowPrices, closePrices, volumeVals);
-
-      const macdGoldenCrossVals = new Array(points.length).fill(false);
-      const bbBounceVals = new Array(points.length).fill(false);
-      for (let k = 1; k < points.length; k++) {
-        const prevHist = macdHistVals[k - 1];
-        const currHist = macdHistVals[k];
-        if (prevHist !== null && currHist !== null && prevHist <= 0 && currHist > 0) {
-          macdGoldenCrossVals[k] = true;
-        }
-        const prevLower = bbLowerVals[k - 1];
-        const currLower = bbLowerVals[k];
-        if (currLower !== null && prevLower !== null) {
-          const touchedOrBelow = points[k].low <= currLower || points[k - 1].close <= prevLower;
-          const closedAbove = points[k].close > currLower;
-          if (touchedOrBelow && closedAbove) {
-            bbBounceVals[k] = true;
-          }
-        }
-      }
-
-      // Compute 1Y highs/lows for position score (lookback 252 days)
-      const yearHighVals: (number | null)[] = new Array(points.length).fill(null);
-      const yearLowVals: (number | null)[] = new Array(points.length).fill(null);
-      const priceReturn1YVals: (number | null)[] = new Array(points.length).fill(null);
-
-      for (let i = 0; i < points.length; i++) {
-        let startIdx = Math.max(0, i - 252);
-        if (i >= 252) {
-          let highest = -Infinity;
-          let lowest = Infinity;
-          for (let k = startIdx; k <= i; k++) {
-            if (highPrices[k] > highest) highest = highPrices[k];
-            if (lowPrices[k] < lowest) lowest = lowPrices[k];
-          }
-          yearHighVals[i] = highest;
-          yearLowVals[i] = lowest;
-          const prevYearPrice = closePrices[startIdx];
-          priceReturn1YVals[i] = ((closePrices[i] - prevYearPrice) / prevYearPrice) * 100;
-        }
-      }
-
       // Fetch stock metadata (company name) from database if possible
       const stockRecord = await this.repository.getAllStocks().then((list) => list.find((s) => s.symbol.toUpperCase() === symbol.toUpperCase()));
       const companyName = stockRecord?.name || symbol;
@@ -508,83 +326,46 @@ export class ScreenerService {
         });
       }
 
-      let scorePayload;
-      const formattedPoints = points.map((p, index) => {
-        const dateStr = p.date instanceof Date ? p.date.toISOString().split("T")[0] : new Date(p.date).toISOString().split("T")[0];
+      // Calculate indicators and metrics using centralized function
+      const calculated = calculateMetricsAndScores(points, rulesConfig);
+
+      const formattedPoints = calculated.map((item, index) => {
+        const dateStr = item.date instanceof Date ? item.date.toISOString().split("T")[0] : new Date(item.date).toISOString().split("T")[0];
         const dbScore = dbScoresMap.get(dateStr);
-        scorePayload = dbScore?.scorePayload;
-
-        const prevClose = index > 0 ? points[index - 1].close : p.open;
-        const change = p.close - prevClose;
-        const changePercent = prevClose !== 0 ? (change / prevClose) * 100 : 0;
-
-        if (dbScore == null) {
-          const metrics: ScoreMetrics = {
-            close: p.close,
-            open: p.open,
-            high: p.high,
-            low: p.low,
-            prevClose,
-            volume: p.volume,
-            avgVolume10: avgVol10Vals[index],
-            avgVolume20: avgVol20Vals[index],
-            atr14: atrVals[index],
-            rsi14: rsiVals[index],
-            ema20: ema21Vals[index], // using 21 as 20
-            ema50: ema50Vals[index],
-            sma50: sma50Vals[index],
-            sma200: sma200Vals[index],
-            macdLine: macdVals[index],
-            macdSignal: macdSignalVals[index],
-            macdHist: macdHistVals[index],
-            yearHigh: yearHighVals[index],
-            priceReturn1Y: priceReturn1YVals[index],
-            bbLower: bbLowerVals[index],
-            bbUpper: bbUpperVals[index],
-            vwap: vwapVals[index],
-            adx: adxVals[index],
-            zScore: zScoreVals[index],
-            poc: pocVals[index],
-            adLine: adLineVals[index],
-            macdGoldenCross: macdGoldenCrossVals[index],
-            bbBounce: bbBounceVals[index],
-          };
-
-          scorePayload = calculateAllScores(metrics, rulesConfig);
-        }
+        const scorePayload = dbScore != null ? dbScore.scorePayload : item.scorePayload;
 
         return {
           id: index,
           symbol: symbol.toUpperCase(),
           name: companyName,
-          date: p.date,
-          open: p.open,
-          high: p.high,
-          low: p.low,
-          close: p.close,
-          volume: p.volume,
-          ema9: ema9Vals[index],
-          ema21: ema21Vals[index],
-          ema50: ema50Vals[index],
-          ema200: ema200Vals[index],
-          rsi: rsiVals[index],
-          macd: macdVals[index],
-          macdSignal: macdSignalVals[index],
-          macdHist: macdHistVals[index],
-          bbLower: bbLowerVals[index],
-          bbUpper: bbUpperVals[index],
-          vwap: vwapVals[index],
-          adx: adxVals[index],
-          zScore: zScoreVals[index],
-          poc: pocVals[index],
-          adLine: adLineVals[index],
-          macdGoldenCross: macdGoldenCrossVals[index],
-          bbBounce: bbBounceVals[index],
-          dayScore: dbScore?.dayScore ?? null,
-          swingScore: dbScore?.swingScore ?? null,
-          positionScore: dbScore?.positionScore ?? null,
+          date: item.date,
+          open: item.open,
+          high: item.high,
+          low: item.low,
+          close: item.close,
+          volume: item.volume,
+          ema9: item.ema9,
+          ema21: item.ema21,
+          ema50: item.ema50,
+          ema200: item.ema200,
+          rsi: item.rsi,
+          macd: item.macd,
+          macdSignal: item.macdSignal,
+          macdHist: item.macdHist,
+          bbLower: item.metrics.bbLower,
+          bbUpper: item.metrics.bbUpper,
+          vwap: item.metrics.vwap,
+          adx: item.metrics.adx,
+          zScore: item.metrics.zScore,
+          poc: item.metrics.poc,
+          adLine: item.metrics.adLine,
+          macdGoldenCross: item.metrics.macdGoldenCross,
+          bbBounce: item.metrics.bbBounce,
+          dayScore: dbScore?.dayScore ?? item.scorePayload.dayScore.total,
+          swingScore: dbScore?.swingScore ?? item.scorePayload.swingScore.total,
+          positionScore: dbScore?.positionScore ?? item.scorePayload.positionScore.total,
           scorePayload: scorePayload ?? null,
-          changePercent: changePercent,
+          changePercent: item.changePercent,
         };
       });
 
@@ -710,31 +491,37 @@ Here are the inputs for your analysis:
 
 --- YOUR TASK ---
 
-STEP 1 – COMPUTE YOUR OWN AI SCORES (0 to 100 each):
+STEP 1 – COMPUTE YOUR OWN AI SCORES (0 to 170 for Day, 0 to 145 for Swing, 0 to 135 for Position):
 Using the rubric below, independently score this stock for each strategy. Do NOT copy the system scores.
 
-Day Trading Score rubric (max 100):
-- Momentum & Trend: RSI above 60 or below 30 → +25 pts; RSI 50–60 → +10 pts
-- MACD Histogram positive and growing → +25 pts; positive only → +15 pts
-- EMA 9 above EMA 21 (bullish crossover) → +10 pts
-- Volume & Liquidity: Volume spike (RVOL > 1.5) or A/D Line rising → +15 pts
-- Price relation to VWAP (Price > VWAP) or BB Lower Band Bounce → +15 pts
-- Z-Score extreme deviation for mean reversion (Z < -2.5 or Z > 2.5) → +10 pts
+Day Trading Score rubric (max 170):
+- Relative Volume (RVOL): RVOL > 2.0 → +35 pts; RVOL > 1.5 → +25 pts; RVOL > 1.0 → +15 pts
+- Volatility (ATR %): ATR % > 5.0% → +25 pts; ATR % > 3.0% → +15 pts
+- Gap %: Gap > 2% or < -2% → +15 pts; Gap > 1% or < -1% → +10 pts
+- Momentum (RSI 14): RSI > 60 or RSI < 30 → +15 pts
+- Liquidity: Average Volume > 1M → +10 pts; > 500K → +5 pts
+- BB Lower Bounce (Bonus): Pantulan terdeteksi → +15 pts
+- Price Above VWAP (Bonus): Price > VWAP → +20 pts
+- Z-Score Extreme Reversal (Bonus): Absolute Z-Score >= 2.5 → +20 pts
+- A/D Line Uptrend (Bonus): Money Flow Multiplier > 0 → +15 pts
 
-Swing Trading Score rubric (max 100):
-- EMA 21 above EMA 50 (uptrend alignment) → +25 pts
-- MACD line above signal line or MACD Golden Cross → +25 pts
-- RSI in 40–65 range (healthy swing zone) → +15 pts
-- Close above EMA 21 (price above mid-term trend) → +10 pts
-- ADX trend strength > 25 → +15 pts
-- VWAP Deviation exhaustion (rebound from dev band) → +10 pts
+Swing Trading Score rubric (max 145):
+- Trend Alignment: Close > EMA 21 → +15 pts; EMA 21 > EMA 50 → +20 pts
+- MACD Setup: Histogram > 0 → +10 pts; MACD Line > Signal Line → +15 pts
+- RSI Setup: RSI 40-65 → +20 pts; RSI 65-70 → +10 pts
+- Volume Trend: Volume > Avg 20 and Price up → +10 pts
+- Proximity: Price diff with EMA 21 < 2% → +10 pts
+- MACD Golden Cross (Bonus): Golden cross today → +20 pts
+- ADX Strong Trend (Bonus): ADX > 25.0 → +15 pts
+- VWAP Dev Exhaustion (Bonus): Absolute Z-Score >= 2.0 → +10 pts
 
-Position Trading Score rubric (max 100):
-- EMA 50 above EMA 200 (golden cross zone) → +30 pts
-- Close above EMA 200 (long-term uptrend) → +20 pts
-- RSI above 50 (sustained momentum) → +15 pts
-- POC proximity (price near high-volume node) → +20 pts
-- RVOL breakout confirmation (> 1.5x) → +15 pts
+Position Trading Score rubric (max 135):
+- Long-Term Trend: Close > SMA 200 → +15 pts; SMA 50 > SMA 200 → +25 pts
+- Price Strength (52W High): Diff to 52W High <= 10% → +25 pts
+- Long-term Momentum: 1Y Return > 20% → +20 pts; > 10% → +10 pts
+- Low Volatility: ATR % < 3.0% → +15 pts; < 5.0% → +5 pts
+- POC Pullback Proximity (Bonus): Price diff with POC <= 5% → +20 pts
+- RVOL Breakout Confirm (Bonus): RVOL > 1.5 → +15 pts
 
 STEP 2 – COMPARE AND GIVE A VERDICT:
 Compare your AI scores with the system scores for all 3 strategies.
@@ -778,5 +565,20 @@ Return a single JSON object with these exact keys:
     });
 
     return saved;
+  }
+
+  async getCorporateActions(symbol: string) {
+    const adapter = await this.getAdapter();
+    const symbolToQuery = symbol.toUpperCase();
+
+    const startDate = new Date();
+    startDate.setFullYear(startDate.getFullYear() - 5); // Fetch 5 years of actions
+
+    if (adapter.getCorporateActions) {
+      return adapter.getCorporateActions(symbolToQuery, startDate, new Date());
+    }
+
+    const yf = new YahooFinanceAdapter();
+    return yf.getCorporateActions(symbolToQuery, startDate, new Date());
   }
 }
