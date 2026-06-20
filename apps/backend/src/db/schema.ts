@@ -14,5 +14,6 @@ export * from "./schemas/backtest-reports.schema";
 
 export * from "./schemas/ai-analyses.schema";
 
+export * from "./schemas/portfolios.schema";
 
-
+export * from "./schemas/trading-journals.schema";

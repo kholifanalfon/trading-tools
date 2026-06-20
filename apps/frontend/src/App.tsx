@@ -14,8 +14,11 @@ import { LiveScreenerPage } from "./features/live-screener/pages/live-screener.p
 import { IngestionLogsPage } from "./features/screener/pages/ingestion-logs.page";
 import { StockDetailPage } from "./features/screener/pages/stock-detail.page";
 import { BacktestPage } from "./features/backtest/pages/backtest.page";
+import { PortfolioListPage } from "./features/portfolio/pages/portfolio-list.page";
+import { PortfolioDetailPage } from "./features/portfolio/pages/portfolio-detail.page";
+import { JournalListPage } from "./features/journal/pages/journal-list.page";
 import { ThemeProvider } from "./shared/components/theme-provider";
-import { HomeIcon, TrendingUpIcon, ActivityIcon, CpuIcon, SettingsIcon, Loader2, ArrowDown } from "lucide-react";
+import { HomeIcon, TrendingUpIcon, ActivityIcon, CpuIcon, SettingsIcon, Loader2, ArrowDown, BriefcaseIcon } from "lucide-react";
 
 import { ThemeToggle } from "./shared/components/ui/theme-toggle";
 import { TooltipProvider } from "./shared/components/ui/tooltip";
@@ -68,6 +71,9 @@ export function App() {
                   <Route path="/screener/:symbol" element={<StockDetailPage />} />
                   <Route path="/ingestion-logs" element={<IngestionLogsPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
+                  <Route path="/portfolios" element={<PortfolioListPage />} />
+                  <Route path="/portfolios/:id" element={<PortfolioDetailPage />} />
+                  <Route path="/journals" element={<JournalListPage />} />
                 </Route>
               </Routes>
             </BrowserRouter>
@@ -165,6 +171,12 @@ function PlatformLayout() {
     pageName = "Settings";
   } else if (location.pathname === "/dashboard") {
     pageName = "Dashboard";
+  } else if (location.pathname === "/portfolios") {
+    pageName = "Trading Portfolios";
+  } else if (location.pathname.startsWith("/portfolios/")) {
+    pageName = "Portfolio Details";
+  } else if (location.pathname === "/journals") {
+    pageName = "Trading Journal";
   } else if (location.pathname === "/orders") {
     pageName = "Orders";
   }
@@ -173,6 +185,7 @@ function PlatformLayout() {
     { label: "Home", path: "/", icon: <HomeIcon className="h-5 w-5" /> },
     { label: "Screener", path: "/screener", icon: <TrendingUpIcon className="h-5 w-5" /> },
     { label: "Live", path: "/live-screener", icon: <ActivityIcon className="h-5 w-5" /> },
+    { label: "Portfolio", path: "/portfolios", icon: <BriefcaseIcon className="h-5 w-5" /> },
     { label: "Backtest", path: "/backtest", icon: <CpuIcon className="h-5 w-5" /> },
     { label: "Settings", path: "/settings", icon: <SettingsIcon className="h-5 w-5" /> },
   ];

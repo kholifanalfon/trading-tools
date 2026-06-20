@@ -1,11 +1,23 @@
 import { useGetInfo } from "../hooks/use-get-info";
 import { InfoPresenter } from "../components/info-presenter";
 import { triggerBackendSentryTest } from "../services/info.api";
+import { useGetPortfolios } from "../../portfolio/hooks/use-get-portfolios";
+import { useGetJournals } from "../../journal/hooks/use-get-journals";
+import { useGetLiveStockData } from "../../live-screener/hooks/use-get-live-stock-data";
+import { useGetAllHoldings } from "../../portfolio/hooks/use-get-all-holdings";
 
 import * as Sentry from "@sentry/react";
 
 export function InfoLandingPage() {
-  const { data: backendStack, isLoading, error } = useGetInfo();
+  const { data: backendStack, isLoading: isInfoLoading, error: infoError } = useGetInfo();
+  const { data: portfolios, isLoading: isPortfoliosLoading, error: portfoliosError } = useGetPortfolios();
+  const { data: journals, isLoading: isJournalsLoading, error: journalsError } = useGetJournals();
+  const { data: liveScreenerData, isLoading: isScreenerLoading, error: screenerError } = useGetLiveStockData({
+    page: 1,
+    limit: 5,
+    strategy: "day",
+  });
+  const { data: holdings, isLoading: isHoldingsLoading, error: holdingsError } = useGetAllHoldings();
 
   const frontendStack = [
     {
@@ -65,6 +77,9 @@ export function InfoLandingPage() {
     }
   };
 
+  const isLoading = isInfoLoading || isPortfoliosLoading || isJournalsLoading || isScreenerLoading || isHoldingsLoading;
+  const error = infoError || portfoliosError || journalsError || screenerError || holdingsError;
+
   return (
     <InfoPresenter
       backendStack={backendStack}
@@ -73,6 +88,11 @@ export function InfoLandingPage() {
       frontendStack={frontendStack}
       onTestFrontendSentry={handleTestFrontendSentry}
       onTestBackendSentry={handleTestBackendSentry}
+      portfolios={portfolios}
+      journals={journals}
+      topStocks={liveScreenerData?.items || []}
+      holdings={holdings}
     />
   );
 }
+

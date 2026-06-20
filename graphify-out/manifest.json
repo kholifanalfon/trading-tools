@@ -295,13 +295,13 @@
     "semantic_hash": ""
   },
   "apps/backend/src/db/migrations/meta/_journal.json": {
-    "mtime": 1781902252.7172794,
-    "ast_hash": "a022f7c88bf2fbfa8fb4c400a4a6c364",
+    "mtime": 1781969547.863005,
+    "ast_hash": "4c4aac93bb02f013c04dde8ae13aea05",
     "semantic_hash": ""
   },
   "apps/backend/src/db/schema.ts": {
-    "mtime": 1781902252.7174094,
-    "ast_hash": "cf9b8bba2a3eeed5f2cd118e8cfca98e",
+    "mtime": 1781967158.2302282,
+    "ast_hash": "f8513bb4488acf4617ffb49324820efa",
     "semantic_hash": ""
   },
   "apps/backend/src/db/schemas/ai-analyses.schema.ts": {
@@ -415,8 +415,8 @@
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.service.ts": {
-    "mtime": 1781902252.7215,
-    "ast_hash": "f6947f2b1345604d2eee3958a530187b",
+    "mtime": 1781903204.9133182,
+    "ast_hash": "c0169cda7814d196563efe42dc4ef75a",
     "semantic_hash": ""
   },
   "apps/backend/src/modules/backtest/backtest.types.ts": {
@@ -570,8 +570,8 @@
     "semantic_hash": ""
   },
   "apps/backend/src/routes/v1.router.ts": {
-    "mtime": 1781902252.7259896,
-    "ast_hash": "1519e0ff08c4fd13a6046461f219d54d",
+    "mtime": 1781967280.2550156,
+    "ast_hash": "0fc6007f6ed255d9271a2adea02e251c",
     "semantic_hash": ""
   },
   "apps/backend/src/types/declarations.d.ts": {
@@ -640,7 +640,7 @@
     "semantic_hash": ""
   },
   "apps/frontend/package.json": {
-    "mtime": 1781902299.133013,
+    "mtime": 1781903204.9150717,
     "ast_hash": "6d03ed66f3fa2e6ca49481fc322cc3ae",
     "semantic_hash": ""
   },
@@ -650,8 +650,8 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/App.tsx": {
-    "mtime": 1781902377.4151516,
-    "ast_hash": "699bfe0e78e5e4f9b59158cc1b15cc35",
+    "mtime": 1781968368.1337564,
+    "ast_hash": "ad40d7fa8ec60f4c359d5eb2f15e0b0f",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/auth/auth.schema.ts": {
@@ -745,8 +745,8 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/info/components/info-presenter.tsx": {
-    "mtime": 1781902252.732301,
-    "ast_hash": "42c48f646af34849db3f53e0ad145160",
+    "mtime": 1781972131.9974337,
+    "ast_hash": "93d36fcdbd07cb460424af1a5f4b045a",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/info/hooks/use-get-info.ts": {
@@ -760,8 +760,8 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/info/pages/info-landing.page.tsx": {
-    "mtime": 1781902252.7324839,
-    "ast_hash": "af9fe1e5a5f26748c81ddf21c5f16049",
+    "mtime": 1781969714.3929648,
+    "ast_hash": "5225a351a3d20f79101fd2c3b9292ff7",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/info/services/info.api.ts": {
@@ -775,8 +775,8 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/live-screener/hooks/use-get-live-stock-data.ts": {
-    "mtime": 1781902252.7330017,
-    "ast_hash": "a56863000a0c7dd24e65b0ef0b2460ed",
+    "mtime": 1781969209.960626,
+    "ast_hash": "40bcf7663a896bfeb996d6a9d3885e40",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/live-screener/live-screener.keys.ts": {
@@ -900,8 +900,8 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/pages/stock-detail.page.tsx": {
-    "mtime": 1781902252.7378354,
-    "ast_hash": "2f1df3f851bb3522d88a2a3693be47a2",
+    "mtime": 1781972448.8332,
+    "ast_hash": "1a1f11ee30c78ae6326d8d378f096cf8",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/screener.keys.ts": {
@@ -915,8 +915,8 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/features/screener/types/screener.types.ts": {
-    "mtime": 1781902252.738323,
-    "ast_hash": "43d833de6025cff69c06f357e696cf61",
+    "mtime": 1781969205.2454526,
+    "ast_hash": "808fbe2545cb6840cf6853e0ec8a8f65",
     "semantic_hash": ""
   },
   "apps/frontend/src/features/settings/components/ai-recommendation-dialog.tsx": {
@@ -1125,8 +1125,8 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/components/app-sidebar.tsx": {
-    "mtime": 1781902252.7475262,
-    "ast_hash": "5c140b2ca46031d3982a8057968ab314",
+    "mtime": 1781967505.6957188,
+    "ast_hash": "f175ba18bb93fdf0517bc2cbe42c22ca",
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/components/global-error-container.tsx": {
@@ -1260,7 +1260,7 @@
     "semantic_hash": ""
   },
   "apps/frontend/src/shared/components/ui/sidebar.tsx": {
-    "mtime": 1781902252.7509353,
+    "mtime": 1781903204.9182122,
     "ast_hash": "2dca6fe95abdffaed2ae743b94117492",
     "semantic_hash": ""
   },
@@ -1697,6 +1697,201 @@
   "apps/frontend/src/assets/vite.svg": {
     "mtime": 1781187137.9470828,
     "ast_hash": "9960a24288958394ac50e57ff638b036",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/db/migrations/0012_gifted_the_leader.sql": {
+    "mtime": 1781967162.7966924,
+    "ast_hash": "5002659b47f9a357dfc60700503b0aed",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/db/migrations/0013_safe_devos.sql": {
+    "mtime": 1781969547.8631356,
+    "ast_hash": "760dc5312175a4f5d9a211527c6cccef",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/db/migrations/meta/0012_snapshot.json": {
+    "mtime": 1781967162.7962437,
+    "ast_hash": "6e5e447fd322eff04adc2a2d97f6756b",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/db/migrations/meta/0013_snapshot.json": {
+    "mtime": 1781969547.862745,
+    "ast_hash": "6d36a1cc70cb625085a7dea56223a800",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/db/schemas/portfolios.schema.ts": {
+    "mtime": 1781969536.7756941,
+    "ast_hash": "4dc61bbcdc883ca6b2c3dd5ef6482fe9",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/db/schemas/trading-journals.schema.ts": {
+    "mtime": 1781967152.0435047,
+    "ast_hash": "9d0cfe59e078bd8b12903efe7a30733a",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/portfolios/portfolios.controller.ts": {
+    "mtime": 1781969598.4863207,
+    "ast_hash": "ac945e00dd8f9acdf739d46cc11e291c",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/portfolios/portfolios.repository.ts": {
+    "mtime": 1781969586.4251802,
+    "ast_hash": "877776433c1679af78e9b8d7e7185884",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/portfolios/portfolios.routes.ts": {
+    "mtime": 1781969602.7977388,
+    "ast_hash": "7ed74eb6940b03e594075dce373e1c3e",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/portfolios/portfolios.schema.ts": {
+    "mtime": 1781969561.7355938,
+    "ast_hash": "c320b347035df99eaa0da2d54acd1941",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/portfolios/portfolios.service.ts": {
+    "mtime": 1781969591.2827516,
+    "ast_hash": "94c5a6b0bd5acfde93eb063575d41cbe",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/trading-journals/trading-journals.controller.ts": {
+    "mtime": 1781967264.1509614,
+    "ast_hash": "a0847a131c5187fe952c249770bdfc2c",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/trading-journals/trading-journals.repository.ts": {
+    "mtime": 1781967235.4027305,
+    "ast_hash": "9fe6309360c1c542b7b2d37b77150785",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/trading-journals/trading-journals.routes.ts": {
+    "mtime": 1781967275.8220994,
+    "ast_hash": "f6f7a143b6304a5c0172967eef5ae3c0",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/trading-journals/trading-journals.schema.ts": {
+    "mtime": 1781967229.6445768,
+    "ast_hash": "3e2dd86b7155b69ab37f6ecc78c518bc",
+    "semantic_hash": ""
+  },
+  "apps/backend/src/modules/trading-journals/trading-journals.service.ts": {
+    "mtime": 1781967252.5276296,
+    "ast_hash": "e2b2960ce9822c7a13a1c950d499ed03",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/journal/hooks/use-create-journal.ts": {
+    "mtime": 1781967467.0080616,
+    "ast_hash": "a80fb1acdfe038d824f3103f389d7185",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/journal/hooks/use-delete-journal.ts": {
+    "mtime": 1781967475.466102,
+    "ast_hash": "ae0c004238dec767805c5baa0fbb7250",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/journal/hooks/use-get-journals.ts": {
+    "mtime": 1781967463.3194144,
+    "ast_hash": "55e905076408735659041bb334917b2b",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/journal/hooks/use-update-journal.ts": {
+    "mtime": 1781967611.473253,
+    "ast_hash": "da6580ea6238455078e9194878c0abb0",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/journal/journal.keys.ts": {
+    "mtime": 1781967454.8149788,
+    "ast_hash": "0585f24fb207bc40cf3360478a85a81c",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/journal/journal.schema.ts": {
+    "mtime": 1781967481.6938477,
+    "ast_hash": "e1d86ad9b53f38afe2e711cd5e63380f",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/journal/pages/journal-list.page.tsx": {
+    "mtime": 1781967632.476404,
+    "ast_hash": "4943b5da7f40ce85d8f2a076c24957e3",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/journal/services/journal.api.ts": {
+    "mtime": 1781967458.8430097,
+    "ast_hash": "7ca20e983500b180dacb01d0d05efbc1",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/journal/types/journal.types.ts": {
+    "mtime": 1781967440.5771646,
+    "ast_hash": "e28e5cd2529a5a7c64d220a68a587264",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/portfolio/hooks/use-add-transaction.ts": {
+    "mtime": 1781967615.325896,
+    "ast_hash": "16752db4edd4fecdbce27509d1fd8c8f",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/portfolio/hooks/use-create-portfolio.ts": {
+    "mtime": 1781967388.179879,
+    "ast_hash": "f2b3248b9df7a9fc6c6ab767453168b8",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/portfolio/hooks/use-delete-portfolio.ts": {
+    "mtime": 1781967395.9641032,
+    "ast_hash": "ea128e24a1248fd3ceaf189af0d4a9a5",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/portfolio/hooks/use-get-all-holdings.ts": {
+    "mtime": 1781969661.8647993,
+    "ast_hash": "866672aa4684e28c0c399105860a864f",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/portfolio/hooks/use-get-portfolio-asset-summary.ts": {
+    "mtime": 1781968222.201989,
+    "ast_hash": "629a3f9b5ce80bef083db2a21776c2ab",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/portfolio/hooks/use-get-portfolio.ts": {
+    "mtime": 1781967375.5660088,
+    "ast_hash": "7c0effb5a5e892e501a49816dd4e5caa",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/portfolio/hooks/use-get-portfolios.ts": {
+    "mtime": 1781967362.370145,
+    "ast_hash": "f7ee040d9cbabe152aa7ddc19673edcd",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/portfolio/hooks/use-update-portfolio.ts": {
+    "mtime": 1781967619.4735017,
+    "ast_hash": "16c09f2b801e51164e7c93a5b9261a74",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/portfolio/pages/portfolio-detail.page.tsx": {
+    "mtime": 1781967604.0262003,
+    "ast_hash": "05f23e3e6e69e75c93eade8404bacb3e",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/portfolio/pages/portfolio-list.page.tsx": {
+    "mtime": 1781972402.9973745,
+    "ast_hash": "a8cf18e1bb6f920fe9558eb9fabebb07",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/portfolio/portfolio.keys.ts": {
+    "mtime": 1781967343.344867,
+    "ast_hash": "5df86ad9cf7c719adf95ac69c56305fb",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/portfolio/portfolio.schema.ts": {
+    "mtime": 1781967412.7006364,
+    "ast_hash": "2c3174d189dbe939b31e2628511f380c",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/portfolio/services/portfolio.api.ts": {
+    "mtime": 1781969764.6752028,
+    "ast_hash": "925f15495694dfd8aba2f24f216a7228",
+    "semantic_hash": ""
+  },
+  "apps/frontend/src/features/portfolio/types/portfolio.types.ts": {
+    "mtime": 1781969641.0728319,
+    "ast_hash": "5f437ba62aca4feb3b451566c0f31488",
     "semantic_hash": ""
   }
 }
