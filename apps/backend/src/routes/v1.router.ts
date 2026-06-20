@@ -6,6 +6,8 @@ import { settingsRoutes } from "@/modules/settings/settings.routes";
 import { screenerRoutes } from "@/modules/screener/screener.routes";
 import { liveScreenerRoutes } from "@/modules/live-screener/live-screener.routes";
 import { backtestRoutes } from "@/modules/backtest/backtest.routes";
+import { portfoliosRoutes } from "@/modules/portfolios/portfolios.routes";
+import { tradingJournalsRoutes } from "@/modules/trading-journals/trading-journals.routes";
 
 const v1Router = Router();
 
@@ -36,5 +38,8 @@ v1Router.use("/settings", settingsRoutes);
 v1Router.use("/screener", screenerRoutes);
 v1Router.use("/live-screener", liveScreenerRoutes);
 v1Router.use("/backtest", backtestRoutes);
+v1Router.use("/portfolios", portfoliosRoutes);
+v1Router.use("/trading-journals", tradingJournalsRoutes);
 
 export { v1Router };
+

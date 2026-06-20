@@ -6,7 +6,7 @@ import { NavMain } from "@/shared/components/nav-main";
 import { TeamSwitcher } from "@/shared/components/team-switcher";
 import { usePwa } from "@/shared/providers/pwa-provider";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail, useSidebar } from "@/shared/components/ui/sidebar";
-import { GalleryVerticalEndIcon, AudioLinesIcon, TerminalIcon, UserIcon, TrendingUpIcon, SettingsIcon, HistoryIcon, LineChartIcon } from "lucide-react";
+import { GalleryVerticalEndIcon, AudioLinesIcon, TerminalIcon, UserIcon, TrendingUpIcon, SettingsIcon, HistoryIcon, LineChartIcon, BriefcaseIcon, BookOpenIcon } from "lucide-react";
 
 import { useAuthStore } from "@/shared/stores/auth.store";
 
@@ -77,6 +77,24 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       ],
     });
   }
+
+  // Trading Tools section accessible to all authenticated users
+  navMain.push({
+    title: "Trading Tools",
+    items: [
+      {
+        title: "Portfolios",
+        url: "/portfolios",
+        icon: <BriefcaseIcon />,
+      },
+      {
+        title: "Trading Journal",
+        url: "/journals",
+        icon: <BookOpenIcon />,
+      },
+    ],
+  });
+
 
   const { state } = useSidebar();
   const { needRefresh, updateServiceWorker } = usePwa();
